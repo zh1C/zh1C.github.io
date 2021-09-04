@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Git基础使用 - NarcissusBlog</title><meta name="Description" content="学习Git的基本使用。"><meta property="og:title" content="Git基础使用" />
+<meta property="og:description" content="学习Git的基本使用。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wen-nan.github.io/posts/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-09-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-09-03T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Git基础使用"/>
+<meta name="twitter:description" content="学习Git的基本使用。"/>
+<meta name="application-name" content="NarcissusBlog">
+<meta name="apple-mobile-web-app-title" content="NarcissusBlog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/" /><link rel="next" href="http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Git基础使用",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wen-nan.github.io\/posts\/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8\/"
+        },"genre": "posts","keywords": "Git","wordcount":  3576 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8\/","datePublished": "2021-09-03T00:00:00+00:00","dateModified": "2021-09-03T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Narcissus"},"author": {
+                "@type": "Person",
+                "name": "Narcissus"
+            },"description": "学习Git的基本使用。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/" title="全部文章"> 全部文章 </a><a class="menu-item" href="/tags/" title="标签"> 标签 </a><a class="menu-item" href="/categories/" title="分类"> 分类 </a><a class="menu-item" href="/about/" title="关于"> 关于 </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="全部文章">全部文章</a><a class="menu-item" href="/tags/" title="标签">标签</a><a class="menu-item" href="/categories/" title="分类">分类</a><a class="menu-item" href="/about/" title="关于">关于</a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Git基础使用</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/git/"><i class="far fa-folder fa-fw"></i>Git</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-03">2021-09-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3576 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一git简介">一、Git简介</a>
+      <ul>
+        <li><a href="#集中式vs分布式">集中式VS分布式</a></li>
+      </ul>
+    </li>
+    <li><a href="#二使用git">二、使用Git</a>
+      <ul>
+        <li><a href="#创建版本库">创建版本库</a></li>
+        <li><a href="#远程仓库使用">远程仓库使用</a></li>
+      </ul>
+    </li>
+    <li><a href="#三仓库管理">三、仓库管理</a>
+      <ul>
+        <li><a href="#版本回退">版本回退</a></li>
+        <li><a href="#工作区暂存区本地仓库">工作区/暂存区/本地仓库</a></li>
+        <li><a href="#撤销修改">撤销修改</a></li>
+        <li><a href="#删除文件">删除文件</a></li>
+      </ul>
+    </li>
+    <li><a href="#四分支管理">四、分支管理</a>
+      <ul>
+        <li><a href="#创建与合并分支">创建与合并分支</a></li>
+        <li><a href="#多人协作">多人协作</a></li>
+      </ul>
+    </li>
+    <li><a href="#五标签管理">五、标签管理</a></li>
+    <li><a href="#六特殊使用">六、特殊使用</a>
+      <ul>
+        <li><a href="#忽略特殊文件">忽略特殊文件</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="一git简介">一、Git简介</h2>
+<p>Git是分布式版本控制系统。</p>
+<h3 id="集中式vs分布式">集中式VS分布式</h3>
+<ul>
+<li>集中式版本控制系统，版本库集中存放在中央服务器，干活的时候先从中央服务器获取最新版本；干完活再把更新推送到中央服务器。<strong>最大缺点就是必须联网才能工作。</strong></li>
+<li>分布式版本控制系统，没有”中央服务器“，每个人的电脑都是一个完整地版本库。</li>
+</ul>
+<p>实际使用分布式版本控制系统的时候，很少在两个个人电脑之间推送版本修改。通常也有一台充当”中央服务器“的电脑，作用是方便”交换“大家的修改。</p>
+<h2 id="二使用git">二、使用Git</h2>
+<p>安装完Git后，需要设置名字和email</p>
+<blockquote>
+<p><code>git config --global user.name &quot;your name&quot;</code></p>
+<p><code>git config --global user.email &quot;email@example.com&quot;</code></p>
+<p><strong>注意<code>--global</code>参数，表示这台计算机上所有Git仓库都使用这个配置。</strong></p>
+</blockquote>
+<ul>
+<li>
+<h3 id="创建版本库">创建版本库</h3>
+</li>
+</ul>
+<p>在相应目录下使用<code>git init</code>命令即可把这个目录变成Git可以管理的仓库。这样目录下会多出<strong>一个<code>.git</code>的目录，用来跟踪管理版本库</strong>的。</p>
+<ol>
+<li>将文件添加到暂存区：</li>
+</ol>
+<blockquote>
+<p><code>git add [file1] [file2] ...</code> 添加一个或多个文件到暂存区</p>
+<p><code>git add [dir]</code> 添加指定目录(包括子目录)到暂存区</p>
+<p><code>git add .</code>添加当前目录下所有文件到暂存区</p>
+</blockquote>
+<ol start="2">
+<li>将暂存区文件提交到仓库：</li>
+</ol>
+<blockquote>
+<p><code>git commit -m [message]</code> 提交暂存区到本地仓库，message可以是一些备注信息</p>
+<p><code>git commit [file1] [file2] ... -m [message]</code> 提交指定文件</p>
+</blockquote>
+<ul>
+<li>
+<h3 id="远程仓库使用">远程仓库使用</h3>
+</li>
+</ul>
+<p>首先在GitHub上创建一个仓库，然后将本地仓库与远程仓库关联，最后可以把本地仓库内容推送到GitHub仓库。</p>
+<ol>
+<li>关联远程仓库GitHub</li>
+</ol>
+<blockquote>
+<p><code>git remote add origin https://github.com/用户名/github远程仓库名 </code> 添加后，远程仓库名字就是<code>origin</code>,<strong>这个名字是Git默认叫法，可以更改</strong></p>
+<p><code>git remote -v</code>显示所有远程仓库</p>
+<p><code>git remote show [remote]</code>显示某个远程仓库的信息</p>
+<p><code>git remote rm name</code>删除远程仓库</p>
+<p><code>git remote rename old_name new_name</code>修改仓库名</p>
+</blockquote>
+<ol start="2">
+<li>把本地仓库内容推送到远程仓库</li>
+</ol>
+<blockquote>
+<p><code>git push -u origin master</code>把当前分支<code>master</code>推送到远程，第一次推送需要加<code>-u</code>参数，此时Git不但会把本地<code>master</code>分支内容推送到远程新的<code>master</code>分支，还会把两者关联起来，后续推送或拉取可以简化命令。</p>
+<p><code>git push &lt;远程仓库名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;</code>如果本地分支名和远程分支名相同，则可以简写<code>git push &lt;远程仓库名&gt; &lt;本地分支名&gt;</code></p>
+</blockquote>
+<ul>
+<li>从远程仓库克隆</li>
+</ul>
+<blockquote>
+<p><code>git clone [url] [name]</code>默认情况下，Git会按照提供的url所指向的项目名称创建本地项目目录，但也可以修改项目名称([name]中修改，默认的话不写)。</p>
+</blockquote>
+<h2 id="三仓库管理">三、仓库管理</h2>
+<ul>
+<li>查看仓库当前状态，显示有变更的文件</li>
+</ul>
+<blockquote>
+<p><code>git status</code> 查看挡墙仓库状态，输出的命令很详细，但有些繁琐</p>
+<p><code>git status -s</code>获取简短的输出结果</p>
+<blockquote>
+<p>新添加的未跟踪文件前面有<code>??</code>标记</p>
+<p>新添加到暂存区中的文件前面有<code>A</code>标记</p>
+<p>修改过的文件前面有<code>M</code>标记，出现在右边的<code>M</code>表示文件被修改了但是还没放入暂存区，出现在靠左边表示文件被修改了并放入了暂存区。</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>比较文件的不同</li>
+</ul>
+<blockquote>
+<p><code>git diff [file]</code> 显示暂存区和工作区的差异</p>
+<p><code>git diff --cached [file]</code> 显示暂存区和上一次提交到仓库的文件的差异</p>
+<p><strong>注意：比较后按q退出</strong></p>
+</blockquote>
+<h3 id="版本回退">版本回退</h3>
+<ul>
+<li>查看历史提交记录</li>
+</ul>
+<blockquote>
+<p><code>git log</code> ,<code>--oneline</code>选项来查看历史记录的简介版本</p>
+<p><code>git blame &lt;file&gt;</code>查看自定文件的修改记录</p>
+</blockquote>
+<ul>
+<li>回退版本</li>
+</ul>
+<blockquote>
+<p><code>git reset [--soft | --mixed | --hard] [HEAD]</code></p>
+<p><strong>注意：HEAD表示当前版本，HEAD~1表示上一个版本，以此类推。</strong></p>
+<p>可以使用<code>git reflog</code>查看命令历史。</p>
+</blockquote>
+<h3 id="工作区暂存区本地仓库">工作区/暂存区/本地仓库</h3>
+<ul>
+<li>
+<p>工作区(working directory):就是电脑能看到的目录</p>
+</li>
+<li>
+<p>版本库(repository):工作区有一个隐藏目录<code>.git</code>，就是Git版本库。Git的版本库存放了很多东西，最重要的是stage的暂存区，还有Git为我们自动创建的第一个分支<code>master</code>,以及指向<code>master</code>的一个指针叫<code>HEAD</code>。</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025430.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025430.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025430.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025430.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025430.png"
+        title="ScreenShot2021-08-29 15.18.00" /></p>
+<p>Git常用的六个命令：<strong>git clone、git push、git add 、git commit、git chechout、git pull</strong>如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025431.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025431.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025431.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025431.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025431.png"
+        title="ScreenShot2021-08-29 14.18.17" /></p>
+</blockquote>
+</li>
+</ul>
+<p><strong>注意：Git管理的是修改，而不是管理的文件。</strong></p>
+<p>我们对一个文件进行以下操作：第一次修改-&gt;<code>git add</code>-&gt;第二次修改-&gt;<code>git commit</code>。可以发现只有第一次修改被提交了，第二次修改没有被提交。</p>
+<h3 id="撤销修改">撤销修改</h3>
+<ul>
+<li>如果修改了工作区某个文件，还没添加到缓存区，想直接丢弃工作区修改时，用命令<code>git checkout -- file</code>。 <strong>注意：<code>--</code>很重要，没有就会变成”切换到另一个分支“的命令。</strong></li>
+<li>如果修改了工作区某个文件，还添加到了暂存区，想丢弃修改，分两步：第一步用<code>git reset HEAD &lt;file&gt;</code>回到上一个情景，然后使用上一个情景的操作。</li>
+<li>如果修改后已经提交到了本地仓库，想撤销本次提交，采用版本回退。</li>
+</ul>
+<h3 id="删除文件">删除文件</h3>
+<p>如果工作区和本地仓库同步的时候，删除了工作区某个文件，<code>git status</code>可以看到哪些文件被删除了。此时有两个选择：</p>
+<ol>
+<li>
+<p>确实要从版本库中删除该文件，就用<code>git rm</code>命令删除，并且<code>git commit</code>,这样文件就从版本库中删除了。</p>
+<blockquote>
+<p><code>git rm &lt;file&gt;</code>将从工作区和暂存区中删除文件。如果删除之前修改过并且已经放到了暂存区，则必须用强制删除选项<code>-f</code>。</p>
+</blockquote>
+</li>
+<li>
+<p>另一种情况就是删错了，版本库里面还有，所以可以轻松把误删文件恢复到最新版本。</p>
+</li>
+</ol>
+<p>使用命令<code>git checkout -- &lt;file&gt;</code>。<strong>但是这种方式会丢失最近一次提交后你修改的内容。</strong></p>
+<h2 id="四分支管理">四、分支管理</h2>
+<h3 id="创建与合并分支">创建与合并分支</h3>
+<p>在Git里，主分支是<code>master</code>，严格来说<code>HEAD</code>指向当前分支，然后<code>master</code>才指向提交。</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025433.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025433.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025433.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025433.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025433.png"
+        title="ScreenShot2021-08-29 14.19.24" /></p>
+<p>当我们创建新分支时，例如<code>dev</code>,Git新建了一个指针叫<code>dev</code>,指向<code>master</code>相同的提交，再把<code>HEAD</code>指向<code>dev</code>，就表示当前分支在<code>dev</code>上：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025433-1.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025433-1.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025433-1.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025433-1.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025433-1.png"
+        title="ScreenShot2021-08-29 15.21.23" /></p>
+<p>**现在开始，对工作区的修改和提交就针对<code>dev</code>分支了，**比如新提交一次，<code>dev</code>指针往前移动一步，而<code>master</code>指针不变：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025435.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025435.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025435.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025435.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025435.png"
+        title="ScreenShot2021-08-29 15.21.30" /></p>
+<p>在<code>dev</code>分支上得工作完成了，就可以把<code>dev</code>合并到<code>master</code>上，最简单的方式就是直接把<code>master</code>指向<code>dev</code>的当前提交，就完成了合并：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025437.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025437.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025437.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025437.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025437.png"
+        title="ScreenShot2021-08-29 15.21.36" /></p>
+<p>合并完成后，可以删除<code>dev</code>分支。删除分支就是把对应指针删除掉。</p>
+</blockquote>
+<h4 id="命令实现">命令实现</h4>
+<ul>
+<li>创建、切换分支</li>
+</ul>
+<blockquote>
+<p><code>git branch &lt;name&gt;</code>创建分支</p>
+<p><code>git branch</code> 查看分支(会列出所有分支，当前分支前面会标*号)</p>
+</blockquote>
+<blockquote>
+<p><code>git checkout &lt;name&gt;</code>或者<code>git switch &lt;name&gt;</code>切换分支</p>
+</blockquote>
+<blockquote>
+<p><code>git checkout -b &lt;name&gt;</code>或者<code>git switch -c &lt;name&gt;</code> 创建并切换分支</p>
+<p><strong>推荐使用git switch命令</strong></p>
+</blockquote>
+<ul>
+<li>合并分支</li>
+</ul>
+<blockquote>
+<p><code>git merge &lt;name&gt;</code>合并某指定分支到当前分支</p>
+</blockquote>
+<p>但如果两个分支各自有自己的提交，Git无法自动合并分支时，必须首先解决冲突。</p>
+<p><strong>解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。</strong></p>
+<p>通常，合并分支时，如果可能Git会用<code>Fast forward</code>模式。但这样删除分支后，会丢掉分支信息，使用<code>--no-ff</code>会强制禁用<code>Fast forward</code>模式</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025438.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025438.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025438.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025438.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/025438.png"
+        title="ScreenShot2021-08-29 15.22.22" /></p>
+<p><code>git merge --no-ff -m [描述] &lt;name&gt;</code>因为本次合并要创建新的commit,所以要加上<code>-m</code>参数，把commit描述写上去。</p>
+</blockquote>
+<ul>
+<li>删除分支</li>
+</ul>
+<blockquote>
+<p><code>git branch -d &lt;name&gt;</code>删除指定分支</p>
+</blockquote>
+<h3 id="多人协作">多人协作</h3>
+<p>多人协作时，大家都会向分支上推送各自的修改，这时**会出现远程分支比本地更新，就需要先用<code>git pull</code>抓取远程新提交并试图合并。**如果有冲突，要先处理冲突。</p>
+<p>命令格式如下：</p>
+<p><code>git pull -rebase &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</code>如果远程分支与当前分支合并，则冒号后面的部分可以省略不写。</p>
+<blockquote>
+<p>注意：rebase操作可以把本地未push的分叉提交历史整理成直线，目的是使得我们在查看历史提交的变化时更容易。</p>
+</blockquote>
+<h2 id="五标签管理">五、标签管理</h2>
+<p>标签(tag)就是一个让人容易记住的有意义的名字，他跟某个commit绑定在一起。<strong>如果这个commit即出现在master分支上，又出现在dev分支，那么在这两个分支上都可以看到这个标签。</strong></p>
+<blockquote>
+<p>命令<code>git tag &lt;tagname&gt;</code>用于新建一个标签，默认为<code>HEAD</code>，也可以指定一个commit id。</p>
+<p>命令<code>git tag -a &lt;tagname&gt; -m &quot;blabla...&quot;</code>可以指定标签信息。</p>
+<p>命令<code>git tag</code>可以查看所有标签。</p>
+</blockquote>
+<ul>
+<li>删除标签</li>
+</ul>
+<blockquote>
+<p><code>git tag -d &lt;tagname&gt;</code>可以删除一个本地标签</p>
+<p><code>git push origin &lt;tagname&gt;</code>可以推送一个本地标签到远程仓库</p>
+<p><code>git push origin --tags</code>推送全部未推送的标签到远程仓库</p>
+<p><code>git push origin :refs/tags/&lt;tagname&gt;</code>删除远程仓库中某一个标签</p>
+</blockquote>
+<h2 id="六特殊使用">六、特殊使用</h2>
+<h3 id="忽略特殊文件">忽略特殊文件</h3>
+<p>有时候需要忽略Git工作目录中的一些文件，但每次<code>git status</code>时都会显示<code>Untracked files...</code>，可以使用对应方法解决。<strong>在Git工作区的根目录下创建一个特殊的<code>.gitignore</code>文件，然后把要忽略的文件名填进去，Git则会自动忽视这些文件。</strong></p>
+<p>GitHub提供了各种配置文件的模板，可以任意组合使用。<a href="https://github.com/github/gitignore" target="_blank" rel="noopener noreffer">https://github.com/github/gitignore</a></p>
+<ul>
+<li><code>.gitignore</code>文件本身要放到版本库里，并且可以对<code>.gitignore</code>做版本管理。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-09-03</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" data-title="Git基础使用" data-hashtags="Git"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" data-hashtag="Git"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" data-title="Git基础使用" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" data-title="Git基础使用"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/git/">Git</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/" class="prev" rel="prev" title="Golang基础语法细节"><i class="fas fa-angle-left fa-fw"></i>Golang基础语法细节</a>
+            <a href="/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" class="next" rel="next" title="二分查找">二分查找<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments">
+        <div id="gitalk-container"></div>
+        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+        <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.18.0/js/md5.js"></script>
+        <script>
+        const gitalk = new Gitalk({
+            clientID: '60afa8aa721493fdc40a',
+            clientSecret: '0d83669766bc4d55f49702f8d22e76215dfb373a',
+            repo: 'wen-nan.github.io',
+            owner: 'wen-nan',
+            admin: ['wen-nan'],
+            
+            
+            id: md5(location.pathname), 
+            distractionFreeMode: false 
+        });
+        (function() {
+            if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+                document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+                return;
+            }
+            gitalk.render('gitalk-container');
+        })();
+        </script>
+        </div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank"></a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"gitalk":{"admin":["wen-nan"],"clientID":"60afa8aa721493fdc40a","clientSecret":"0d83669766bc4d55f49702f8d22e76215dfb373a","id":"2021-09-03T00:00:00Z","owner":"wen-nan","repo":"wen-nan.github.io","title":"Git基础使用"}}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

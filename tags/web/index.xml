@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Web - 标签 - NarcissusBlog</title>
+        <link>http://wen-nan.github.io/tags/web/</link>
+        <description>Web - 标签 - NarcissusBlog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Sep 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/web/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang实现博客(一)</title>
+    <link>http://wen-nan.github.io/posts/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80/</link>
+    <pubDate>Fri, 03 Sep 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80/</guid>
+    <description><![CDATA[基础准备 1、热加载 air是Go语言的热加载工具，它可以监听文件或目录的变化，自动编译，重启程序。大大提高开发期的工作效率。 安装使用air工具]]></description>
+</item></channel>
+</rss>

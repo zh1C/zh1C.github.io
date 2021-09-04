@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Golang基础语法细节 - NarcissusBlog</title><meta name="Description" content="Go语言基础语法细节。"><meta property="og:title" content="Golang基础语法细节" />
+<meta property="og:description" content="Go语言基础语法细节。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-09-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-09-03T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang基础语法细节"/>
+<meta name="twitter:description" content="Go语言基础语法细节。"/>
+<meta name="application-name" content="NarcissusBlog">
+<meta name="apple-mobile-web-app-title" content="NarcissusBlog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/" /><link rel="prev" href="http://wen-nan.github.io/posts/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80/" /><link rel="next" href="http://wen-nan.github.io/posts/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Golang基础语法细节",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wen-nan.github.io\/posts\/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82\/"
+        },"genre": "posts","keywords": "Golang","wordcount":  4640 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82\/","datePublished": "2021-09-03T00:00:00+00:00","dateModified": "2021-09-03T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Narcissus"},"author": {
+                "@type": "Person",
+                "name": "Narcissus"
+            },"description": "Go语言基础语法细节。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/" title="全部文章"> 全部文章 </a><a class="menu-item" href="/tags/" title="标签"> 标签 </a><a class="menu-item" href="/categories/" title="分类"> 分类 </a><a class="menu-item" href="/about/" title="关于"> 关于 </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="全部文章">全部文章</a><a class="menu-item" href="/tags/" title="标签">标签</a><a class="menu-item" href="/categories/" title="分类">分类</a><a class="menu-item" href="/about/" title="关于">关于</a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Golang基础语法细节</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Golang学习</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-03">2021-09-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4640 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一类型">一、类型</a></li>
+    <li><a href="#二表达式">二、表达式</a></li>
+    <li><a href="#三函数">三、函数</a>
+      <ul>
+        <li><a href="#闭包">闭包</a></li>
+        <li><a href="#错误">错误</a></li>
+      </ul>
+    </li>
+    <li><a href="#四数据">四、数据</a>
+      <ul>
+        <li><a href="#切片">切片</a></li>
+        <li><a href="#字典">字典</a></li>
+        <li><a href="#结构">结构</a></li>
+      </ul>
+    </li>
+    <li><a href="#五方法">五、方法</a></li>
+    <li><a href="#六接口">六、接口</a></li>
+    <li><a href="#七并发">七、并发</a></li>
+    <li><a href="#八包结构">八、包结构</a>
+      <ul>
+        <li><a href="#gopath模式">GOPATH模式</a></li>
+        <li><a href="#go-modules模式">Go Modules模式</a></li>
+      </ul>
+    </li>
+    <li><a href="#九反射">九、反射</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h1 id="基础语法细节">基础语法细节</h1>
+<h2 id="一类型">一、类型</h2>
+<ul>
+<li>
+<p>简短模式(<code>x := 100</code>)定义限制:</p>
+<blockquote>
+<p>定义变量，同时显示初始化。</p>
+<p>不能提供数据类型。</p>
+<p><strong>只能用在函数内部。</strong></p>
+</blockquote>
+</li>
+<li>
+<p>简短模式有可能会出现退化的赋值操作。例如：</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031255.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031255.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031255.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031255.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031255.png"
+        title="ScreenShot2021-08-29 15.25.47" /></p>
+<p>退化赋值前提条件：<strong>最少有一个新变量被定义，且必须是同一作用域</strong></p>
+</blockquote>
+</li>
+<li>
+<p>编译器将未使用的局部变量当做错误，<strong>全局变量没问题，局部常量<code>const y = 123</code>也没问题,可指定常量类型或由编译器推断,<code>const y int = 123</code></strong></p>
+</li>
+<li>
+<p>符号名字首字母大小写决定了其作用域。<strong>首字母大写为导出成员，可被包外引用。</strong></p>
+</li>
+<li>
+<p>Go并没有明确意义上的枚举(enum)定义，不过可以借助itoa标识符实现一组自增常量值来实现枚举类型。</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031257.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031257.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031257.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031257.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031257.png"
+        title="ScreenShot2021-08-29 15.26.23" /></p>
+</blockquote>
+</li>
+<li>
+<p>自定义数据类型(type)中,<code>type data int</code>不能理解为取别名，这只能表明它们有相同底层数据结构，两者间不存在任何关系，属于完全不同的两种类型，<strong>不能隐式转换，也不能直接用于比较表达式。</strong></p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031258.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031258.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031258.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031258.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031258.png"
+        title="ScreenShot2021-08-29 15.27.16" /></p>
+</blockquote>
+</li>
+</ul>
+<h2 id="二表达式">二、表达式</h2>
+<ul>
+<li>
+<p>自增、自减不再是运算符。<strong>只能作为独立语句，不能用于表达式。</strong></p>
+</li>
+<li>
+<p>局部变量的有效范围包含整个if/else块，</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031300.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031300.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031300.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031300.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031300.png"
+        title="ScreenShot2021-08-29 15.27.44" /></p>
+</blockquote>
+</li>
+<li>
+<p>编程细节：尽可能减少代码块嵌套，让正常逻辑处于相同层次。<strong>将流程和局部细节分离是常见做法，不同的变化因素被分隔在各自独立单元(函数或模块)内，可避免修改时造成关联错误，减少患”肥胖症“的函数数量。</strong></p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031300-1.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031300-1.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031300-1.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031300-1.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031300-1.png"
+        title="ScreenShot2021-08-29 15.28.00" /></p>
+<p>该示例中，if块显然承担了两种逻辑：错误处理和后续正常操作。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031302.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031302.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031302.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031302.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031302.png"
+        title="ScreenShot2021-08-29 15.28.11" /></p>
+<p>如此，if块仅完成条件检查和错误处理，相关正常逻辑保持在同一层次。</p>
+</blockquote>
+</li>
+<li>
+<p>switch语句中，无须显示执行break语句，case执行完毕后自动中断。如须贯通后续case，须执行fallthrough，但不再匹配后续条件表达式。注意，fallthrough必须放在case块末尾，可使用break语句阻止。</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031304.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031304.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031304.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031304.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031304.png"
+        title="ScreenShot2021-08-29 15.29.17" /></p>
+</blockquote>
+</li>
+<li>
+<p>无论普通的for循环，还是range迭代，其定义的局部变量都会重复使用。</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031304-1.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031304-1.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031304-1.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031304-1.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031304-1.png"
+        title="ScreenShot2021-08-29 15.29.27" /></p>
+</blockquote>
+<p>注意：range会复制目标数据。</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/ScreenShot2021-09-02%2011.17.10.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/ScreenShot2021-09-02%2011.17.10.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/ScreenShot2021-09-02%2011.17.10.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/ScreenShot2021-09-02%2011.17.10.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/ScreenShot2021-09-02%2011.17.10.png"
+        title="ScreenShot2021-09-02" /></p>
+<p>相关数据类型中，复制成本都很小，无须专门优化。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="三函数">三、函数</h2>
+<ul>
+<li>
+<p>不管是指针、应用类型，还是其他类型参数，都是值拷贝传递。区别无非是拷贝目标对象还是拷贝指针而已。</p>
+</li>
+<li>
+<p>如果函数参数过多，建议将其重构为一个符合结构类型，也算变相实现可选参数和命名实参功能。</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031306.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031306.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031306.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031306.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031306.png"
+        title="ScreenShot2021-08-29 15.31.22" /></p>
+</blockquote>
+</li>
+</ul>
+<h3 id="闭包">闭包</h3>
+<p>闭包是函数和引用环境的组合体。关键要分析出返回函数引用到哪些变量。</p>
+<p><strong>正因为闭包通过指针引用环境变量，那么可能会导致其生命周期延长，甚至被分配到堆内存。另外，还有所谓&quot;延迟求值&quot;的特性。</strong></p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031308.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031308.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031308.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031308.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031308.png"
+        title="ScreenShot2021-08-29 15.31.33" /></p>
+<p>由于for循环复用局部变量i，则每次添加匿名函数引用的自然是同一变量。</p>
+</blockquote>
+<h3 id="错误">错误</h3>
+<p>Go的错误处理方式存在不足，即大量函数和方法返回error，使得调用代码变得很难看，一堆堆的检查语句充斥在代码行间。解决思路有：</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031310.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031310.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031310.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031310.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031310.png"
+        title="ScreenShot2021-08-29 15.31.44" /></p>
+</blockquote>
+<h2 id="四数据">四、数据</h2>
+<ul>
+<li>
+<p>要修改字符串，须将其转换为可变类型([]byte或[]rune)，待完成后再转换回来。但不管如何转换，都须重新分配内存，并复制数据。</p>
+</li>
+<li>
+<p>数组中，元素类型相同，长度不同的数组不属于同一类型。</p>
+</li>
+<li>
+<p>与C不同，Go数组是值类型，赋值和传参操作都会复制整个数组数据，<strong>可以改用指针或切片，避免数据复制。</strong></p>
+</li>
+</ul>
+<h3 id="切片">切片</h3>
+<ul>
+<li>可基于数组来创建切片，注意cap的计算方式<code>cap = max - low</code>，结合下图理解：</li>
+</ul>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031311.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031311.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031311.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031311.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031311.png"
+        title="ScreenShot2021-08-29 15.33.21" /></p>
+<p>属性cap表示切片所引用数组片段的真实长度，len用于限定可读的写元素数量。</p>
+<p><strong>使用append追加元素时，数据被追加到原底层数组。如果超出cap限制，则为新切片对象重新分配数组。注意：1.是超出切片cap限制，而非底层数组长度限制，因为cap可小于数组长度。2.新分配数组长度是原cap的2倍，而非原数组的2倍，并且非总是2倍，较大的切片会尝试扩容1/4,以节约内存。</strong></p>
+</blockquote>
+<p>注意：切片初始化使用make函数时，若不指定cap,则cap和len一样。</p>
+<ul>
+<li>利用上述特性，可以容易实现一个栈式数据结构,<strong>很巧妙，可以学习使用</strong></li>
+</ul>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031313.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031313.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031313.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031313.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031313.png"
+        title="ScreenShot2021-08-29 15.33.30" /></p>
+</blockquote>
+<p><strong>编程技巧：1.正是因为存在重新分配底层数组的缘故，某些场合建议多预留足够的空间，避免中途内存分配和数据复制开销。2.如果切片长时间引用大数组中很小的片段，建议新建独立切片，复制出所需数据，以便原数组内存可被及时回收。</strong></p>
+<h3 id="字典">字典</h3>
+<ul>
+<li>因为内存访问安全和哈希算法的缘故，字典被设计成&quot;not addresssable&quot;,故不能直接修改value成员(<strong>结构或数组</strong>)。例如<code>m[1].age += 1</code> 正确做法是返回整个value，待修改后再设置字典键值，或直接用指针类型。</li>
+<li>运行时会对字典并发操作做出检测，可使用sync.RWMutex实现同步，避免读写操作同时进行。</li>
+<li>字典对象本身就是指针包装，传参时无须再次取地址；在创建时预先准备足够空间有助于提升性能，减少扩张时的内存分配和重新哈希操作。</li>
+</ul>
+<h3 id="结构">结构</h3>
+<ul>
+<li>空结构可作为通道元素类型，用于事件通知。</li>
+</ul>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031314.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031314.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031314.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031314.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031314.png"
+        title="ScreenShot2021-08-29 15.33.40" /></p>
+</blockquote>
+<ul>
+<li>实际上，这类**&ldquo;长度&quot;为零的对象通常都指向runtime.zerobase变量**。</li>
+</ul>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031315.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031315.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031315.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031315.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031315.png"
+        title="ScreenShot2021-08-29 15.33.47" /></p>
+</blockquote>
+<h2 id="五方法">五、方法</h2>
+<ul>
+<li>方法内部不引用实例，则可省略参数名，仅保留类型。</li>
+</ul>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031316.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031316.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031316.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031316.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031316.png"
+        title="ScreenShot2021-08-29 15.35.34" /></p>
+</blockquote>
+<ul>
+<li>类型T和类型*T的方法集不相同，具体关系如下：</li>
+</ul>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031318.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031318.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031318.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031318.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031318.png"
+        title="ScreenShot2021-08-29 15.35.41" /></p>
+</blockquote>
+<ul>
+<li>可以像访问匿名字段成员那样调用其方法</li>
+</ul>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031319.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031319.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031319.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031319.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031319.png"
+        title="ScreenShot2021-08-29 15.35.47" /></p>
+<p><strong>很显然，匿名字段就是为方法准备的。Go语言更加倾向于&quot;组合优于继承&quot;的思想</strong>将模块分解成相互独立的更小单元，分别处理不同方面的需求，最后以匿名嵌入的方式组合到一起。</p>
+</blockquote>
+<h2 id="六接口">六、接口</h2>
+<ul>
+<li>Go接口实现机制很简洁，只要目标类型方法集内包含接口声明的全部方法，就被视为实现了接口，无须作显示声明。当然，目标类型可以实现多个接口。但是接口会有一些语法限制。</li>
+</ul>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031321.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031321.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031321.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031321.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031321.png"
+        title="ScreenShot2021-08-29 15.35.55" /></p>
+<p>接口通常以er作为名称后缀，方法名是声明组成部分，但参数名可不同或省略。</p>
+</blockquote>
+<ul>
+<li>
+<p>超集接口变量可隐式转换为子集，反过来不行。</p>
+</li>
+<li>
+<p>将对象赋值给接口变量时，会复制该对象。**甚至无法修改接口存储的复制品，**即便将其复制出来，用本地变量修改后，依然无法对iface.data赋值。<strong>解决方法是将对象指针赋值给接口。</strong></p>
+</li>
+<li>
+<p>只有当接口变量内部的两个指针(itab,data)都为nil时，接口才等于nil。<strong>itab中还存放了接口类型的字段。</strong></p>
+</li>
+</ul>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031321-1.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031321-1.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031321-1.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031321-1.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031321-1.png"
+        title="ScreenShot2021-08-29 15.36.02" /></p>
+</blockquote>
+<h2 id="七并发">七、并发</h2>
+<ul>
+<li>并发和并行的区别，简单地说，<strong>并行是并发设计的理想执行模式。</strong></li>
+</ul>
+<blockquote>
+<p>并发：逻辑上具备同时处理多个任务的能力。</p>
+<p>并行：物理上在同一时刻执行多个并发任务。</p>
+</blockquote>
+<ul>
+<li>与defer一样，goroutine也会因“延迟执行”而立即计算并复制执行参数。进程退出时不会等待并发任务结束，可用通道(channel)阻塞，然后发出退出信号。</li>
+</ul>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031323.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031323.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031323.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031323.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031323.png"
+        title="ScreenShot2021-08-29 15.37.44" /></p>
+<p>**如果等待多个任务结束，推荐使用sync.WaitGroup。**通过设定计数器，让每个goroutine在退出前递减，直至归零时解除阻塞。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031325.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031325.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031325.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031325.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031325.png"
+        title="ScreenShot2021-08-29 15.37.53" /></p>
+<p><strong>注意：尽管WaitGroup.Add实现了原子操作，但还是建议在goroutine外累加计数器，避免Add尚未执行，Wait已经退出。</strong></p>
+</blockquote>
+<ul>
+<li>通常使用工厂方法将goroutine和通道绑定</li>
+</ul>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/ScreenShot2021-09-02%2011.20.09.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/ScreenShot2021-09-02%2011.20.09.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/ScreenShot2021-09-02%2011.20.09.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/ScreenShot2021-09-02%2011.20.09.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/ScreenShot2021-09-02%2011.20.09.png"
+        title="ScreenShot2021-08-29 15.38.00" /></p>
+</blockquote>
+<ul>
+<li>通道可能会引发资源泄露(goroutine leak),确切的说，是指goroutine处于发送或接收阻塞状态，但一直未被唤醒。垃圾回收器并不收集此类资源，导致它们会在等待队列里长久休眠，形成资源泄露。</li>
+</ul>
+<h2 id="八包结构">八、包结构</h2>
+<ul>
+<li>编译器等相关工具按GOPATH设置的路径搜索目标，<strong>即在导入目标库时，排在列表前面的路径比当前工作空间优先级更高。</strong></li>
+</ul>
+<blockquote>
+<p>注意：不同操作系统，GOPATH列表分隔符不同。UNIX-like使用冒号，Windows使用分号。</p>
+</blockquote>
+<ul>
+<li>同一目录下所有源码文件必须使用相同包名称，不能把多个包放到同一个目录中，也不能把同一个包的文件分拆到多个不同目录中。不同路径的同名包允许存在，<strong>可以利用后面给包取别名来区分。</strong></li>
+<li>程序编译时，会使用声明main包的代码所在的目录的目录名作为二进制可执行文件的文件名(如果编译时不给出编译后的可执行文件名)。</li>
+<li>编译器首先确保完成所有全局变量初始化，然后才开始执行初始化函数。直到这些全部结束后，运行时才正式进入main.main入口函数。</li>
+</ul>
+<h3 id="gopath模式">GOPATH模式</h3>
+<p>通过输入<code>go env</code>命令，可以看到GOPATH变量的结果，GOPATH目录下一共包含了三个子目录，分别是：</p>
+<ol>
+<li>bin:存储所编译生成的二进制文件。</li>
+<li>pkg:存储预编译的目录文件，以加快程序的后续编译速度。</li>
+<li>src:存储所有<code>.go</code>文件或源代码。</li>
+</ol>
+<p>因此在使用GOPATH模式下，我们需要把应用代码存放在固定的<code>$GOPATH/src</code>目录下，并且如果执行<code>go get</code>来拉取外部依赖会自动下载并安装到<code>$GOPATH</code>目录下。</p>
+<h4 id="弃用gopath模式">弃用GOPATH模式</h4>
+<ul>
+<li>GOPATH模式下没有版本控制的概念，在执行<code>go get</code>的时候，你无法传达任何版本信息，也就是说你无法知道自己当前跟新的是哪一个版本，也无法通过指定具体版本。</li>
+<li>运行Go应用程序时，无法保证其他人与你所期望依赖的第三方库是相同的版本。</li>
+</ul>
+<h3 id="go-modules模式">Go Modules模式</h3>
+<p>提供了如下命令进行操作：</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031327.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031327.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031327.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031327.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031327.png"
+        title="ScreenShot2021-08-29 15.39.26" /></p>
+</blockquote>
+<h4 id="提供的环境变量">提供的环境变量</h4>
+<ul>
+<li>
+<p>GO111MODULE</p>
+<p>这个环境变量作为Go modules的开关，允许设置一下参数：</p>
+<ol>
+<li>auto:只要项目包含go.mod文件的话启动Go modules。</li>
+<li>on:启动Go modules。</li>
+<li>off:禁用Go modules。</li>
+</ol>
+</li>
+<li>
+<p>GOPROXY</p>
+<p>这个环境变量主要是用于设置Go模块代理，作用是用于使Go在后续拉取模块版本时直接通过镜像站点快速拉取。默认是是<code>https://proxy.golang.org,direct</code>,但是国内无法访问，可以修改为<code>https://goproxy.cn,direct</code>。</p>
+<p>*<em>GOPROXT的值以一个英文逗号<code>,</code>分隔Go的模块代理列表，允许设置多个模块代理。</em></p>
+</li>
+</ul>
+<p><strong>direct是什么?</strong></p>
+<p>实际上是一个特殊指示符，用于指示Go回源到模块版本的源地址去抓取(比如GitHub等)，过程如下：当值列表中上一个Go模块代理返回404或410错误时，Go自动尝试列表中下一个，遇到&quot;direct&quot;时回源抓取。</p>
+<ul>
+<li>
+<p>GOSUMDB</p>
+<p>用于在拉取模块时保证拉取到的模块版本数据未经过篡改。默认值是：<code>sum.golang.org</code>，但是GOSUMMDB可以被Go模块代理所代理，所以不必过度关心这个变量。</p>
+</li>
+<li>
+<p>GONOPROXY|GONOSUMDN|GOPROVATE</p>
+<p>暂时用不到，不用了解，后续用到可以学习。</p>
+</li>
+</ul>
+<h4 id="使用go-modules">使用Go Modules</h4>
+<ul>
+<li>使用<code>go mod init 模块名</code>来指定模块导入路径，后续可以在项目根目录执行<code>go get 第三方包路径</code>导入第三方依赖。</li>
+</ul>
+<blockquote>
+<p>在第一次拉取模块依赖后，还会多出一个go.sum文件。</p>
+</blockquote>
+<ul>
+<li>模块拉取的结果缓存在<code>$GOPATH/pkg/mod</code>和<code>$GOPATH/pkg/sumdb</code>目录下。如果希望清理已缓存的模块版本数据，可执行<code>go clean -modcache</code>命令。</li>
+</ul>
+<h4 id="go-modules下的go-get行为">Go Modules下的go get行为</h4>
+<p>拉取项目依赖时，过程分为三步，分别是finding（发现）、downloading（下载）以及extracting（提取）。<strong>注意 不指定版本信息，则由Go modules自行按照内部规则进行选择。</strong></p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031328.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031328.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031328.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031328.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031328.png"
+        title="ScreenShot2021-08-29 15.39.46" /></p>
+</blockquote>
+<h4 id="最小版本选择mvs">最小版本选择(MVS)</h4>
+<p>最小版本选择可以理解为”最新非最大“版本选择。举例如下</p>
+<blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031330.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031330.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031330.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031330.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031330.png"
+        title="ScreenShot2021-08-29 15.40.00" /></p>
+<p>上图显示了moduleA,B和C分别独立地需要module D和各自需要D的不同版本。我们可以要求go向我们提供所有已存在(打 tag)的版本列表。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031331.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031331.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031331.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031331.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/031331.png"
+        title="ScreenShot2021-08-29 15.40.08" /></p>
+<p>可以看到module D 最新最大版本是1.4.2。</p>
+<p><strong>如果只有module A，则选择v1.0.6版本即可，如果引入module B,则module D版本会升级到v1.2.0;再次引入module C,则Go将从当前所需版本集合中(v1.0.6  v1.2.0  v1.3.2)选择最新版本v1.3.2, 最后如果删除module C ，Go会将项目锁定到module D 的版本v1.3.2上。降级到版本v1.2.0将是一个更大的更改，而Go知道版本v1.3.2可以正常并稳定运行，因此版本v1.3.2仍然是module D的&quot;最新但非最大&quot;版本。</strong></p>
+</blockquote>
+<p>参考博客：<a href="https://gocn.vip/topics/9904" target="_blank" rel="noopener noreffer">go modules 讲解</a>、<a href="https://tonybai.com/2019/12/21/go-modules-minimal-version-selection/" target="_blank" rel="noopener noreffer">最小版本选择</a>、<a href="https://tonybai.com/2018/07/15/hello-go-module/" target="_blank" rel="noopener noreffer">go modules讲解2</a></p>
+<h2 id="九反射">九、反射</h2>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-09-03</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/" data-title="Golang基础语法细节" data-hashtags="Golang"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/" data-hashtag="Golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/" data-title="Golang基础语法细节" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/" data-title="Golang基础语法细节"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">Golang</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80/" class="prev" rel="prev" title="Golang实现博客(一)"><i class="fas fa-angle-left fa-fw"></i>Golang实现博客(一)</a>
+            <a href="/posts/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/" class="next" rel="next" title="Git基础使用">Git基础使用<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments">
+        <div id="gitalk-container"></div>
+        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+        <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.18.0/js/md5.js"></script>
+        <script>
+        const gitalk = new Gitalk({
+            clientID: '60afa8aa721493fdc40a',
+            clientSecret: '0d83669766bc4d55f49702f8d22e76215dfb373a',
+            repo: 'wen-nan.github.io',
+            owner: 'wen-nan',
+            admin: ['wen-nan'],
+            
+            
+            id: md5(location.pathname), 
+            distractionFreeMode: false 
+        });
+        (function() {
+            if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+                document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+                return;
+            }
+            gitalk.render('gitalk-container');
+        })();
+        </script>
+        </div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank"></a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"gitalk":{"admin":["wen-nan"],"clientID":"60afa8aa721493fdc40a","clientSecret":"0d83669766bc4d55f49702f8d22e76215dfb373a","id":"2021-09-03T00:00:00Z","owner":"wen-nan","repo":"wen-nan.github.io","title":"Golang基础语法细节"}}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Golang实现博客(一) - NarcissusBlog</title><meta name="Description" content="Go语言实现博客"><meta property="og:title" content="Golang实现博客(一)" />
+<meta property="og:description" content="Go语言实现博客" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wen-nan.github.io/posts/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-09-03T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-09-03T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Golang实现博客(一)"/>
+<meta name="twitter:description" content="Go语言实现博客"/>
+<meta name="application-name" content="NarcissusBlog">
+<meta name="apple-mobile-web-app-title" content="NarcissusBlog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80/" /><link rel="prev" href="http://wen-nan.github.io/posts/sql%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/" /><link rel="next" href="http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Golang实现博客(一)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80\/"
+        },"genre": "posts","keywords": "Golang, Web","wordcount":  5356 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80\/","datePublished": "2021-09-03T00:00:00+00:00","dateModified": "2021-09-03T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Narcissus"},"author": {
+                "@type": "Person",
+                "name": "Narcissus"
+            },"description": "Go语言实现博客"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/" title="全部文章"> 全部文章 </a><a class="menu-item" href="/tags/" title="标签"> 标签 </a><a class="menu-item" href="/categories/" title="分类"> 分类 </a><a class="menu-item" href="/about/" title="关于"> 关于 </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="全部文章">全部文章</a><a class="menu-item" href="/tags/" title="标签">标签</a><a class="menu-item" href="/categories/" title="分类">分类</a><a class="menu-item" href="/about/" title="关于">关于</a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i></a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Golang实现博客(一)</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Golang学习</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-03">2021-09-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5356 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#基础准备">基础准备</a>
+      <ul>
+        <li><a href="#1热加载">1、热加载</a></li>
+        <li><a href="#2web-一些散知识点">2、Web 一些散知识点</a></li>
+      </ul>
+    </li>
+    <li><a href="#路由和中间件">路由和中间件</a>
+      <ul>
+        <li><a href="#1路由">1、路由</a></li>
+        <li><a href="#2依赖管理go-modules">2、依赖管理Go Modules</a></li>
+        <li><a href="#3uri中的斜杠">3、URI中的斜杠</a></li>
+      </ul>
+    </li>
+    <li><a href="#表单提交">表单提交</a>
+      <ul>
+        <li><a href="#1读取表单请求数据">1、读取表单请求数据</a></li>
+        <li><a href="#2模板文件语法">2、模板文件语法</a></li>
+      </ul>
+    </li>
+    <li><a href="#操作数据库">操作数据库</a>
+      <ul>
+        <li><a href="#1mysql驱动">1、MySQL驱动</a></li>
+        <li><a href="#2连接数据库">2、连接数据库</a></li>
+        <li><a href="#3数据库表结构">3、数据库表结构</a></li>
+        <li><a href="#4插入数据">4、插入数据</a></li>
+        <li><a href="#5显示文章">5、显示文章</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="基础准备">基础准备</h2>
+<h3 id="1热加载">1、热加载</h3>
+<p><code>air</code>是Go语言的热加载工具，它可以监听文件或目录的变化，自动编译，重启程序。大大提高开发期的工作效率。</p>
+<ul>
+<li>安装使用<code>air</code>工具</li>
+</ul>
+<p>在项目的根目录下使用命令<code>go get -u github.com/cosmtrek/air</code>进行安装，此时在go.mod文件中会自动生成模块依赖。</p>
+<p><strong>注意：在Go Modules第三方依赖管理模式下，使用<code>go get -u 地址</code>来下载安装第三方依赖。</strong></p>
+<ul>
+<li>使用<code>air init</code>会在根目录下生成一份配置文件，可以配置项目根目录，临时文件目录，编译和执行的命令等。</li>
+<li>使用<code>air</code>命令就可以运行程序，后续会自动编译，启动程序，并监听当前目录中的文件修改。</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032554.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032554.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032554.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032554.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032554.png"
+        title="ScreenShot2021-08-30 13.01.31" /></p>
+<h3 id="2web-一些散知识点">2、Web 一些散知识点</h3>
+<ul>
+<li><code>http.HandleFunc(&quot;/&quot;, handler)</code>里传参的<code>/</code>意味着任意路径。</li>
+<li>可以通过<code>WriterHeader()</code>来设置响应的状态码。常见的有(StatusNotFound 404:页面没找到等)可以通过文档查看。</li>
+</ul>
+<h2 id="路由和中间件">路由和中间件</h2>
+<h3 id="1路由">1、路由</h3>
+<h4 id="servemux和handler">ServeMux和Handler</h4>
+<p>Go语言中处理HTTP请求主要跟两个东西有关：ServeMux和Handler。</p>
+<p>ServeMux本质上是一个HTTP请求的路由器(或者叫多路复用器，Multiplexor)。他把收到的请求与一组预先定义的URL路径列表做对比，然后在匹配到路径的时候调用关联的处理器（Handler）。</p>
+<p><strong><code>http.ListenAndServe(addr string, handler Handler)</code>中handler通常是nil,此种情况下会使用DefaultServeMux</strong></p>
+<h4 id="httpservemux的对比其他第三方路由优缺点">http.ServeMux的对比其他第三方路由优缺点</h4>
+<p>优点：</p>
+<ol>
+<li>标准库意味着随着Go打包安装，无须另行安装</li>
+<li>测试充分；稳定、兼容性强</li>
+<li>简单、高效</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>缺少web开发常见的特性</li>
+<li>在复杂的项目中使用，需要写更多的代码。</li>
+</ol>
+<p>常见的第三方路由有HttpRouter、gorilla/mux。HttpRouter是目前速度最快的路由器，且被框架Gin所采用。</p>
+<h4 id="路由解析规则">路由解析规则</h4>
+<ul>
+<li><strong>精准匹配</strong>指路由只会匹配准确指定的规则。</li>
+<li><strong>长度优先匹配</strong>一般用在静态路由上（不支持动态元素如正则和URL路径参数），优先匹配字符数较多的规则。</li>
+</ul>
+<p>以下面的为例：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032555.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032555.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032555.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032555.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032555.png"
+        title="ScreenShot2021-08-30 14.49.39" /></p>
+<p>使用<strong>长度优先匹配</strong>规则的http.ServeMux会把除了<code>/about</code>这个匹配的以外的所有URI都是用<code>defaultHandler</code>来处理。</p>
+<p>使用<strong>精准匹配</strong>的gorilla/mux会把以上两个规则精准匹配到两个链接，<code>/</code>为首页，<code>/about</code>为关于，除此之外都是404未找到。</p>
+<h3 id="2依赖管理go-modules">2、依赖管理Go Modules</h3>
+<h4 id="弃用gopath">弃用GOPATH</h4>
+<p>Go Modules出现的目的之一就是为了解决GOPATH的问题。</p>
+<p>在GOPATH时代，Go源码必须放置在<code>GOPATH/src</code>下，抛弃GOPATH的好处就是能下任意地方创建Go项目。另外，GOPATH有非常落后的依赖管理系统。因为在执行<code>go get</code>时无法传达任何版本信息。无法保证所有人的依赖版本都一致。</p>
+<h4 id="go-modules日常使用">Go Modules日常使用</h4>
+<ul>
+<li><strong>初始化</strong></li>
+</ul>
+<p>新项目，使用<code>go mod init</code>初始化生成<code>go.mod</code>文件。</p>
+<ul>
+<li><strong>Go Proxy</strong></li>
+</ul>
+<p>国内访问外网受限，一般需要配合Go Proxy使用，防止<code>go get</code>获取源码包时花费时间过长。安装package的原则是先拉最新的release tag，若无tag则拉最新的commit。</p>
+<p><strong>使用<code>go env -w ...</code>来修改Go相关的环境变量。</strong></p>
+<ul>
+<li><strong>go.mod</strong></li>
+</ul>
+<p>每一次的<code>go get</code>会同时修改<code>go.mod</code>和<code>go.sum</code>文件。查看 <code>go.mod</code>代码：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032556.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032556.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032556.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032556.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032556.png"
+        title="ScreenShot2021-08-30 15.31.07" /></p>
+<p>几个参数：</p>
+<ol>
+<li>module &mdash;&ndash; 我们的项目在Go Module里也算一个Module</li>
+<li>go &mdash;&ndash; 指定了版本要求，最低1.15</li>
+<li>require &mdash;&ndash; 项目所需依赖</li>
+</ol>
+<ul>
+<li><strong>go.sum</strong></li>
+</ul>
+<p><code>go.sum</code>文件保存着依赖包的版本和哈希值。直接依赖包、间接依赖包的哈希值都会被保存。</p>
+<ul>
+<li><strong>indirect</strong></li>
+</ul>
+<p>回到<code>go.mod</code>中，可以看到<code>require</code>区块里有<code>// indirect</code>字样：此标志标明这个依赖包还未被使用，如果在代码的某个地方<code>import</code>到的话，这个标志会自动去除。</p>
+<ul>
+<li><strong>go mod tidy命令</strong></li>
+</ul>
+<p>此命令做整理依赖使用，执行时会把未使用的module移除掉。</p>
+<ul>
+<li><strong>源码包的存放位置</strong></li>
+</ul>
+<p>默认源码包存放于<code>GOPATH/pkg/mod</code>中。</p>
+<ul>
+<li><strong>清空Go Modules缓存</strong></li>
+</ul>
+<p>使用<code>go clean -modcache</code>命令清空本地下载的Go Modules缓存。</p>
+<ul>
+<li><strong>下载依赖</strong></li>
+</ul>
+<p>默认情况下，执行<code>go run</code>和<code>go build</code>命令时，Go会基于自动<code>go.mod</code>文件自动拉取依赖。Go Module也提供了<code>go mod download</code>命令下载项目所需依赖。</p>
+<ul>
+<li><strong>所有Go Module命令</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032558.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032558.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032558.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032558.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032558.png"
+        title="ScreenShot2021-08-30 16.13.09" /></p>
+<h3 id="3uri中的斜杠">3、URI中的斜杠</h3>
+<p>访问以下两个链接：</p>
+<ul>
+<li>ocalhost:3000/about</li>
+<li>localhost:3000/about/</li>
+</ul>
+<p>可以看到有<code>/</code>的链接会报404错误。我们需要在URL进入Gorilla Mux路由解析之前，将后面的<code>/</code>去掉。使用中间件会因为执行顺序的问题，Gorilla Mux会先匹配路由，在执行中间件，故使用中间件依然会返回404。</p>
+<p><strong>解决方法很简单，就是写一个函数把Gorilla Mux包起来，在这个函数中我们先对请求做处理，再传给Gorilla Mux解析</strong>。但需要注意把首页URL的<code>/</code>排除在外。</p>
+<h2 id="表单提交">表单提交</h2>
+<h3 id="1读取表单请求数据">1、读取表单请求数据</h3>
+<p><code>r.ParseForm()</code>由http包提供，从请求中解析请求参数，必须是执行完这段代码，后面使用<code>r.PostForm</code>和<code>r.Form</code>才能读取到数据，否则为空数组。</p>
+<ul>
+<li>Form:存储了post、put和get参数，在使用之前需要调用ParseForm方法。</li>
+<li>PostForm:存储了post、put参数，在使用之前需要调用ParseForm方法。</li>
+</ul>
+<p>如果不想获取所有请求内容，而是逐个获取的话，无需使用<code>r.ParseForm()</code>可直接使用<code>r.FormValue()</code>和<code>r.PostFormValue()</code>方法。</p>
+<h3 id="2模板文件语法">2、模板文件语法</h3>
+<p>双层大括号<code>{{}}</code>是默认的模板界定符。用于在HTML模板文件中界定模板语法。模板语法都包含在<code>{{</code>和<code>}}</code>中。</p>
+<ul>
+<li><strong>{{.}}语句</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032558-1.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032558-1.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032558-1.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032558-1.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032558-1.png"
+        title="ScreenShot2021-08-31 14.17.03" /></p>
+<p><code>{{.}}</code>中的点表示当前对象。当我们传入一个结构体对象时，我们可以使用<code>.</code>来访问结构体的对应字段。同理，当我们传入的变量是<code>map</code>时，也可以在末班文件中通过<code>.</code>根据key来取值。</p>
+<ul>
+<li><strong>with关键字</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032600.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032600.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032600.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032600.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032600.png"
+        title="ScreenShot2021-08-31 14.20.31" /></p>
+<p>语法如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032601.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032601.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032601.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032601.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032601.png"
+        title="ScreenShot2021-08-31 14.22.14" /></p>
+<ul>
+<li><strong>注释</strong></li>
+</ul>
+<p>注释，执行时会忽略。可以多行，不能嵌套并且必须紧贴分界符。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032602.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032602.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032602.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032602.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032602.png"
+        title="ScreenShot2021-08-31 14.25.20" /></p>
+<ul>
+<li><strong>变量</strong></li>
+</ul>
+<p>还可以在模板中声明变量，用来保存传入模板的数据或其他语句生成的结果。具体语法如下:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032603.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032603.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032603.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032603.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032603.png"
+        title="ScreenShot2021-08-31 14.25.23" /></p>
+<p>其中<code>$variable</code>是变量的名字，在后续的代码中可以使用该变量。</p>
+<ul>
+<li><strong>移除空格</strong></li>
+</ul>
+<p>有时会不可避免的引入空格或换行符，导致模板最终渲染结果不如预期，这种情况下可以使用移除空格语法。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032604.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032604.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032604.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032604.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032604.png"
+        title="ScreenShot2021-08-31 14.25.33" /></p>
+<p><strong>注意：</strong><code>-</code>要紧挨<code>{{</code>和<code>}}</code>，同时与模板值之间需要使用空格分隔。</p>
+<ul>
+<li><strong>条件判断</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032606.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032606.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032606.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032606.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032606.png"
+        title="ScreenShot2021-08-31 14.25.40" /></p>
+<ul>
+<li><strong>range遍历</strong></li>
+</ul>
+<p>range遍历有两种写法，其中<code>pipeline</code>的值必须是数组、切片、字典或者通道。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032606-1.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032606-1.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032606-1.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032606-1.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032606-1.png"
+        title="ScreenShot2021-08-31 14.38.04" /></p>
+<ul>
+<li><strong>修改默认的分界符</strong></li>
+</ul>
+<p>Go标准库的模板引擎使用两对花括号作为标识，而许多前端框架（如<code>Vue</code>和<code>AngularJS</code>）也是用两队花括号作为标识符，同时使用会产生冲突，需要修改标识符，演示修改Go语言模板引擎的默认标识符。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032608.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032608.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032608.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032608.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032608.png"
+        title="ScreenShot2021-08-31 14.42.34" /></p>
+<h2 id="操作数据库">操作数据库</h2>
+<h3 id="1mysql驱动">1、MySQL驱动</h3>
+<h4 id="操作mysql数据库">操作MySQL数据库</h4>
+<p>使用Go操作MySQL等数据库，一般有两种方式：</p>
+<ul>
+<li>一是利用database/sql接口，直接在代码里硬编写sql语句</li>
+<li>二是利用ORM,具体一点就是GORM,以对象关系映射的方式在抽象地操作数据库。</li>
+</ul>
+<h4 id="mysql驱动使用">MySQL驱动使用</h4>
+<p>选用<a href="https://github.com/go-sql-driver/mysql" target="_blank" rel="noopener noreffer">github.com/go-sql-diver/mysql</a>项目作为数据库驱动。使用<code>go get -u github.com/go-sql-driver/mysql</code>下载驱动。</p>
+<p>下载后，在项目中引入：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032609.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032609.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032609.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032609.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032609.png"
+        title="ScreenShot2021-08-31 15.48.40" /></p>
+<p>注意导入MySQL驱动时，在包路径前添加了<code>_</code>,这里我们使用了<strong>匿名导入</strong>的方式来加载驱动。</p>
+<p><strong>为什么需要匿名导入？</strong></p>
+<p>因为引入的是驱动，操作数据库时我们使用的是sql库里的方法，而不会具体使用到<code>github.com/go-sql-driver/mysql</code>包里的方法，当有未使用的包被引入时，Go编译器会停止编译。为了能让编译器正常运行，需要使用匿名导入来加载。</p>
+<p><strong>当导入一个数据库驱动后，此驱动会自行初始化(利用init()函数)并注册自己到Golang的database/sql上下文中，随后我们就可以通过database/sql包提供的方法来操作数据库了。</strong></p>
+<p>驱动里的<code>init()</code>代码如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032610.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032610.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032610.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032610.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032610.png"
+        title="ScreenShot2021-08-31 15.55.09" /></p>
+<blockquote>
+<p>注意:  Go 语言中，为了使用导入的程序包，必须首先对其进行初始化。初始化始终在单个线程中执行，并且以程序包依赖关系的顺序执行。初始化每个包后，会优先自动执行 init() 函数，并且执行优先级高于主函数的执行优先级。</p>
+</blockquote>
+<h3 id="2连接数据库">2、连接数据库</h3>
+<h4 id="sqldb连接池">sql.DB连接池</h4>
+<p><code>sql.DB</code>结构体是database/sql包封装的一个数据库操作对象，包含了操作数据库的基本方法，通常情况下理解为<strong>连接池对象。</strong></p>
+<p>一般而言，使用<code>sql.Open()</code>函数便可以初始化并返回一个<code>*sql.DB</code>结构体实例，只需要传入驱动名称及对应的DSN便可。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032611.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032611.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032611.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032611.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032611.png"
+        title="ScreenShot2021-08-31 18.44.52" /></p>
+<blockquote>
+<p>注意，调用<code>sql.Open()</code>时，并未开始连接数据库，只是为连接数据库做好准备而已。所以一般都会跟一个<code>db.Ping()</code>来检测连接状态。</p>
+</blockquote>
+<h4 id="连接池配置信息设置">连接池配置信息设置</h4>
+<p>推荐以下设置：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032613.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032613.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032613.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032613.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032613.png"
+        title="ScreenShot2021-08-31 19.02.35" /></p>
+<ul>
+<li><strong>SetMaxOpenConns最大连接数</strong></li>
+</ul>
+<p>设置连接池最大打开数据库连接数，&lt;=0表示无限制，默认为0。<a href="https://learnku.com/go/t/49809" target="_blank" rel="noopener noreffer">实验表明</a>，在高并发的情况下，将值设为大于 10，可以获得比设置为 1 接近六倍的性能提升。而设置为 10 跟设置为 0（也就是无限制），在高并发的情况下，性能差距不明显。</p>
+<p>但需要注意不能超过数据库系统设置的最大连接数。否则会出现MySQL错误：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032613-1.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032613-1.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032613-1.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032613-1.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032613-1.png"
+        title="ScreenShot2021-08-31 19.08.50" /></p>
+<ul>
+<li><strong>SetMaxIdleConns空闲连接数</strong></li>
+</ul>
+<p>设置连接池最大空闲数据库连接数，&lt;=0表示不设置空闲连接数，默认为2。<a href="https://learnku.com/go/t/49809" target="_blank" rel="noopener noreffer">实验表明</a>，在高并发的情况下，将值设为大于 0，可以获得比设置为 0 超过 20 倍的性能提升。
+这是因为设置为 0 的情况下，每一个 SQL 连接执行任务以后就销毁掉了，执行新任务时又需要重新建立连接。很明显，重新建立连接是很消耗资源的一个动作。设置空闲连接数，当有新任务进来时，直接使用这些随时待命的连接传输数据，以此达到节约资源，提高执行效率的目的。</p>
+<ul>
+<li><strong>SetConnMaxLifetime过期时间</strong></li>
+</ul>
+<p>设置连接池里每一个连接的过期时间，过期会自动关闭。理论上来讲，在并发的情况下，此值越小，连接就会越快被关闭，也意味着更多的连接会被创建。设置的值不应该超过 MySQL 的 wait_timeout 设置项（默认情况下是 8 个小时）。</p>
+<h4 id="dsn">DSN</h4>
+<p><code>DSN</code>全称是<code>Data Source Name</code>，表示数据库连接源，用于定义数据库的连接信息，不同数据库的DSN格式不同。可以使用<code>mysql.Config</code>创建MySQL的连接信息：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032615.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032615.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032615.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032615.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032615.png"
+        title="ScreenShot2021-08-31 19.54.00" /></p>
+<h3 id="3数据库表结构">3、数据库表结构</h3>
+<h4 id="新建数据库">新建数据库</h4>
+<p>有两种方式，一种是使用命令行创建数据库，一种是使用可视化工具（NaviCat）。</p>
+<h5 id="命令行创建数据库">命令行创建数据库</h5>
+<p>连接数据库通用格式：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032615-1.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032615-1.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032615-1.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032615-1.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032615-1.png"
+        title="ScreenShot2021-08-31 20.01.25" /></p>
+<p>端口默认是<code>3306</code>,主机默认是<code>localhost</code>，如果默认可以不传输，使用命令<code>mysql -u root -p</code>即可认证成功进入命令行模式。</p>
+<p>使用命令：<code>CREATE DATABASE goblog CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;</code>创建数据库。编码使用<code>utf8mb4_unicode_ci</code>可以支持存储Emoji,另外支持大小写不敏感(ci是Case Insensitive的缩写)。</p>
+<h4 id="建表">建表</h4>
+<p>使用<code>Exec()</code>来执行创建数据库表结构的语句。一般使用<code>sql.DB()</code>中的<code>Exec()</code>来执行没有返回结果集的SQL语句。例如<code>INSERT</code>，<code>UPDATA</code>，<code>DELETE</code>等语句。语法如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032617.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032617.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032617.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032617.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032617.png"
+        title="ScreenShot2021-09-01 13.12.00" /></p>
+<p><code>Exec()</code>方法的第一个返回值实现了<code>sql.Result</code>接口的类型，<code>sql.Result</code>的定义如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032618.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032618.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032618.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032618.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032618.png"
+        title="ScreenShot2021-09-01 13.13.34" /></p>
+<h3 id="4插入数据">4、插入数据</h3>
+<p>多变量声明的方式和引入多个包使用<code>import(...)</code>一样。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032619.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032619.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032619.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032619.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032619.png"
+        title="ScreenShot2021-09-01 13.32.41" /></p>
+<ul>
+<li><strong>prepare语句</strong></li>
+</ul>
+<p>在数据库安全方面，Prepare语句是防范SQL注入攻击有效且必备的手段，SQL注入的例子请见&mdash;-<a href="https://learnku.com/go/t/49692#0e50ee" target="_blank" rel="noopener noreffer">Golang MySQL驱动中的Prepare语句（防止SQL注入）</a>。<a href="https://www.cnblogs.com/myseries/p/10821372.html" target="_blank" rel="noopener noreffer">SQL注入详解</a></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032620.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032620.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032620.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032620.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032620.png"
+        title="ScreenShot2021-09-01 13.32.58" /></p>
+<ul>
+<li><strong>sql.Stmt</strong></li>
+</ul>
+<p>当我们执行：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032621.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032621.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032621.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032621.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032621.png"
+        title="ScreenShot2021-09-01 13.50.54" /></p>
+<p>会使用会使用 SQL 连接向 MySQL 服务器发送一次请求，此方法返回一个 <code>*sql.Stmt</code> 指针对象，我们将其赋值到 <code>stmt</code> 变量里。<code>stmt </code>是 <code>statement</code> 的简写，是声明、陈诉的意思。可以理解为将包含变量占位符 <code>? </code>的语句先告知 MySQL 服务器端。</p>
+<p>此时的stmt是一个指针变量，会占用SQL连接，我们需要对其进行关闭以释放SQL连接。<strong>及时关闭SQL连接很有必要</strong>，否则很快就会报错<code>ERROR 1040: Too many connections</code>。</p>
+<ul>
+<li><strong>stmt.Exec()</strong></li>
+</ul>
+<p>Prepare只会生产stmt，真正执行请求需要调用<code>stmt.Exec()</code>。<code>stmt.Exec()</code> 的参数依次对应 <code>db.Prepare()</code> 参数中 SQL 变量占位符 <code>?</code>。返回一个<code>sql.Result</code>对象。</p>
+<h3 id="5显示文章">5、显示文章</h3>
+<h4 id="prepare模式">Prepare模式</h4>
+<p><code>QueryRow()</code>是可变参数的方法，语法如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032622.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032622.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032622.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032622.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032622.png"
+        title="ScreenShot2021-09-01 15.29.46" /></p>
+<p>它的参数可以为一个或者多个。参数只有一个的情况下，我们称之为<strong>纯文本模式(易被SQL注入)</strong>，多个参数的情况下称之为 <strong>Prepare 模式</strong>。</p>
+<p>之所以称之为 Prepare 模式是因为当多个参数的情况下，QueryRow() 封装了 Prepare 方法的调用，也就是说，下面这段代码：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032624.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032624.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032624.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032624.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032624.png"
+        title="ScreenShot2021-09-01 15.30.09" /></p>
+<p>等同于：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032625.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032625.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032625.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032625.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032625.png"
+        title="ScreenShot2021-09-01 15.30.18" /></p>
+<p>使用 <code>QueryRow()</code>的 Prepare 模式不仅保证了安全性，更能提升可读性。</p>
+<blockquote>
+<p>关于Prepare模式和纯文本模式，需要注意两点：</p>
+<ol>
+<li>使用Prepare 模式会发送两个 SQL  请求到 MySQL 服务器上，而纯文本模式只有一个；</li>
+<li>在使用路由参数过滤只允许数字的情况下，可以放心使用纯文本模式无需担心 SQL 注入。</li>
+</ol>
+</blockquote>
+<ul>
+<li><strong>Scan（）方法</strong></li>
+</ul>
+<p><code>QueryRow() </code>会返回一个 <code>sql.Row</code> struct，紧接着我们使用<strong>链式调用的方式</strong>调用了 <code>sql.Row.Scan() </code>方法：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032627.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032627.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032627.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032627.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032627.png"
+        title="ScreenShot2021-09-01 15.46.23" /></p>
+<p>需要注意的是，返回的<code>sql.Row</code>是个指针变量，保存有 SQL 连接。当调用 <code>Scan()</code> 时，就会将连接释放。所以在每次 <strong>QueryRow 后使用 Scan 是必须的</strong>。
+<strong>极力推荐这种链式调用的方式，养成好习惯以避免掉进 SQL 连接不够用的坑。</strong></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-09-03</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80/" data-title="Golang实现博客(一)" data-hashtags="Golang,Web"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80/" data-hashtag="Golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80/" data-title="Golang实现博客(一)" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80/" data-title="Golang实现博客(一)"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">Golang</a>,&nbsp;<a href="/tags/web/">Web</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/sql%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/" class="prev" rel="prev" title="Golang操作sql总结"><i class="fas fa-angle-left fa-fw"></i>Golang操作sql总结</a>
+            <a href="/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/" class="next" rel="next" title="Golang基础语法细节">Golang基础语法细节<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments">
+        <div id="gitalk-container"></div>
+        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+        <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.18.0/js/md5.js"></script>
+        <script>
+        const gitalk = new Gitalk({
+            clientID: '60afa8aa721493fdc40a',
+            clientSecret: '0d83669766bc4d55f49702f8d22e76215dfb373a',
+            repo: 'wen-nan.github.io',
+            owner: 'wen-nan',
+            admin: ['wen-nan'],
+            
+            
+            id: md5(location.pathname), 
+            distractionFreeMode: false 
+        });
+        (function() {
+            if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+                document.getElementById('gitalk-container').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+                return;
+            }
+            gitalk.render('gitalk-container');
+        })();
+        </script>
+        </div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank"></a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"gitalk":{"admin":["wen-nan"],"clientID":"60afa8aa721493fdc40a","clientSecret":"0d83669766bc4d55f49702f8d22e76215dfb373a","id":"2021-09-03T00:00:00Z","owner":"wen-nan","repo":"wen-nan.github.io","title":"Golang实现博客(一)"}}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>
