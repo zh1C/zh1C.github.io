@@ -23,7 +23,7 @@
     <pubDate>Fri, 03 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/</guid>
-    <description><![CDATA[基础语法细节 一、类型 简短模式(x := 100)定义限制: 定义变量，同时显示初始化。 不能提供数据类型。 只能用在函数内部。 简短模式有可能会出现退化的]]></description>
+    <description><![CDATA[一、类型 简短模式(x := 100)定义限制: 定义变量，同时显示初始化。 不能提供数据类型。 只能用在函数内部。 简短模式有可能会出现退化的赋值操作。例]]></description>
 </item><item>
     <title>Golang实现博客(一)</title>
     <link>http://wen-nan.github.io/posts/golang%E5%AE%9E%E7%8E%B0%E5%8D%9A%E5%AE%A2%E4%B8%80/</link>

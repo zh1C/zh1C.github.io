@@ -15,14 +15,15 @@
 <meta name="twitter:title" content="NarcissusBlog"/>
 <meta name="twitter:description" content=""/>
 <meta name="application-name" content="NarcissusBlog">
-<meta name="apple-mobile-web-app-title" content="NarcissusBlog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/" /><link rel="alternate" href="/index.xml" type="application/rss+xml" title="NarcissusBlog">
+<meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="canonical" href="http://wen-nan.github.io/" /><link rel="alternate" href="/index.xml" type="application/rss+xml" title="NarcissusBlog">
     <link rel="feed" href="/index.xml" type="application/rss+xml" title="NarcissusBlog"><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "WebSite",
-        "url": "http:\/\/wen-nan.github.io\/","inLanguage": "zh-CN","name": "NarcissusBlog"
+        "url": "http:\/\/wen-nan.github.io\/","inLanguage": "zh-CN","author": {
+                "@type": "Person",
+                "name": "Narcissus"
+            },"name": "NarcissusBlog"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -95,7 +96,7 @@
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/git/">Git</a></div></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/">Golang基础语法细节</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-09-03">2021-09-03</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Golang学习</a></span></div><div class="content">基础语法细节 一、类型 简短模式(x := 100)定义限制: 定义变量，同时显示初始化。 不能提供数据类型。 只能用在函数内部。 简短模式有可能会出现退化的</div><div class="post-footer">
+    </h1><div class="post-meta"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-publish">发布于 <time datetime="2021-09-03">2021-09-03</time></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Golang学习</a></span></div><div class="content">一、类型 简短模式(x := 100)定义限制: 定义变量，同时显示初始化。 不能提供数据类型。 只能用在函数内部。 简短模式有可能会出现退化的赋值操作。例</div><div class="post-footer">
         <a href="/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/">阅读全文</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">Golang</a></div></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
@@ -118,8 +119,10 @@
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
-                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank"></a></span></div>
+        <div class="footer-container"><div class="footer-line">
+                <span id="run-time"></span>
+            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Narcissus</a></span></div>
         </div>
     </footer></div>
 
