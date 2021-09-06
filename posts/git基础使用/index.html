@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8\/"
-        },"genre": "posts","keywords": "Git","wordcount":  3576 ,
+        },"genre": "posts","keywords": "Git","wordcount":  3580 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8\/","datePublished": "2021-09-03T00:00:00+00:00","dateModified": "2021-09-03T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -38,7 +38,9 @@
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
 
-        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+        <div id="mask"></div><div class="wrapper">
+<script src="/js/fuse.min.js"></script>
+<script src="/js/fastsearch.js"></script><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
             <a href="/" title="NarcissusBlog"><img
@@ -114,7 +116,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Git基础使用</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/git/"><i class="far fa-folder fa-fw"></i>Git</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-03">2021-09-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3576 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-03">2021-09-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3580 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -215,7 +217,7 @@
 <li>从远程仓库克隆</li>
 </ul>
 <blockquote>
-<p><code>git clone [url] [name]</code>默认情况下，Git会按照提供的url所指向的项目名称创建本地项目目录，但也可以修改项目名称([name]中修改，默认的话不写)。</p>
+<p><code>git clone -b 分支名 [url] [name]</code>默认情况下，Git会按照提供的url所指向的项目名称创建本地项目目录，但也可以修改项目名称([name]中修改，默认的话不写)。</p>
 </blockquote>
 <h2 id="三仓库管理">三、仓库管理</h2>
 <ul>
