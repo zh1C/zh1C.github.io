@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>二分查找 - NarcissusBlog</title><meta name="Description" content="算法学习-二分查找"><meta property="og:title" content="二分查找" />
-<meta property="og:description" content="算法学习-二分查找" />
+        <title>二分查找 - NarcissusBlog</title><meta name="Description" content="算法学习之二分查找，主要学习二分查找几种常见用法及LeetCode经典题目解题思路。"><meta property="og:title" content="二分查找" />
+<meta property="og:description" content="算法学习之二分查找，主要学习二分查找几种常见用法及LeetCode经典题目解题思路。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-09-04T00:00:00+00:00" />
@@ -14,7 +14,7 @@
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="二分查找"/>
-<meta name="twitter:description" content="算法学习-二分查找"/>
+<meta name="twitter:description" content="算法学习之二分查找，主要学习二分查找几种常见用法及LeetCode经典题目解题思路。"/>
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -27,13 +27,13 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE\/"
-        },"genre": "posts","keywords": "二分查找, 算法学习","wordcount":  6 ,
+        },"genre": "posts","keywords": "二分查找, 算法学习","wordcount":  1984 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE\/","datePublished": "2021-09-04T00:00:00+00:00","dateModified": "2021-09-04T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
                 "name": "Narcissus"
-            },"description": "算法学习-二分查找"
+            },"description": "算法学习之二分查找，主要学习二分查找几种常见用法及LeetCode经典题目解题思路。"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -114,16 +114,208 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">二分查找</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-04">2021-09-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-04">2021-09-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1984 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
                     <span><i class="details-icon fas fa-angle-right"></i></span>
                 </div>
-                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents"></nav></div>
-            </div><div class="content" id="content"><p>二分查找暂定</p>
-</div><div class="post-footer" id="post-footer">
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一基本的二分查找">一、基本的二分查找</a>
+      <ul>
+        <li><a href="#mid防止溢出">mid防止溢出</a></li>
+        <li><a href="#循环结束条件">循环结束条件</a></li>
+        <li><a href="#leftright每次迭代更替的值"><code>left、right</code>每次迭代更替的值</a></li>
+      </ul>
+    </li>
+    <li><a href="#二搜索左边界">二、搜索左边界</a>
+      <ul>
+        <li><a href="#循环结束条件-1">循环结束条件</a></li>
+        <li><a href="#返回值解惑">返回值解惑</a></li>
+        <li><a href="#leftright每次迭代更替的值-1"><code>left、right</code>每次迭代更替的值</a></li>
+        <li><a href="#为什么能搜索左侧区间">为什么能搜索左侧区间？</a></li>
+      </ul>
+    </li>
+    <li><a href="#三搜索右边界">三、搜索右边界</a>
+      <ul>
+        <li><a href="#为什么能搜索右侧区间">为什么能搜索右侧区间？</a></li>
+        <li><a href="#返回值解惑-1">返回值解惑</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><blockquote>
+<p><strong>注意：排序数组中的搜索问题，首先想到二分法。</strong></p>
+</blockquote>
+<h2 id="一基本的二分查找">一、基本的二分查找</h2>
+<p>最简单的情况就是搜索一个数，如果存在，返回索引；否则返回-1。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">search</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">target</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// 二分查找
+</span><span class="c1"></span>    <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="c1">// 注意
+</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">left</span> <span class="o">&lt;=</span> <span class="nx">right</span> <span class="p">{</span>
+        <span class="nx">mid</span> <span class="o">:=</span> <span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span> <span class="c1">// 注意
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">mid</span><span class="p">]</span> <span class="o">==</span> <span class="nx">target</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">mid</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">mid</span><span class="p">]</span> <span class="p">&gt;</span> <span class="nx">target</span> <span class="p">{</span>
+            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">-</span> <span class="mi">1</span> <span class="c1">// 注意
+</span><span class="c1"></span>        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">mid</span><span class="p">]</span> <span class="p">&lt;</span> <span class="nx">target</span> <span class="p">{</span>
+            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">// 注意
+</span><span class="c1"></span>        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="mid防止溢出">mid防止溢出</h3>
+<p>代码<code>mid := left + (right - left) &gt;&gt; 1</code>目的是为了防止<code>left</code>和<code>right</code>太大相加导致溢出。</p>
+<h3 id="循环结束条件">循环结束条件</h3>
+<p>循环结束条件是<code>&lt;=</code>，而不是<code>&lt;</code>。</p>
+<p>是因为初始化<code>right</code>的赋值是<code>nums.length - 1</code>，即最后一个元素的索引，而不是<code>nums.length</code>。两者出现在不同功能的二分查找中，区别是：前者相当于两端都是闭区间<code>[left, right]</code>，后者相当于左闭右开区间<code>[left, right)</code>。我们可以把这个区间称作<strong>搜索区间</strong>。而搜索未找到停止搜索的条件就是<strong>搜索区间为空</strong>。当<code>left == right</code>时，搜索区间还有一个值。所以循环结束条件是<code>&lt;=</code>。</p>
+<h3 id="leftright每次迭代更替的值"><code>left、right</code>每次迭代更替的值</h3>
+<p>此处是<code>left = mid + 1, right = mid - 1</code>,有时候是<code>right = mid</code>或者<code>left = mid</code>。为什么呢？</p>
+<p>当我们理解搜索区间的概念后，本算法中搜索区间两端都是闭的。当发现索引<code>mid</code>不是要找的<code>target</code>时，下一步的搜索区间应该是<code>[left, mid - 1]</code>或者<code>[mid + 1, right]</code>。<strong>因为<code>mid</code>已经搜索过，应该从搜索区间中去除。</strong></p>
+<h2 id="二搜索左边界">二、搜索左边界</h2>
+<p>常见代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">search</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">target</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+  	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+    		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+  	<span class="p">}</span>
+    <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="c1">// 注意
+</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span> <span class="c1">//注意
+</span><span class="c1"></span>        <span class="nx">mid</span> <span class="o">:=</span> <span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">mid</span><span class="p">]</span> <span class="o">==</span> <span class="nx">target</span> <span class="p">{</span>
+            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">mid</span><span class="p">]</span> <span class="p">&gt;</span> <span class="nx">target</span> <span class="p">{</span>
+            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span> <span class="c1">// 注意
+</span><span class="c1"></span>        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">mid</span><span class="p">]</span> <span class="p">&lt;</span> <span class="nx">target</span> <span class="p">{</span>
+            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">left</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="循环结束条件-1">循环结束条件</h3>
+<p>此处终止条件是<code>left &lt; right</code>。是因为前面<code>right = nums.length</code>，所以搜索区间是<code>[left, right)</code>左闭右开。所以循环的终止条件等价于<code>left == right</code>，此时搜索区间已经为空，可以终止。</p>
+<blockquote>
+<p>注意：至于为什么这里写成左闭右开搜索区间形式，是因为这种写法较为普遍。也可以赋值为<code>right = nums.length - 1</code>写为闭区间。</p>
+</blockquote>
+<h3 id="返回值解惑">返回值解惑</h3>
+<ul>
+<li><strong>为什么没有返回-1操作？如果<code>nums</code>中不存在<code>target</code>这个值，怎么办？</strong></li>
+</ul>
+<p>先理解左侧边界有什么特殊含义：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.15.27.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.15.27.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.15.27.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.15.27.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.15.27.png"
+        title="ScreenShot2021-09-06 10.15.27" /></p>
+<p>对于上述数组，算反会返回1。这个1的含义可以解读为：<code>nums</code>中小于2的元素有1个。</p>
+<p>比如对于有序数组<code>nums = [2,3,5,7],target = 1</code>，算法会返回0，含义是：<code>nums</code>中小于1的元素有0个。</p>
+<p>再比如说<code>nums = [2,3,5,7],target = 8</code>，算法会返回4，含义是：<code>nums</code>中小于8的元素有4个。</p>
+<p>可以看出，函数返回值（即<code>left</code>变量的值）取值区间是闭区间<code>[0, nums.length]</code>。所以我们可以在循环结束后面添加如下代码，就能在正确的时候返回-1:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
+  <span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+<span class="c1">// target 比所有数都大
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">left</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+<span class="c1">// 处理其他情况
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">left</span><span class="p">]</span> <span class="o">==</span> <span class="nx">target</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">left</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li><strong>为什么返回<code>left</code>而不是<code>right</code>?</strong></li>
+</ul>
+<p>因为循环终止条件是<code>left == right</code>，所以都是一样的。</p>
+<h3 id="leftright每次迭代更替的值-1"><code>left、right</code>每次迭代更替的值</h3>
+<p>此处<code>right = mid， left = mid + 1</code>是因为搜索区间是<code>[left, right)</code>左闭右开，所以当<code>nums[mid]</code>被检测之后，下一步搜索区间应该去掉<code>mid</code>分隔为两个区间，即<code>[left, mid)</code>和<code>[mid + 1, right)</code>。</p>
+<h3 id="为什么能搜索左侧区间">为什么能搜索左侧区间？</h3>
+<p>关键在于对<code>nums[mid] == target</code>这种情况的处理：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.34.50.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.34.50.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.34.50.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.34.50.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.34.50.png"
+        title="ScreenShot2021-09-06 10.34.50" /></p>
+<p><strong>找到target时不立即返回，而是缩小搜索区间的上届<code>right</code>，在区间<code>[left, mid)</code>中继续搜索</strong>，即不断向左收缩，达到锁定左侧边界的目的。</p>
+<h2 id="三搜索右边界">三、搜索右边界</h2>
+<p>和搜索左边界类似，依然采用左闭右开搜索区间的写法，有两处不同已标注：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">search</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">target</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+  	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+    		<span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+  	<span class="p">}</span>
+    <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
+        <span class="nx">mid</span> <span class="o">:=</span> <span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">mid</span><span class="p">]</span> <span class="o">==</span> <span class="nx">target</span> <span class="p">{</span>
+            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1">// 注意
+</span><span class="c1"></span>        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">mid</span><span class="p">]</span> <span class="p">&gt;</span> <span class="nx">target</span> <span class="p">{</span>
+            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">mid</span><span class="p">]</span> <span class="p">&lt;</span> <span class="nx">target</span> <span class="p">{</span>
+            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">left</span> <span class="o">-</span> <span class="mi">1</span> <span class="c1">// 注意
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></div><h3 id="为什么能搜索右侧区间">为什么能搜索右侧区间？</h3>
+<p>类似的，关键点在于：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.46.42.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.46.42.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.46.42.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.46.42.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.46.42.png"
+        title="ScreenShot2021-09-06 10.46.42" /></p>
+<p><strong>当<code>nums[mid] == target</code>时，不要立即返回，而是增大搜索区间的下界<code>left</code>,使得区间不断向右收缩</strong>，达到锁定右侧边界的目的。</p>
+<h3 id="返回值解惑-1">返回值解惑</h3>
+<ul>
+<li><strong>为什么最后返回<code>left - 1</code>而不像左侧边界的函数，返回<code>left</code>？而且我觉得这里既然是搜索右侧边界，应该返回<code>right</code>才对。</strong></li>
+</ul>
+<p>因为循环终止条件是<code>left == right</code>,所以<code>left</code>和<code>right</code>是一样的。</p>
+<p>至于为什么要减一，是搜索右侧边界的一个特殊点，关键在这个条件判断：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.59.49.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.59.49.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.59.49.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.59.49.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2010.59.49.png"
+        title="ScreenShot2021-09-06 10.59.49" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2011.00.58.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2011.00.58.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2011.00.58.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2011.00.58.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2011.00.58.png"
+        title="ScreenShot2021-09-06 11.00.58" /></p>
+<p>因为我们对<code>left</code>的更新必须是<code>left = mid + 1</code>，而循环结束时，<code>nums[left]</code>一定不等于<code>target</code>了，而<code>nums[left - 1]</code>可能是<code>target</code>。</p>
+<ul>
+<li><strong>为什么没有返回-1操作？如果<code>nums</code>中不存在<code>target</code>这个值，怎么办？</strong></li>
+</ul>
+<p>类似搜索左边界，<code>left</code>的取值范围是<code>[0, nums;length]</code>，所以添加如下代码，可以正确返回-1:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
+  <span class="c1">// ...
+</span><span class="c1"></span><span class="p">}</span>
+<span class="c1">// target 比所有数都小
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">left</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+<span class="c1">// 处理其他情况
+</span><span class="c1"></span><span class="k">if</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">left</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="nx">target</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">left</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
