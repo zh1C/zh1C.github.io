@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%BA%94%E7%94%A8\/"
-        },"genre": "posts","keywords": "二分查找, 算法学习","wordcount":  710 ,
+        },"genre": "posts","keywords": "二分查找, 算法学习","wordcount":  1170 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%BA%94%E7%94%A8\/","datePublished": "2021-09-06T00:00:00+00:00","dateModified": "2021-09-06T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">二分查找LeetCode题目应用</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-06">2021-09-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 710 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-06">2021-09-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1170 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -260,7 +260,80 @@
     <span class="k">return</span> <span class="nx">allDay</span> <span class="o">&lt;=</span> <span class="nx">day</span>
 <span class="p">}</span>
 </code></pre></div><h3 id="3分隔数组的最大值">3、分隔数组的最大值</h3>
-</div><div class="post-footer" id="post-footer">
+<p>想用二分查找技巧优化算法，首先要把for循环形式的暴力算法写出来，如果算法中存在以下形式的for循环：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2011.10.09.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2011.10.09.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2011.10.09.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2011.10.09.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2011.10.09.png"
+        title="ScreenShot2021-09-07 11.10.09" /></p>
+<p><strong>如果<code>func(i)</code>函数是在<code>i</code>上单调的函数，一定可以使用二分查找技巧优化for循环。</strong></p>
+<p>题目如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2011.13.18.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2011.13.18.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2011.13.18.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2011.13.18.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2011.13.18.png"
+        title="ScreenShot2021-09-07 11.13.18" /></p>
+<p>本题是固定<code>m</code>的值，让我们确定一个最大子数组和；我们可以反向思考，<strong>限制一个最大子数组和<code>max</code>，来反推最大子数组和为<code>max</code>时，至少可以将<code>nums</code>分割成几个子数组</strong>。这样我们可以写一个这样的<code>split</code>函数：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2012.29.30.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2012.29.30.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2012.29.30.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2012.29.30.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-07%2012.29.30.png"
+        title="ScreenShot2021-09-07 12.29.30" /></p>
+<p>这样<code>x</code>就是<code>max</code>，函数就是<code>split(max)</code>，并且这个函数随<code>max</code>增大而减少，<code>target</code>就是<code>m</code>。找到满足<code>m</code>的最小的<code>max</code>值，即寻找左侧边界。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/IMG_130BE3572293-1.jpeg"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/IMG_130BE3572293-1.jpeg, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/IMG_130BE3572293-1.jpeg 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/IMG_130BE3572293-1.jpeg 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/IMG_130BE3572293-1.jpeg"
+        title="IMG_130BE3572293-1" /></p>
+<p>这样就转换为了二分查找左侧边界问题。代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">splitArray</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">m</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// 二分查找左边界
+</span><span class="c1"></span>    <span class="nx">maxNum</span><span class="p">,</span> <span class="nx">sumNum</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
+        <span class="nx">sumNum</span> <span class="o">+=</span> <span class="nx">val</span>
+        <span class="k">if</span> <span class="nx">val</span> <span class="p">&gt;</span> <span class="nx">maxNum</span> <span class="p">{</span>
+            <span class="nx">maxNum</span> <span class="p">=</span> <span class="nx">val</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="nx">maxNum</span><span class="p">,</span> <span class="nx">sumNum</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
+        <span class="nx">mid</span> <span class="o">:=</span> <span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="nf">split</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">mid</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nx">m</span> <span class="p">{</span>
+            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nf">split</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">mid</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nx">m</span> <span class="p">{</span>
+            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">left</span>
+<span class="p">}</span>
+
+<span class="c1">// 子数组和不超过max情况下，最少能分割为几个子数组，返回个数
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">split</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">max</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// 贪心思想解决
+</span><span class="c1"></span>    <span class="nx">sum</span><span class="p">,</span> <span class="nx">count</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">sum</span> <span class="o">+</span> <span class="nx">val</span> <span class="o">&lt;=</span> <span class="nx">max</span> <span class="p">{</span>
+            <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">val</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">sum</span> <span class="p">=</span> <span class="nx">val</span>
+            <span class="nx">count</span><span class="o">++</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
