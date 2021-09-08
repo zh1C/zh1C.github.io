@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>二叉堆 - 标签 - NarcissusBlog</title>
+        <link>http://wen-nan.github.io/tags/%E4%BA%8C%E5%8F%89%E5%A0%86/</link>
+        <description>二叉堆 - 标签 - NarcissusBlog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 08 Sep 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E4%BA%8C%E5%8F%89%E5%A0%86/" rel="self" type="application/rss+xml" /><item>
+    <title>二叉堆</title>
+    <link>http://wen-nan.github.io/posts/%E4%BA%8C%E5%8F%89%E5%A0%86/</link>
+    <pubDate>Wed, 08 Sep 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E4%BA%8C%E5%8F%89%E5%A0%86/</guid>
+    <description><![CDATA[二叉堆主要应用有两个，一种是排序方法堆排序，第二是一种数据结构&ndash;优先队列。 二叉堆概览 二叉堆就是一种特殊的二叉树（完全二叉树），只]]></description>
+</item></channel>
+</rss>
