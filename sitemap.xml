@@ -2,14 +2,20 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://wen-nan.github.io/categories/</loc><lastmod>2021-09-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/</loc><lastmod>2021-09-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/posts/</loc><lastmod>2021-09-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/tags/</loc><lastmod>2021-09-08T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/categories/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/posts/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/tags/redis/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/posts/redis-%E9%93%BE%E8%A1%A8/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/categories/redis%E5%AD%A6%E4%B9%A0/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/tags/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</loc><lastmod>2021-09-09T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/tags/%E4%BA%8C%E5%8F%89%E5%A0%86/</loc><lastmod>2021-09-08T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/posts/%E4%BA%8C%E5%8F%89%E5%A0%86/</loc><lastmod>2021-09-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</loc><lastmod>2021-09-08T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</loc><lastmod>2021-09-08T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</loc><lastmod>2021-09-06T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%BA%94%E7%94%A8/</loc><lastmod>2021-09-06T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</loc><lastmod>2021-09-04T00:00:00&#43;00:00</lastmod></url><url>
@@ -24,8 +30,6 @@
             <loc>http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/</loc><lastmod>2021-09-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/tags/sql/</loc><lastmod>2021-09-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/tags/web/</loc><lastmod>2021-09-03T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/tags/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</loc><lastmod>2021-09-03T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</loc><lastmod>2021-09-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/tags/%E9%93%BE%E8%A1%A8/</loc><lastmod>2021-09-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/posts/%E9%93%BE%E8%A1%A8/</loc><lastmod>2021-09-03T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/tags/%E9%9D%A2%E8%AF%95/</loc><lastmod>2021-09-03T00:00:00&#43;00:00</lastmod></url><url>

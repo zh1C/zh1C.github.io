@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Redis(一)简单动态字符串 - NarcissusBlog</title><meta name="Description" content="Redis设计与实现----阅读笔记之简单动态字符串"><meta property="og:title" content="Redis(一)简单动态字符串" />
+<meta property="og:description" content="Redis设计与实现----阅读笔记之简单动态字符串" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-09-09T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-09-09T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Redis(一)简单动态字符串"/>
+<meta name="twitter:description" content="Redis设计与实现----阅读笔记之简单动态字符串"/>
+<meta name="application-name" content="NarcissusBlog">
+<meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" /><link rel="prev" href="http://wen-nan.github.io/posts/redis-%E9%93%BE%E8%A1%A8/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Redis(一)简单动态字符串",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wen-nan.github.io\/posts\/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2\/"
+        },"genre": "posts","keywords": "Redis","wordcount":  1659 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2\/","datePublished": "2021-09-09T00:00:00+00:00","dateModified": "2021-09-09T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Narcissus"},"author": {
+                "@type": "Person",
+                "name": "Narcissus"
+            },"description": "Redis设计与实现----阅读笔记之简单动态字符串"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner">
+                <a class="menu-item" href="/posts/" title="全部文章"><i class="fa fa-fw fa-bars"></i> 全部文章 
+                        </a><a class="menu-item" href="/categories/" title="分类"><i class="fas fa-fw fa-th"></i> 分类 
+                        </a><a class="menu-item" href="/tags/" title="标签"><i class="fas fa-fw fa-tag"></i> 标签 
+                        </a>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="menu-item menu-more dropbtn" title="文档" ><i class='fas fa-fw fa-fan fa-spin'></i> 文档 
+                            </a>
+                            <div class="menu-more-content dropdown-content"><a href="https://gohugo.io/documentation/" title="" target="_blank" rel="noopener"><i class='fa fa-thumbs-up'></i> Hugo文档 </a></div>
+                        </div>
+                    <a class="menu-item" href="/about/" title="关于"><i class="fas fa-fw fa-at"></i> 关于 
+                        </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  
+                        </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="全部文章"><i class="fa fa-fw fa-bars"></i> 全部文章 
+                    </a><a class="menu-item" href="/categories/" title="分类"><i class="fas fa-fw fa-th"></i> 分类 
+                    </a><a class="menu-item" href="/tags/" title="标签"><i class="fas fa-fw fa-tag"></i> 标签 
+                    </a>
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="menu-item menu-more dropbtn" title="文档" ><i class='fas fa-fw fa-fan fa-spin'></i> 文档 
+                        </a>
+                        <div class="menu-more-content dropdown-content"><a href="https://gohugo.io/documentation/" title="" target="_blank" rel="noopener"><i class='fa fa-thumbs-up'></i> Hugo文档 </a></div>
+                    </div>
+                <a class="menu-item" href="/about/" title="关于"><i class="fas fa-fw fa-at"></i> 关于 
+                    </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  
+                    </a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Redis(一)简单动态字符串</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Redis学习</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-09">2021-09-09</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1659 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#概述">概述</a></li>
+    <li><a href="#简单动态字符串">简单动态字符串</a>
+      <ul>
+        <li><a href="#1sds定义">1、SDS定义</a></li>
+        <li><a href="#2sds与c字符串的区别">2、SDS与C字符串的区别</a>
+          <ul>
+            <li><a href="#21-常数复杂度获取字符串长度">2.1 常数复杂度获取字符串长度</a></li>
+            <li><a href="#22-杜绝缓冲区溢出">2.2 杜绝缓冲区溢出</a></li>
+            <li><a href="#23-减少修改字符串时带来的内存重分配次数">2.3 减少修改字符串时带来的内存重分配次数</a></li>
+            <li><a href="#24-二进制安全">2.4 二进制安全</a></li>
+            <li><a href="#25-兼容部分c字符串函数">2.5 兼容部分C字符串函数</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="概述">概述</h2>
+<p>简单来说 <strong>Redis 就是一个使用 C 语言开发的数据库</strong>， 是速度非常快的非关系型（NoSQL）内存键值数据库，可以存储键和五种不同类型的值之间的映射。键的类型只能为字符串，值支持五种数据类型：字符串、列表、集合、散列表、有序集合。与传统数据库不同的是 <strong>Redis 的数据是存在内存中的</strong> ，也就是它是内存数据库，所以读写速度非常快，因此 Redis 被广泛应用于缓存方向。另外，<strong>Redis 除了做缓存之外，也经常用来做分布式锁，甚至是消息队列。</strong></p>
+<h2 id="简单动态字符串">简单动态字符串</h2>
+<p>Redis没有直接使用C语言传统的字符串表示(以空字符结尾的字符数组)，而是自己构建了一种名为简单动态字符串(simple dynamic string，SDS)的抽象类型，并作为默认字符串表示。</p>
+<p><strong>在Redis的数据库里面，包含字符串值的键值对在底层都是由SDS实现的。除此之外还被用作缓冲区。</strong></p>
+<h3 id="1sds定义">1、SDS定义</h3>
+<p>SDS结构体定义如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2012.58.51.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2012.58.51.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2012.58.51.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2012.58.51.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2012.58.51.png"
+        title="ScreenShot2021-09-09 12.58.51" /></p>
+<p><strong>SDS底层对字符数组结尾的空字符作了透明处理。方便</strong>SDS直接重用C字符串函数库里面的函数。</p>
+<h3 id="2sds与c字符串的区别">2、SDS与C字符串的区别</h3>
+<h4 id="21-常数复杂度获取字符串长度">2.1 常数复杂度获取字符串长度</h4>
+<p>对于C字符串，因为不记录自身长度信息，所以每一次获取一个字符串长度都需要O(N)时间复杂度来遍历字符串获取长度；而对于SDS，因为<code>len</code>属性记录了SDS本身的长度，因此**获取一个SDS长度的复杂度仅为O(1)。**因此即使对一个非常长的字符串键反复执行STRLRN命令，也不会对系统性能造成任何影响。</p>
+<h4 id="22-杜绝缓冲区溢出">2.2 杜绝缓冲区溢出</h4>
+<p>C字符串不记录自身长度带来的另一个问题就是容易造成缓冲区溢出(buffer overflow)。SDS的空间分配策略完全杜绝了发生缓冲区溢出的可能性：<strong>需要对SDS进行修改时，会自动先检查SDS空间是否满足修改所需的要求，并自动扩容到所需大小。</strong></p>
+<h4 id="23-减少修改字符串时带来的内存重分配次数">2.3 减少修改字符串时带来的内存重分配次数</h4>
+<p>内存重分配涉及复杂的算法，通常是一个非常耗时的操作。由于C字符串的长度和底层数组的长度之间的关联性(N个字符底层是N+1个字符长)，会造成频繁的内存重分配，<strong>SDS通过未使用空间解除了字符串长度和底层数组长度之间的关联</strong>:在SDS中，buf数组里面包含未使用的字节，这些字节的数量由<code>free</code>属性记录。</p>
+<p>通过未使用空间，SDS实现了空间预分配和惰性空间释放两种优化策略。</p>
+<ul>
+<li><strong>空间预分配</strong></li>
+</ul>
+<p>用于优化SDS的字符串增长操作：需要对SDS进行空间扩容时，会分配额外未使用的空间。分配策略如下：</p>
+<ol>
+<li>如果对SDS修改后，SDS长度(即<code>len</code>属性的值)将小于1MB，程序分配和<code>len</code>属性同样大小的未使用空间，这时<code>len</code>属性值将和<code>free</code>属性值相同。</li>
+<li>如果对SDS修改后，SDS长度大于等于1MB，程序会分配1MB未使用空间。</li>
+</ol>
+<p>通过空间预分配策略，Redis可以减少连续执行字符串增长操作所需的内存重分配次数。<strong>将连续增长N次字符串所需的内存重分配次数从必定N次降低为最多N次。</strong></p>
+<p>举例，对下图执行<code>sdscat(s, &quot;Cluster&quot;);</code>操作：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2013.57.26.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2013.57.26.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2013.57.26.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2013.57.26.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2013.57.26.png"
+        title="ScreenShot2021-09-09 13.57.26" /></p>
+<p>此时SDS的buf数组的实际长度为13+13+1=27字节(额外1字节用于保存空字符)。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2013.57.39.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2013.57.39.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2013.57.39.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2013.57.39.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2013.57.39.png"
+        title="ScreenShot2021-09-09 13.57.39" /></p>
+<ul>
+<li><strong>惰性空间释放</strong></li>
+</ul>
+<p>用于优化SDS的字符串缩短操作：<strong>当SDS需要缩短保存的字符串时，程序不立即使用内存分配来回收缩短后多出的字节，而是用<code>free</code>属性将这些字节的数量记录起来，并等待将来使用</strong>。举例对下图执行<code>sdstrim(s, &quot;XY&quot;); // 移除SDS字符串中所有'X'和'Y'</code>操作：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.05.35.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.05.35.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.05.35.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.05.35.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.05.35.png"
+        title="ScreenShot2021-09-09 14.05.35" /></p>
+<p>执行后多出来的8字节作为未使用空间保留在了SDS里面。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.05.43.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.05.43.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.05.43.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.05.43.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.05.43.png"
+        title="ScreenShot2021-09-09 14.05.43" /></p>
+<h4 id="24-二进制安全">2.4 二进制安全</h4>
+<p>C字符串不能包含空字符，否则会被程序误认为是结尾符，因此不能保存像图片、音频、视频等二进制数据。为了确保Redis可以用于各种不同场景，SDS的API都是二进制安全的(binary-safe)。所以将SDS的<code>buf</code>属性称为字节数组。<strong>因为SDS使用<code>len</code>属性的值而不是空字符来判断字符串是否结束</strong>。如下图所示：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.12.55.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.12.55.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.12.55.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.12.55.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.12.55.png"
+        title="ScreenShot2021-09-09 14.12.55" /></p>
+<h4 id="25-兼容部分c字符串函数">2.5 兼容部分C字符串函数</h4>
+<p>虽然SDS的API都是二进制安全的，但它们一样遵循C字符串以空字符结尾的惯例。所以可以重用一部分<code>&lt;string.h&gt;</code>库定义的函数。</p>
+<h2 id="总结">总结</h2>
+<p>C字符串和SDS之间的区别如下表：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.16.11.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.16.11.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.16.11.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.16.11.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.16.11.png"
+        title="ScreenShot2021-09-09 14.16.11" /></p>
+<p>重点回顾</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.17.29.png"
+        data-srcset="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.17.29.png, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.17.29.png 1.5x, http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.17.29.png 2x"
+        data-sizes="auto"
+        alt="http://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-09%2014.17.29.png"
+        title="ScreenShot2021-09-09 14.17.29" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-09-09</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" data-title="Redis(一)简单动态字符串" data-hashtags="Redis"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" data-hashtag="Redis"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" data-title="Redis(一)简单动态字符串" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" data-title="Redis(一)简单动态字符串"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/redis/">Redis</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/redis-%E9%93%BE%E8%A1%A8/" class="prev" rel="prev" title="Redis(二)链表"><i class="fas fa-angle-left fa-fw"></i>Redis(二)链表</a></div>
+</div>
+<div id="comments">
+        <div id="gitalk" class="comment"></div>
+        <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+        <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/blueimp-md5/2.18.0/js/md5.js"></script>
+        <script>
+        const gitalk = new Gitalk({
+            clientID: '60afa8aa721493fdc40a',
+            clientSecret: '0d83669766bc4d55f49702f8d22e76215dfb373a',
+            repo: 'wen-nan.github.io',
+            owner: 'wen-nan',
+            admin: ['wen-nan'],
+            
+            
+            id: md5(location.pathname), 
+            distractionFreeMode: false 
+        });
+        (function() {
+            if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+                document.getElementById('gitalk').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+                return;
+            }
+            gitalk.render('gitalk');
+        })();
+        </script>
+        </div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                <span id="run-time"></span>
+            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Narcissus</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/gitalk/gitalk.min.css"><script type="text/javascript" src="/lib/gitalk/gitalk.min.js"></script><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{"gitalk":{"admin":["wen-nan"],"clientID":"60afa8aa721493fdc40a","clientSecret":"0d83669766bc4d55f49702f8d22e76215dfb373a","id":"2021-09-09T00:00:00Z","owner":"wen-nan","repo":"wen-nan.github.io","title":"Redis(一)简单动态字符串"}}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>
