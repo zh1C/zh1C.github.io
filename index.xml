@@ -3,9 +3,16 @@
         <title>NarcissusBlog</title>
         <link>http://wen-nan.github.io/</link>
         <description>NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 11 Sep 2021 00:00:00 &#43;0000</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 12 Sep 2021 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="http://wen-nan.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Redis(四)整数集合</title>
+    <link>http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/</link>
+    <pubDate>Sun, 12 Sep 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/</guid>
+    <description><![CDATA[整数集合是集合键的底层实现之一，当一个集合只包含整数值元素，并且集合元素不多时，Redis会使用整数集合作为集合键的底层实现。 1、整数集合的]]></description>
+</item><item>
     <title>Redis(三)字典</title>
     <link>http://wen-nan.github.io/posts/redis-%E5%AD%97%E5%85%B8/</link>
     <pubDate>Sat, 11 Sep 2021 00:00:00 &#43;0000</pubDate>
@@ -68,12 +75,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</guid>
     <description><![CDATA[一、Git简介 Git是分布式版本控制系统。 集中式VS分布式 集中式版本控制系统，版本库集中存放在中央服务器，干活的时候先从中央服务器获取最新版]]></description>
-</item><item>
-    <title>Golang基础语法细节</title>
-    <link>http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/</link>
-    <pubDate>Fri, 03 Sep 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/</guid>
-    <description><![CDATA[一、类型 简短模式(x := 100)定义限制: 定义变量，同时显示初始化。 不能提供数据类型。 只能用在函数内部。 简短模式有可能会出现退化的赋值操作。例]]></description>
 </item></channel>
 </rss>
