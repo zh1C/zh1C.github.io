@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>广度优先搜索 - NarcissusBlog</title><meta name="Description" content="算法学习之广度优先搜索，介绍广度优先搜索框架、优化及相关LeetCode题目。"><meta property="og:title" content="广度优先搜索" />
+<meta property="og:description" content="算法学习之广度优先搜索，介绍广度优先搜索框架、优化及相关LeetCode题目。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wen-nan.github.io/posts/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-09-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-09-13T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="广度优先搜索"/>
+<meta name="twitter:description" content="算法学习之广度优先搜索，介绍广度优先搜索框架、优化及相关LeetCode题目。"/>
+<meta name="application-name" content="NarcissusBlog">
+<meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" /><link rel="prev" href="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" /><link rel="next" href="http://wen-nan.github.io/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "广度优先搜索",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wen-nan.github.io\/posts\/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2\/"
+        },"genre": "posts","keywords": "算法学习, 广度优先搜索","wordcount":  1577 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2\/","datePublished": "2021-09-13T00:00:00+00:00","dateModified": "2021-09-13T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Narcissus"},"author": {
+                "@type": "Person",
+                "name": "Narcissus"
+            },"description": "算法学习之广度优先搜索，介绍广度优先搜索框架、优化及相关LeetCode题目。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner">
+                <a class="menu-item" href="/posts/" title="全部文章"><i class="fa fa-fw fa-bars"></i> 全部文章 
+                        </a><a class="menu-item" href="/categories/" title="分类"><i class="fas fa-fw fa-th"></i> 分类 
+                        </a><a class="menu-item" href="/tags/" title="标签"><i class="fas fa-fw fa-tag"></i> 标签 
+                        </a>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="menu-item menu-more dropbtn" title="文档" ><i class='fas fa-fw fa-fan fa-spin'></i> 文档 
+                            </a>
+                            <div class="menu-more-content dropdown-content"><a href="https://gohugo.io/documentation/" title="" target="_blank" rel="noopener"><i class='fa fa-thumbs-up'></i> Hugo文档 </a></div>
+                        </div>
+                    <a class="menu-item" href="/about/" title="关于"><i class="fas fa-fw fa-at"></i> 关于 
+                        </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  
+                        </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="全部文章"><i class="fa fa-fw fa-bars"></i> 全部文章 
+                    </a><a class="menu-item" href="/categories/" title="分类"><i class="fas fa-fw fa-th"></i> 分类 
+                    </a><a class="menu-item" href="/tags/" title="标签"><i class="fas fa-fw fa-tag"></i> 标签 
+                    </a>
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="menu-item menu-more dropbtn" title="文档" ><i class='fas fa-fw fa-fan fa-spin'></i> 文档 
+                        </a>
+                        <div class="menu-more-content dropdown-content"><a href="https://gohugo.io/documentation/" title="" target="_blank" rel="noopener"><i class='fa fa-thumbs-up'></i> Hugo文档 </a></div>
+                    </div>
+                <a class="menu-item" href="/about/" title="关于"><i class="fas fa-fw fa-at"></i> 关于 
+                    </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  
+                    </a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">广度优先搜索</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-13">2021-09-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1577 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#1算法框架">1、算法框架</a></li>
+    <li><a href="#2二叉树最小高度">2、二叉树最小高度</a></li>
+    <li><a href="#3解开密码锁的最少次数">3、解开密码锁的最少次数</a></li>
+    <li><a href="#4双向bfs优化">4、双向BFS优化</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>BFS的核心思想就是把一些问题抽象成图，从一个点开始，向四周开始扩散。一般来说，写BFS算法都用<strong>队列</strong>这种数据结构，每次将一个节点周围所有节点加入队列。</p>
+<h2 id="1算法框架">1、算法框架</h2>
+<p>BFS常见场景问题的本质就是<strong>在一幅图中找起点<code>start</code>到终点<code>target</code>的最近距离</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2014.20.45.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2014.20.45.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2014.20.45.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2014.20.45.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2014.20.45.png"
+        title="ScreenShot2021-09-13 14.20.45" /></p>
+<p><code>cur.adj()</code>泛指<code>cur</code>相邻的节点；<code>visited</code>主要作用是防止走回头路，大部分的时候是必须的，但像一般的二叉树结构，没有子节点到父节点的指针，不会走回头路就不需要<code>visited</code>。</p>
+<h2 id="2二叉树最小高度">2、二叉树最小高度</h2>
+<p>一个简单的BFS题目，如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2014.25.59.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2014.25.59.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2014.25.59.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2014.25.59.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2014.25.59.png"
+        title="ScreenShot2021-09-13 14.25.59" /></p>
+<p>首先明确起点<code>start</code>和终点<code>target</code>是什么，怎么判断到了终点：<strong>显然起点就是<code>root</code>根节点，终点就是最靠近根节点的那个叶子节点。</strong></p>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">minDepth</span><span class="p">(</span><span class="nx">root</span> <span class="o">*</span><span class="nx">TreeNode</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// BFS
+</span><span class="c1"></span>    <span class="k">if</span> <span class="nx">root</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">queue</span> <span class="p">[]</span><span class="o">*</span><span class="nx">TreeNode</span>
+    <span class="c1">// 先将起点加入队列并记录扩散步数
+</span><span class="c1"></span>    <span class="nx">queue</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">root</span><span class="p">)</span>
+    <span class="nx">step</span> <span class="o">:=</span> <span class="mi">1</span>
+
+    <span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">queue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nx">size</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">queue</span><span class="p">)</span>
+        <span class="c1">// 将当前队列中的所有节点向四周扩散
+</span><span class="c1"></span>        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">size</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">queue</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+            <span class="c1">// 判断是否到达终点
+</span><span class="c1"></span>            <span class="k">if</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Left</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Right</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">step</span>
+            <span class="p">}</span>
+            <span class="c1">// 将cur相邻节点加入队列中
+</span><span class="c1"></span>            <span class="k">if</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Left</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+                <span class="nx">queue</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Left</span><span class="p">)</span>
+            <span class="p">}</span>
+            <span class="k">if</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Right</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+                <span class="nx">queue</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">cur</span><span class="p">.</span><span class="nx">Right</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">queue</span> <span class="p">=</span> <span class="nx">queue</span><span class="p">[</span><span class="nx">size</span><span class="p">:]</span>
+        <span class="c1">// 更新步数
+</span><span class="c1"></span>        <span class="nx">step</span><span class="o">++</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="3解开密码锁的最少次数">3、解开密码锁的最少次数</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2015.01.28.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2015.01.28.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2015.01.28.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2015.01.28.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-13%2015.01.28.png"
+        title="ScreenShot2021-09-13 15.01.28" /></p>
+<p>密码锁总共有4个位置，每个位置可以向上转，也可以向下转，就有8种可能。<strong>这就可以抽象成一幅图，每个节点有8个相邻的节点</strong>，求最短路径。代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">openLock</span><span class="p">(</span><span class="nx">deadends</span> <span class="p">[]</span><span class="kt">string</span><span class="p">,</span> <span class="nx">target</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// 广度优先搜索
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">queue</span> <span class="p">[]</span><span class="kt">string</span>
+    <span class="nx">queue</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span> <span class="s">&#34;0000&#34;</span><span class="p">)</span>
+    <span class="c1">// 记录已经穷举过的密码，防止走回头路
+</span><span class="c1"></span>    <span class="nx">visited</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">struct</span><span class="p">{}{}</span>
+    <span class="c1">// 将deadends中的元素也加入到visited中
+</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">deadends</span> <span class="p">{</span>
+        <span class="c1">// 特殊情况，死亡集合中有初始密码
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">val</span> <span class="o">==</span> <span class="s">&#34;0000&#34;</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="p">}</span>
+        <span class="nx">visited</span><span class="p">[</span><span class="nx">val</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+    <span class="p">}</span>
+    <span class="nx">step</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">queue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nx">q_size</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">queue</span><span class="p">)</span>
+        <span class="c1">// 将当前队列中所有节点向周围扩散
+</span><span class="c1"></span>        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">q_size</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">queue</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+            <span class="c1">// 判断是否到达终点
+</span><span class="c1"></span>            <span class="k">if</span> <span class="nx">cur</span> <span class="o">==</span> <span class="nx">target</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">step</span>
+            <span class="p">}</span>
+            <span class="c1">// 将一个节点的相邻节点加入到队列
+</span><span class="c1"></span>            <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">{</span>
+                <span class="nx">up</span> <span class="o">:=</span> <span class="nf">plusOne</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">cur</span><span class="p">),</span> <span class="nx">j</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">visited</span><span class="p">[</span><span class="nx">up</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+                    <span class="nx">queue</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">up</span><span class="p">)</span>
+                    <span class="nx">visited</span><span class="p">[</span><span class="nx">up</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+                <span class="p">}</span>
+                <span class="nx">down</span> <span class="o">:=</span> <span class="nf">minusOne</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">cur</span><span class="p">),</span> <span class="nx">j</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">visited</span><span class="p">[</span><span class="nx">down</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+                    <span class="nx">queue</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">down</span><span class="p">)</span>
+                    <span class="nx">visited</span><span class="p">[</span><span class="nx">down</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// 增加步数
+</span><span class="c1"></span>        <span class="nx">step</span><span class="o">++</span>
+        <span class="nx">queue</span> <span class="p">=</span> <span class="nx">queue</span><span class="p">[</span><span class="nx">q_size</span><span class="p">:]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="c1">// 将s[j]向上拨动一次
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">plusOne</span><span class="p">(</span><span class="nx">s</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;9&#39;</span> <span class="p">{</span>
+        <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;0&#39;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// 将s[j]向下拨动一次
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">minusOne</span><span class="p">(</span><span class="nx">s</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;0&#39;</span> <span class="p">{</span>
+        <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;9&#39;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="4双向bfs优化">4、双向BFS优化</h2>
+<p>BFS还有一种稍微高级一点的优化思路：<strong>双向BFS</strong>，可以进一步提高算法效率。</p>
+<p><strong>传统BFS框架就是从起点开始向四周扩散，遇到终点时停止；而双向BFS则是从起点和终点同时开始扩散，当两边有交集的时候停止</strong>。双向BFS只需要遍历半棵树就会找到最短路径，但是必须知道终点在哪里。</p>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">openLock</span><span class="p">(</span><span class="nx">deadends</span> <span class="p">[]</span><span class="kt">string</span><span class="p">,</span> <span class="nx">target</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// 双向BFS
+</span><span class="c1"></span>    <span class="c1">// 使用哈希表作为队列，方便判断两个集合是否相交
+</span><span class="c1"></span>    <span class="nx">q1</span><span class="p">,</span> <span class="nx">q2</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">struct</span><span class="p">{}{},</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">struct</span><span class="p">{}{}</span>
+    <span class="nx">q1</span><span class="p">[</span><span class="s">&#34;0000&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+    <span class="nx">q2</span><span class="p">[</span><span class="nx">target</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+    <span class="c1">// 记录已经穷举过的密码，防止走回头路
+</span><span class="c1"></span>    <span class="nx">visited</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">struct</span><span class="p">{}{}</span>
+    <span class="c1">// 将deadends中的元素也加入到visited中
+</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">deadends</span> <span class="p">{</span>
+        <span class="c1">// 特殊情况，死亡集合中有初始密码
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">val</span> <span class="o">==</span> <span class="s">&#34;0000&#34;</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="p">}</span>
+        <span class="nx">visited</span><span class="p">[</span><span class="nx">val</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+    <span class="p">}</span>
+    <span class="nx">step</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">q1</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">q2</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="c1">// 哈希集合在遍历的过程中不能修改，用 temp 存储扩散结果
+</span><span class="c1"></span>        <span class="nx">temp</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">struct</span><span class="p">{}{}</span>
+        <span class="c1">// 扩散元素少的队列
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">q1</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">q2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">q1</span><span class="p">,</span> <span class="nx">q2</span> <span class="p">=</span> <span class="nx">q2</span><span class="p">,</span> <span class="nx">q1</span>
+        <span class="p">}</span>
+
+        <span class="c1">// 将q1中所有节点向周围扩散
+</span><span class="c1"></span>        <span class="k">for</span> <span class="nx">cur</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">q1</span> <span class="p">{</span>
+            <span class="c1">// 判断是否到达终点
+</span><span class="c1"></span>            <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">q2</span><span class="p">[</span><span class="nx">cur</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">step</span>
+            <span class="p">}</span>
+            <span class="nx">visited</span><span class="p">[</span><span class="nx">cur</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+            <span class="c1">// 将一个节点的相邻节点加入到队列
+</span><span class="c1"></span>            <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="mi">4</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">{</span>
+                <span class="nx">up</span> <span class="o">:=</span> <span class="nf">plusOne</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">cur</span><span class="p">),</span> <span class="nx">j</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">visited</span><span class="p">[</span><span class="nx">up</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+                    <span class="nx">temp</span><span class="p">[</span><span class="nx">up</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+                <span class="p">}</span>
+                <span class="nx">down</span> <span class="o">:=</span> <span class="nf">minusOne</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">cur</span><span class="p">),</span> <span class="nx">j</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">visited</span><span class="p">[</span><span class="nx">down</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+                    <span class="nx">temp</span><span class="p">[</span><span class="nx">down</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// 增加步数
+</span><span class="c1"></span>        <span class="nx">step</span><span class="o">++</span>
+        <span class="c1">// 交换q1, q2,下一轮相当于扩散q2
+</span><span class="c1"></span>        <span class="nx">q1</span><span class="p">,</span> <span class="nx">q2</span> <span class="p">=</span> <span class="nx">q2</span><span class="p">,</span> <span class="nx">temp</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="c1">// 将s[j]向上拨动一次
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">plusOne</span><span class="p">(</span><span class="nx">s</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;9&#39;</span> <span class="p">{</span>
+        <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;0&#39;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// 将s[j]向下拨动一次
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">minusOne</span><span class="p">(</span><span class="nx">s</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;0&#39;</span> <span class="p">{</span>
+        <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;9&#39;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">s</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li>双向BFS队列用哈希表代替， 方便快速判断两个集合是否相交。<strong>后续扩散的时候，由于遍历过程中哈希表不能修改(因为哈希表无须性)，所以需要临时的哈细胞存放扩散后的节点。</strong></li>
+<li><strong>while 循环的最后交换<code>q1</code>和<code>q2</code>的内容</strong>，所以只要默认扩散<code>q1</code>就相当于轮流扩散<code>q1</code>和<code>q2</code>。</li>
+<li><strong>while开始的时候交换<code>q1</code>和<code>q2</code>的内容</strong>，目的是每次都选择一个较小的集合进行扩散，那么占用的空间增长速度就会慢一些，效率就会高一些。</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-09-13</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" data-title="广度优先搜索" data-hashtags="算法学习,广度优先搜索"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" data-hashtag="算法学习"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" data-title="广度优先搜索" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" data-title="广度优先搜索"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">算法学习</a>,&nbsp;<a href="/tags/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/">广度优先搜索</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" class="prev" rel="prev" title="Redis(五)整数集合"><i class="fas fa-angle-left fa-fw"></i>Redis(五)整数集合</a>
+            <a href="/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/" class="next" rel="next" title="Redis(六)压缩列表">Redis(六)压缩列表<i class="fas fa-angle-right fa-fw"></i></a></div>
+</div>
+<div id="comments">
+        <div id="gitalk" class="comment"></div>
+        <link rel="stylesheet" href="/js/gitalk.css">
+        <script src="/js/gitalk.min.js"></script>
+        <script src="/js/md5.js"></script>
+        <script>
+        const gitalk = new Gitalk({
+            clientID: '60afa8aa721493fdc40a',
+            clientSecret: '0d83669766bc4d55f49702f8d22e76215dfb373a',
+            repo: 'wen-nan.github.io',
+            owner: 'wen-nan',
+            admin: ['wen-nan'],
+            
+            
+            id: md5(location.pathname), 
+            distractionFreeMode: false 
+        });
+        (function() {
+            if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+                document.getElementById('gitalk').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+                return;
+            }
+            gitalk.render('gitalk');
+        })();
+        </script>
+        </div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                <span id="run-time"></span>
+            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Narcissus</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>
