@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>Redis(四)整数集合 - NarcissusBlog</title><meta name="Description" content="Redis设计与实现----阅读笔记之整数结合"><meta property="og:title" content="Redis(四)整数集合" />
+        <title>Redis(五)整数集合 - NarcissusBlog</title><meta name="Description" content="Redis设计与实现----阅读笔记之整数结合"><meta property="og:title" content="Redis(五)整数集合" />
 <meta property="og:description" content="Redis设计与实现----阅读笔记之整数结合" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" /><meta property="article:section" content="posts" />
@@ -13,21 +13,21 @@
 <meta property="article:modified_time" content="2021-09-12T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Redis(四)整数集合"/>
+<meta name="twitter:title" content="Redis(五)整数集合"/>
 <meta name="twitter:description" content="Redis设计与实现----阅读笔记之整数结合"/>
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" /><link rel="prev" href="http://wen-nan.github.io/posts/redis-%E5%AD%97%E5%85%B8/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" /><link rel="prev" href="http://wen-nan.github.io/posts/redis-%E5%AD%97%E5%85%B8/" /><link rel="next" href="http://wen-nan.github.io/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Redis(四)整数集合",
+        "headline": "Redis(五)整数集合",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88\/"
-        },"genre": "posts","keywords": "Redis","wordcount":  72 ,
+        },"genre": "posts","keywords": "Redis","wordcount":  720 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88\/","datePublished": "2021-09-12T00:00:00+00:00","dateModified": "2021-09-12T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -112,10 +112,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">Redis(四)整数集合</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">Redis(五)整数集合</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Redis学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-12">2021-09-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 72 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-12">2021-09-12</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 720 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -124,10 +124,64 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#1整数集合的实现">1、整数集合的实现</a></li>
+    <li><a href="#2升级">2、升级</a></li>
+    <li><a href="#3升级的好处">3、升级的好处</a></li>
+    <li><a href="#4降级">4、降级</a></li>
+    <li><a href="#重点回顾">重点回顾</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>整数集合是集合键的底层实现之一，当一个集合只包含整数值元素，并且集合元素不多时，Redis会使用整数集合作为集合键的底层实现。</p>
 <h2 id="1整数集合的实现">1、整数集合的实现</h2>
+<p>结构体定义如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2015.21.10.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2015.21.10.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2015.21.10.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2015.21.10.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2015.21.10.png"
+        title="ScreenShot2021-09-12 15.21.10" /></p>
+<p><code>contents</code>数组是整数集合的底层实现：<strong>整数集合的每个元素都是<code>contents</code>数组的一个数组项，各个项在数组中按值从小到大有序排列，并切不重复</strong>。虽然<code>contents</code>属性声明为int8_t类型的数组，但实际上数组的真正类型取决于<code>encoding</code>属性的值。</p>
+<h2 id="2升级">2、升级</h2>
+<p>当我们要将一个新元素添加到整数集合里面，并且新元素类型比整数集合现有所有元素的类型都长时，整数集合需要先进行<strong>升级</strong>。</p>
+<p>升级步骤分为三步：</p>
+<ol>
+<li>根据新元素类型，扩展整数集合底层数组空间的大小，并为新元素分配空间。</li>
+<li>将底层数组现有所有元素转换为与新元素相同的类型，并将转换后的元素放置到正确位置。(有序性质不变)</li>
+<li>新元素添加到底层数组里面。</li>
+</ol>
+<blockquote>
+<p>注意：因为每次向整数集合添加新元素都可能会引起升级，并且每次升级都会对底层数组中所有元素进行类型转换，所以<strong>向整数集合添加新元素的时间复杂度为O(N)</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2016.16.36.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2016.16.36.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2016.16.36.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2016.16.36.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2016.16.36.png"
+        title="ScreenShot2021-09-12 16.16.36" /></p>
+</blockquote>
+<h2 id="3升级的好处">3、升级的好处</h2>
+<p>整数集合升级策略有如下两个好处：</p>
+<ul>
+<li><strong>提升灵活性</strong></li>
+</ul>
+<p>由于C语言是静态类型语言，为了避免类型错误，通常不会将两种类型的值放到同一个数据结构里面。但整数集合可以自动升级底层数组来适应新元素，所以可以将不同类型整数添加到集合中，非常灵活。</p>
+<ul>
+<li><strong>节约内存</strong></li>
+</ul>
+<p>要让一个数组同时保存int16_t、int32_t、int64_t三种类型数据，最简单的方式就是直接使用int64_t类型，但这样会造成内存浪费。整数集合这样的做法可以确保升级操作只会在需要的时候进行，这样可以尽量节省内存。</p>
+<h2 id="4降级">4、降级</h2>
+<p>整数集合不支持降级操作，一旦升级，编码会一直保持升级后的状态。</p>
+<h2 id="重点回顾">重点回顾</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2016.27.02.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2016.27.02.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2016.27.02.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2016.27.02.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-12%2016.27.02.png"
+        title="ScreenShot2021-09-12 16.27.02" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -139,7 +193,7 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" data-title="Redis(四)整数集合" data-hashtags="Redis"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" data-hashtag="Redis"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" data-title="Redis(四)整数集合" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" data-title="Redis(四)整数集合"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" data-title="Redis(五)整数集合" data-hashtags="Redis"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" data-hashtag="Redis"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" data-title="Redis(五)整数集合" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/" data-title="Redis(五)整数集合"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
             </div>
         </div>
     </div>
@@ -151,7 +205,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/redis-%E5%AD%97%E5%85%B8/" class="prev" rel="prev" title="Redis(三)字典"><i class="fas fa-angle-left fa-fw"></i>Redis(三)字典</a></div>
+    <div class="post-nav"><a href="/posts/redis-%E5%AD%97%E5%85%B8/" class="prev" rel="prev" title="Redis(三)字典"><i class="fas fa-angle-left fa-fw"></i>Redis(三)字典</a>
+            <a href="/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/" class="next" rel="next" title="Redis(六)压缩列表">Redis(六)压缩列表<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>
