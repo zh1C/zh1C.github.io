@@ -3,9 +3,23 @@
         <title>NarcissusBlog</title>
         <link>http://wen-nan.github.io/</link>
         <description>NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 13 Sep 2021 00:00:00 &#43;0000</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 14 Sep 2021 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="http://wen-nan.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Redis(七)对象</title>
+    <link>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</link>
+    <pubDate>Tue, 14 Sep 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</guid>
+    <description><![CDATA[对象学习]]></description>
+</item><item>
+    <title>回溯算法(或DFS)</title>
+    <link>http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/</link>
+    <pubDate>Tue, 14 Sep 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/</guid>
+    <description><![CDATA[1、框架 深度优先搜索就是回溯算法，解决一个回溯问题，实际上就是一个决策树的遍历过程。需要思考三个问题： 路径：已经做出的选择。 选择列表：当前可]]></description>
+</item><item>
     <title>Redis(六)压缩列表</title>
     <link>http://wen-nan.github.io/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/</link>
     <pubDate>Mon, 13 Sep 2021 00:00:00 &#43;0000</pubDate>
@@ -61,19 +75,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</guid>
     <description><![CDATA[队列是一种先进先出的数据结构，栈是一种先进后出的数据结构。这两种数据结构底层都是数组或者链表实现的，只是API限定了它们的特性。 栈实现队列 队]]></description>
-</item><item>
-    <title>二叉堆</title>
-    <link>http://wen-nan.github.io/posts/%E4%BA%8C%E5%8F%89%E5%A0%86/</link>
-    <pubDate>Wed, 08 Sep 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E4%BA%8C%E5%8F%89%E5%A0%86/</guid>
-    <description><![CDATA[二叉堆主要应用有两个，一种是排序方法堆排序，第二是一种数据结构&ndash;优先队列。 二叉堆概览 二叉堆就是一种特殊的二叉树（完全二叉树），只]]></description>
-</item><item>
-    <title>二分查找LeetCode题目应用</title>
-    <link>http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%BA%94%E7%94%A8/</link>
-    <pubDate>Mon, 06 Sep 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%BA%94%E7%94%A8/</guid>
-    <description><![CDATA[二分搜索问题泛化 把题目抽象出一个自变量x,一个关于x的函数f(x),以及一个目标值target。 同时，x,f(x),target必须满足以下]]></description>
 </item></channel>
 </rss>

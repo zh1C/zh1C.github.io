@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2\/"
-        },"genre": "posts","keywords": "算法学习, 广度优先搜索","wordcount":  1577 ,
+        },"genre": "posts","keywords": "算法学习, 广度优先搜索","wordcount":  2041 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2\/","datePublished": "2021-09-13T00:00:00+00:00","dateModified": "2021-09-13T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">广度优先搜索</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-13">2021-09-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1577 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-13">2021-09-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2041 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -127,6 +127,7 @@
     <li><a href="#2二叉树最小高度">2、二叉树最小高度</a></li>
     <li><a href="#3解开密码锁的最少次数">3、解开密码锁的最少次数</a></li>
     <li><a href="#4双向bfs优化">4、双向BFS优化</a></li>
+    <li><a href="#5滑动拼图问题">5、滑动拼图问题</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>BFS的核心思想就是把一些问题抽象成图，从一个点开始，向四周开始扩散。一般来说，写BFS算法都用<strong>队列</strong>这种数据结构，每次将一个节点周围所有节点加入队列。</p>
@@ -338,6 +339,111 @@
 <li><strong>while 循环的最后交换<code>q1</code>和<code>q2</code>的内容</strong>，所以只要默认扩散<code>q1</code>就相当于轮流扩散<code>q1</code>和<code>q2</code>。</li>
 <li><strong>while开始的时候交换<code>q1</code>和<code>q2</code>的内容</strong>，目的是每次都选择一个较小的集合进行扩散，那么占用的空间增长速度就会慢一些，效率就会高一些。</li>
 </ul>
+<h2 id="5滑动拼图问题">5、滑动拼图问题</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2011.01.43.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2011.01.43.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2011.01.43.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2011.01.43.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2011.01.43.png"
+        title="ScreenShot2021-09-14 11.01.43" /></p>
+<p>比如输入一个二维数组<code>board = [[4,1,2],[5,0,3]]</code>，算法会返回5：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2011.03.47.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2011.03.47.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2011.03.47.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2011.03.47.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2011.03.47.png"
+        title="ScreenShot2021-09-14 11.03.47" /></p>
+<p><strong>BFS算法并不只是一个寻路算法，而是一种暴力搜索算法</strong>，只要涉及暴力穷举问题，都可以考虑BFS。</p>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">slidingPuzzle</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// BFS
+</span><span class="c1"></span>    <span class="c1">// 将每一种情况的二维数组转换为字符串方式
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">queue</span> <span class="p">[]</span><span class="kt">string</span>
+    <span class="nx">target</span> <span class="o">:=</span> <span class="s">&#34;123450&#34;</span>
+    <span class="kd">var</span> <span class="nx">st</span> <span class="p">[]</span><span class="kt">byte</span>
+    <span class="c1">// 将初始二维数组转换为字符串
+</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
+            <span class="nx">st</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">st</span><span class="p">,</span> <span class="nb">byte</span><span class="p">(</span><span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">])</span> <span class="o">+</span> <span class="sc">&#39;0&#39;</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">start</span> <span class="o">:=</span> <span class="nb">string</span><span class="p">(</span><span class="nx">st</span><span class="p">)</span>
+    <span class="nx">queue</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">start</span><span class="p">)</span>
+    <span class="nx">visited</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kd">struct</span><span class="p">{}{}</span>
+    <span class="nx">visited</span><span class="p">[</span><span class="nx">start</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+    <span class="nx">step</span> <span class="o">:=</span> <span class="mi">0</span>
+    <span class="c1">// 二维到一维映射表
+</span><span class="c1"></span>    <span class="nx">table</span> <span class="o">:=</span> <span class="p">[][]</span><span class="kt">int</span><span class="p">{</span>
+        <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span>
+        <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">},</span>
+        <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">},</span>
+        <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">},</span>
+        <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">},</span>
+        <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">},</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">queue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nx">size</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">queue</span><span class="p">)</span>
+        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">size</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="nx">t</span> <span class="o">:=</span> <span class="nx">queue</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+            <span class="c1">// 判断是否到达终点
+</span><span class="c1"></span>            <span class="k">if</span> <span class="nx">t</span> <span class="o">==</span> <span class="nx">target</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="nx">step</span>
+            <span class="p">}</span>
+            <span class="nx">cur</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">t</span><span class="p">)</span>
+            <span class="nx">index</span> <span class="o">:=</span> <span class="nf">getZeroIndex</span><span class="p">(</span><span class="nx">cur</span><span class="p">)</span>
+            <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">table</span><span class="p">[</span><span class="nx">index</span><span class="p">]);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+                <span class="nx">temp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+                <span class="nb">copy</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nx">cur</span><span class="p">)</span>
+                <span class="nx">temp</span><span class="p">[</span><span class="nx">index</span><span class="p">],</span> <span class="nx">temp</span><span class="p">[</span><span class="nx">table</span><span class="p">[</span><span class="nx">index</span><span class="p">][</span><span class="nx">i</span><span class="p">]]</span> <span class="p">=</span> <span class="nx">temp</span><span class="p">[</span><span class="nx">table</span><span class="p">[</span><span class="nx">index</span><span class="p">][</span><span class="nx">i</span><span class="p">]],</span> <span class="nx">temp</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span>
+                <span class="nx">temp2</span> <span class="o">:=</span> <span class="nb">string</span><span class="p">(</span><span class="nx">temp</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">visited</span><span class="p">[</span><span class="nx">temp2</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+                    <span class="nx">queue</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">queue</span><span class="p">,</span> <span class="nx">temp2</span><span class="p">)</span>
+                    <span class="nx">visited</span><span class="p">[</span><span class="nx">temp2</span><span class="p">]</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{}{}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">queue</span> <span class="p">=</span> <span class="nx">queue</span><span class="p">[</span><span class="nx">size</span><span class="p">:]</span>
+        <span class="nx">step</span><span class="o">++</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">getZeroIndex</span><span class="p">(</span><span class="nx">s</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">s</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;0&#39;</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">i</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li><strong>第一个技巧就是将每一种二维数组情况转换为字符串形式，方便BFS操作</strong>。</li>
+<li><strong>二维映射到一维，没有上下左右概念，建立了一个映射表</strong>：</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2012.24.03.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2012.24.03.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2012.24.03.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2012.24.03.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2012.24.03.png"
+        title="ScreenShot2021-09-14 12.24.03" /></p>
+<p>含义就是在在一维字符串中，索引<code>i</code>在二维数组中的相邻索引为<code>table[i]</code>：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2012.24.43.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2012.24.43.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2012.24.43.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2012.24.43.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2012.24.43.png"
+        title="ScreenShot2021-09-14 12.24.43" /></p>
+<blockquote>
+<p>注意：因为知道target,所以可以使用双向BFS进行优化。</p>
+</blockquote>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
