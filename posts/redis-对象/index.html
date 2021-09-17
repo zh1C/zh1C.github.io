@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/redis-%E5%AF%B9%E8%B1%A1\/"
-        },"genre": "posts","keywords": "Redis","wordcount":  1274 ,
+        },"genre": "posts","keywords": "Redis","wordcount":  1666 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/redis-%E5%AF%B9%E8%B1%A1\/","datePublished": "2021-09-17T00:00:00+00:00","dateModified": "2021-09-17T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis(七)对象</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Redis学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-17">2021-09-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1274 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-17">2021-09-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1666 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -135,7 +135,12 @@
         <li><a href="#字符串命令的实现">字符串命令的实现</a></li>
       </ul>
     </li>
-    <li><a href="#3列表对象">3、列表对象</a></li>
+    <li><a href="#3列表对象">3、列表对象</a>
+      <ul>
+        <li><a href="#编码转换">编码转换</a></li>
+        <li><a href="#列表命令的实现">列表命令的实现</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>Redis用到的主要数据结构有简单动态字符串(SDS)、双端链表、字典、跳跃表、压缩列整数集合等。但是Redis并没有直接使用这些数据结构来实现键值对数据库，而是<strong>基于这些数据结构创建了一个对象系统</strong>。包含<strong>字符串对象、列表对象、哈希对象、集合对象和有序集合对象</strong>。每种对象至少用到了一种前面的数据结构。</p>
@@ -263,6 +268,60 @@
         title="ScreenShot2021-09-17 15.06.00" /></p>
 <h2 id="3列表对象">3、列表对象</h2>
 <p>列表对象的编码可以是<code>ziplist</code>或者<code>linkedlist</code>。</p>
+<p><code>ziplist</code>编码的列表对象使用压缩列表作为底层实现，每个压缩列表节点保存了一个列表元素。如下图：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2016.16.36.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2016.16.36.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2016.16.36.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2016.16.36.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2016.16.36.png"
+        title="ScreenShot2021-09-17 16.16.36" /></p>
+<p><code>linkedlist</code>编码的列表对象使用双端链表作为底层实现，每个双端链表节点都保存了一个字符串对象，而每个字符串对象都保存了一个列表元素。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2016.16.47.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2016.16.47.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2016.16.47.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2016.16.47.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2016.16.47.png"
+        title="ScreenShot2021-09-17 16.16.47" /></p>
+<blockquote>
+<p>注意：</p>
+<ol>
+<li>双端链表结构中嵌套了字符串对象，字符串对象是Redis五种类型的对象中唯一一种会被其他对象嵌套的对象。</li>
+<li>上图是简化的字符串对象表示，真实情况如下图：</li>
+</ol>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2018.21.43.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2018.21.43.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2018.21.43.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2018.21.43.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2018.21.43.png"
+        title="ScreenShot2021-09-17 18.21.43" /></p>
+</blockquote>
+<h3 id="编码转换">编码转换</h3>
+<p>当列表对象满足以下两个条件时，列表对象使用<code>ziplist</code>编码：</p>
+<ul>
+<li>列表对象保存的所有字符串元素的长度都小于64字节；</li>
+<li>列表对象保存的元素数量小于512个。</li>
+</ul>
+<p>不能同时满足条件的列表对象需要使用<code>linkedlist</code>编码。</p>
+<blockquote>
+<p>注意：以上两个条件的上限值可以修改。</p>
+</blockquote>
+<p>对于使用<code>ziplist</code>编码的列表对象来说，当以上任意一个条件不能被满足时，对象编码转换操作就会被执行。</p>
+<h3 id="列表命令的实现">列表命令的实现</h3>
+<p>下表列出了列表对象常见命令：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2019.18.02.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2019.18.02.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2019.18.02.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2019.18.02.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-17%2019.18.02.png"
+        title="ScreenShot2021-09-17 19.18.02" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
