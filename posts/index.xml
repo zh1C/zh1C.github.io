@@ -3,13 +3,13 @@
         <title>所有文章 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/posts/</link>
         <description>所有文章 | NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 14 Sep 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 17 Sep 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/posts/" rel="self" type="application/rss+xml" /><item>
     <title>Redis(七)对象</title>
     <link>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</link>
-    <pubDate>Tue, 14 Sep 2021 00:00:00 &#43;0000</pubDate>
+    <pubDate>Fri, 17 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</guid>
-    <description><![CDATA[对象学习]]></description>
+    <description><![CDATA[Redis用到的主要数据结构有简单动态字符串(SDS)、双端链表、字典、跳跃表、压缩列整数集合等。但是Redis并没有直接使用这些数据结构来]]></description>
 </item><item>
     <title>回溯算法(或DFS)</title>
     <link>http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/</link>

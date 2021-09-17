@@ -3,13 +3,13 @@
         <title>Redis学习 - 分类 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/categories/redis%E5%AD%A6%E4%B9%A0/</link>
         <description>Redis学习 - 分类 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 14 Sep 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/categories/redis%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 17 Sep 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/categories/redis%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
     <title>Redis(七)对象</title>
     <link>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</link>
-    <pubDate>Tue, 14 Sep 2021 00:00:00 &#43;0000</pubDate>
+    <pubDate>Fri, 17 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</guid>
-    <description><![CDATA[对象学习]]></description>
+    <description><![CDATA[Redis用到的主要数据结构有简单动态字符串(SDS)、双端链表、字典、跳跃表、压缩列整数集合等。但是Redis并没有直接使用这些数据结构来]]></description>
 </item><item>
     <title>Redis(六)压缩列表</title>
     <link>http://wen-nan.github.io/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/</link>
