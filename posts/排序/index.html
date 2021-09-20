@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E6%8E%92%E5%BA%8F\/"
-        },"genre": "posts","keywords": "排序, 算法学习","wordcount":  2348 ,
+        },"genre": "posts","keywords": "排序, 算法学习","wordcount":  3537 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E6%8E%92%E5%BA%8F\/","datePublished": "2021-09-20T00:00:00+00:00","dateModified": "2021-09-20T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">排序</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-20">2021-09-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2348 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-20">2021-09-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3537 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -142,7 +142,16 @@
         <li><a href="#把数组排成最小的数">把数组排成最小的数</a></li>
       </ul>
     </li>
-    <li><a href="#快速排序">快速排序</a></li>
+    <li><a href="#快速排序">快速排序</a>
+      <ul>
+        <li><a href="#数组中第k个最大元素">数组中第K个最大元素</a>
+          <ul>
+            <li><a href="#二叉堆解法">二叉堆解法</a></li>
+            <li><a href="#快速选择解法">快速选择解法</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="二叉堆">二叉堆</h2>
@@ -544,6 +553,155 @@
 <p><code>Less(x, y int) bool</code>方法的重写解释,当前元素对应的下标<code>x</code>在<code>y</code>后面，如果<code>Less</code>方法返回<code>true</code>，则交换<code>x,y</code>下标对应的元素；返回<code>false</code>则不交换。</p>
 </blockquote>
 <h2 id="快速排序">快速排序</h2>
+<p>快速排序的逻辑是，<strong>若要对<code>nums[lo..hi]</code>进行排序，先找一个分界点<code>p</code>，通过交换元素使得<code>nums[lo..p-1]</code>都小于等于<code>nums[p]</code>，且<code>nums[p+1..hi]</code>都大于<code>nums[p]</code>，然后递归地去<code>nums[lo..p-1]</code>和<code>nums[p+1..hi]</code>中寻找新的分界点，最后整个数组都被排序了</strong>。</p>
+<p>代码如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.46.32.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.46.32.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.46.32.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.46.32.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.46.32.png"
+        title="ScreenShot2021-09-20 18.46.32" /></p>
+<ul>
+<li><strong><code>partition</code>函数</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.56.23.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.56.23.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.56.23.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.56.23.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.56.23.png"
+        title="ScreenShot2021-09-20 18.56.23" /></p>
+<p><strong>索引<code>p</code>左侧的元素都比<code>nums[p]</code>小，右侧的元素都比<code>nums[p]</code>大，意味着这个元素已经放到了正确的位置上</strong>。递归调用会把<code>nums[p]</code>之外的元素也放到正确位置上。代码如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2019.01.19.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2019.01.19.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2019.01.19.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2019.01.19.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2019.01.19.png"
+        title="ScreenShot2021-09-20 19.01.19" /></p>
+<ul>
+<li><strong>洗牌算法</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.52.18.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.52.18.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.52.18.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.52.18.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.52.18.png"
+        title="ScreenShot2021-09-20 18.52.18" /></p>
+<p>用洗牌算法的目的：快速排序最好情况下，每次每次<code>p</code>都恰好是正中间<code>(lo + hi) / 2</code>，那么遍历的元素总数就是：<code>N + N/2 + N/4 + N/8 + … + 1</code>等比数列求和，求个极限就等于<code>2N</code>，所以遍历元素个数为<code>2N</code>，时间复杂度为<code>O(N)</code>。最坏情况下<code>p</code>一直都是<code>lo + 1</code>或者一直都是<code>hi - 1</code>，遍历的元素总数就是：<code>N + (N - 1) + (N - 2) + … + 1</code>是等差数列求和，时间复杂度会退化到<code>O(N^2)</code>。<strong>为了尽可能防止极端情况发生，所以需要在算法开始的时候对<code>nums</code>数组来一次随机打乱</strong>。</p>
+<h3 id="数组中第k个最大元素">数组中第K个最大元素</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.30.29.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.30.29.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.30.29.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.30.29.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2018.30.29.png"
+        title="ScreenShot2021-09-20 18.30.29" /></p>
+<h4 id="二叉堆解法">二叉堆解法</h4>
+<p>二叉堆解法比较简单，由于堆大小不会超过<code>K</code>，所以时间复杂度是<code>O(NlogK)</code>，空间复杂度是<code>O(K)</code>。代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">findKthLargest</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">k</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// 小根堆
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">pq</span> <span class="nx">PriorityQueue</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">pq</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="p">&lt;</span> <span class="nx">k</span> <span class="p">{</span>
+            <span class="nx">heap</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">pq</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">heap</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">pq</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+            <span class="nx">heap</span><span class="p">.</span><span class="nf">Pop</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">pq</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">heap</span><span class="p">.</span><span class="nf">Pop</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">pq</span><span class="p">).(</span><span class="kt">int</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">PriorityQueue</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">sort</span><span class="p">.</span><span class="nx">IntSlice</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">pq</span> <span class="o">*</span><span class="nx">PriorityQueue</span><span class="p">)</span> <span class="nf">Push</span><span class="p">(</span><span class="nx">x</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+    <span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span><span class="p">,</span> <span class="nx">x</span><span class="p">.(</span><span class="kt">int</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">pq</span> <span class="o">*</span><span class="nx">PriorityQueue</span><span class="p">)</span> <span class="nf">Pop</span><span class="p">()</span> <span class="kd">interface</span><span class="p">{}</span> <span class="p">{</span>
+    <span class="nx">old</span> <span class="o">:=</span> <span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span>
+    <span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">old</span><span class="p">)</span>
+    <span class="nx">item</span> <span class="o">:=</span> <span class="nx">old</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span> <span class="p">=</span> <span class="nx">old</span><span class="p">[:</span> <span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nx">item</span>
+<span class="p">}</span>
+</code></pre></div><h4 id="快速选择解法">快速选择解法</h4>
+<p><strong>快速选择算法比较巧妙，时间复杂度更低，是快速排序的简化版。</strong></p>
+<p><code>partition</code>函数会将<code>nums[p]</code>排到正确的位置，使得<code>nums[lo..p-1] &lt; nums[p] &lt; nums[p+1..hi]</code>。<strong>那么我们可以把<code>p</code>和<code>k</code>进行比较，如果<code>p &lt; k</code>说明第<code>k</code>大的元素在<code>nums[p+1..hi]</code>中，如果<code>p &gt; k</code>说明第<code>k</code>大的元素在<code>nums[lo..p-1]</code>中</strong>。时间复杂度是<code>O(N)</code>。</p>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">findKthLargest</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">k</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// 快速选择算法
+</span><span class="c1"></span>    <span class="nf">shuffle</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span>
+    <span class="nx">low</span><span class="p">,</span> <span class="nx">high</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="nx">k</span> <span class="p">=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="o">-</span> <span class="nx">k</span>
+    <span class="k">for</span> <span class="nx">low</span> <span class="o">&lt;=</span> <span class="nx">high</span> <span class="p">{</span>
+        <span class="nx">p</span> <span class="o">:=</span> <span class="nf">partition</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">low</span><span class="p">,</span> <span class="nx">high</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nx">p</span> <span class="p">&lt;</span> <span class="nx">k</span> <span class="p">{</span>
+            <span class="c1">// 第k大元素在nums[p+1..high]中
+</span><span class="c1"></span>            <span class="nx">low</span> <span class="p">=</span> <span class="nx">p</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">p</span> <span class="p">&gt;</span> <span class="nx">k</span> <span class="p">{</span>
+            <span class="c1">// 第k大元素在nums[low..p - 1]中
+</span><span class="c1"></span>            <span class="nx">high</span> <span class="p">=</span> <span class="nx">p</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// 找到第k大元素
+</span><span class="c1"></span>            <span class="k">return</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">p</span><span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">partition</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">low</span><span class="p">,</span> <span class="nx">high</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">low</span> <span class="o">==</span> <span class="nx">high</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">low</span>
+    <span class="p">}</span>
+    <span class="c1">// 将nums[low]作为默认分界点pivot
+</span><span class="c1"></span>    <span class="nx">pivot</span> <span class="o">:=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">low</span><span class="p">]</span>
+    <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="o">:=</span> <span class="nx">low</span><span class="p">,</span> <span class="nx">high</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="p">{</span>
+        <span class="c1">// 保证nums[low..i]都小于pivot
+</span><span class="c1"></span>        <span class="k">for</span> <span class="nx">i</span><span class="o">++</span><span class="p">;</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">&lt;</span> <span class="nx">pivot</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="nx">high</span> <span class="p">{</span>
+                <span class="k">break</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="c1">// 保证nums[j..high]都大于pivot
+</span><span class="c1"></span>        <span class="k">for</span> <span class="nx">j</span><span class="o">--</span><span class="p">;</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="p">&gt;</span> <span class="nx">pivot</span><span class="p">;</span> <span class="nx">j</span><span class="o">--</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="nx">j</span> <span class="o">==</span> <span class="nx">low</span> <span class="p">{</span>
+                <span class="k">break</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="nx">j</span> <span class="p">{</span>
+            <span class="k">break</span>
+        <span class="p">}</span>
+        <span class="c1">// 此时有nums[i] &gt; pivot &amp;&amp; nums[j] &lt; pivot
+</span><span class="c1"></span>        <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="c1">// 将pivot值交换到正确位置
+</span><span class="c1"></span>    <span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">low</span><span class="p">]</span> <span class="p">=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">low</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nx">j</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">shuffle</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="c1">// 从i到最后随机选一个元素
+</span><span class="c1"></span>        <span class="nx">r</span> <span class="o">:=</span> <span class="nx">i</span> <span class="o">+</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="nx">n</span> <span class="o">-</span> <span class="nx">i</span><span class="p">)</span>
+        <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span> <span class="p">=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">r</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><blockquote>
+<p>注意：找第K大的元素，即从小到大排序找<code>len(nums) - k</code>索引位置的元素。</p>
+</blockquote>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
