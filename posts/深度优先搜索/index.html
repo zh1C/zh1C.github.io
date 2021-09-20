@@ -9,8 +9,8 @@
 <meta property="og:description" content="算法学习之深度优先搜索及回溯算法，介绍回溯算法及深度优先搜索框架、和相关LeetCode题目。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-09-14T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-09-14T00:00:00+00:00" />
+<meta property="article:published_time" content="2021-09-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-09-20T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="回溯算法(或DFS)"/>
@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" /><link rel="prev" href="http://wen-nan.github.io/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/" /><link rel="next" href="http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2\/"
-        },"genre": "posts","keywords": "算法学习, 深度优先搜索, 回溯算法","wordcount":  1031 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2\/","datePublished": "2021-09-14T00:00:00+00:00","dateModified": "2021-09-14T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "算法学习, 深度优先搜索, 回溯算法","wordcount":  1547 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2\/","datePublished": "2021-09-20T00:00:00+00:00","dateModified": "2021-09-20T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">回溯算法(或DFS)</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-14">2021-09-14</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1031 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-20">2021-09-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1547 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -133,6 +133,7 @@
       </ul>
     </li>
     <li><a href="#5解数独">5、解数独</a></li>
+    <li><a href="#6合法括号生成">6、合法括号生成</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="1框架">1、框架</h2>
@@ -389,11 +390,128 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-19%2012.07.40.png"
         title="ScreenShot2021-09-19 12.07.40" /></p>
 <h2 id="5解数独">5、解数独</h2>
-</div><div class="post-footer" id="post-footer">
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.48.42.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.48.42.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.48.42.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.48.42.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.48.42.png"
+        title="ScreenShot2021-09-20 09.48.42" /></p>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">solveSudoku</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">)</span>  <span class="p">{</span>
+    <span class="c1">// 回溯
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span>
+    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+        <span class="nx">m</span><span class="p">,</span> <span class="nx">n</span> <span class="o">:=</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span>
+        <span class="c1">// 结束条件
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">row</span> <span class="o">==</span> <span class="nx">m</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">true</span>
+        <span class="p">}</span>
+        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">col</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;.&#39;</span> <span class="p">{</span>
+                <span class="k">continue</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="nx">c</span> <span class="o">:=</span> <span class="sc">&#39;1&#39;</span><span class="p">;</span> <span class="nx">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;9&#39;</span><span class="p">;</span> <span class="nx">c</span><span class="o">++</span> <span class="p">{</span>
+                <span class="c1">// 剪枝
+</span><span class="c1"></span>                <span class="k">if</span> <span class="p">!</span><span class="nf">isValid</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nb">byte</span><span class="p">(</span><span class="nx">c</span><span class="p">))</span> <span class="p">{</span>
+                    <span class="k">continue</span>
+                <span class="p">}</span>
+                <span class="c1">// 做选择
+</span><span class="c1"></span>                <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nb">byte</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
+                <span class="c1">// 进入下一层决策
+</span><span class="c1"></span>                <span class="k">if</span> <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="kc">true</span>
+                <span class="p">}</span>
+                <span class="c1">// 撤销决策
+</span><span class="c1"></span>                <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;.&#39;</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="kc">false</span>
+        <span class="p">}</span>
+        <span class="c1">// 进入下一行
+</span><span class="c1"></span>        <span class="k">return</span> <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">isValid</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">char</span> <span class="kt">byte</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">9</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="c1">// 判断行是否有重复
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="nx">char</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">false</span>
+        <span class="p">}</span>
+        <span class="c1">// 判断列是否有重复
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">col</span><span class="p">]</span> <span class="o">==</span> <span class="nx">char</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">false</span>
+        <span class="p">}</span>
+        <span class="c1">// 判断小九宫格是否有重复
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">board</span><span class="p">[(</span><span class="nx">row</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">/</span> <span class="mi">3</span><span class="p">][(</span><span class="nx">col</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">%</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="nx">char</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">false</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="6合法括号生成">6、合法括号生成</h2>
+<p>括号问题可以简单分为两类：一是括号合法性判断；另一个是括号生成。括号合法性判断一般需要用到栈，括号生成一般考虑回溯思想。</p>
+<blockquote>
+<p>关于括号问题，有以下两个特点：</p>
+<ol>
+<li><strong>一个合法括号组合的左括号数量一定等于右括号数量</strong>。</li>
+<li><strong>对于一个合法的括号字符串组合<code>p</code>，必然对于任何<code>0 &lt;= i &lt; len(p)</code>都有：子串<code>p[0..i]</code>中左括号的数量都大于或等于右括号的数量</strong>。</li>
+</ol>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.52.26.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.52.26.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.52.26.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.52.26.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.52.26.png"
+        title="ScreenShot2021-09-20 09.52.26" /></p>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">generateParenthesis</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">string</span> <span class="p">{</span>
+    <span class="c1">// 回溯
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="p">(</span>
+        <span class="nx">result</span> <span class="p">[]</span><span class="kt">string</span>
+        <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="kt">int</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// 结束条件
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">n</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="nx">leftNum</span> <span class="o">==</span> <span class="nx">rightNum</span> <span class="p">{</span>
+                <span class="nx">temp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">n</span><span class="p">)</span>
+                <span class="nb">copy</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nx">track</span><span class="p">)</span>
+                <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">temp</span><span class="p">))</span>
+            <span class="p">}</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="c1">// 剪枝
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">rightNum</span> <span class="p">&gt;</span> <span class="nx">leftNum</span> <span class="o">||</span> <span class="nx">leftNum</span> <span class="p">&gt;</span> <span class="nx">n</span> <span class="p">{</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+
+        <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="sc">&#39;(&#39;</span><span class="p">)</span>
+        <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">leftNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">rightNum</span><span class="p">)</span>
+        <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="sc">&#39;)&#39;</span><span class="p">)</span>
+        <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="p">(</span>
+        <span class="nx">track</span> <span class="p">[]</span><span class="kt">byte</span>
+        <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="kt">int</span>
+    <span class="p">)</span>
+    <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">result</span>
+<span class="p">}</span>
+</code></pre></div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-09-14</span>
+                <span>更新于 2021-09-20</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -412,8 +530,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/" class="prev" rel="prev" title="Redis(六)压缩列表"><i class="fas fa-angle-left fa-fw"></i>Redis(六)压缩列表</a>
-            <a href="/posts/redis-%E5%AF%B9%E8%B1%A1/" class="next" rel="next" title="Redis(七)对象">Redis(七)对象<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/%E6%8E%92%E5%BA%8F/" class="prev" rel="prev" title="排序"><i class="fas fa-angle-left fa-fw"></i>排序</a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>

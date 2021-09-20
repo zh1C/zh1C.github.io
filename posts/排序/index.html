@@ -5,35 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>二叉堆 - NarcissusBlog</title><meta name="Description" content="算法学习之二叉堆，主要学习二叉堆的实现，以及优先队列的应用。"><meta property="og:title" content="二叉堆" />
-<meta property="og:description" content="算法学习之二叉堆，主要学习二叉堆的实现，以及优先队列的应用。" />
+        <title>排序 - NarcissusBlog</title><meta name="Description" content="算法学习之排序，主要学习堆排序和快速排序的实现，以及优先队列的应用。"><meta property="og:title" content="排序" />
+<meta property="og:description" content="算法学习之排序，主要学习堆排序和快速排序的实现，以及优先队列的应用。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://wen-nan.github.io/posts/%E4%BA%8C%E5%8F%89%E5%A0%86/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-09-08T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-09-08T00:00:00+00:00" />
+<meta property="og:url" content="http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-09-20T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-09-20T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="二叉堆"/>
-<meta name="twitter:description" content="算法学习之二叉堆，主要学习二叉堆的实现，以及优先队列的应用。"/>
+<meta name="twitter:title" content="排序"/>
+<meta name="twitter:description" content="算法学习之排序，主要学习堆排序和快速排序的实现，以及优先队列的应用。"/>
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/%E4%BA%8C%E5%8F%89%E5%A0%86/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%BA%94%E7%94%A8/" /><link rel="next" href="http://wen-nan.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/" /><link rel="prev" href="http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/" /><link rel="next" href="http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "二叉堆",
+        "headline": "排序",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/wen-nan.github.io\/posts\/%E4%BA%8C%E5%8F%89%E5%A0%86\/"
-        },"genre": "posts","keywords": "二叉堆, 算法学习","wordcount":  1343 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/%E4%BA%8C%E5%8F%89%E5%A0%86\/","datePublished": "2021-09-08T00:00:00+00:00","dateModified": "2021-09-08T00:00:00+00:00","publisher": {
+            "@id": "http:\/\/wen-nan.github.io\/posts\/%E6%8E%92%E5%BA%8F\/"
+        },"genre": "posts","keywords": "排序, 算法学习","wordcount":  2348 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/%E6%8E%92%E5%BA%8F\/","datePublished": "2021-09-20T00:00:00+00:00","dateModified": "2021-09-20T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
                 "name": "Narcissus"
-            },"description": "算法学习之二叉堆，主要学习二叉堆的实现，以及优先队列的应用。"
+            },"description": "算法学习之排序，主要学习堆排序和快速排序的实现，以及优先队列的应用。"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -112,10 +112,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">二叉堆</h1><div class="post-meta">
+        </div><article class="page single"><h1 class="single-title animated flipInX">排序</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-08">2021-09-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1343 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-20">2021-09-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2348 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -123,18 +123,31 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#二叉堆概览">二叉堆概览</a></li>
-    <li><a href="#优先级队列">优先级队列</a>
+    <li><a href="#二叉堆">二叉堆</a>
       <ul>
-        <li><a href="#实现swim和sink">实现<code>swim</code>和<code>sink</code></a></li>
-        <li><a href="#实现delmax和insert">实现<code>delMax</code>和<code>insert</code></a></li>
-        <li><a href="#使用heap包实现优先队列">使用heap包实现优先队列</a></li>
+        <li><a href="#二叉堆概览">二叉堆概览</a></li>
+        <li><a href="#优先级队列">优先级队列</a>
+          <ul>
+            <li><a href="#实现swim和sink">实现<code>swim</code>和<code>sink</code></a></li>
+            <li><a href="#实现delmax和insert">实现<code>delMax</code>和<code>insert</code></a></li>
+            <li><a href="#使用heap包实现优先队列">使用heap包实现优先队列</a></li>
+          </ul>
+        </li>
+        <li><a href="#数据流的中位数">数据流的中位数</a>
+          <ul>
+            <li><a href="#思路分析">思路分析</a></li>
+            <li><a href="#代码实现">代码实现</a></li>
+          </ul>
+        </li>
+        <li><a href="#把数组排成最小的数">把数组排成最小的数</a></li>
       </ul>
     </li>
+    <li><a href="#快速排序">快速排序</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>二叉堆主要应用有两个，一种是排序方法<strong>堆排序</strong>，第二是一种数据结构&ndash;<strong>优先队列</strong>。</p>
-<h2 id="二叉堆概览">二叉堆概览</h2>
+            </div><div class="content" id="content"><h2 id="二叉堆">二叉堆</h2>
+<p>二叉堆主要应用有两个，一种是排序方法<strong>堆排序</strong>，第二是一种数据结构&ndash;<strong>优先队列</strong>。</p>
+<h3 id="二叉堆概览">二叉堆概览</h3>
 <p>二叉堆就是一种特殊的二叉树（完全二叉树），只不过<strong>存储在数组中</strong>。一般的链表二叉树，操作节点的指针，而在数组中，将<strong>数组索引作为指针</strong>：</p>
 <p><img
         class="lazyload"
@@ -157,7 +170,7 @@
 <p>注意数组的第一个索引0空着不用。</p>
 </blockquote>
 <p>二叉堆还分为最大堆和最小堆。<strong>最大堆的性质是：每个节点都大于等于它的两个子节点。</strong></p>
-<h2 id="优先级队列">优先级队列</h2>
+<h3 id="优先级队列">优先级队列</h3>
 <p>优先队列这种数据结构有一个特殊功能，插入和删除元素的时候，元素会自动排序，底层就是二叉堆实现。有两个主要的API，分别是<code>insert</code>插入一个元素和<code>delMax</code>删除最大元素。</p>
 <p>大顶堆e代码如下：(<strong>没有使用Go语言任何内建的包</strong>)</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">pq</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">0</span><span class="p">}</span>
@@ -207,7 +220,7 @@
         <span class="nx">k</span> <span class="p">=</span> <span class="nx">older</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</code></pre></div><h3 id="实现swim和sink">实现<code>swim</code>和<code>sink</code></h3>
+</code></pre></div><h4 id="实现swim和sink">实现<code>swim</code>和<code>sink</code></h4>
 <p>对于最大堆，会破坏堆性质的有两种情况：</p>
 <ol>
 <li>如果某个节点A比它的子节点中的一个小，那么A就不配做父节点，应该下去，这就对A进行<strong>下沉</strong>。</li>
@@ -249,7 +262,7 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/650.gif"
         title="650" /></p>
-<h3 id="实现delmax和insert">实现<code>delMax</code>和<code>insert</code></h3>
+<h4 id="实现delmax和insert">实现<code>delMax</code>和<code>insert</code></h4>
 <p>这两个方法是建立在<code>swim</code>和<code>sink</code>上的。</p>
 <p><strong><code>insert</code>方法先把要插入的元素添加到堆底的最后，然后让其上浮到正确位置</strong>。代码如下：</p>
 <p><img
@@ -269,7 +282,7 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-08%2013.10.47.png"
         title="ScreenShot2021-09-08 13.10.47" /></p>
-<h3 id="使用heap包实现优先队列">使用heap包实现优先队列</h3>
+<h4 id="使用heap包实现优先队列">使用heap包实现优先队列</h4>
 <p>heap包对任意实现了heap接口的类型提供堆操作。该接口定义如下：</p>
 <p><img
         class="lazyload"
@@ -292,9 +305,9 @@
 </ul>
 <p>故是要实现了这五个方法，就定义了一个堆。下面是官方文档实现的优先队列代码：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Item</span> <span class="kd">struct</span> <span class="p">{</span>
-		<span class="nx">value</span> <span class="kt">string</span> <span class="c1">// item的值
-</span><span class="c1"></span>  	<span class="nx">priority</span> <span class="kt">int</span> <span class="c1">// item在优先队列中的优先级
-</span><span class="c1"></span>  	<span class="nx">index</span> <span class="kt">int</span> <span class="c1">// 在优先队列中的索引
+    <span class="nx">value</span> <span class="kt">string</span> <span class="c1">// item的值
+</span><span class="c1"></span>    <span class="nx">priority</span> <span class="kt">int</span> <span class="c1">// item在优先队列中的优先级
+</span><span class="c1"></span>    <span class="nx">index</span> <span class="kt">int</span> <span class="c1">// 在优先队列中的索引
 </span><span class="c1"></span><span class="p">}</span>
 
 <span class="kd">type</span> <span class="nx">PriorityQueue</span> <span class="p">[]</span><span class="o">*</span><span class="nx">Item</span>
@@ -314,16 +327,16 @@
 <span class="p">}</span>
 
 <span class="kd">func</span> <span class="p">(</span><span class="nx">pq</span> <span class="o">*</span><span class="nx">PriorityQueue</span><span class="p">)</span> <span class="nf">Push</span><span class="p">(</span><span class="nx">x</span> <span class="nx">interfase</span><span class="p">{})</span> <span class="p">{</span>
- 		<span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">)</span>
-  	<span class="nx">item</span> <span class="o">:=</span> <span class="nx">x</span><span class="p">.(</span><span class="o">*</span><span class="nx">Item</span><span class="p">)</span>
-  	<span class="nx">item</span><span class="p">.</span><span class="nx">index</span> <span class="p">=</span> <span class="nx">n</span>
-  	<span class="o">*</span><span class="nx">pq</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span>
+    <span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">)</span>
+    <span class="nx">item</span> <span class="o">:=</span> <span class="nx">x</span><span class="p">.(</span><span class="o">*</span><span class="nx">Item</span><span class="p">)</span>
+    <span class="nx">item</span><span class="p">.</span><span class="nx">index</span> <span class="p">=</span> <span class="nx">n</span>
+    <span class="o">*</span><span class="nx">pq</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span>
 <span class="p">}</span>
 
 <span class="kd">func</span> <span class="p">(</span><span class="nx">pq</span> <span class="o">*</span><span class="nx">PriorityQueue</span><span class="p">)</span> <span class="nf">Pop</span><span class="p">()</span> <span class="kd">interface</span><span class="p">{}</span> <span class="p">{</span>
   	<span class="nx">old</span> <span class="o">:=</span> <span class="o">*</span><span class="nx">pq</span>
   	<span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">old</span><span class="p">)</span>
- 		<span class="nx">item</span> <span class="o">:=</span> <span class="nx">old</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+  	<span class="nx">item</span> <span class="o">:=</span> <span class="nx">old</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
   	<span class="nx">old</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="kc">nil</span> <span class="c1">// 避免内存泄漏
 </span><span class="c1"></span>  	<span class="nx">item</span><span class="p">.</span><span class="nx">index</span> <span class="p">=</span> <span class="o">-</span><span class="mi">1</span> <span class="c1">// 为了安全
 </span><span class="c1"></span>  	<span class="o">*</span><span class="nx">pq</span> <span class="p">=</span> <span class="nx">old</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -357,31 +370,205 @@
 	<span class="p">}</span>
 	<span class="nx">heap</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">pq</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span>
 <span class="p">}</span>
-</code></pre></div></div><div class="post-footer" id="post-footer">
+</code></pre></div><h3 id="数据流的中位数">数据流的中位数</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2010.46.10.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2010.46.10.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2010.46.10.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2010.46.10.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2010.46.10.png"
+        title="ScreenShot2021-09-20 10.46.10" /></p>
+<h4 id="思路分析">思路分析</h4>
+<p>直接的想法就是底层用一个数组，通过插入排序保证有序，调用<code>findMedian</code>方法时，可以通过计算索引得出中位数，<code>addNum</code>搜索插入位置时可以用二分搜索算法。但是插入操作需要搬移数据，最坏时间复杂度为O(N)。链表的查找时间也是O(N)。</p>
+<p><strong>本题必须使用有序数据结构，本题核心思路是使用两个优先级队列</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2010.54.29.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2010.54.29.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2010.54.29.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2010.54.29.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2010.54.29.png"
+        title="ScreenShot2021-09-20 10.54.29" /></p>
+<p>梯形是小顶堆，但其中元素较大，称为<code>large</code>；倒三角是大顶堆，但是元素较小，称为<code>small</code>。<strong>两个堆中元素之差不能超过1</strong>。</p>
+<ul>
+<li><strong>addNum</strong></li>
+</ul>
+<p>难点是：<strong>不仅要维护<code>large</code>和<code>small</code>的元素个数之差不超过 1，还要维护<code>large</code>堆的堆顶元素要大于等于<code>small</code>堆的堆顶元素</strong>。所用技巧：<strong>想要往<code>large</code>里添加元素，不能直接添加，而是要先往<code>small</code>里添加，然后再把<code>small</code>的堆顶元素加到<code>large</code>中；向<code>small</code>中添加元素同理</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2014.11.50.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2014.11.50.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2014.11.50.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2014.11.50.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2014.11.50.png"
+        title="ScreenShot2021-09-20 14.11.50" /></p>
+<ul>
+<li><strong>findMedian</strong></li>
+</ul>
+<p>只需要比较两个堆的元素数量，一样则返回堆顶元素之和除以二；不一样就返回堆元素数量多的堆顶元素。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2014.11.43.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2014.11.43.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2014.11.43.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2014.11.43.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2014.11.43.png"
+        title="ScreenShot2021-09-20 14.11.43" /></p>
+<h4 id="代码实现">代码实现</h4>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">MedianFinder</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="c1">// 优先级队列
+</span><span class="c1"></span>    <span class="c1">// large是小顶堆，small是大顶堆
+</span><span class="c1"></span>    <span class="nx">large</span><span class="p">,</span> <span class="nx">small</span> <span class="nx">PriorityQueue</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">PriorityQueue</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">sort</span><span class="p">.</span><span class="nx">IntSlice</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">pq</span> <span class="o">*</span><span class="nx">PriorityQueue</span><span class="p">)</span> <span class="nf">Push</span><span class="p">(</span><span class="nx">x</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+    <span class="nx">item</span> <span class="o">:=</span> <span class="nx">x</span><span class="p">.(</span><span class="kt">int</span><span class="p">)</span>
+    <span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">pq</span> <span class="o">*</span><span class="nx">PriorityQueue</span><span class="p">)</span> <span class="nf">Pop</span><span class="p">()</span> <span class="kd">interface</span><span class="p">{}</span> <span class="p">{</span>
+  	<span class="nx">old</span> <span class="o">:=</span> <span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span>
+  	<span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">old</span><span class="p">)</span>
+  	<span class="nx">item</span> <span class="o">:=</span> <span class="nx">old</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+  	<span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span> <span class="p">=</span> <span class="nx">old</span><span class="p">[</span><span class="mi">0</span> <span class="p">:</span> <span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+  	<span class="k">return</span> <span class="nx">item</span>
+<span class="p">}</span>
+
+<span class="cm">/** initialize your data structure here. */</span>
+<span class="kd">func</span> <span class="nf">Constructor</span><span class="p">()</span> <span class="nx">MedianFinder</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">MedianFinder</span><span class="p">{}</span>
+<span class="p">}</span>
+
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">MedianFinder</span><span class="p">)</span> <span class="nf">AddNum</span><span class="p">(</span><span class="nx">num</span> <span class="kt">int</span><span class="p">)</span>  <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">this</span><span class="p">.</span><span class="nx">small</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="nx">this</span><span class="p">.</span><span class="nx">large</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">heap</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">this</span><span class="p">.</span><span class="nx">small</span><span class="p">,</span> <span class="o">-</span><span class="nx">num</span><span class="p">)</span>
+        <span class="nx">heap</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">this</span><span class="p">.</span><span class="nx">large</span><span class="p">,</span> <span class="o">-</span><span class="nx">heap</span><span class="p">.</span><span class="nf">Pop</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">this</span><span class="p">.</span><span class="nx">small</span><span class="p">).(</span><span class="kt">int</span><span class="p">))</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">heap</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">this</span><span class="p">.</span><span class="nx">large</span><span class="p">,</span> <span class="nx">num</span><span class="p">)</span>
+        <span class="nx">heap</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">this</span><span class="p">.</span><span class="nx">small</span><span class="p">,</span> <span class="o">-</span><span class="nx">heap</span><span class="p">.</span><span class="nf">Pop</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">this</span><span class="p">.</span><span class="nx">large</span><span class="p">).(</span><span class="kt">int</span><span class="p">))</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">MedianFinder</span><span class="p">)</span> <span class="nf">FindMedian</span><span class="p">()</span> <span class="kt">float64</span> <span class="p">{</span>
+    <span class="c1">// 如果元素不一样多, 返回元素多的堆顶元素
+</span><span class="c1"></span>    <span class="k">if</span> <span class="nx">this</span><span class="p">.</span><span class="nx">large</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="p">&gt;</span> <span class="nx">this</span><span class="p">.</span><span class="nx">small</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">this</span><span class="p">.</span><span class="nx">large</span><span class="p">.</span><span class="nx">IntSlice</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">this</span><span class="p">.</span><span class="nx">small</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="p">&gt;</span> <span class="nx">this</span><span class="p">.</span><span class="nx">large</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nb">float64</span><span class="p">(</span><span class="o">-</span><span class="nx">this</span><span class="p">.</span><span class="nx">small</span><span class="p">.</span><span class="nx">IntSlice</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="p">}</span>
+    <span class="c1">// 如果元素一样多，返回之和除以二
+</span><span class="c1"></span>    <span class="k">return</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">this</span><span class="p">.</span><span class="nx">large</span><span class="p">.</span><span class="nx">IntSlice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span> <span class="nx">this</span><span class="p">.</span><span class="nx">small</span><span class="p">.</span><span class="nx">IntSlice</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
+<span class="p">}</span>
+</code></pre></div><blockquote>
+<p>注意：默认为小顶堆，需要重写<code>Less()</code>方法，才能改为大顶堆；本题为了方便使用负号这个技巧，<strong>将元素变为负再加入堆中</strong>，则小顶堆可以视为大顶堆。</p>
+</blockquote>
+<p><strong><code>addNum</code>方法时间复杂度 O(logN)，<code>findMedian</code>方法时间复杂度 O(1)</strong>。</p>
+<h3 id="把数组排成最小的数">把数组排成最小的数</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2016.44.20.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2016.44.20.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2016.44.20.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2016.44.20.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2016.44.20.png"
+        title="ScreenShot2021-09-20 16.44.20" /></p>
+<p>采用堆排序，排序规则如下：</p>
+<blockquote>
+<p>若拼接字符串 xy &gt; yx, 则x &gt; y。</p>
+</blockquote>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">minNumber</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="c1">// 排序 -- 堆实现
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="p">(</span>
+        <span class="nx">pq</span> <span class="nx">PriorityQueue</span>
+        <span class="nx">result</span> <span class="p">[]</span><span class="kt">byte</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
+        <span class="nx">heap</span><span class="p">.</span><span class="nf">Push</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">pq</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="nx">pq</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">heap</span><span class="p">.</span><span class="nf">Pop</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">pq</span><span class="p">).(</span><span class="kt">int</span><span class="p">))</span><span class="o">...</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">PriorityQueue</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">sort</span><span class="p">.</span><span class="nx">IntSlice</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="p">(</span><span class="nx">pq</span> <span class="o">*</span><span class="nx">PriorityQueue</span><span class="p">)</span> <span class="nf">Less</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+    <span class="nx">numX</span><span class="p">,</span> <span class="nx">numY</span> <span class="o">:=</span> <span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span><span class="p">[</span><span class="nx">x</span><span class="p">],</span> <span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span><span class="p">[</span><span class="nx">y</span><span class="p">]</span>
+    <span class="nx">tempX</span><span class="p">,</span> <span class="nx">tempY</span> <span class="o">:=</span> <span class="nx">numX</span><span class="p">,</span> <span class="nx">numY</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">tempX</span><span class="p">;</span> <span class="nx">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">/=</span> <span class="mi">10</span> <span class="p">{</span>
+        <span class="nx">numY</span> <span class="o">*=</span> <span class="mi">10</span>
+    <span class="p">}</span>
+    <span class="c1">// 特殊处理
+</span><span class="c1"></span>    <span class="k">if</span> <span class="nx">numX</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nx">numY</span> <span class="o">*=</span> <span class="mi">10</span>
+    <span class="p">}</span>
+    <span class="nx">numY</span> <span class="o">+=</span> <span class="nx">tempX</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">tempY</span><span class="p">;</span> <span class="nx">i</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">/=</span> <span class="mi">10</span> <span class="p">{</span>
+        <span class="nx">numX</span> <span class="o">*=</span> <span class="mi">10</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="nx">numY</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="nx">numX</span> <span class="o">*=</span> <span class="mi">10</span>
+    <span class="p">}</span>
+    <span class="nx">numX</span> <span class="o">+=</span> <span class="nx">tempY</span>
+    <span class="k">if</span> <span class="nx">numX</span> <span class="p">&lt;</span> <span class="nx">numY</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">false</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">pq</span> <span class="o">*</span><span class="nx">PriorityQueue</span><span class="p">)</span> <span class="nf">Push</span><span class="p">(</span><span class="nx">x</span> <span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+    <span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span><span class="p">,</span> <span class="nx">x</span><span class="p">.(</span><span class="kt">int</span><span class="p">))</span>
+<span class="p">}</span>
+
+<span class="kd">func</span><span class="p">(</span><span class="nx">pq</span> <span class="o">*</span><span class="nx">PriorityQueue</span><span class="p">)</span> <span class="nf">Pop</span><span class="p">()</span> <span class="kd">interface</span><span class="p">{}</span> <span class="p">{</span>
+    <span class="nx">old</span> <span class="o">:=</span> <span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span>
+    <span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">old</span><span class="p">)</span>
+    <span class="nx">item</span> <span class="o">:=</span> <span class="nx">old</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="nx">pq</span><span class="p">.</span><span class="nx">IntSlice</span> <span class="p">=</span> <span class="nx">old</span><span class="p">[:</span> <span class="nx">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nx">item</span>
+<span class="p">}</span>
+</code></pre></div><blockquote>
+<p><code>Less(x, y int) bool</code>方法的重写解释,当前元素对应的下标<code>x</code>在<code>y</code>后面，如果<code>Less</code>方法返回<code>true</code>，则交换<code>x,y</code>下标对应的元素；返回<code>false</code>则不交换。</p>
+</blockquote>
+<h2 id="快速排序">快速排序</h2>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-09-08</span>
+                <span>更新于 2021-09-20</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/%E4%BA%8C%E5%8F%89%E5%A0%86/" data-title="二叉堆" data-hashtags="二叉堆,算法学习"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/%E4%BA%8C%E5%8F%89%E5%A0%86/" data-hashtag="二叉堆"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/%E4%BA%8C%E5%8F%89%E5%A0%86/" data-title="二叉堆" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/%E4%BA%8C%E5%8F%89%E5%A0%86/" data-title="二叉堆"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/" data-title="排序" data-hashtags="排序,算法学习"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/" data-hashtag="排序"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/" data-title="排序" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/" data-title="排序"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E4%BA%8C%E5%8F%89%E5%A0%86/">二叉堆</a>,&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">算法学习</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%8E%92%E5%BA%8F/">排序</a>,&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">算法学习</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%BA%94%E7%94%A8/" class="prev" rel="prev" title="二分查找LeetCode题目应用"><i class="fas fa-angle-left fa-fw"></i>二分查找LeetCode题目应用</a>
-            <a href="/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" class="next" rel="next" title="栈和队列">栈和队列<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/redis-%E5%AF%B9%E8%B1%A1/" class="prev" rel="prev" title="Redis(七)对象"><i class="fas fa-angle-left fa-fw"></i>Redis(七)对象</a>
+            <a href="/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" class="next" rel="next" title="回溯算法(或DFS)">回溯算法(或DFS)<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>
