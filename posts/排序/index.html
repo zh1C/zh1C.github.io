@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E6%8E%92%E5%BA%8F\/"
-        },"genre": "posts","keywords": "排序, 算法学习","wordcount":  3537 ,
+        },"genre": "posts","keywords": "排序, 算法学习","wordcount":  3534 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E6%8E%92%E5%BA%8F\/","datePublished": "2021-09-20T00:00:00+00:00","dateModified": "2021-09-20T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">排序</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-20">2021-09-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3537 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-20">2021-09-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3534 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -191,14 +191,14 @@
 </span><span class="c1"></span>    <span class="nf">swim</span><span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 <span class="p">}</span>
 <span class="c1">// 删除最大值
-</span><span class="c1"></span><span class="kd">func</span> <span class="nf">delMax</span><span class="p">(</span><span class="nx">pq</span> <span class="o">*</span><span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">freq</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">delMax</span><span class="p">(</span><span class="nx">pq</span> <span class="o">*</span><span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
   	<span class="c1">// 堆顶就是最大元素
 </span><span class="c1"></span>    <span class="nx">max</span><span class="p">,</span> <span class="nx">N</span> <span class="o">:=</span> <span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">)</span>
   	<span class="c1">// 把这个元素换到最后，删除
 </span><span class="c1"></span>    <span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">)[</span><span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">)[</span><span class="nx">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">)[</span><span class="nx">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="o">*</span><span class="nx">pq</span> <span class="p">=</span> <span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">)[:</span><span class="nx">N</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
   	<span class="c1">// 让pq[1]下沉到正确位置
-</span><span class="c1"></span>    <span class="nf">sink</span><span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">,</span> <span class="nx">freq</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class="c1"></span>    <span class="nf">sink</span><span class="p">(</span><span class="o">*</span><span class="nx">pq</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">return</span> <span class="nx">max</span>
 <span class="p">}</span>
 <span class="c1">// 上浮
