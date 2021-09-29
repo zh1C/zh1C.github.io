@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97\/"
-        },"genre": "posts","keywords": "栈和队列, 算法学习","wordcount":  1379 ,
+        },"genre": "posts","keywords": "栈和队列, 算法学习","wordcount":  2155 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97\/","datePublished": "2021-09-28T00:00:00+00:00","dateModified": "2021-09-28T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">栈和队列</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-28">2021-09-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1379 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-28">2021-09-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2155 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -142,7 +142,16 @@
         <li><a href="#2下一个更大元素ii">2、下一个更大元素II</a></li>
       </ul>
     </li>
-    <li><a href="#单调队列">单调队列</a></li>
+    <li><a href="#单调队列">单调队列</a>
+      <ul>
+        <li><a href="#单调队列的实现">单调队列的实现</a></li>
+        <li><a href="#滑动窗口中的最大值">滑动窗口中的最大值</a>
+          <ul>
+            <li><a href="#复杂度分析">复杂度分析</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><p>队列是一种<strong>先进先出</strong>的数据结构，栈是一种<strong>先进后出</strong>的数据结构。这两种数据结构底层都是数组或者链表实现的，只是API限定了它们的特性。</p>
@@ -402,6 +411,140 @@
 </ol>
 <h2 id="单调队列">单调队列</h2>
 <p>单调队列就是一个队列，只是使用了一些巧妙地方法，使得<strong>队列中的元素全都是单调的</strong>。</p>
+<blockquote>
+<p>单调栈一般解决数据持续输入，求最值；单调队列一般解决数据不仅输入同时还会输出，求最值。</p>
+</blockquote>
+<p>单调队列就能够在O(1)时间内得出最值。单调队列操作如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2010.15.34.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2010.15.34.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2010.15.34.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2010.15.34.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2010.15.34.png"
+        title="ScreenShot2021-09-29 10.15.34" /></p>
+<h3 id="单调队列的实现">单调队列的实现</h3>
+<p>单调队列需要数据结构能够支持在头部和尾部进行插入和删除，采用<strong>双链表或者数组</strong>数据结构。</p>
+<p><code>push</code>方法依然在队尾添加元素，但是要把前面比自己小的元素都删除，代码如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.20.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.20.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.20.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.20.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.20.png"
+        title="ScreenShot2021-09-29 11.02.20" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2010.25.23.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2010.25.23.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2010.25.23.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2010.25.23.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2010.25.23.png"
+        title="ScreenShot2021-09-29 10.25.23" /></p>
+<p>如果每个元素加入时都执行这样的操作，最终单调队列中的元素大小会保持单调递减的顺序，则<code>max</code>方法代码如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.13.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.13.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.13.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.13.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.13.png"
+        title="ScreenShot2021-09-29 11.02.13" /></p>
+<p><code>pop</code>方法在对头删除元素<code>n</code>，之所以要判断<code>data.front() == n</code>,是因为要删除的队头元素<code>n</code>可能已经被前面插入时删除了，这时就不用删除。代码如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.07.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.07.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.07.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.07.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2011.02.07.png"
+        title="ScreenShot2021-09-29 11.02.07" /></p>
+<p>完整单调队列实现代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// 单调队列数据结构
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">MonotonicQueue</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Queue</span> <span class="p">[]</span><span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="c1">// 在队尾添加元素n
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">MonotonicQueue</span><span class="p">)</span> <span class="nf">push</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 将前面小于自己的元素都删除
+</span><span class="c1"></span>    <span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="p">&lt;</span> <span class="nx">n</span> <span class="p">{</span>
+        <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span> <span class="p">=</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 返回当前队列中的最大值
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">MonotonicQueue</span><span class="p">)</span> <span class="nf">max</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1">// 队头元素如果是 n，删除它
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">MonotonicQueue</span><span class="p">)</span> <span class="nf">pop</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">n</span> <span class="o">==</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">{</span>
+        <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span> <span class="p">=</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">[</span><span class="mi">1</span> <span class="p">:]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="滑动窗口中的最大值">滑动窗口中的最大值</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2013.49.59.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2013.49.59.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2013.49.59.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2013.49.59.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-29%2013.49.59.png"
+        title="ScreenShot2021-09-29 13.49.59" /></p>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">maxSlidingWindow</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">k</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// 单调队列
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="p">(</span>
+        <span class="nx">window</span> <span class="nx">MonotonicQueue</span>
+        <span class="nx">result</span> <span class="p">[]</span><span class="kt">int</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">k</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">{</span>
+            <span class="c1">// 先填满窗口的前 k - 1
+</span><span class="c1"></span>            <span class="nx">window</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// 窗口向前滑动，添加新元素
+</span><span class="c1"></span>            <span class="nx">window</span><span class="p">.</span><span class="nf">push</span><span class="p">(</span><span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+            <span class="c1">// 将当前窗口最大值加入结果数组
+</span><span class="c1"></span>            <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">window</span><span class="p">.</span><span class="nf">max</span><span class="p">())</span>
+            <span class="c1">// 移除旧数据
+</span><span class="c1"></span>            <span class="nx">window</span><span class="p">.</span><span class="nf">pop</span><span class="p">(</span><span class="nx">nums</span><span class="p">[</span><span class="nx">i</span> <span class="o">-</span> <span class="nx">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">result</span>
+<span class="p">}</span>
+
+<span class="c1">// 单调队列数据结构
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">MonotonicQueue</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">Queue</span> <span class="p">[]</span><span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="c1">// 在队尾添加元素n
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">MonotonicQueue</span><span class="p">)</span> <span class="nf">push</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="c1">// 将前面小于自己的元素都删除
+</span><span class="c1"></span>    <span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="p">&lt;</span> <span class="nx">n</span> <span class="p">{</span>
+        <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span> <span class="p">=</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1">// 返回当前队列中的最大值
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">MonotonicQueue</span><span class="p">)</span> <span class="nf">max</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1">// 队头元素如果是 n，删除它
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">q</span> <span class="o">*</span><span class="nx">MonotonicQueue</span><span class="p">)</span> <span class="nf">pop</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">n</span> <span class="o">==</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">{</span>
+        <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span> <span class="p">=</span> <span class="nx">q</span><span class="p">.</span><span class="nx">Queue</span><span class="p">[</span><span class="mi">1</span> <span class="p">:]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h4 id="复杂度分析">复杂度分析</h4>
+<p>单独看<code>push</code>操作的复杂度确实不是<code>O(1)</code>，但是算法整体的复杂度依然是<code>O(N)</code>线性时间。要这样想，<code>nums</code>中的每个元素最多被<code>push_back</code>和<code>pop_back</code>一次，没有任何多余操作，所以整体的复杂度还是<code>O(N)</code>。空间复杂度就是窗口的大小<code>O(k)</code>。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
