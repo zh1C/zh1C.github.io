@@ -3,9 +3,16 @@
         <title>NarcissusBlog</title>
         <link>http://wen-nan.github.io/</link>
         <description>NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 28 Sep 2021 00:00:00 &#43;0000</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 30 Sep 2021 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="http://wen-nan.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>分治算法</title>
+    <link>http://wen-nan.github.io/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/</link>
+    <pubDate>Thu, 30 Sep 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/</guid>
+    <description><![CDATA[分治算法可以认为是一种算法思想，通过将原问题分解成小规模的子问题，然后根据子问题的结果构造出原问题的答案。 归并排序 归并排序是最典型的分治算法]]></description>
+</item><item>
     <title>栈和队列</title>
     <link>http://wen-nan.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</link>
     <pubDate>Tue, 28 Sep 2021 00:00:00 &#43;0000</pubDate>
@@ -68,12 +75,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/redis-%E8%B7%B3%E8%B7%83%E8%A1%A8/</guid>
     <description><![CDATA[跳跃表是一种有序数据结构，通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。支持平均O(logN)、最坏O(N)复杂度]]></description>
-</item><item>
-    <title>Redis(一)简单动态字符串</title>
-    <link>http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
-    <pubDate>Thu, 09 Sep 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
-    <description><![CDATA[概述 简单来说 Redis 就是一个使用 C 语言开发的数据库， 是速度非常快的非关系型（NoSQL）内存键值数据库，可以存储键和五种不同类型的值之间的映射。键]]></description>
 </item></channel>
 </rss>
