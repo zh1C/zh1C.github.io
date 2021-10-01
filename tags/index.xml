@@ -3,7 +3,21 @@
         <title>Tags - 标签 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/tags/</link>
         <description>Tags - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 30 Sep 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 01 Oct 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>数学技巧</title>
+    <link>http://wen-nan.github.io/tags/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</link>
+    <pubDate>Fri, 01 Oct 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/tags/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
+    <title>算法学习</title>
+    <link>http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
+    <pubDate>Fri, 01 Oct 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>分治算法</title>
     <link>http://wen-nan.github.io/tags/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/</link>
     <pubDate>Thu, 30 Sep 2021 00:00:00 &#43;0000</pubDate>
@@ -16,13 +30,6 @@
     <pubDate>Thu, 30 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
     <guid>http://wen-nan.github.io/tags/%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>算法学习</title>
-    <link>http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
-    <pubDate>Thu, 30 Sep 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>栈和队列</title>
@@ -65,13 +72,6 @@
     <pubDate>Mon, 13 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
     <guid>http://wen-nan.github.io/tags/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>二分查找</title>
-    <link>http://wen-nan.github.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</link>
-    <pubDate>Mon, 06 Sep 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

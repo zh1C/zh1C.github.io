@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>数学技巧 - NarcissusBlog</title><meta name="Description" content="算法学习之常用数学技巧。"><meta property="og:title" content="数学技巧" />
+<meta property="og:description" content="算法学习之常用数学技巧。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wen-nan.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-10-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-10-01T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="数学技巧"/>
+<meta name="twitter:description" content="算法学习之常用数学技巧。"/>
+<meta name="application-name" content="NarcissusBlog">
+<meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "数学技巧",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wen-nan.github.io\/posts\/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7\/"
+        },"genre": "posts","keywords": "数学技巧, 算法学习","wordcount":  840 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7\/","datePublished": "2021-10-01T00:00:00+00:00","dateModified": "2021-10-01T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Narcissus"},"author": {
+                "@type": "Person",
+                "name": "Narcissus"
+            },"description": "算法学习之常用数学技巧。"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner">
+                <a class="menu-item" href="/posts/" title="全部文章"><i class="fa fa-fw fa-bars"></i> 全部文章 
+                        </a><a class="menu-item" href="/categories/" title="分类"><i class="fas fa-fw fa-th"></i> 分类 
+                        </a><a class="menu-item" href="/tags/" title="标签"><i class="fas fa-fw fa-tag"></i> 标签 
+                        </a>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="menu-item menu-more dropbtn" title="文档" ><i class='fas fa-fw fa-fan fa-spin'></i> 文档 
+                            </a>
+                            <div class="menu-more-content dropdown-content"><a href="https://gohugo.io/documentation/" title="" target="_blank" rel="noopener"><i class='fa fa-thumbs-up'></i> Hugo文档 </a></div>
+                        </div>
+                    <a class="menu-item" href="/about/" title="关于"><i class="fas fa-fw fa-at"></i> 关于 
+                        </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  
+                        </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="全部文章"><i class="fa fa-fw fa-bars"></i> 全部文章 
+                    </a><a class="menu-item" href="/categories/" title="分类"><i class="fas fa-fw fa-th"></i> 分类 
+                    </a><a class="menu-item" href="/tags/" title="标签"><i class="fas fa-fw fa-tag"></i> 标签 
+                    </a>
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="menu-item menu-more dropbtn" title="文档" ><i class='fas fa-fw fa-fan fa-spin'></i> 文档 
+                        </a>
+                        <div class="menu-more-content dropdown-content"><a href="https://gohugo.io/documentation/" title="" target="_blank" rel="noopener"><i class='fa fa-thumbs-up'></i> Hugo文档 </a></div>
+                    </div>
+                <a class="menu-item" href="/about/" title="关于"><i class="fas fa-fw fa-at"></i> 关于 
+                    </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  
+                    </a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">数学技巧</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-01">2021-10-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 840 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#快速幂">快速幂</a>
+      <ul>
+        <li><a href="#二进制拆分">二进制拆分</a></li>
+        <li><a href="#编程实现">编程实现</a></li>
+        <li><a href="#复杂度">复杂度</a></li>
+        <li><a href="#超级次方">超级次方</a>
+          <ul>
+            <li><a href="#处理数组指数">处理数组指数</a></li>
+            <li><a href="#处理mod运算">处理mod运算</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="快速幂">快速幂</h2>
+<p>根据幂运算的定义可以知道，如果要求 <code>x</code> 的 <code>N</code> 次幂，那么暴力方法就是用一个 <code>N</code> 次的循环，然后累乘得到结果，时间复杂度为<code>o(N)</code>。快速幂算法可以将复杂度降为<code>O(logN)</code>。</p>
+<h3 id="二进制拆分">二进制拆分</h3>
+<p>以<code>N = 10</code>为具体场景，10写成二进制表示为<code>1010(BIN)</code>,那么求<code>x</code>的<code>10</code>次幂，就可以写成如下式子：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.14.49.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.14.49.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.14.49.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.14.49.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.14.49.png"
+        title="ScreenShot2021-10-01 09.14.49" /></p>
+<p>对上面的最后结果按从低位到高位交换位置如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.15.59.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.15.59.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.15.59.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.15.59.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.15.59.png"
+        title="ScreenShot2021-10-01 09.15.59" /></p>
+<p>在不考虑幂指数的<code>*0</code>和<code>*1</code>，只看前半部分，会有规律：<strong>左式每次是要乘以自身，就是下一项的左式</strong>。我们的例子中有：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.19.50.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.19.50.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.19.50.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.19.50.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.19.50.png"
+        title="ScreenShot2021-10-01 09.19.50" /></p>
+<p>编程思路为：<strong>从<code>x</code>开始维护一个左式，每一次迭代都执行<code>x *= x</code>，然后每次遇到右边是<code>*1</code>的情况，就记录以下<code>res *= x</code></strong>，这样就模拟出了二进制拆分的计算思路。</p>
+<h3 id="编程实现">编程实现</h3>
+<p>先简单实现计算出2的10次方这个例子，代码如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.29.56.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.29.56.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.29.56.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.29.56.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.29.56.png"
+        title="ScreenShot2021-10-01 09.29.56" /></p>
+<p>将<code>n,x</code>做成参数，编写一个快速幂方法，代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">qPow</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="nx">res</span> <span class="o">:=</span> <span class="mi">1</span>
+	<span class="k">for</span> <span class="nx">n</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="nx">n</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
+			<span class="nx">res</span> <span class="o">*=</span> <span class="nx">x</span>
+		<span class="p">}</span>
+		<span class="nx">x</span> <span class="o">*=</span> <span class="nx">x</span>
+		<span class="nx">n</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">res</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="复杂度">复杂度</h3>
+<p>不妨设求x的N次方，<strong>并且令N的所有二进制位都是1</strong>，就有如下等式：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.36.11.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.36.11.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.36.11.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.36.11.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.36.11.png"
+        title="ScreenShot2021-10-01 09.36.11" /></p>
+<p>则k就是计算机需要计算的次数，可以反推出k的大小：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.38.52.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.38.52.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.38.52.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.38.52.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.38.52.png"
+        title="ScreenShot2021-10-01 09.38.52" /></p>
+<h3 id="超级次方">超级次方</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.52.45.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.52.45.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.52.45.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.52.45.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.52.45.png"
+        title="ScreenShot2021-10-01 09.52.45" /></p>
+<p>题目要求返回幂运算<code>a^b</code>的计算结果与1337取模后的结果。有三个难点：</p>
+<ul>
+<li><strong>如何处理用数组表示的指数</strong>？</li>
+</ul>
+<p><code>b</code>是一个数组，即<code>b</code>可能非常大，没办法直接转换为整型。</p>
+<ul>
+<li><strong>如何得到求模之后的结果</strong>？</li>
+</ul>
+<p>一般是先把幂运算结果算出来，再取模，但幂运算结果非常大，会溢出报错。</p>
+<ul>
+<li><strong>如何高效进行幂运算</strong>？</li>
+</ul>
+<p>即采用快速幂算法，解决这个难点。</p>
+<h4 id="处理数组指数">处理数组指数</h4>
+<p>不考虑求模要求，以<code>b = [1,5,6,4]</code>为例，结合指数运算法则，有以下规律：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.58.52.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.58.52.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.58.52.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.58.52.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-01%2009.58.52.png"
+        title="ScreenShot2021-10-01 09.58.52" /></p>
+<p>即可以<strong>采用递归实现</strong>。</p>
+<h4 id="处理mod运算">处理mod运算</h4>
+<p>由于计算机编码方式，形如<code>(a * b) % mod</code>这样的运算，乘法结果可能会溢出，防止溢出的技巧为：</p>
+<p><strong><code>(a*b)%k = (a%k)*(b%k) % k</code>即对乘法结果求模，等价于先对每个因子都求模，然后对因子相乘的结果再求模</strong>。</p>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">const</span> <span class="nx">mod</span> <span class="kt">int</span> <span class="p">=</span> <span class="mi">1337</span>
+
+<span class="kd">func</span> <span class="nf">superPow</span><span class="p">(</span><span class="nx">a</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">b</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="c1">// 快速幂+递归
+</span><span class="c1"></span>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="p">}</span>
+    <span class="nx">last</span> <span class="o">:=</span> <span class="nx">b</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="nx">b</span> <span class="p">=</span> <span class="nx">b</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="nx">b</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="nx">result</span> <span class="o">:=</span> <span class="nf">pow</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">last</span><span class="p">)</span> <span class="o">*</span> <span class="nf">pow</span><span class="p">(</span><span class="nf">superPow</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">),</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nx">result</span> <span class="o">%</span> <span class="nx">mod</span>
+<span class="p">}</span>
+
+<span class="c1">// 返回x的n次方求模
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">pow</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="nx">res</span> <span class="o">:=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="nx">n</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="nx">n</span> <span class="o">&amp;</span> <span class="mi">1</span> <span class="o">==</span> <span class="mi">1</span> <span class="p">{</span>
+            <span class="nx">res</span> <span class="o">*=</span> <span class="nx">x</span> <span class="o">%</span> <span class="nx">mod</span>
+        <span class="p">}</span>
+        <span class="nx">x</span> <span class="o">*=</span> <span class="nx">x</span> <span class="o">%</span> <span class="nx">mod</span>
+        <span class="nx">n</span> <span class="o">&gt;&gt;=</span> <span class="mi">1</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">res</span> <span class="o">%</span> <span class="nx">mod</span>
+<span class="p">}</span>
+</code></pre></div></div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2021-10-01</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/" data-title="数学技巧" data-hashtags="数学技巧,算法学习"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/" data-hashtag="数学技巧"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/" data-title="数学技巧" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/" data-title="数学技巧"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/">数学技巧</a>,&nbsp;<a href="/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/">算法学习</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/" class="prev" rel="prev" title="分治算法"><i class="fas fa-angle-left fa-fw"></i>分治算法</a></div>
+</div>
+<div id="comments">
+        <div id="gitalk" class="comment"></div>
+        <link rel="stylesheet" href="/js/gitalk.css">
+        <script src="/js/gitalk.min.js"></script>
+        <script src="/js/md5.js"></script>
+        <script>
+        const gitalk = new Gitalk({
+            clientID: '60afa8aa721493fdc40a',
+            clientSecret: '0d83669766bc4d55f49702f8d22e76215dfb373a',
+            repo: 'wen-nan.github.io',
+            owner: 'wen-nan',
+            admin: ['wen-nan'],
+            
+            
+            id: md5(location.pathname), 
+            distractionFreeMode: false 
+        });
+        (function() {
+            if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+                document.getElementById('gitalk').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+                return;
+            }
+            gitalk.render('gitalk');
+        })();
+        </script>
+        </div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                <span id="run-time"></span>
+            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.87.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Narcissus</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>
