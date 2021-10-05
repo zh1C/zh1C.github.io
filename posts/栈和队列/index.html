@@ -9,8 +9,8 @@
 <meta property="og:description" content="算法学习之栈与队列学习，主要学习栈和队列相互实现、单调栈和单调队列。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-09-28T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-09-28T00:00:00+00:00" />
+<meta property="article:published_time" content="2021-10-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-10-05T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="栈和队列"/>
@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" /><link rel="next" href="http://wen-nan.github.io/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97\/"
-        },"genre": "posts","keywords": "栈和队列, 算法学习","wordcount":  2155 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97\/","datePublished": "2021-09-28T00:00:00+00:00","dateModified": "2021-09-28T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "栈和队列, 算法学习","wordcount":  2447 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97\/","datePublished": "2021-10-05T00:00:00+00:00","dateModified": "2021-10-05T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">栈和队列</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-28">2021-09-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2155 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-05">2021-10-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2447 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -140,6 +140,7 @@
       <ul>
         <li><a href="#1下一个更大元素">1、下一个更大元素</a></li>
         <li><a href="#2下一个更大元素ii">2、下一个更大元素II</a></li>
+        <li><a href="#去除重复字母">去除重复字母</a></li>
       </ul>
     </li>
     <li><a href="#单调队列">单调队列</a>
@@ -409,7 +410,55 @@
 <li><strong>可以不用构造新数组，而是利用循环数组的技巧来模拟数组长度翻倍的效果</strong>。</li>
 <li><strong>为了方便将数据存入结果数组，单调栈中存放的是索引而不是元素</strong>。</li>
 </ol>
-<h2 id="单调队列">单调队列</h2>
+<h3 id="去除重复字母">去除重复字母</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-05%2009.32.07.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-05%2009.32.07.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-05%2009.32.07.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-05%2009.32.07.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-05%2009.32.07.png"
+        title="ScreenShot2021-10-05 09.32.07" /></p>
+<p>要找到字典序最小的串(删去中间任意字符)，可以使用单调栈。但这样不能保证每个字符出现仅出现一次。因此需要特殊处理：<strong>用哈希记录栈中出现字符（防止同一字符出现多次）；记录当前字符后面还有多少个相同字符（保证每个字符都出现一次），哈希表实现</strong>。</p>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">removeDuplicateLetters</span><span class="p">(</span><span class="nx">s</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="c1">// 单调栈
+</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">stack</span> <span class="p">[]</span><span class="kt">byte</span>
+    <span class="nx">inStack</span><span class="p">,</span> <span class="nx">freqChar</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">26</span><span class="p">),</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">26</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">s</span> <span class="p">{</span>
+        <span class="nx">freqChar</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nx">v</span> <span class="o">-</span> <span class="sc">&#39;a&#39;</span><span class="p">)]</span><span class="o">++</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+        <span class="nx">cur</span> <span class="o">:=</span> <span class="nx">s</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+        <span class="c1">// 如果栈中存在，不需要入栈
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">inStack</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nx">cur</span> <span class="o">-</span> <span class="sc">&#39;a&#39;</span><span class="p">)]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+            <span class="nx">freqChar</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nx">cur</span> <span class="o">-</span> <span class="sc">&#39;a&#39;</span><span class="p">)]</span><span class="o">--</span>
+            <span class="k">continue</span>
+        <span class="p">}</span>
+        <span class="c1">// 入栈
+</span><span class="c1"></span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">stack</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">stack</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="p">&lt;</span> <span class="nx">cur</span> <span class="p">{</span>
+            <span class="nx">stack</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">stack</span><span class="p">,</span> <span class="nx">cur</span><span class="p">)</span>
+            <span class="nx">inStack</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nx">cur</span> <span class="o">-</span> <span class="sc">&#39;a&#39;</span><span class="p">)]</span><span class="o">++</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">// 出栈
+</span><span class="c1"></span>            <span class="k">for</span> <span class="nb">len</span><span class="p">(</span><span class="nx">stack</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">stack</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">stack</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="p">&gt;</span> <span class="nx">cur</span> <span class="p">{</span>
+                <span class="nx">last</span> <span class="o">:=</span> <span class="nx">stack</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">stack</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> 
+                <span class="c1">// 后面没有栈顶元素，这栈顶元素不需要出栈
+</span><span class="c1"></span>                <span class="k">if</span> <span class="nx">freqChar</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nx">last</span><span class="o">-</span> <span class="sc">&#39;a&#39;</span><span class="p">)]</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+                    <span class="k">break</span>
+                <span class="p">}</span>
+                <span class="nx">inStack</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nx">last</span> <span class="o">-</span> <span class="sc">&#39;a&#39;</span><span class="p">)]</span><span class="o">--</span>
+                <span class="nx">stack</span> <span class="p">=</span> <span class="nx">stack</span><span class="p">[:</span> <span class="nb">len</span><span class="p">(</span><span class="nx">stack</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="p">}</span>
+            <span class="nx">stack</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">stack</span><span class="p">,</span> <span class="nx">cur</span><span class="p">)</span>
+            <span class="nx">inStack</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nx">cur</span> <span class="o">-</span> <span class="sc">&#39;a&#39;</span><span class="p">)]</span><span class="o">++</span> 
+        <span class="p">}</span>
+        <span class="nx">freqChar</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="nx">cur</span> <span class="o">-</span> <span class="sc">&#39;a&#39;</span><span class="p">)]</span><span class="o">--</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nb">string</span><span class="p">(</span><span class="nx">stack</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="单调队列">单调队列</h2>
 <p>单调队列就是一个队列，只是使用了一些巧妙地方法，使得<strong>队列中的元素全都是单调的</strong>。</p>
 <blockquote>
 <p>单调栈一般解决数据持续输入，求最值；单调队列一般解决数据不仅输入同时还会输出，求最值。</p>
@@ -549,7 +598,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-09-28</span>
+                <span>更新于 2021-10-05</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -568,8 +617,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/" class="prev" rel="prev" title="回溯算法(或DFS)"><i class="fas fa-angle-left fa-fw"></i>回溯算法(或DFS)</a>
-            <a href="/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/" class="next" rel="next" title="分治算法">分治算法<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/" class="prev" rel="prev" title="数学技巧"><i class="fas fa-angle-left fa-fw"></i>数学技巧</a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>
