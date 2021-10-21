@@ -2,10 +2,14 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://wen-nan.github.io/categories/</loc><lastmod>2021-10-09T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/</loc><lastmod>2021-10-09T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/posts/</loc><lastmod>2021-10-09T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/tags/</loc><lastmod>2021-10-09T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/categories/</loc><lastmod>2021-10-21T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/</loc><lastmod>2021-10-21T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/posts/</loc><lastmod>2021-10-21T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/tags/python/</loc><lastmod>2021-10-21T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/posts/python%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/</loc><lastmod>2021-10-21T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/tags/</loc><lastmod>2021-10-21T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/tags/%E6%8A%80%E6%9C%AF/</loc><lastmod>2021-10-21T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/categories/%E6%8A%80%E6%9C%AF/</loc><lastmod>2021-10-21T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc><lastmod>2021-10-09T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc><lastmod>2021-10-09T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</loc><lastmod>2021-10-09T00:00:00&#43;00:00</lastmod></url><url>
