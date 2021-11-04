@@ -1,0 +1,21 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Golang - 分类 - NarcissusBlog</title>
+        <link>http://wen-nan.github.io/categories/golang/</link>
+        <description>Golang - 分类 - NarcissusBlog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 04 Nov 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/categories/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>sync包学习</title>
+    <link>http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/</link>
+    <pubDate>Thu, 04 Nov 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/</guid>
+    <description><![CDATA[读写锁和互斥锁 Go语言标准库sync提供了2中锁，互斥锁（sync.Mutex）和读写锁（sync.RWMutex）。 互斥锁(sync.Mu]]></description>
+</item><item>
+    <title>goroutine的调度原理</title>
+    <link>http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%91/</link>
+    <pubDate>Mon, 01 Nov 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%91/</guid>
+    <description><![CDATA[Goroutine调度器]]></description>
+</item></channel>
+</rss>

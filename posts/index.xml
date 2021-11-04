@@ -3,7 +3,21 @@
         <title>所有文章 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/posts/</link>
         <description>所有文章 | NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 26 Oct 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 04 Nov 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>sync包学习</title>
+    <link>http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/</link>
+    <pubDate>Thu, 04 Nov 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/</guid>
+    <description><![CDATA[读写锁和互斥锁 Go语言标准库sync提供了2中锁，互斥锁（sync.Mutex）和读写锁（sync.RWMutex）。 互斥锁(sync.Mu]]></description>
+</item><item>
+    <title>goroutine的调度原理</title>
+    <link>http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%91/</link>
+    <pubDate>Mon, 01 Nov 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%91/</guid>
+    <description><![CDATA[Goroutine调度器]]></description>
+</item><item>
     <title>MapReduce</title>
     <link>http://wen-nan.github.io/posts/6-824%E5%AD%A6%E4%B9%A01/</link>
     <pubDate>Tue, 26 Oct 2021 00:00:00 &#43;0000</pubDate>
@@ -59,19 +73,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/</guid>
     <description><![CDATA[分治算法可以认为是一种算法思想，通过将原问题分解成小规模的子问题，然后根据子问题的结果构造出原问题的答案。 归并排序 归并排序是最典型的分治算法]]></description>
-</item><item>
-    <title>回溯算法(或DFS)</title>
-    <link>http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/</link>
-    <pubDate>Mon, 20 Sep 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/</guid>
-    <description><![CDATA[1、框架 深度优先搜索就是回溯算法，解决一个回溯问题，实际上就是一个决策树的遍历过程。需要思考三个问题： 路径：已经做出的选择。 选择列表：当前可]]></description>
-</item><item>
-    <title>Redis(七)对象</title>
-    <link>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</link>
-    <pubDate>Fri, 17 Sep 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</guid>
-    <description><![CDATA[Redis用到的主要数据结构有简单动态字符串(SDS)、双端链表、字典、跳跃表、压缩列整数集合等。但是Redis并没有直接使用这些数据结构来]]></description>
 </item></channel>
 </rss>

@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/6-824%E5%AD%A6%E4%B9%A01/" /><link rel="prev" href="http://wen-nan.github.io/posts/python%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/6-824%E5%AD%A6%E4%B9%A01/" /><link rel="prev" href="http://wen-nan.github.io/posts/python%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/" /><link rel="next" href="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%91/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/6-824%E5%AD%A6%E4%B9%A01\/"
-        },"genre": "posts","keywords": "6.824, MapReduce","wordcount":  500 ,
+        },"genre": "posts","keywords": "6.824, MapReduce","wordcount":  780 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/6-824%E5%AD%A6%E4%B9%A01\/","datePublished": "2021-10-26T00:00:00+00:00","dateModified": "2021-10-26T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MapReduce</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/6.824/"><i class="far fa-folder fa-fw"></i>6.824</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-26">2021-10-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 500 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-10-26">2021-10-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 780 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -124,7 +124,11 @@
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#mapreduce原理">MapReduce原理</a></li>
-    <li><a href="#lab1实现">Lab1实现</a></li>
+    <li><a href="#lab1实现">Lab1实现</a>
+      <ul>
+        <li><a href="#任务分析">任务分析</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="mapreduce原理">MapReduce原理</h2>
@@ -172,7 +176,7 @@
 <ol start="5">
 <li><strong>Reduce: Sort (Shuffle)</strong></li>
 </ol>
-<p>当所有的<code>map worker</code>完成工作后，<code>master</code>通知<code>reduce worker</code>开始工作。<code>reduce worker</code>通过远程调用获取键值对，然后再按键排序。<strong>排序是非常必要的</strong>。排序后，所有出现的相同键都被分组在一起，以便轻松获取与单个键相关联的所有数据。这个过程也被叫做洗牌阶段。</p>
+<p>当所有的<code>map worker</code>完成工作后，<code>master</code>通知<code>reduce worker</code>开始工作。<code>reduce worker</code>通过远程调用(RPC通信)获取键值对，然后再按键排序。<strong>排序是非常必要的</strong>。排序后，所有出现的相同键都被分组在一起，以便轻松获取与单个键相关联的所有数据。这个过程也被叫做洗牌阶段。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -195,6 +199,18 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-10/ScreenShot2021-10-26%2020.30.58.png"
         title="ScreenShot2021-10-26 20.30.58" /></p>
 <h2 id="lab1实现">Lab1实现</h2>
+<h3 id="任务分析">任务分析</h3>
+<p>实验初始代码提供了<strong>单进程串行</strong>版本，需要我们实现<strong>单机多线程并行</strong>的版本。任务概述如下：</p>
+<ul>
+<li>整个 MR 框架由一个 Coordinator 进程及若干个 Worker 进程构成</li>
+<li>Coordinator 进程与 Worker 进程间通过本地 Socket 进行 Golang RPC通信</li>
+<li>由 Coordinator 协调整个 MR 计算的推进，并分配 Task 到 Worker 上运行</li>
+<li>在启动 Coordinator 进程时指定 输入文件名 及 Reduce Task 数量</li>
+<li>在启动 Worker 进程时指定所用的 MR APP 动态链接库文件</li>
+<li>Coordinator 需要留意 Worker 可能无法在合理时间内完成收到的任务（Worker 卡死或宕机），在遇到此类问题时需要重新派发任务</li>
+<li>Coordinator 进程的入口文件为 <code>main/mrcoordinator.go</code>Worker 进程的入口文件为 <code>main/mrworker.go</code></li>
+<li>我们需要补充实现<code> mr/coordinator.go</code>、<code>mr/worker.go</code>、<code>mr/rpc.go</code> 这三个文件</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -218,7 +234,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/python%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/" class="prev" rel="prev" title="Python版本管理"><i class="fas fa-angle-left fa-fw"></i>Python版本管理</a></div>
+    <div class="post-nav"><a href="/posts/python%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/" class="prev" rel="prev" title="Python版本管理"><i class="fas fa-angle-left fa-fw"></i>Python版本管理</a>
+            <a href="/posts/go%E5%B9%B6%E5%8F%91/" class="next" rel="next" title="goroutine的调度原理">goroutine的调度原理<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>
