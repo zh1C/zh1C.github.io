@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/go%E5%B9%B6%E5%8F%912\/"
-        },"genre": "posts","keywords": "Golang, 并发","wordcount":  1015 ,
+        },"genre": "posts","keywords": "Golang学习, 并发","wordcount":  1765 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/go%E5%B9%B6%E5%8F%912\/","datePublished": "2021-11-04T00:00:00+00:00","dateModified": "2021-11-04T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">sync包学习</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-04">2021-11-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1015 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-04">2021-11-04</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1765 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -128,6 +128,13 @@
         <li><a href="#互斥锁syncmutex">互斥锁(sync.Mutex)</a></li>
         <li><a href="#读写锁syncrwmutex">读写锁(sync.RWMutex)</a></li>
         <li><a href="#互斥锁如何实现公平">互斥锁如何实现公平</a></li>
+      </ul>
+    </li>
+    <li><a href="#synccond">Sync.Cond</a>
+      <ul>
+        <li><a href="#synccond的使用场景">sync.Cond的使用场景</a></li>
+        <li><a href="#synccond的方法">sync.Cond的方法</a></li>
+        <li><a href="#使用示例">使用示例</a></li>
       </ul>
     </li>
   </ul>
@@ -175,7 +182,78 @@
 <p>如果一个等待的goroutine获取了锁，并且满足一以下其中的任何一个条件：(1)它是队列中的最后一个；(2)它等待的时候小于1ms。它会将锁的状态转换为正常状态。</p>
 <p>正常状态有很好的性能表现，饥饿模式也是非常重要的，因为它能阻止尾部延迟的现象。</p>
 </blockquote>
-</div><div class="post-footer" id="post-footer">
+<h2 id="synccond">Sync.Cond</h2>
+<h3 id="synccond的使用场景">sync.Cond的使用场景</h3>
+<blockquote>
+<p><code>sync.Cond</code>条件变量用来协调想要访问共享资源的那些goroutine，当共享资源的状态发生变化的时候，可以用来通知被互斥锁阻塞的goroutine。</p>
+</blockquote>
+<p><code>sync.Cond</code>常用在多个goroutine等待，一个goroutine通知的场景。如果是一个通知，一个等待，使用互斥锁或channel就可以。</p>
+<h3 id="synccond的方法">sync.Cond的方法</h3>
+<p>每个 Cond 实例都会关联一个锁 L（互斥锁 *Mutex，或读写锁 *RWMutex），当修改条件或者调用 Wait 方法时，必须加锁。</p>
+<ul>
+<li>
+<p>NewCond 创建实例：<code>func NewCond(l Locker) *Cond</code></p>
+</li>
+<li>
+<p>Broadcast 广播唤醒所有：<code>func (c *Cond) Broadcast()</code></p>
+</li>
+</ul>
+<p>Broadcast唤醒所有等待调价变量c的goroutine，无需锁保护。</p>
+<ul>
+<li>Signal唤醒一个协程：<code>func (c *COnd) Signal()</code></li>
+</ul>
+<p>Signal 只唤醒任意 1 个等待条件变量 c 的 goroutine，无需锁保护。</p>
+<ul>
+<li>Wait 等待：<code>func (c *COnd) Wait()</code></li>
+</ul>
+<p>调用 Wait 会自动释放锁 c.L，并挂起调用者所在的 goroutine，因此当前协程会阻塞在 Wait 方法调用的地方。如果其他协程调用了 Signal 或 Broadcast 唤醒了该协程，那么 Wait 方法在结束阻塞时，会重新给 c.L 加锁，并且继续执行 Wait 后面的代码。</p>
+<h3 id="使用示例">使用示例</h3>
+<p>三个协程调用<code>wait()</code>等待，另一个协程调用<code>Broadcast()</code>唤醒所有等待的协程。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">done</span> <span class="p">=</span> <span class="kc">false</span>
+
+<span class="kd">func</span> <span class="nf">read</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">c</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Cond</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+	<span class="k">for</span> <span class="p">!</span><span class="nx">done</span> <span class="p">{</span>
+		<span class="nx">c</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+	<span class="p">}</span>
+	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="s">&#34;starts reading&#34;</span><span class="p">)</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">write</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">c</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Cond</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="s">&#34;starts writing&#34;</span><span class="p">)</span>
+	<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+	<span class="nx">done</span> <span class="p">=</span> <span class="kc">true</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">L</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+	<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="s">&#34;wakes all&#34;</span><span class="p">)</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nf">Broadcast</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="nx">cond</span> <span class="o">:=</span> <span class="nx">sync</span><span class="p">.</span><span class="nf">NewCond</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span><span class="p">{})</span>
+
+	<span class="k">go</span> <span class="nf">read</span><span class="p">(</span><span class="s">&#34;reader1&#34;</span><span class="p">,</span> <span class="nx">cond</span><span class="p">)</span>
+	<span class="k">go</span> <span class="nf">read</span><span class="p">(</span><span class="s">&#34;reader2&#34;</span><span class="p">,</span> <span class="nx">cond</span><span class="p">)</span>
+	<span class="k">go</span> <span class="nf">read</span><span class="p">(</span><span class="s">&#34;reader3&#34;</span><span class="p">,</span> <span class="nx">cond</span><span class="p">)</span>
+	<span class="nf">write</span><span class="p">(</span><span class="s">&#34;writer&#34;</span><span class="p">,</span> <span class="nx">cond</span><span class="p">)</span>
+
+	<span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><ul>
+<li><code>done</code> 即互斥锁需要保护的条件变量。</li>
+<li><code>read()</code> 调用 <code>Wait()</code> 等待通知，直到 done 为 true。</li>
+<li><code>write()</code> 接收数据，接收完成后，将 done 置为 true，调用 <code>Broadcast()</code> 通知所有等待的协程。</li>
+<li><code>write()</code> 中的暂停了 1s，一方面是模拟耗时，另一方面是确保前面的 3 个 read 协程都执行到 <code>Wait()</code>，处于等待状态。main 函数最后暂停了 3s，确保所有操作执行完毕。</li>
+</ul>
+<p>执行结果</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">$ go run main.go        
+2021/11/14 12:58:00 writer starts writing
+2021/11/14 12:58:01 writer wakes all
+2021/11/14 12:58:01 reader3 starts reading
+2021/11/14 12:58:01 reader1 starts reading
+2021/11/14 12:58:01 reader2 starts reading
+</code></pre></div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -186,13 +264,13 @@
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/" data-title="sync包学习" data-hashtags="Golang,并发"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/" data-hashtag="Golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/" data-title="sync包学习" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/" data-title="sync包学习"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/" data-title="sync包学习" data-hashtags="Golang学习,并发"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/" data-hashtag="Golang学习"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/" data-title="sync包学习" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/" data-title="sync包学习"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">Golang</a>,&nbsp;<a href="/tags/%E5%B9%B6%E5%8F%91/">并发</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang%E5%AD%A6%E4%B9%A0/">Golang学习</a>,&nbsp;<a href="/tags/%E5%B9%B6%E5%8F%91/">并发</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
