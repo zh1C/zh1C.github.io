@@ -3,7 +3,14 @@
         <title>算法学习 - 标签 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
         <description>算法学习 - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 09 Oct 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 15 Nov 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <title>刷题技巧总结</title>
+    <link>http://wen-nan.github.io/posts/%E5%88%B7%E9%A2%98%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/</link>
+    <pubDate>Mon, 15 Nov 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E5%88%B7%E9%A2%98%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/</guid>
+    <description><![CDATA[判断两个字符串是否有相同字符 原理讲解 限制条件为必须均为小写字母构成(不是必须)，则可以使用位掩码技巧：用一个(长度为26比特位，1表示含有该]]></description>
+</item><item>
     <title>数据结构</title>
     <link>http://wen-nan.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
     <pubDate>Sat, 09 Oct 2021 00:00:00 &#43;0000</pubDate>
@@ -66,12 +73,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%BA%94%E7%94%A8/</guid>
     <description><![CDATA[二分搜索问题泛化 把题目抽象出一个自变量x,一个关于x的函数f(x),以及一个目标值target。 同时，x,f(x),target必须满足以下]]></description>
-</item><item>
-    <title>二分查找</title>
-    <link>http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</link>
-    <pubDate>Sat, 04 Sep 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/</guid>
-    <description><![CDATA[注意：排序数组中的搜索问题，首先想到二分法。 一、基本的二分查找 最简单的情况就是搜索一个数，如果存在，返回索引；否则返回-1。 func search(nums []int, target int) int { //]]></description>
 </item></channel>
 </rss>
