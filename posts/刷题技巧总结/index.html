@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E5%88%B7%E9%A2%98%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","keywords": "算法学习\u0022","wordcount":  406 ,
+        },"genre": "posts","keywords": "算法学习\u0022","wordcount":  414 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E5%88%B7%E9%A2%98%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93\/","datePublished": "2021-11-15T00:00:00+00:00","dateModified": "2021-11-15T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">刷题技巧总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-15">2021-11-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 406 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-15">2021-11-15</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 414 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -123,7 +123,7 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#判断两个字符串是否有相同字符">判断两个字符串是否有相同字符</a>
+    <li><a href="#位掩码技巧">位掩码技巧</a>
       <ul>
         <li><a href="#原理讲解">原理讲解</a></li>
         <li><a href="#leetcode例题">LeetCode例题</a></li>
@@ -131,9 +131,9 @@
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="判断两个字符串是否有相同字符">判断两个字符串是否有相同字符</h2>
+            </div><div class="content" id="content"><h2 id="位掩码技巧">位掩码技巧</h2>
 <h3 id="原理讲解">原理讲解</h3>
-<p>限制条件为必须均为小写字母构成(不是必须)，则可以使用<strong>位掩码技巧：用一个(长度为26比特位，1表示含有该字母，0表示不含有)数存储字符串包含字母情况，则判断两个字符串可以通过两个位掩码数与计算是否为0(num1 &amp; num2 == 0 ?)</strong>。</p>
+<p><strong>用于快速判断是否有重复出现的字符</strong>。限制条件为必须均为小写字母构成(不是必须)，则可以使用<strong>位掩码技巧：用一个(长度为26比特位，1表示含有该字母，0表示不含有)数存储字符串包含字母情况，则判断两个字符串可以通过两个位掩码数与计算是否为0(num1 &amp; num2 == 0 ?)</strong>。</p>
 <blockquote>
 <p>如何设置掩码的第 n 位？使用标准的位操作：<code>n_th_bit = 1 &lt;&lt; n</code>。</p>
 <p>如何计算一个单词的位掩码？遍历单词的每个字母，计算该字母在掩码中的位置 <code>n = (int)ch - (int)'a'</code>，然后创建一个第 n 位为 1 的掩码<code> n_th_bit = 1 &lt;&lt; n</code>，通过或操作将该码合并到位掩码中<code> bitmask |= n_th_bit</code>。</p>
