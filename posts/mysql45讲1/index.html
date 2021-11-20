@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql45%E8%AE%B21\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  1825 ,
+        },"genre": "posts","keywords": "MySQL","wordcount":  3255 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/mysql45%E8%AE%B21\/","datePublished": "2021-11-20T00:00:00+00:00","dateModified": "2021-11-20T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL基础篇一</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-20">2021-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1825 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-20">2021-11-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3255 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -142,6 +142,14 @@
     <li><a href="#事务隔离为什么你改了我还看不见">事务隔离：为什么你改了我还看不见？</a>
       <ul>
         <li><a href="#隔离性与隔离级别">隔离性与隔离级别</a></li>
+        <li><a href="#事务隔离的实现">事务隔离的实现</a></li>
+      </ul>
+    </li>
+    <li><a href="#深入浅出索引">深入浅出索引</a>
+      <ul>
+        <li><a href="#索引常见模型优劣分析">索引常见模型优劣分析</a></li>
+        <li><a href="#innodb的索引模型">InnoDB的索引模型</a></li>
+        <li><a href="#索引维护">索引维护</a></li>
       </ul>
     </li>
   </ul>
@@ -222,6 +230,86 @@
 <h2 id="事务隔离为什么你改了我还看不见">事务隔离：为什么你改了我还看不见？</h2>
 <p><strong>事务支持是在引擎层实现的</strong>，MySQL是支持多引擎的系统，但并不是所有引擎都支持事务。</p>
 <h3 id="隔离性与隔离级别">隔离性与隔离级别</h3>
+<p>事务的特性有ACID（Atomicity、Consistency、Isolation、Durability，即原子性、一致性、隔离性、持久性）。</p>
+<p>当数据库多个事务同时执行的时候，就可能出现脏读、不可重复读、幻读的问题，为了解决这些问题，就有了隔离级别的概念。SQL标准事务隔离级别包括：</p>
+<ul>
+<li>读未提交：一个事务还没提交时，他做的变更就能被别的事务看到。</li>
+<li>读提交：一个事务提交后，他做的变更才会被其他事务看到。</li>
+<li>可重复读：一个事务执行过程中看到的数据，总是跟这个事务启动时看到的数据保持一致。</li>
+<li>串行化：对同一行记录，读写都会加锁。</li>
+</ul>
+<blockquote>
+<p>在实现上，<strong>数据库会创建一个视图，访问的时候以视图的逻辑结果为准</strong>。</p>
+<ul>
+<li>在“可重复读”隔离级别下，视图在事务启动时创建，整个事务存在期间都用这个视图。</li>
+<li>在“读提交”隔离级别下，视图在每个SQL语句开始执行的时候创建。</li>
+<li>“读未提交”隔离级别下直接返回记录上的最新值，没有视图概念。</li>
+<li>“串行化”隔离级别下直接用加锁的方式避免并行访问。</li>
+</ul>
+</blockquote>
+<h3 id="事务隔离的实现">事务隔离的实现</h3>
+<p><strong>事务隔离通过回滚日志实现</strong>，在MySQL中，每一条记录在更新的时候都会记录一条回滚操作，假设一个值从1被顺序改成了2、3、4，在回滚日志里面有类似下面的记录：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png"
+        title="ScreenShot2021-11-20 18.36.53" /></p>
+<p>在视图A、B、C中，这个记录的值分别是1、2、4，<strong>同一条记录在系统中可以存在多个版本，这就是数据库的多版本并发控制（MVCC）</strong>。</p>
+<blockquote>
+<p>注意：当系统里没有比回滚日志更早的read-view时，回滚日志就会被删除。因此我们应该尽量避免使用长事务，因为会导致大量占用存储空间。</p>
+</blockquote>
+<h2 id="深入浅出索引">深入浅出索引</h2>
+<p>索引的出现就是为了提高数据查询的效率，就像书的目录一样。</p>
+<h3 id="索引常见模型优劣分析">索引常见模型优劣分析</h3>
+<ul>
+<li>哈希表</li>
+</ul>
+<p>哈希表是以一种键值对存储的数据结构，<strong>适用于只有等值查询的场景</strong>。</p>
+<ul>
+<li>有序数组</li>
+</ul>
+<p><strong>有序数组在等值查询和范围查询场景中性能都非常优秀，但只适用于静态存储索引</strong>。因为修改需要挪动记录，成本太高。</p>
+<ul>
+<li>搜索树</li>
+</ul>
+<p>二叉树是搜索树效率最高的，但实际大多数数据库存储并不使用二叉树。原因是，<strong>索引不止存在内存中，还要写到磁盘上</strong>。</p>
+<blockquote>
+<p>受限与磁盘的读写性能，减少单次查询尽量少的读磁盘，就必须让查询过程访问尽量少的数据块，因此不应该使用二叉树，而要使用N叉树。</p>
+</blockquote>
+<p><strong>N叉树由于读写上的性能优点，以及适配磁盘的访问模式，已经被广泛应用在数据库引擎中</strong>。</p>
+<h3 id="innodb的索引模型">InnoDB的索引模型</h3>
+<p>在InnoDB中，表都是根据主键顺序以索引的形式存放的，这种存储方式的表称为<strong>索引组织表</strong>。<strong>InnoDB使用B+树索引模型</strong>，每一个索引在InnoDB里面对应一棵B+树。</p>
+<p>有一个主键列为ID的表，表中有字段k,并且在k上有索引，则两棵树如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2019.49.31.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2019.49.31.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2019.49.31.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2019.49.31.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2019.49.31.png"
+        title="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2019.49.31.png" /></p>
+<p>可以看出，根据叶子节点的内容，<strong>索引类型分为主键索引和非主键索引</strong>。</p>
+<ul>
+<li>主键索引的叶子节点存储整行数据，在InnoDB中，主键索引也被称为聚簇索引。</li>
+<li>非主键索引的叶子节点内容是主键的值，在InnoDB中，非主键索引也被称为二级索引。</li>
+</ul>
+<blockquote>
+<p>基于主键索引和普通索引的查询有什么区别？</p>
+<p><strong>基于非主键索引的查询需要多扫描一棵索引树</strong>，即先通过非主键索引查询到对应主键，再通过主键查询到对应的记录。</p>
+</blockquote>
+<h3 id="索引维护">索引维护</h3>
+<p>B+树为了维护索引的有序性，在插入新值的时候需要做必要的维护。在这个过程中可能会需要一个新的数据页，挪动部分数据过去，这个过程称为<strong>页分裂。</strong></p>
+<blockquote>
+<p>页分裂会影响性能和数据页的利用率，当利用率很低之后，会将数据页合并。</p>
+</blockquote>
+<p>自增主键的优点：</p>
+<ol>
+<li><strong>其插入数据的模式，符合递增插入的场景，不涉及挪动其他记录，不会触发页分裂，写数据成本较低</strong>。</li>
+<li><strong>主键长度越小，普通索引的叶子节点就越小，普通索引占用空间就越小</strong>。</li>
+</ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
