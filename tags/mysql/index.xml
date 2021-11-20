@@ -1,0 +1,14 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>MySQL - 标签 - NarcissusBlog</title>
+        <link>http://wen-nan.github.io/tags/mysql/</link>
+        <description>MySQL - 标签 - NarcissusBlog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 20 Nov 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/mysql/" rel="self" type="application/rss+xml" /><item>
+    <title>MySQL基础篇一</title>
+    <link>http://wen-nan.github.io/posts/mysql45%E8%AE%B21/</link>
+    <pubDate>Sat, 20 Nov 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/mysql45%E8%AE%B21/</guid>
+    <description><![CDATA[基础架构：一条SQL查询语句是如何执行的？ MySQL的基本架构示意图如下： MySQL可以分为Server层和存储引擎层，不同存储引擎共用一个]]></description>
+</item></channel>
+</rss>
