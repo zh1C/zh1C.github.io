@@ -3,12 +3,40 @@
         <title>NarcissusBlog</title>
         <link>http://wen-nan.github.io/</link>
         <description>NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 20 Nov 2021 00:00:00 &#43;0000</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="http://wen-nan.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>MySQL基础篇一</title>
+    <title>Golang源码之常见数据结构实现原理</title>
+    <link>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</link>
+    <pubDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</guid>
+    <description><![CDATA[Channel 1. 前言 channel是Golang提供的goroutine间通信方式，主要用于进程内各goroutine间通信。源代码位于runtime/]]></description>
+</item><item>
+    <title>MySQL:事务</title>
+    <link>http://wen-nan.github.io/posts/mysql45%E8%AE%B22/</link>
+    <pubDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/mysql45%E8%AE%B22/</guid>
+    <description><![CDATA[事务隔离：为什么你改了我还看不见？ 事务支持是在引擎层实现的，MySQL是支持多引擎的系统，但并不是所有引擎都支持事务。 隔离性与隔离级别 事务的]]></description>
+</item><item>
+    <title>MySQL:索引</title>
+    <link>http://wen-nan.github.io/posts/mysql45%E8%AE%B23/</link>
+    <pubDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/mysql45%E8%AE%B23/</guid>
+    <description><![CDATA[深入浅出索引 索引的出现就是为了提高数据查询的效率，就像书的目录一样。 索引常见模型优劣分析 哈希表 哈希表是以一种键值对存储的数据结构，适用于只有]]></description>
+</item><item>
+    <title>MySQL:锁</title>
+    <link>http://wen-nan.github.io/posts/mysql45%E8%AE%B24/</link>
+    <pubDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/mysql45%E8%AE%B24/</guid>
+    <description><![CDATA[全局锁和表锁 ：给表加个字段怎么有这么多阻碍？ 根据加锁范围，MySQL里面的锁大致可以分为全局锁、表级锁和行锁三类。 全局锁 全局锁就是对整个数据]]></description>
+</item><item>
+    <title>MySQL基本介绍</title>
     <link>http://wen-nan.github.io/posts/mysql45%E8%AE%B21/</link>
-    <pubDate>Sat, 20 Nov 2021 00:00:00 &#43;0000</pubDate>
+    <pubDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/mysql45%E8%AE%B21/</guid>
     <description><![CDATA[基础架构：一条SQL查询语句是如何执行的？ MySQL的基本架构示意图如下： MySQL可以分为Server层和存储引擎层，不同存储引擎共用一个]]></description>
@@ -47,33 +75,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%91/</guid>
     <description><![CDATA[Goroutine调度器]]></description>
-</item><item>
-    <title>MapReduce</title>
-    <link>http://wen-nan.github.io/posts/6-824%E5%AD%A6%E4%B9%A01/</link>
-    <pubDate>Tue, 26 Oct 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/6-824%E5%AD%A6%E4%B9%A01/</guid>
-    <description><![CDATA[MapReduce原理 MapReduce程序分成了一个master和多个worker，master负责分配和调度任务，worker负责执行被]]></description>
-</item><item>
-    <title>Python版本管理</title>
-    <link>http://wen-nan.github.io/posts/python%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/</link>
-    <pubDate>Thu, 21 Oct 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/python%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86/</guid>
-    <description><![CDATA[virtualenv virtualenv 所要解决的是同一个库不同版本共存的兼容问题。例如项目 A 需要用到 requests 的 1.0 版本，项目 B 需要用到 requests 的 2.0 版本。如果不使用工具的话，一台机器只能安装]]></description>
-</item><item>
-    <title>数据结构</title>
-    <link>http://wen-nan.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
-    <pubDate>Sat, 09 Oct 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
-    <description><![CDATA[平衡查找树 在一棵含有N个结点的树中，我们希望树高为lgN，这样就能保证所有查找都能在lgN次比较内结束。但是在动态插入中保证树的完美平衡的代]]></description>
-</item><item>
-    <title>排序</title>
-    <link>http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/</link>
-    <pubDate>Fri, 08 Oct 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/</guid>
-    <description><![CDATA[二叉堆 二叉堆主要应用有两个，一种是排序方法堆排序，第二是一种数据结构&ndash;优先队列。 二叉堆概览 二叉堆就是一种特殊的二叉树（完全二叉树]]></description>
 </item></channel>
 </rss>
