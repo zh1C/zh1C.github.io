@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/" /><link rel="prev" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/" /><link rel="prev" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/" /><link rel="next" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862\/"
-        },"genre": "posts","keywords": "Golang","wordcount":  350 ,
+        },"genre": "posts","keywords": "Golang","wordcount":  1736 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862\/","datePublished": "2021-12-01T00:00:00+00:00","dateModified": "2021-12-01T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang源码之常见数据结构实现原理下</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-01">2021-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 350 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-01">2021-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1736 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -135,7 +135,27 @@
         <li><a href="#3-tag常见用法">3. Tag常见用法</a></li>
       </ul>
     </li>
-    <li><a href="#iota">Iota</a></li>
+    <li><a href="#iota">Iota</a>
+      <ul>
+        <li><a href="#规则">规则</a></li>
+        <li><a href="#2-编译原理">2. 编译原理</a></li>
+      </ul>
+    </li>
+    <li><a href="#string">String</a>
+      <ul>
+        <li><a href="#1-string标准概念">1. string标准概念</a></li>
+        <li><a href="#2-string数据结构">2. string数据结构</a></li>
+        <li><a href="#3-string操作">3. string操作</a>
+          <ul>
+            <li><a href="#31-声明">3.1 声明</a></li>
+            <li><a href="#32-byte转string">3.2 []byte转string</a></li>
+            <li><a href="#33-string转byte">3.3 string转[]byte</a></li>
+            <li><a href="#34-字符串拼接">3.4 字符串拼接</a></li>
+          </ul>
+        </li>
+        <li><a href="#4-byte转换成string一定会拷贝内存吗">4. []byte转换成string一定会拷贝内存吗？</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="struct的tag">Struct的Tag</h2>
@@ -163,6 +183,156 @@
 <h3 id="3-tag常见用法">3. Tag常见用法</h3>
 <p>常见的tag用法主要是JSON数据解析，ORM映射等。</p>
 <h2 id="iota">Iota</h2>
+<h3 id="规则">规则</h3>
+<p>很多博客上描述的规则是：</p>
+<ul>
+<li>iota在const关键字出现时被重置为0</li>
+<li>const声明块中每新增一行iota值自增1</li>
+</ul>
+<p>但实际上规则就一条：</p>
+<ul>
+<li><strong>iota代表了const声明块的行索引(下标从0开始)</strong></li>
+</ul>
+<p>这样理解更贴近编译器实现逻辑，也更准确。此外，<strong>const声明还有一个特点，即第一个常量必须指定一个表达式，后续的常量如果没有表达式，则继承上面的表达式</strong>。</p>
+<p>如下面的代码，每一个常量值为多少：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2018.52.49.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2018.52.49.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2018.52.49.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2018.52.49.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2018.52.49.png"
+        title="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2018.52.49.png" /></p>
+<ul>
+<li>第0行表达式展开即<code>bit0, mask0 = 1&lt;&lt;0, 1&lt;&lt;0 - 1</code>，所以bit0 = 1,mask0 = 0。</li>
+<li>第1行没有指定表达式继承上一行，即<code>bit1, mask1 = 1&lt;&lt;1, 1&lt;&lt;1 - 1</code>，所以bit1 = 2,maks1 = 1。</li>
+<li>第2行没有定义常量</li>
+<li>第3行没有指定表达式继承第一行，即<code>bit3, mask3 = 1&lt;&lt;3, 1&lt;&lt;3 - 1</code>，所以bit3 = 8, mask3 = 7。</li>
+</ul>
+<h3 id="2-编译原理">2. 编译原理</h3>
+<p>const块中每一行在Go中使用<code>spec</code>数据结构描述，声明如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.04.39.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.04.39.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.04.39.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.04.39.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.04.39.png"
+        title="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.04.39.png" /></p>
+<p>只关注<code>ValueSpec.Names</code>，这个切片中保存了一行中定义的常量，如果一行中定义了N个常量，那么<code>ValueSpec.Names</code>切片长度为N。const块实际上是spec类型的切片，用于表示const中的多行。</p>
+<p>编译期间构造常量时的伪算法如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.07.42.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.07.42.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.07.42.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.07.42.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.07.42.png"
+        title="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.07.42.png" /></p>
+<p><strong>可以清晰看到iota实际上就是遍历const块的索引，所以每行即便多次使用iota，其值也不会递增</strong>。</p>
+<h2 id="string">String</h2>
+<h3 id="1-string标准概念">1. string标准概念</h3>
+<p>Go标准库<code>builtin</code>给出了所有内置类型的定义。源码位于<code>src/builtin/builtin.go</code>，关于string描述如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.11.41.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.11.41.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.11.41.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.11.41.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.11.41.png"
+        title="ScreenShot2021-12-01 19.11.41" /></p>
+<p>string是8比特字节的集合，通常但并不一定是UTF-8编码的文本，<strong>string可以为空（长度为0），但不会是nil；string对象不可以修改</strong>。</p>
+<h3 id="2-string数据结构">2. string数据结构</h3>
+<p>源码<code>src/runtime/string.go</code>中定义了string的数据结构：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.15.23.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.15.23.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.15.23.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.15.23.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.15.23.png"
+        title="ScreenShot2021-12-01 19.15.23" /></p>
+<ul>
+<li><code>stringStruct.str</code>：字符串的首地址；</li>
+<li><code>stringStruct.len</code>：字符串长度。</li>
+</ul>
+<h3 id="3-string操作">3. string操作</h3>
+<h4 id="31-声明">3.1 声明</h4>
+<p>如下声明一个string变量并赋予初值：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.19.13.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.19.13.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.19.13.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.19.13.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.19.13.png"
+        title="ScreenShot2021-12-01 19.19.13" /></p>
+<p>字符串构建过程是先根据字符串构建<code>stringStruct</code>，再转换成string。转换源代码如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.21.54.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.21.54.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.21.54.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.21.54.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.21.54.png"
+        title="ScreenShot2021-12-01 19.21.54" /></p>
+<h4 id="32-byte转string">3.2 []byte转string</h4>
+<p>byte切片可以很方便的转换为string，代码如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.23.29.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.23.29.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.23.29.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.23.29.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.23.29.png"
+        title="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.23.29.png" /></p>
+<p><strong>注意：这种转换需要一次内存拷贝</strong>。如下图：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.26.50.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.26.50.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.26.50.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.26.50.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2019.26.50.png"
+        title="ScreenShot2021-12-01 19.26.50" /></p>
+<h4 id="33-string转byte">3.3 string转[]byte</h4>
+<p>string也可以方便的转成byte切片，如下代码所示：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193136572.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193136572.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193136572.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193136572.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193136572.png"
+        title="image-20211201193136572" /></p>
+<p><strong>也需要一次内存拷贝</strong>，如下图示：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193223624.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193223624.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193223624.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193223624.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193223624.png"
+        title="image-20211201193223624" /></p>
+<h4 id="34-字符串拼接">3.4 字符串拼接</h4>
+<p>字符串可以很方便进行拼接，代码如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193358528.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193358528.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193358528.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193358528.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211201193358528.png"
+        title="image-20211201193358528" /></p>
+<p>即便非常多的字符串需要拼接，性能上也有比较好的保证，因为新字符串的内存空间是一次分配完成的，所以性能消耗主要在拷贝数据上。<strong>一个拼接语句的字符串编译时都会被存放到一个切片中，拼接过程需要遍历两次切片，第一次遍历获取总的字符串长度，据此申请内存，第二次遍历会把字符串逐个拷贝过去</strong>。</p>
+<h3 id="4-byte转换成string一定会拷贝内存吗">4. []byte转换成string一定会拷贝内存吗？</h3>
+<p>byte切片转换成string的场景很多，<strong>为了性能上的考虑，有时候只是临时需要字符串的场景下，byte切片转换成 string时并不会拷贝内存，而是直接返回一个string，这个string的指针(string.str)指向切片的内存</strong>。</p>
+<p>比如以下临时场景：</p>
+<ul>
+<li>使用<code>m[string(b)]</code>来查找map（map是string为key，临时把切片b转成string）；</li>
+<li>字符串拼接，如<code>”&lt;”	+	“string(b)”	+	“&gt;”</code>；</li>
+<li>字符串比较：<code>string(b)	==	“foo”</code>。</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -186,7 +356,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/" class="prev" rel="prev" title="Golang源码之常见数据结构实现原理上"><i class="fas fa-angle-left fa-fw"></i>Golang源码之常见数据结构实现原理上</a></div>
+    <div class="post-nav"><a href="/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/" class="prev" rel="prev" title="Golang源码之常见数据结构实现原理上"><i class="fas fa-angle-left fa-fw"></i>Golang源码之常见数据结构实现原理上</a>
+            <a href="/posts/golang%E6%BA%90%E7%A0%81_%E6%8E%A7%E5%88%B6%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/" class="next" rel="next" title="Golang源码之常见控制结构实现原理">Golang源码之常见控制结构实现原理<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>
