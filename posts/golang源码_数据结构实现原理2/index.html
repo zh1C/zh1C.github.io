@@ -5,35 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>MySQL:事务 - NarcissusBlog</title><meta name="Description" content="学习MySQL45讲事务相关知识。"><meta property="og:title" content="MySQL:事务" />
-<meta property="og:description" content="学习MySQL45讲事务相关知识。" />
+        <title>Golang源码之常见数据结构实现原理下 - NarcissusBlog</title><meta name="Description" content="Go语言专家编程书籍阅读笔记，常见数据结构的源码阅读，包括struct、iota、string。"><meta property="og:title" content="Golang源码之常见数据结构实现原理下" />
+<meta property="og:description" content="Go语言专家编程书籍阅读笔记，常见数据结构的源码阅读，包括struct、iota、string。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-11-30T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-11-30T00:00:00+00:00" />
+<meta property="og:url" content="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-12-01T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-12-01T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="MySQL:事务"/>
-<meta name="twitter:description" content="学习MySQL45讲事务相关知识。"/>
+<meta name="twitter:title" content="Golang源码之常见数据结构实现原理下"/>
+<meta name="twitter:description" content="Go语言专家编程书籍阅读笔记，常见数据结构的源码阅读，包括struct、iota、string。"/>
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" /><link rel="prev" href="http://wen-nan.github.io/posts/mysql45%E8%AE%B23/" /><link rel="next" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/" /><link rel="prev" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "MySQL:事务",
+        "headline": "Golang源码之常见数据结构实现原理下",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/wen-nan.github.io\/posts\/mysql45%E8%AE%B22\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  699 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/mysql45%E8%AE%B22\/","datePublished": "2021-11-30T00:00:00+00:00","dateModified": "2021-11-30T00:00:00+00:00","publisher": {
+            "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862\/"
+        },"genre": "posts","keywords": "Golang","wordcount":  350 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862\/","datePublished": "2021-12-01T00:00:00+00:00","dateModified": "2021-12-01T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
                 "name": "Narcissus"
-            },"description": "学习MySQL45讲事务相关知识。"
+            },"description": "Go语言专家编程书籍阅读笔记，常见数据结构的源码阅读，包括struct、iota、string。"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -112,10 +112,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">MySQL:事务</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-30">2021-11-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 699 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Golang源码之常见数据结构实现原理下</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-01">2021-12-01</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 350 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -123,73 +123,70 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#事务隔离为什么你改了我还看不见">事务隔离：为什么你改了我还看不见？</a>
+    <li><a href="#struct的tag">Struct的Tag</a>
       <ul>
-        <li><a href="#隔离性与隔离级别">隔离性与隔离级别</a></li>
-        <li><a href="#事务隔离的实现">事务隔离的实现</a></li>
+        <li><a href="#1-前言">1. 前言</a></li>
+        <li><a href="#2-tag的本质">2. Tag的本质</a>
+          <ul>
+            <li><a href="#21-tag规则">2.1 Tag规则</a></li>
+            <li><a href="#22-tag是struct的一部分">2.2 Tag是struct的一部分</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-tag常见用法">3. Tag常见用法</a></li>
       </ul>
     </li>
+    <li><a href="#iota">Iota</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="事务隔离为什么你改了我还看不见">事务隔离：为什么你改了我还看不见？</h2>
-<p><strong>事务支持是在引擎层实现的</strong>，MySQL是支持多引擎的系统，但并不是所有引擎都支持事务。</p>
-<h3 id="隔离性与隔离级别">隔离性与隔离级别</h3>
-<p>事务的特性有ACID（Atomicity、Consistency、Isolation、Durability，即原子性、一致性、隔离性、持久性）。</p>
-<p>当数据库多个事务同时执行的时候，就可能出现脏读、不可重复读、幻读的问题，为了解决这些问题，就有了隔离级别的概念。SQL标准事务隔离级别包括：</p>
+            </div><div class="content" id="content"><h2 id="struct的tag">Struct的Tag</h2>
+<h3 id="1-前言">1. 前言</h3>
+<p>Go的struct声明允许字段附带<code>Tag</code>来对字段做一些标记。该Tag不仅仅是一个字符串，写法也需要遵循一定的规则。</p>
+<h3 id="2-tag的本质">2. Tag的本质</h3>
+<h4 id="21-tag规则">2.1 Tag规则</h4>
+<p><code>Tag</code>本身是一个字符串，规则必须满足<strong>以空格分隔的key:value对</strong>。</p>
 <ul>
-<li>读未提交：一个事务还没提交时，他做的变更就能被别的事务看到。</li>
-<li>读提交：一个事务提交后，他做的变更才会被其他事务看到。</li>
-<li>可重复读：一个事务执行过程中看到的数据，总是跟这个事务启动时看到的数据保持一致。</li>
-<li>串行化：对同一行记录，读写都会加锁。</li>
+<li><code>key</code>：必须是非空字符串，不能包含控制符号、空格、引号、冒号。</li>
+<li><code>value</code>：以双引号标记的字符串。</li>
+<li>注意：冒号前后不能有空格。</li>
 </ul>
-<blockquote>
-<p>在实现上，<strong>数据库会创建一个视图，访问的时候以视图的逻辑结果为准</strong>。</p>
-<ul>
-<li>在“可重复读”隔离级别下，视图在事务启动时创建，整个事务存在期间都用这个视图。</li>
-<li>在“读提交”隔离级别下，视图在每个SQL语句开始执行的时候创建。</li>
-<li>“读未提交”隔离级别下直接返回记录上的最新值，没有视图概念。</li>
-<li>“串行化”隔离级别下直接用加锁的方式避免并行访问。</li>
-</ul>
-</blockquote>
-<h3 id="事务隔离的实现">事务隔离的实现</h3>
-<p><strong>事务隔离通过回滚日志实现</strong>，在MySQL中，每一条记录在更新的时候都会记录一条回滚操作，假设一个值从1被顺序改成了2、3、4，在回滚日志里面有类似下面的记录：</p>
+<h4 id="22-tag是struct的一部分">2.2 Tag是struct的一部分</h4>
+<p><code>Tag</code>只有在反射场景中才有用，反射包提供了操作<code>Tag</code>的方法，以下是<code>reflect</code>包中的类型声明，省略了部分与无关字段。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png"
-        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png 2x"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2017.27.27.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2017.27.27.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2017.27.27.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2017.27.27.png 2x"
         data-sizes="auto"
-        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png"
-        title="ScreenShot2021-11-20 18.36.53" /></p>
-<p>在视图A、B、C中，这个记录的值分别是1、2、4，<strong>同一条记录在系统中可以存在多个版本，这就是数据库的多版本并发控制（MVCC）</strong>。</p>
-<blockquote>
-<p>注意：当系统里没有比回滚日志更早的read-view时，回滚日志就会被删除。因此我们应该尽量避免使用长事务，因为会导致大量占用存储空间。</p>
-</blockquote>
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2017.27.27.png"
+        title="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2017.27.27.png" /></p>
+<p>描述一个结构体成员的结构中包含了<code>StructTag</code>，其本身是一个string。<strong>也就是说，<code>Tag</code>是结构体字段的一个组成部分</strong>。</p>
+<h3 id="3-tag常见用法">3. Tag常见用法</h3>
+<p>常见的tag用法主要是JSON数据解析，ORM映射等。</p>
+<h2 id="iota">Iota</h2>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-11-30</span>
+                <span>更新于 2021-12-01</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" data-title="MySQL:事务" data-hashtags="MySQL"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" data-hashtag="MySQL"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" data-title="MySQL:事务" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" data-title="MySQL:事务"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/" data-title="Golang源码之常见数据结构实现原理下" data-hashtags="Golang"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/" data-hashtag="Golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/" data-title="Golang源码之常见数据结构实现原理下" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/" data-title="Golang源码之常见数据结构实现原理下"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql/">MySQL</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">Golang</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/mysql45%E8%AE%B23/" class="prev" rel="prev" title="MySQL:索引"><i class="fas fa-angle-left fa-fw"></i>MySQL:索引</a>
-            <a href="/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/" class="next" rel="next" title="Golang源码之常见数据结构实现原理上">Golang源码之常见数据结构实现原理上<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/" class="prev" rel="prev" title="Golang源码之常见数据结构实现原理上"><i class="fas fa-angle-left fa-fw"></i>Golang源码之常见数据结构实现原理上</a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>

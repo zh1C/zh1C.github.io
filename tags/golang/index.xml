@@ -3,12 +3,19 @@
         <title>Golang - 标签 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/tags/golang/</link>
         <description>Golang - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
-    <title>Golang源码之常见数据结构实现原理</title>
-    <link>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</link>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 01 Dec 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang源码之常见数据结构实现原理下</title>
+    <link>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/</link>
+    <pubDate>Wed, 01 Dec 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/</guid>
+    <description><![CDATA[Struct的Tag 1. 前言 Go的struct声明允许字段附带Tag来对字段做一些标记。该Tag不仅仅是一个字符串，写法也需要遵循一定的规则。]]></description>
+</item><item>
+    <title>Golang源码之常见数据结构实现原理上</title>
+    <link>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/</link>
     <pubDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86/</guid>
+    <guid>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/</guid>
     <description><![CDATA[Channel 1. 前言 channel是Golang提供的goroutine间通信方式，主要用于进程内各goroutine间通信。源代码位于runtime/]]></description>
 </item><item>
     <title>Golang基础语法细节</title>
