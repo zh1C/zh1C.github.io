@@ -4,6 +4,13 @@
         <link>http://wen-nan.github.io/posts/</link>
         <description>所有文章 | NarcissusBlog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 06 Dec 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang实现分布式缓存</title>
+    <link>http://wen-nan.github.io/posts/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0/</link>
+    <pubDate>Mon, 06 Dec 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0/</guid>
+    <description><![CDATA[概述 1. 实现的特性 单机缓存和基于HTTP的分布式缓存 使用最近最少访问（LRU）缓存策略 使用Go锁机制防止缓存穿透 使用一致性哈希选择节点，实现负]]></description>
+</item><item>
     <title>Shell脚本学习</title>
     <link>http://wen-nan.github.io/posts/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A01/</link>
     <pubDate>Mon, 06 Dec 2021 00:00:00 &#43;0000</pubDate>
@@ -66,12 +73,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/mysql45%E8%AE%B21/</guid>
     <description><![CDATA[基础架构：一条SQL查询语句是如何执行的？ MySQL的基本架构示意图如下： MySQL可以分为Server层和存储引擎层，不同存储引擎共用一个]]></description>
-</item><item>
-    <title>动态规划-区间DP</title>
-    <link>http://wen-nan.github.io/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E5%8C%BA%E9%97%B4dp/</link>
-    <pubDate>Fri, 19 Nov 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E5%8C%BA%E9%97%B4dp/</guid>
-    <description><![CDATA[概念 区间 DP 是状态的定义和转移都与区间有关，其中区间用两个端点表示。**状态定义 dp[i][j] = [i..j] 上原问题的解。i 变大，j 变小都可以得到更小规模的子问题。]]></description>
 </item></channel>
 </rss>
