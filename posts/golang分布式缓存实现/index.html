@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0\/"
-        },"genre": "posts","keywords": "Golang, 分布式缓存","wordcount":  646 ,
+        },"genre": "posts","keywords": "Golang, 分布式缓存","wordcount":  5234 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0\/","datePublished": "2021-12-06T00:00:00+00:00","dateModified": "2021-12-06T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang实现分布式缓存</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-06">2021-12-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 646 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-06">2021-12-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5234 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -143,6 +143,45 @@
             <li><a href="#22-核心方法">2.2 核心方法</a></li>
           </ul>
         </li>
+      </ul>
+    </li>
+    <li><a href="#单机并发缓存">单机并发缓存</a>
+      <ul>
+        <li><a href="#1-syncmutex">1. sync.Mutex</a></li>
+        <li><a href="#2-支持并发读写">2. 支持并发读写</a></li>
+        <li><a href="#3-主结构体group">3. 主结构体Group</a>
+          <ul>
+            <li><a href="#30-接口技巧">3.0 接口技巧</a></li>
+            <li><a href="#31-回调getter">3.1 回调Getter</a></li>
+            <li><a href="#32-group的定义">3.2 Group的定义</a></li>
+            <li><a href="#33-group的get方法">3.3 Group的Get方法</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#http服务端">HTTP服务端</a></li>
+    <li><a href="#一致性哈希">一致性哈希</a>
+      <ul>
+        <li><a href="#1-为什么使用一致性哈希">1. 为什么使用一致性哈希</a>
+          <ul>
+            <li><a href="#11-该访问谁">1.1 该访问谁？</a></li>
+            <li><a href="#12-节点数量变化了怎么办">1.2 节点数量变化了怎么办？</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-算法原理">2. 算法原理</a>
+          <ul>
+            <li><a href="#21-步骤">2.1 步骤</a></li>
+            <li><a href="#22-数据倾斜问题">2.2 数据倾斜问题</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-实现">3. 实现</a></li>
+      </ul>
+    </li>
+    <li><a href="#分布式节点">分布式节点</a>
+      <ul>
+        <li><a href="#1-抽象peerpicker">1. 抽象PeerPicker</a></li>
+        <li><a href="#2-节点选择与http客户端实现">2. 节点选择与HTTP客户端实现</a></li>
+        <li><a href="#3-实现主流程">3. 实现主流程</a></li>
       </ul>
     </li>
   </ul>
@@ -188,7 +227,402 @@
 </ul>
 <p>删除最近最少使用节点的时候，需要通过节点获取对应的key，然后再删除哈希表中的键值对。</p>
 <h4 id="22-核心方法">2.2 核心方法</h4>
-</div><div class="post-footer" id="post-footer">
+<p>查找方法<code>Get()</code>时间复杂度为O(1),核心代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Get look up a key&#39;s value
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">value</span> <span class="nx">Value</span><span class="p">,</span> <span class="nx">ok</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cache</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+		<span class="nx">c</span><span class="p">.</span><span class="nx">ll</span><span class="p">.</span><span class="nf">MoveToFront</span><span class="p">(</span><span class="nx">ele</span><span class="p">)</span>
+		<span class="nx">kv</span> <span class="o">:=</span> <span class="nx">ele</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nx">kv</span><span class="p">.</span><span class="nx">value</span><span class="p">,</span> <span class="kc">true</span>
+	<span class="p">}</span>
+	<span class="k">return</span>
+<span class="p">}</span>
+</code></pre></div><p>插入方法<code>Add()</code>时间复杂度为O(1)，流程图如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/IMG_3376.JPG"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/IMG_3376.JPG, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/IMG_3376.JPG 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/IMG_3376.JPG 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/IMG_3376.JPG"
+        title="IMG_3376" /></p>
+<p>核心代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Add adds a value to cache
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Cache</span><span class="p">)</span> <span class="nf">Add</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">Value</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">ele</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">cache</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span> <span class="nx">ok</span> <span class="p">{</span>
+		<span class="c1">// 如果存在
+</span><span class="c1"></span>		<span class="nx">c</span><span class="p">.</span><span class="nx">ll</span><span class="p">.</span><span class="nf">MoveToFront</span><span class="p">(</span><span class="nx">ele</span><span class="p">)</span>
+		<span class="nx">kv</span> <span class="o">:=</span> <span class="nx">ele</span><span class="p">.</span><span class="nx">Value</span><span class="p">.(</span><span class="o">*</span><span class="nx">entry</span><span class="p">)</span>
+		<span class="nx">c</span><span class="p">.</span><span class="nx">nBytes</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span> <span class="o">-</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">kv</span><span class="p">.</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span>
+		<span class="nx">kv</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">value</span>
+	<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+		<span class="c1">// 如果不存在
+</span><span class="c1"></span>		<span class="nx">ele</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">ll</span><span class="p">.</span><span class="nf">PushFront</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">entry</span><span class="p">{</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">})</span>
+		<span class="nx">c</span><span class="p">.</span><span class="nx">cache</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">ele</span>
+		<span class="nx">c</span><span class="p">.</span><span class="nx">nBytes</span> <span class="o">+=</span> <span class="nb">int64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">key</span><span class="p">))</span> <span class="o">+</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">value</span><span class="p">.</span><span class="nf">Len</span><span class="p">())</span>
+	<span class="p">}</span>
+	<span class="c1">// 超过缓存
+</span><span class="c1"></span>	<span class="c1">// 设置为0表示不对内存大小做限制
+</span><span class="c1"></span>	<span class="k">for</span> <span class="nx">c</span><span class="p">.</span><span class="nx">maxBytes</span> <span class="o">!=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">c</span><span class="p">.</span><span class="nx">maxBytes</span> <span class="p">&lt;</span> <span class="nx">c</span><span class="p">.</span><span class="nx">nBytes</span> <span class="p">{</span>
+		<span class="nx">c</span><span class="p">.</span><span class="nf">RemoveOldest</span><span class="p">()</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><blockquote>
+<p>注意：缓存大小为0，表示不对内存大小做限制</p>
+<p>使用for循环而不用if，是因为可能插入大对象则需要移除多个缓存记录。</p>
+</blockquote>
+<h2 id="单机并发缓存">单机并发缓存</h2>
+<h3 id="1-syncmutex">1. sync.Mutex</h3>
+<p>Sync.Mutex是一个互斥锁，可以由不同协程加锁和解锁。<code>sync.Mutex</code> 是 Go 语言标准库提供的一个互斥锁，当一个协程(goroutine)获得了这个锁的拥有权后，其它请求锁的协程(goroutine) 就会阻塞在 <code>Lock()</code> 方法的调用上，直到调用 <code>Unlock()</code> 锁被释放。</p>
+<h3 id="2-支持并发读写">2. 支持并发读写</h3>
+<p>用<code>sync.Mutex</code>封装LRU的方法，使之支持并发读写。</p>
+<p>先抽象一个<strong>只读的数据结构</strong><code>ByteView</code>用来表示缓存值。ByteView 只有一个数据成员，<code>b []byte</code>，b 将会存储真实的缓存值，并且<code>b</code>是只读的，返回的是<code>b</code>的一个拷贝，防止缓存值被外部程序修改。深拷贝核心代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">cloneBytes</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">[]</span><span class="kt">byte</span> <span class="p">{</span>
+	<span class="nx">c</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">b</span><span class="p">))</span>
+	<span class="nb">copy</span><span class="p">(</span><span class="nx">c</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
+	<span class="k">return</span> <span class="nx">c</span>
+<span class="p">}</span>
+</code></pre></div><p>为lru添加并发读写，<code>cache.go</code>实例化了lru,并封装了<code>add()、get()</code>方法。并且封装的方法是私有的，不会被其他包使用。代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">cache</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">mu</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
+	<span class="nx">lru</span> <span class="o">*</span><span class="nx">lru</span><span class="p">.</span><span class="nx">Cache</span>
+	<span class="nx">cacheBytes</span> <span class="kt">int64</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">cache</span><span class="p">)</span> <span class="nf">add</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">value</span> <span class="nx">ByteView</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+	<span class="k">defer</span> <span class="nx">c</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+
+	<span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="p">=</span> <span class="nx">lru</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">cacheBytes</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">lru</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">cache</span><span class="p">)</span> <span class="nf">get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">value</span> <span class="nx">ByteView</span><span class="p">,</span> <span class="nx">ok</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">c</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+	<span class="k">defer</span> <span class="nx">c</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+
+	<span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">lru</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">v</span><span class="p">.(</span><span class="nx">ByteView</span><span class="p">),</span> <span class="nx">ok</span>
+	<span class="p">}</span>
+	<span class="k">return</span>
+<span class="p">}</span>
+</code></pre></div><blockquote>
+<p>注意：在 <code>add</code> 方法中，判断了 <code>c.lru</code> 是否为 nil，如果等于 nil 再创建实例。这种方法称之为<strong>延迟初始化(Lazy Initialization)</strong>，一个对象的延迟初始化意味着该对象的创建将会延迟至第一次使用该对象时。主要用于提高性能，并减少程序内存要求。</p>
+</blockquote>
+<h3 id="3-主结构体group">3. 主结构体Group</h3>
+<p>Group是核心数据结构，负责与用户交互并且控制缓存值存储与获取流程。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208101552039.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208101552039.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208101552039.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208101552039.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208101552039.png"
+        title="image-20211208101552039" /></p>
+<h4 id="30-接口技巧">3.0 接口技巧</h4>
+<ul>
+<li>让编译器检查，确保类型实现了指定的接口</li>
+</ul>
+<p><code>var _ 指定接口 = (类型)(零值)</code>。比如代码中有如下一段：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">_</span> <span class="nx">PeerGetter</span> <span class="p">=</span> <span class="p">(</span><span class="o">*</span><span class="nx">httpGetter</span><span class="p">)(</span><span class="kc">nil</span><span class="p">)</span>
+</code></pre></div><p>就是为了判断<code>*httpGetter</code>是否实现了<code>PeerGetter</code>接口。</p>
+<ul>
+<li>接口型函数</li>
+</ul>
+<p>如果某个函数其中一个参数是该接口类型，<strong>那么既可以将普通的函数类型（函数签名必须相同，需要强制转换）作为参数传入，也可以将实现了该接口的结构体（实例化的结构体变量）作为参数传入</strong>。使用更加灵活。</p>
+<blockquote>
+<p>注意：</p>
+<ol>
+<li>接口型函数的接口类型只能有一个方法，这样才能让某一个函树类型实现该接口。</li>
+<li>定义一个函数类型 F，并且实现接口 A 的方法，然后在这个方法中调用自己。这是 Go 语言中将其他函数（参数返回值定义与 F 一致）转换为接口 A 的常用技巧。</li>
+</ol>
+</blockquote>
+<h4 id="31-回调getter">3.1 回调Getter</h4>
+<p>分布式缓存并没有实现支持多种数据源的配置，<strong>原因有两点：一是数据源种类太多，没办法一一实现，二是扩展型不好</strong>。因此设计了一个回调函数(callback)，当缓存不存在时，调用这个函数，得到源数据。回调函数的设计采用了接口型函数技巧，代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Getter</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="kd">type</span> <span class="nx">GetterFunc</span> <span class="kd">func</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">f</span> <span class="nx">GetterFunc</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nf">f</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><h4 id="32-group的定义">3.2 Group的定义</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// A Group is a cache namespace and associated data loaded spread over
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Group</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">name</span>      <span class="kt">string</span>
+	<span class="nx">getter</span>    <span class="nx">Getter</span>
+	<span class="nx">mainCache</span> <span class="nx">cache</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="p">(</span>
+	<span class="nx">mu</span>     <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>
+	<span class="nx">groups</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">Group</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div><p>一个Group可以认为是一个缓存的命名空间，每个Group拥有一个唯一的名称<code>name</code>。第二个属性<code>getter Getter</code>，即缓存未命中时获取源数据的回调。第三个属性<code>mainCache cache</code>，即并发缓存。</p>
+<p>每个Goup存储在全局变量<code>groups</code>中。</p>
+<h4 id="33-group的get方法">3.3 Group的Get方法</h4>
+<p>这时整个分布式缓存最为核心的方法，实现了上述流程的(1)和(3)过程。代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Get value for a key from cache
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">ByteView</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">key</span> <span class="o">==</span> <span class="s">&#34;&#34;</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">ByteView</span><span class="p">{},</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;key is required&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">if</span> <span class="nx">v</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">g</span><span class="p">.</span><span class="nx">mainCache</span><span class="p">.</span><span class="nf">get</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span> <span class="nx">ok</span> <span class="p">{</span>
+		<span class="nx">log</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;[GoCache] hit&#34;</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nx">v</span><span class="p">,</span> <span class="kc">nil</span>
+	<span class="p">}</span>
+  <span class="c1">// 缓存未命中，上述流程(3),回调函数，返回缓存值并将缓存值添加到对应缓存中
+</span><span class="c1"></span>	<span class="k">return</span> <span class="nx">g</span><span class="p">.</span><span class="nf">load</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="http服务端">HTTP服务端</h2>
+<p>分布式缓存需要实现节点间通信，本项目使用基于HTTP的通信机制，如果一个节点启动了HTTP服务，那么这个节点就可以被其他节点访问。</p>
+<p>首先创建一个结构体<code>HTTPPool</code>，作为承载节点间HTTP通信的核心数据结构。如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">HTTPPool</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="c1">// this peer&#39;s base URL, e.g. &#34;https://example.net:8000&#34;
+</span><span class="c1"></span>	<span class="nx">self</span>     <span class="kt">string</span>
+	<span class="nx">basePath</span> <span class="kt">string</span>
+<span class="p">}</span>
+</code></pre></div><p><code>HTTPPool</code>有两个参数，一个是<code>self</code>用来记录自己的地址，包括主机名/IP和端口；另一个是<code>basePath</code>，作为节点间通信地址的前缀，默认为<code>/_gocache/</code>即<code>http://example.com/gocache/</code>开头的请求，就用于节点间的访问。<strong>因为一个主机还可能承载其他的服务，加一段Path是一个好习惯</strong>。</p>
+<p><code>ServeHTTp</code>方法代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// ServeHTTP handle all http requests
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">HTTPPool</span><span class="p">)</span> <span class="nf">ServeHTTP</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">r</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="p">!</span><span class="nx">strings</span><span class="p">.</span><span class="nf">HasPrefix</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">basePath</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;HTTPPool serving unexpected path: &#34;</span> <span class="o">+</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">p</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">&#34;%s %s&#34;</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">Method</span><span class="p">,</span> <span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span>
+	<span class="c1">// /&lt;basepath&gt;/&lt;groupname&gt;/&lt;key&gt; required
+</span><span class="c1"></span>	<span class="nx">parts</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">SplitN</span><span class="p">(</span><span class="nx">r</span><span class="p">.</span><span class="nx">URL</span><span class="p">.</span><span class="nx">Path</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">.</span><span class="nx">basePath</span><span class="p">):],</span> <span class="s">&#34;/&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">parts</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span> <span class="p">{</span>
+		<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;bad request&#34;</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusBadRequest</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="nx">groupName</span> <span class="o">:=</span> <span class="nx">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="nx">key</span> <span class="o">:=</span> <span class="nx">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+	<span class="nx">group</span> <span class="o">:=</span> <span class="nf">GetGroup</span><span class="p">(</span><span class="nx">groupName</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">group</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&#34;no such group: &#34;</span><span class="o">+</span><span class="nx">groupName</span><span class="p">,</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusNotFound</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="nx">view</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">group</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nx">http</span><span class="p">.</span><span class="nf">Error</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nf">Error</span><span class="p">(),</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusInternalServerError</span><span class="p">)</span>
+		<span class="k">return</span>
+	<span class="p">}</span>
+
+	<span class="nx">w</span><span class="p">.</span><span class="nf">Header</span><span class="p">().</span><span class="nf">Set</span><span class="p">(</span><span class="s">&#34;Content-Type&#34;</span><span class="p">,</span> <span class="s">&#34;application/octet-stream&#34;</span><span class="p">)</span>
+	<span class="nx">w</span><span class="p">.</span><span class="nf">Write</span><span class="p">(</span><span class="nx">view</span><span class="p">.</span><span class="nf">ByteSlice</span><span class="p">())</span>
+<span class="p">}</span>
+</code></pre></div><p>首先判断访问路径的前缀是否是<code>basePath</code>，<strong>约定访问路径格式为<code>/&lt;basepath&gt;/&lt;groupname&gt;/&lt;key&gt;</code></strong>，通过groupname得到group实例，再使用<code>group.Get(key)</code>获取缓存值。最后通过<code>w.Write()</code>将缓存值最为httpResponse的body返回。</p>
+<h2 id="一致性哈希">一致性哈希</h2>
+<h3 id="1-为什么使用一致性哈希">1. 为什么使用一致性哈希</h3>
+<p>一致性哈希算法是本项目从单节点走向分布式节点的一个重要环节。</p>
+<h4 id="11-该访问谁">1.1 该访问谁？</h4>
+<p>对于分布式缓存来说，当一个节点接收到请求，如果该节点并没有存储缓存值，将面临从谁哪儿获取数据。</p>
+<p>假设包括自己在内有10个节点。假如第一次随机选取了节点1，节点1从数据源获取到数据的同时缓存该数据；那第二次只有1/10的概率再次选择节点1，9/10的概率选择其他9个节点，如果选择了其他节点，就意味着需要再一次从数据源获取数据。这样会导致：<strong>一是缓存效率低，而是各个节点都存储着相同的数据，浪费了大量存储空间</strong>。</p>
+<p>使用哈希算法可以解决上述问题，即对于给定的key，每次都选择同一个节点。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208144833102.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208144833102.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208144833102.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208144833102.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208144833102.png"
+        title="image-20211208144833102" /></p>
+<h4 id="12-节点数量变化了怎么办">1.2 节点数量变化了怎么办？</h4>
+<p>虽然取Hash值解决了缓存性能问题，但没有考虑节点数量变化的场景。分布式中，某一个节点出问题的概率很大，假设某一个节点出问题，那么之前 <code>hash(key) % 10</code> 变成了 <code>hash(key) % 9</code>，也就意味着几乎缓存值对应的节点都发生了改变。容易引起<strong>缓存雪崩</strong>。</p>
+<blockquote>
+<p>缓存雪崩：缓存在同一时刻全部失效，造成瞬间DB请求量大，压力骤增，引起雪崩。常因为缓存服务器宕机或缓存设置了相同的过期时间引起。</p>
+</blockquote>
+<p><strong>一致性哈希可以解决缓存雪崩问题。</strong></p>
+<h3 id="2-算法原理">2. 算法原理</h3>
+<h4 id="21-步骤">2.1 步骤</h4>
+<p>一致性哈希算法将 key 映射到 2^32 的空间中，将这个数字首尾相连，形成一个环。在新增/删除节点时，只需要重新定位该节点附近的一小部分数据，而不需要重新定位所有的节点。</p>
+<ul>
+<li>计算节点/机器(通常使用节点的名称、编号和 IP 地址)的哈希值，放置在环上。</li>
+<li>计算key的哈希值，放置在换上，顺时针寻找到的第一个节点，就是应该选取的节点/机器。</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208145751780.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208145751780.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208145751780.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208145751780.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208145751780.png"
+        title="image-20211208145751780" /></p>
+<p>环上有 peer2，peer4，peer6 三个节点，<code>key11</code>，<code>key2</code>，<code>key27</code> 均映射到peer2，<code>key23</code> 映射到 peer4。此时，如果新增节点/机器 peer8，假设它新增位置如图所示，那么只有 <code>key27</code> 从 peer2 调整到 peer8，其余的映射均没有发生改变。</p>
+<h4 id="22-数据倾斜问题">2.2 数据倾斜问题</h4>
+<p>如果服务器的节点过少，容易引起 key 的倾斜。例如上面例子中的 peer2，peer4，peer6 分布在环的上半部分，下半部分是空的。那么映射到环下半部分的 key 都会被分配给 peer2，key 过度向 peer2 倾斜，<strong>缓存节点间负载不均</strong>。为了解决这个问题，<strong>引入了虚拟节点概念，一个真实节点对应多个虚拟节点。</strong></p>
+<p>假设 1 个真实节点对应 3 个虚拟节点，那么 peer1 对应的虚拟节点是 peer1-1、 peer1-2、 peer1-3（通常以添加编号的方式实现），其余节点也以相同的方式操作。</p>
+<ul>
+<li>计算虚拟节点的哈希值，放置在环上。</li>
+<li>计算 key 的 Hash 值，在环上顺时针寻找到应选取的虚拟节点，例如是 peer2-1，那么就对应真实节点 peer2。</li>
+</ul>
+<p><strong>虚拟节点扩充了节点的数量，解决了节点较少的情况下数据容易倾斜的问题。而且代价非常小，只需要增加一个字典(map)维护真实节点与虚拟节点的映射关系即可。</strong></p>
+<h3 id="3-实现">3. 实现</h3>
+<p>相关结构体定义如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Hash maps bytes to uint32
+</span><span class="c1"></span><span class="kd">type</span> <span class="nx">Hash</span> <span class="kd">func</span><span class="p">(</span><span class="nx">data</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">uint32</span>
+
+<span class="kd">type</span> <span class="nx">Map</span> <span class="kd">struct</span> <span class="p">{</span>
+  <span class="c1">// 默认为crc32.ChecksumIEEE算法，也可以自定义。
+</span><span class="c1"></span>	<span class="nx">hash</span> <span class="nx">Hash</span>
+	<span class="c1">// 虚拟节点倍数
+</span><span class="c1"></span>	<span class="nx">replicas</span> <span class="kt">int</span>
+	<span class="c1">// 哈希环
+</span><span class="c1"></span>	<span class="nx">keys</span> <span class="p">[]</span><span class="kt">int</span>  <span class="c1">// sorted
+</span><span class="c1"></span>	<span class="c1">// 虚拟节点与真实节点的隐射，键是虚拟节点哈希值，值是真实节点名称
+</span><span class="c1"></span>	<span class="nx">hashMap</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">string</span>
+<span class="p">}</span>
+</code></pre></div><p>添加真实节点<code>Add()</code>方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Add adds some keys to the hash
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">Map</span><span class="p">)</span> <span class="nf">Add</span><span class="p">(</span><span class="nx">keys</span> <span class="o">...</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">key</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">keys</span> <span class="p">{</span>
+		<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">m</span><span class="p">.</span><span class="nx">replicas</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+			<span class="c1">// 虚拟节点名称是strconv.Itoa(i) + key
+</span><span class="c1"></span>			<span class="nx">hash</span> <span class="o">:=</span> <span class="nb">int</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nf">hash</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">strconv</span><span class="p">.</span><span class="nf">Itoa</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span> <span class="o">+</span> <span class="nx">key</span><span class="p">)))</span>
+			<span class="nx">m</span><span class="p">.</span><span class="nx">keys</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">keys</span><span class="p">,</span> <span class="nx">hash</span><span class="p">)</span>
+			<span class="nx">m</span><span class="p">.</span><span class="nx">hashMap</span><span class="p">[</span><span class="nx">hash</span><span class="p">]</span> <span class="p">=</span> <span class="nx">key</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+	<span class="nx">sort</span><span class="p">.</span><span class="nf">Ints</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">keys</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><blockquote>
+<p>注意：真实节点并没有计算hash值添加到哈希环上。</p>
+</blockquote>
+<p>节点选择<code>Get()</code>方法:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Get gets the closest item in the hash to the provided key
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">m</span> <span class="o">*</span><span class="nx">Map</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">string</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">keys</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="s">&#34;&#34;</span>
+	<span class="p">}</span>
+	<span class="c1">// 计算key对应的哈希值
+</span><span class="c1"></span>	<span class="nx">hash</span> <span class="o">:=</span> <span class="nb">int</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nf">hash</span><span class="p">([]</span><span class="nb">byte</span><span class="p">(</span><span class="nx">key</span><span class="p">)))</span>
+	<span class="c1">// 二分查找对应虚拟节点
+</span><span class="c1"></span>	<span class="nx">idx</span> <span class="o">:=</span> <span class="nx">sort</span><span class="p">.</span><span class="nf">Search</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">keys</span><span class="p">),</span> <span class="kd">func</span><span class="p">(</span><span class="nx">i</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">m</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">hash</span>
+	<span class="p">})</span>
+	<span class="c1">// 如果idx==len(m.keys),说明应该选择m.keys[0]
+</span><span class="c1"></span>	<span class="k">return</span> <span class="nx">m</span><span class="p">.</span><span class="nx">hashMap</span><span class="p">[</span><span class="nx">m</span><span class="p">.</span><span class="nx">keys</span><span class="p">[</span><span class="nx">idx</span><span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="nx">m</span><span class="p">.</span><span class="nx">keys</span><span class="p">)]]</span>
+<span class="p">}</span>
+</code></pre></div><h2 id="分布式节点">分布式节点</h2>
+<p>上述流程图(2)，从远程节点获取缓存值，细化成如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208151734844.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208151734844.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208151734844.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208151734844.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211208151734844.png"
+        title="image-20211208151734844" /></p>
+<h3 id="1-抽象peerpicker">1. 抽象PeerPicker</h3>
+<p>抽象出两个接口</p>
+<ul>
+<li>接口PeerPicker的<code>PickPeer()</code>方法用于根据传入的key选择相应节点PeerGetter</li>
+<li>接口PeerGetter的<code>Get()</code>方法用于从对应group查找缓存值。</li>
+</ul>
+<h3 id="2-节点选择与http客户端实现">2. 节点选择与HTTP客户端实现</h3>
+<p>第一步，创建具体的HTTP客户端类<code>httpGetter</code>，实现PeerGetter接口。</p>
+<ul>
+<li>baseURL表示将要访问的远程节点的地址，例如<code>http://exmple.com/gocache/</code>。</li>
+</ul>
+<p>代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">httpGetter</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">baseURL</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="c1">// Get http客户端方法，访问远程服务端节点从对应group查找key的缓存值
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="o">*</span><span class="nx">httpGetter</span><span class="p">)</span> <span class="nf">Get</span><span class="p">(</span><span class="nx">group</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">u</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span>
+		<span class="s">&#34;%v%v/%v&#34;</span><span class="p">,</span>
+		<span class="nx">h</span><span class="p">.</span><span class="nx">baseURL</span><span class="p">,</span>
+		<span class="nx">url</span><span class="p">.</span><span class="nf">QueryEscape</span><span class="p">(</span><span class="nx">group</span><span class="p">),</span>
+		<span class="nx">url</span><span class="p">.</span><span class="nf">QueryEscape</span><span class="p">(</span><span class="nx">key</span><span class="p">),</span>
+	<span class="p">)</span>
+	<span class="c1">// 发送HTTP请求
+</span><span class="c1"></span>	<span class="nx">res</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">http</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">u</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">err</span>
+	<span class="p">}</span>
+	<span class="k">defer</span> <span class="nx">res</span><span class="p">.</span><span class="nx">Body</span><span class="p">.</span><span class="nf">Close</span><span class="p">()</span>
+
+	<span class="k">if</span> <span class="nx">res</span><span class="p">.</span><span class="nx">StatusCode</span> <span class="o">!=</span> <span class="nx">http</span><span class="p">.</span><span class="nx">StatusOK</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;server returned: %v&#34;</span><span class="p">,</span> <span class="nx">res</span><span class="p">.</span><span class="nx">Status</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="nx">bytes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nf">ReadAll</span><span class="p">(</span><span class="nx">res</span><span class="p">.</span><span class="nx">Body</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Errorf</span><span class="p">(</span><span class="s">&#34;reading response body: %v&#34;</span><span class="p">,</span> <span class="nx">err</span><span class="p">)</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="nx">bytes</span><span class="p">,</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div><p>第二步，为HTTPPool添加节点选择功能。</p>
+<p>HTTPPool结构体增加成员变量：</p>
+<ul>
+<li><code>peers</code>，类型是一致性哈希算法的<code>Map</code>，用来根据具体的key选择节点。</li>
+<li><code>httpGetters</code>，映射远程节点与对应的httpGetter。每一个远程节点对应一个httpGetter。</li>
+</ul>
+<p>第三步，实现PeerPicker接口，代码如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Set 实例化一致性哈希算法，并添加传入的节点并为每个节点创建一个HTTP客户端httpGetter
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">HTTPPool</span><span class="p">)</span> <span class="nf">Set</span><span class="p">(</span><span class="nx">peers</span> <span class="o">...</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">p</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+	<span class="k">defer</span> <span class="nx">p</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+
+	<span class="nx">p</span><span class="p">.</span><span class="nx">peers</span> <span class="p">=</span> <span class="nx">consistenthash</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">defaultReplicas</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+	<span class="nx">p</span><span class="p">.</span><span class="nx">peers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="nx">peers</span><span class="o">...</span><span class="p">)</span>
+	<span class="nx">p</span><span class="p">.</span><span class="nx">httpGetters</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="o">*</span><span class="nx">httpGetter</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">peers</span><span class="p">))</span>
+	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">peer</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">peers</span> <span class="p">{</span>
+		<span class="nx">p</span><span class="p">.</span><span class="nx">httpGetters</span><span class="p">[</span><span class="nx">peer</span><span class="p">]</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">httpGetter</span><span class="p">{</span><span class="nx">baseURL</span><span class="p">:</span> <span class="nx">peer</span> <span class="o">+</span> <span class="nx">p</span><span class="p">.</span><span class="nx">basePath</span><span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// PickPeer 根据key返回节点,即节点对应的HTTP客户端
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">HTTPPool</span><span class="p">)</span> <span class="nf">PickPeer</span><span class="p">(</span><span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">PeerGetter</span><span class="p">,</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">p</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+	<span class="k">defer</span> <span class="nx">p</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+
+  <span class="c1">// 如果peer不为空并且不是自身节点
+</span><span class="c1"></span>	<span class="k">if</span> <span class="nx">peer</span> <span class="o">:=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">peers</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">key</span><span class="p">);</span> <span class="nx">peer</span> <span class="o">!=</span> <span class="s">&#34;&#34;</span> <span class="o">&amp;&amp;</span> <span class="nx">peer</span> <span class="o">!=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">self</span> <span class="p">{</span>
+		<span class="nx">p</span><span class="p">.</span><span class="nf">Log</span><span class="p">(</span><span class="s">&#34;Pick peer %s&#34;</span><span class="p">,</span> <span class="nx">peer</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nx">p</span><span class="p">.</span><span class="nx">httpGetters</span><span class="p">[</span><span class="nx">peer</span><span class="p">],</span> <span class="kc">true</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></div><p>则<strong>HTTPPool既具备提供HTTP服务的能力，也具备根据具体的key，创建HTTP客户端从远程节点获取缓存值的能力</strong>。</p>
+<h3 id="3-实现主流程">3. 实现主流程</h3>
+<ul>
+<li><code>RegisterPeers()</code>方法，将实现了PeerPicker接口的HTTPPool注入到Group中。</li>
+<li><code>getFromPeer()</code>方法，访问远程节点peerGetter，获取缓存值。</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// RegisterPeers 将实现了PeerPicker接口的HTTPPool注入到Group中
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">RegisterPeers</span><span class="p">(</span><span class="nx">peers</span> <span class="nx">PeerPicker</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">if</span> <span class="nx">g</span><span class="p">.</span><span class="nx">peers</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="nb">panic</span><span class="p">(</span><span class="s">&#34;RegisterPeerPicker called more than once&#34;</span><span class="p">)</span>
+	<span class="p">}</span>
+	<span class="nx">g</span><span class="p">.</span><span class="nx">peers</span> <span class="p">=</span> <span class="nx">peers</span>
+<span class="p">}</span>
+
+<span class="c1">// getFromPeer 访问远程节点peerGetter,获取key缓存值
+</span><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Group</span><span class="p">)</span> <span class="nf">getFromPeer</span><span class="p">(</span><span class="nx">peer</span> <span class="nx">PeerGetter</span><span class="p">,</span> <span class="nx">key</span> <span class="kt">string</span><span class="p">)</span> <span class="p">(</span><span class="nx">ByteView</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+	<span class="nx">bytes</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">peer</span><span class="p">.</span><span class="nf">Get</span><span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="nx">ByteView</span><span class="p">{},</span> <span class="nx">err</span>
+	<span class="p">}</span>
+	<span class="k">return</span> <span class="nx">ByteView</span><span class="p">{</span><span class="nx">b</span><span class="p">:</span> <span class="nx">bytes</span><span class="p">},</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</code></pre></div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
