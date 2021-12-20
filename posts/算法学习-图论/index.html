@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0-%E5%9B%BE%E8%AE%BA\/"
-        },"genre": "posts","keywords": "算法学习, 并查集","wordcount":  657 ,
+        },"genre": "posts","keywords": "算法学习, 并查集","wordcount":  1218 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0-%E5%9B%BE%E8%AE%BA\/","datePublished": "2021-12-20T00:00:00+00:00","dateModified": "2021-12-20T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">图论</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-20">2021-12-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 657 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-12-20">2021-12-20</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1218 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -133,10 +133,17 @@
     <li><a href="#二分图">二分图</a>
       <ul>
         <li><a href="#二分图简介">二分图简介</a></li>
-        <li><a href="#例题">例题</a></li>
+        <li><a href="#2-例题">2. 例题</a></li>
       </ul>
     </li>
-    <li><a href="#并查集">并查集</a></li>
+    <li><a href="#并查集union-find">并查集（Union-Find）</a>
+      <ul>
+        <li><a href="#1-基本介绍">1. 基本介绍</a></li>
+        <li><a href="#2-路径压缩">2. 路径压缩</a></li>
+        <li><a href="#3-代码实现">3. 代码实现</a></li>
+        <li><a href="#4-并查集应用">4. 并查集应用</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="图论基础">图论基础</h2>
@@ -225,7 +232,7 @@
 <p>算法4中的应用例子为如何存储电影演员和电影之间的关系？</p>
 <p>如果用哈希表存储，则需要两个哈希表分别存储两种映射关系；如果用图结构存储，就可以用到二分图模型。</p>
 </blockquote>
-<h3 id="例题">例题</h3>
+<h3 id="2-例题">2. 例题</h3>
 <ul>
 <li>二分图的判定</li>
 </ul>
@@ -269,9 +276,77 @@
     <span class="k">return</span> <span class="nx">ok</span>
 <span class="p">}</span>
 </code></pre></div><ul>
-<li>LeetCode886 代码省略</li>
+<li>LeetCode 886 代码省略</li>
 </ul>
-<h2 id="并查集">并查集</h2>
+<h2 id="并查集union-find">并查集（Union-Find）</h2>
+<p>并查集算法主要是解决图论中动态连通性的问题。</p>
+<blockquote>
+<p>只有路径压缩的并查集复杂度是 O(logn) 的，这也是大多数情况下的实现方案；只有启发式合并（按深度合并）的并查集的复杂度也是 O(logn) 的，适用于可持久化的场景。</p>
+</blockquote>
+<h3 id="1-基本介绍">1. 基本介绍</h3>
+<p><strong>用森林来表示图的动态联通性，用数组来实现森林</strong>。设定树的每一个节点都有一个指向父节点的指针，如果是根节点则指向自己。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211220162628965.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211220162628965.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211220162628965.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211220162628965.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211220162628965.png"
+        title="image-20211220162628965" /></p>
+<p><strong>如果两个节点连通，则它们一定拥有相同的根节点；如果某两个节点被连通，则让其中任意一个节点的根节点接到另一个节点的根节点上</strong>。</p>
+<h3 id="2-路径压缩">2. 路径压缩</h3>
+<p>普通方式可能会出现极端的情况，即树变成了链表，<strong>只有路径压缩的并查集时间复杂度才是O(logN)</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/640.gif"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/640.gif, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/640.gif 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/640.gif 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/640.gif"
+        title="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/640.gif" /></p>
+<p>实现上只需要在<code>find()</code>方法中加一行代码：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211220165646749.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211220165646749.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211220165646749.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211220165646749.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/image-20211220165646749.png"
+        title="image-20211220165646749" /></p>
+<blockquote>
+<p>注意：除了采用路径压缩的方式，优化并查集复杂度为O(logn)，<strong>采用启发式合并(按深度合并)的方式也可以</strong>，即使用额外的数组<code>size</code>来记录每一个节点的深度，每次合并将深度小的树接到深度大的树上面。</p>
+</blockquote>
+<h3 id="3-代码实现">3. 代码实现</h3>
+<p><strong>注意：上述路径压缩是采用迭代方式实现，下述代码采用递归方式实现。</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">fa</span> <span class="p">[]</span><span class="kt">int</span>
+<span class="nx">initUF</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">fa</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">fa</span> <span class="p">{</span>
+    <span class="nx">fa</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">i</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="nf">initUF</span><span class="p">(</span><span class="nx">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1">// 查询节点的根节点
+</span><span class="c1"></span><span class="kd">var</span> <span class="nx">find</span> <span class="kd">func</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="kt">int</span>
+<span class="nx">find</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">x</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="nx">fa</span><span class="p">[</span><span class="nx">x</span><span class="p">]</span> <span class="o">!=</span> <span class="nx">x</span> <span class="p">{</span>
+    <span class="c1">// 路径压缩递归写法
+</span><span class="c1"></span>    <span class="nx">fa</span><span class="p">[</span><span class="nx">x</span><span class="p">]</span> <span class="p">=</span> <span class="nf">find</span><span class="p">(</span><span class="nx">fa</span><span class="p">[</span><span class="nx">x</span><span class="p">])</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">fa</span><span class="p">[</span><span class="nx">x</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="c1">// 连通两个节点
+</span><span class="c1"></span><span class="nx">union</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">from</span><span class="p">,</span> <span class="nx">to</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">fa</span><span class="p">[</span><span class="nf">find</span><span class="p">(</span><span class="nx">from</span><span class="p">)]</span> <span class="p">=</span> <span class="nf">find</span><span class="p">(</span><span class="nx">to</span><span class="p">)</span> 
+<span class="p">}</span>
+<span class="c1">// 判断是否连通
+</span><span class="c1"></span><span class="nx">connected</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nf">find</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="o">==</span> <span class="nf">find</span><span class="p">(</span><span class="nx">y</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><blockquote>
+<p>注意:也可以用结构体的方式实现</p>
+</blockquote>
+<h3 id="4-并查集应用">4. 并查集应用</h3>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
