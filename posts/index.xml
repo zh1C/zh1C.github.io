@@ -11,6 +11,13 @@
     <guid>http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
     <description><![CDATA[1、nil切片和空切片 问题 nil切片和空切片指向的地址一样吗？代码会输出什么？ 回答 nil切片和空切片指向的地址不一样。nil空切片引用数组指]]></description>
 </item><item>
+    <title>操作系统</title>
+    <link>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+    <pubDate>Sat, 19 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+    <description><![CDATA[1. 操作系统基础 1.1 什么是操作系统？ 操作系统是管理计算机硬件与软件资源的程序，是计算机的基石。 操作系统本质上是一个运行在计算机上的程序，用于管理]]></description>
+</item><item>
     <title>Golang源码之内存管理</title>
     <link>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</link>
     <pubDate>Thu, 17 Feb 2022 00:00:00 &#43;0000</pubDate>
@@ -24,13 +31,6 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6/</guid>
     <description><![CDATA[1. Golang调度器的由来 1.1 单进程时代 早期的操作系统是单进程的，面临单一的执行流程，进程阻塞会带来CPU时间浪费的缺陷。 1.2 多进程时代有了调度]]></description>
-</item><item>
-    <title>操作系统</title>
-    <link>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
-    <pubDate>Mon, 14 Feb 2022 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
-    <description><![CDATA[的]]></description>
 </item><item>
     <title>计算机网络</title>
     <link>http://wen-nan.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
