@@ -9,8 +9,8 @@
 <meta property="og:description" content="Go语言面试题总结。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-09-03T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-09-03T00:00:00+00:00" />
+<meta property="article:published_time" content="2022-02-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-02-19T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang面试题"/>
@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E9%93%BE%E8%A1%A8/" /><link rel="next" href="http://wen-nan.github.io/posts/sql%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "Golang, 面试","wordcount":  638 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2021-09-03T00:00:00+00:00","dateModified": "2021-09-03T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "Golang, 面试","wordcount":  1107 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-19T00:00:00+00:00","dateModified": "2022-02-19T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-03">2021-09-03</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 638 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-19">2022-02-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1107 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -134,6 +134,12 @@
       <ul>
         <li><a href="#回答-1">回答</a></li>
         <li><a href="#解释-1">解释</a></li>
+      </ul>
+    </li>
+    <li><a href="#3new和make有什么区别">3、new和make有什么区别？</a>
+      <ul>
+        <li><a href="#基本特性">基本特性</a></li>
+        <li><a href="#区别">区别</a></li>
       </ul>
     </li>
   </ul>
@@ -251,11 +257,68 @@
 <li><code>(*[]byte)(unsafe.pointer(&amp;ssh))</code>可以把ssh底层结构体转成byte的切片指针。</li>
 <li>再通过*转成指针指向的实际内容。</li>
 </ol>
+<h2 id="3new和make有什么区别">3、new和make有什么区别？</h2>
+<h3 id="基本特性">基本特性</h3>
+<ul>
+<li><strong>make</strong></li>
+</ul>
+<p>在Go中，内置函数make仅支持<code>slice、map、channel</code>三种数据类型的内存创建，<strong>其返回值是所创建类型的本身，而不是新的指针引用</strong>。</p>
+<p>函数签名为：<code>func make(t Type, size ...IntegerType) Type</code></p>
+<ul>
+<li><strong>new</strong></li>
+</ul>
+<p>内置函数new可以对类型进行内存创建和初始化。<strong>其返回值是所创建类型的指针引用</strong>,函数签名为：<code>func new(Type) *Type</code></p>
+<blockquote>
+<p>注意：new分配内存的同时会把分配的内存置为零，也就是类型的零值。</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219134945366.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219134945366.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219134945366.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219134945366.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219134945366.png"
+        title="image-20220219134945366" /></p>
+<p>上述代码会报错，因为<strong>对于引用类型的变量，我们不仅要声明它，还需要为其分配内存空间</strong>，否则值放到哪里去呢？</p>
+<p>因此，可以使用new来分配内存空间：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219135159687.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219135159687.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219135159687.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219135159687.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219135159687.png"
+        title="image-20220219135159687" /></p>
+<p>但实际代码中，我们不常用new这个内置函数，我们通常都是采用短语句声明以及结构体的字面量达到我们的目的，比如：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219135705377.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219135705377.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219135705377.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219135705377.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220219135705377.png"
+        title="image-20220219135705377" /></p>
+<h3 id="区别">区别</h3>
+<ul>
+<li>make</li>
+</ul>
+<ol>
+<li>能够分配并初始化类型所需的内存空间和结构，返回引用类型的本身。</li>
+<li>具有使用范围的局限性，仅支持channel、map、slice三种类型。</li>
+<li>具有独特的优势，会对三种结构的内部数据结构（长度，容量等）赋值。</li>
+</ol>
+<ul>
+<li>new</li>
+</ul>
+<ol>
+<li>能够分配并初始化类型所需的内存空间，返回指针应用(指向内存的指针)。</li>
+<li>可被替代，能够通过字面值快速初始化。</li>
+</ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-09-03</span>
+                <span>更新于 2022-02-19</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -274,8 +337,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/%E9%93%BE%E8%A1%A8/" class="prev" rel="prev" title="链表"><i class="fas fa-angle-left fa-fw"></i>链表</a>
-            <a href="/posts/sql%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/" class="next" rel="next" title="Golang操作sql总结">Golang操作sql总结<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/golang%E6%BA%90%E7%A0%81_%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="prev" rel="prev" title="Golang源码之内存管理"><i class="fas fa-angle-left fa-fw"></i>Golang源码之内存管理</a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>
