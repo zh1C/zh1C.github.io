@@ -3,12 +3,19 @@
         <title>操作系统 - 分类 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
         <description>操作系统 - 分类 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 19 Feb 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 21 Feb 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="self" type="application/rss+xml" /><item>
     <title>操作系统</title>
     <link>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
-    <pubDate>Sat, 19 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <pubDate>Mon, 21 Feb 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
     <description><![CDATA[1. 操作系统基础 1.1 什么是操作系统？ 操作系统是管理计算机硬件与软件资源的程序，是计算机的基石。 操作系统本质上是一个运行在计算机上的程序，用于管理]]></description>
+</item><item>
+    <title>零拷贝</title>
+    <link>http://wen-nan.github.io/posts/%E9%9B%B6%E6%8B%B7%E8%B4%9D/</link>
+    <pubDate>Mon, 21 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E9%9B%B6%E6%8B%B7%E8%B4%9D/</guid>
+    <description><![CDATA[以文件传输作为切入点，分析零拷贝原理。 1. 为什么要有DMA技术？ 在没有DMA技术前，I/O过程如下： CPU发出对应指令给磁盘控制器，然后返回；]]></description>
 </item></channel>
 </rss>

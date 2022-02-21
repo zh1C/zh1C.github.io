@@ -3,20 +3,27 @@
         <title>所有文章 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/posts/</link>
         <description>所有文章 | NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 19 Feb 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 21 Feb 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>操作系统</title>
+    <link>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+    <pubDate>Mon, 21 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+    <description><![CDATA[1. 操作系统基础 1.1 什么是操作系统？ 操作系统是管理计算机硬件与软件资源的程序，是计算机的基石。 操作系统本质上是一个运行在计算机上的程序，用于管理]]></description>
+</item><item>
+    <title>零拷贝</title>
+    <link>http://wen-nan.github.io/posts/%E9%9B%B6%E6%8B%B7%E8%B4%9D/</link>
+    <pubDate>Mon, 21 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E9%9B%B6%E6%8B%B7%E8%B4%9D/</guid>
+    <description><![CDATA[以文件传输作为切入点，分析零拷贝原理。 1. 为什么要有DMA技术？ 在没有DMA技术前，I/O过程如下： CPU发出对应指令给磁盘控制器，然后返回；]]></description>
+</item><item>
     <title>Golang面试题</title>
     <link>http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
     <pubDate>Sat, 19 Feb 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
     <description><![CDATA[1、nil切片和空切片 问题 nil切片和空切片指向的地址一样吗？代码会输出什么？ 回答 nil切片和空切片指向的地址不一样。nil空切片引用数组指]]></description>
-</item><item>
-    <title>操作系统</title>
-    <link>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
-    <pubDate>Sat, 19 Feb 2022 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
-    <description><![CDATA[1. 操作系统基础 1.1 什么是操作系统？ 操作系统是管理计算机硬件与软件资源的程序，是计算机的基石。 操作系统本质上是一个运行在计算机上的程序，用于管理]]></description>
 </item><item>
     <title>Golang源码之内存管理</title>
     <link>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</link>
@@ -66,12 +73,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0/</guid>
     <description><![CDATA[概述 1. 实现的特性 单机缓存和基于HTTP的分布式缓存 使用最近最少访问（LRU）缓存策略 使用Go锁机制防止缓存穿透 使用一致性哈希选择节点，实现负]]></description>
-</item><item>
-    <title>Shell脚本学习</title>
-    <link>http://wen-nan.github.io/posts/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A01/</link>
-    <pubDate>Mon, 06 Dec 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/shell%E8%84%9A%E6%9C%AC%E5%AD%A6%E4%B9%A01/</guid>
-    <description><![CDATA[Bash基本语法 1. echo命令 echo命令作用是在屏幕输出一行文本。如果想要输出多行文本，即包括换行符，需要把多行文本放在引号里面。 1.1 -n参]]></description>
 </item></channel>
 </rss>
