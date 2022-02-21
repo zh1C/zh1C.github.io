@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E9%9B%B6%E6%8B%B7%E8%B4%9D\/"
-        },"genre": "posts","keywords": "操作系统","wordcount":  2230 ,
+        },"genre": "posts","keywords": "操作系统","wordcount":  2231 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E9%9B%B6%E6%8B%B7%E8%B4%9D\/","datePublished": "2022-02-21T00:00:00+00:00","dateModified": "2022-02-21T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">零拷贝</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"><i class="far fa-folder fa-fw"></i>操作系统</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-21">2022-02-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2230 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-21">2022-02-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2231 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -132,7 +132,7 @@
         <li><a href="#sendfile">sendfile</a></li>
       </ul>
     </li>
-    <li><a href="#pagecache有什么作用">PageCache有什么作用？</a></li>
+    <li><a href="#5-pagecache有什么作用">5. PageCache有什么作用？</a></li>
     <li><a href="#6-大文件传输用什么方式实现">6. 大文件传输用什么方式实现？</a></li>
   </ul>
 </nav></div>
@@ -245,7 +245,7 @@
 <p>此过程只需要2次数据拷贝。</p>
 <p>所谓的零拷贝（Zero-copy）技术，<strong>没有在内存层面去拷贝数据，也就是说全程没有通过 CPU 来搬运数据，所有的数据都是通过 DMA 来进行传输的。</strong></p>
 <p>零拷贝技术的文件传输方式相比传统文件传输的方式，减少了 2 次上下文切换和数据拷贝次数，<strong>只需要 2 次上下文切换和数据拷贝次数，就可以完成文件的传输，而且 2 次的数据拷贝过程，都不需要通过 CPU，2 次都是由 DMA 来搬运。</strong></p>
-<h2 id="pagecache有什么作用">PageCache有什么作用？</h2>
+<h2 id="5-pagecache有什么作用">5. PageCache有什么作用？</h2>
 <p>上述的第一步，将磁盘文件拷贝到内核缓冲区，<strong>这个内核缓冲区实际上就是磁盘高速缓存(PageCache)</strong>。则零拷贝使用了PageCache技术。</p>
 <p>读写磁盘相比读写内存速度慢很多，因此通过DMA把磁盘数据搬运到内存中，这样就可以用读内存替换读磁盘。但由于内存空间小，因此<strong>PageCache缓存最近被访问数据和预读功能。</strong></p>
 <p>但是<strong>对于大文件（GB级别）传输的时候，PageCache 会不起作用，那就白白浪费 DMA 多做的一次数据拷贝，造成性能的降低，即使使用了 PageCache 的零拷贝也会损失性能</strong>。</p>
