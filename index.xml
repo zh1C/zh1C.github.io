@@ -13,6 +13,20 @@
     <guid>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/</guid>
     <description><![CDATA[1. Go V1.3之前的标记-清除(mark and sweep)算法 该算法主要有两个步骤： 标记 清除 第一步先暂停程序业务逻辑，分类出可达和不可达对象，然后]]></description>
 </item><item>
+    <title>Golang面试题</title>
+    <link>http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <pubDate>Tue, 22 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+    <description><![CDATA[1、nil切片和空切片 问题 nil切片和空切片指向的地址一样吗？代码会输出什么？ 回答 nil切片和空切片指向的地址不一样。nil空切片引用数组指]]></description>
+</item><item>
+    <title>mysql面试题</title>
+    <link>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <pubDate>Tue, 22 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+    <description><![CDATA[1. MyISAM与InnoDB的区别 在MySQL5.5之前，默认存储引擎是MyISAM，5.5版本之后，默认存储引擎变为了InnoDB。下面对]]></description>
+</item><item>
     <title>操作系统</title>
     <link>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
     <pubDate>Mon, 21 Feb 2022 00:00:00 &#43;0000</pubDate>
@@ -26,13 +40,6 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E9%9B%B6%E6%8B%B7%E8%B4%9D/</guid>
     <description><![CDATA[以文件传输作为切入点，分析零拷贝原理。 1. 为什么要有DMA技术？ 在没有DMA技术前，I/O过程如下： CPU发出对应指令给磁盘控制器，然后返回；]]></description>
-</item><item>
-    <title>Golang面试题</title>
-    <link>http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
-    <pubDate>Sat, 19 Feb 2022 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
-    <description><![CDATA[1、nil切片和空切片 问题 nil切片和空切片指向的地址一样吗？代码会输出什么？ 回答 nil切片和空切片指向的地址不一样。nil空切片引用数组指]]></description>
 </item><item>
     <title>Golang源码之协程调度</title>
     <link>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6/</link>
@@ -68,12 +75,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/</guid>
     <description><![CDATA[临时设置 直接在终端输入如下命令 export https_proxy=http://proxyAddress:port http_proxy=http://proxyAddress:port all_proxy=socks5://proxyAddress:port export命令用于设置或显示环境变量，语法是export [-fnp] [变量名称]=[变量设置值] -f 代表[变量名]]></description>
-</item><item>
-    <title>Golang实现分布式缓存</title>
-    <link>http://wen-nan.github.io/posts/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0/</link>
-    <pubDate>Fri, 10 Dec 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0/</guid>
-    <description><![CDATA[概述 1. 实现的特性 单机缓存和基于HTTP的分布式缓存 使用最近最少访问（LRU）缓存策略 使用Go锁机制防止缓存穿透 使用一致性哈希选择节点，实现负]]></description>
 </item></channel>
 </rss>
