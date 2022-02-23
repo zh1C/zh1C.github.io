@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="next" href="http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  5832 ,
+        },"genre": "posts","keywords": "MySQL","wordcount":  7284 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-23T00:00:00+00:00","dateModified": "2022-02-23T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-23">2022-02-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5832 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-23">2022-02-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 7284 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 15 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -163,6 +163,12 @@
       </ul>
     </li>
     <li><a href="#总结">总结</a></li>
+    <li><a href="#5-一条sql语句在mysql中如何被执行的">5. 一条SQL语句在MySQL中如何被执行的？</a>
+      <ul>
+        <li><a href="#51-mysql基础架构分析">5.1 MySQL基础架构分析</a></li>
+        <li><a href="#52-语法分析">5.2 语法分析</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="1-myisam与innodb的区别">1. MyISAM与InnoDB的区别</h2>
@@ -481,6 +487,70 @@
 <h2 id="总结">总结</h2>
 <p>MySQL InnoDB 引擎使用 <strong>redo log(重做日志)</strong> 保证事务的<strong>持久性</strong>，使用 <strong>undo log(回滚日志)</strong> 来保证事务的<strong>原子性</strong>。</p>
 <p><code>MySQL</code>数据库的<strong>数据备份、主备、主主、主从</strong>都离不开<code>binlog</code>，需要依靠<code>binlog</code>来同步数据，保证数据一致性。</p>
+<h2 id="5-一条sql语句在mysql中如何被执行的">5. 一条SQL语句在MySQL中如何被执行的？</h2>
+<h3 id="51-mysql基础架构分析">5.1 MySQL基础架构分析</h3>
+<p>MySQL主要分为Server层和存储引擎层：</p>
+<ul>
+<li><strong>Server层</strong>：主要包括连接器、查询缓存、分析器、优化器、执行器等，所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图、函数等，还有一个通用日志模块binlog。</li>
+<li><strong>存储引擎</strong>：主要负责数据的存储和读取，采用可以替换的插件式架构，支持InnoDB，MyISAM，MeMory等多个存储引擎，其中 InnoDB 引擎有自有的日志模块 redolog 模块。<strong>现在最常用的存储引擎是 InnoDB，它从 MySQL 5.5.5 版本开始就被当做默认存储引擎了。</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220223182324153.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220223182324153.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220223182324153.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220223182324153.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220223182324153.png"
+        title="image-20220223182324153" /></p>
+<p>Server层基本组件介绍：</p>
+<ul>
+<li>连接器</li>
+</ul>
+<p>执行SQL语句时，首先需要连接MySQL服务端，<strong>连接器负责跟客户端建立连接、获取权限、维持和管理连接</strong>。使用<code>mysql -h ip -p port -u user -p</code>建立连接。这个过程中连接器会验证用户名和密码并查询出拥有的权限。</p>
+<blockquote>
+<p>建立连接过程比较复杂，使用中尽量减少建立连接的动作，使用长连接。但是这样会导致内存占用太大，被系统强行杀掉（OOM），即显示MySQL异常重启。有两个解决方案：</p>
+<ol>
+<li>定期断开长连接。</li>
+<li>如果使用MySQL5.7或更新版本，可以在每次执行一个较大操作后，执行<code>mysql_reset_connection</code>来重新初始化连接资源。</li>
+</ol>
+</blockquote>
+<ul>
+<li>查询缓存</li>
+</ul>
+<p>建立连接后，就会执行输入的查询语句了。MySQL拿到一个查询请求后，会先到查询缓存中看看，之前是不是执行过这一条语句。<strong>执行过的语句和结果可能会以key-value对形式缓存到内存中</strong>,如果不在缓存中，就会继续后面的阶段，如果在缓存中则会直接返回结果。</p>
+<blockquote>
+<p>查询缓存对于更新压力大的数据库来说，缓存命中率会非常低。因此在8.0版本直接删除了整个模块。低版本也可以“按需使用”，将参数<code>query_cache_type</code>设置为<code>DEMAND</code>，默认就不会使用查询缓存，需要可以显示指定。</p>
+</blockquote>
+<ul>
+<li>分析器</li>
+</ul>
+<p>没有命中查询缓存，MySQL需要对SQL语句做解析，知道你要做什么。分析器会先做“词法分析”，再做“语法分析”。</p>
+<ul>
+<li>优化器</li>
+</ul>
+<p>经过分析器后，再开始执行前，需要经过优化器处理。优化器是在表里面有多个索引的时候，决定使用哪一个索引；或者在一个语句关联多个表的时候，决定关联的顺序。该阶段完成后，执行方案就确定了。</p>
+<ul>
+<li>执行器</li>
+</ul>
+<p>开始执行前，会先判断你对这个表有没有执行查询的权限，如果没有会返回没有权限的错误；如果有则会根据表的引擎定义，使用指定的引擎提供的接口查询结果并返回。</p>
+<h3 id="52-语法分析">5.2 语法分析</h3>
+<p>sql语句可以分为查询和更新（增加、更新、删除）</p>
+<ul>
+<li><strong>查询语句</strong></li>
+</ul>
+<p>执行过程就是按上述server层组件顺序执行。</p>
+<p>权限校验（如果命中缓存）&mdash;&gt;查询缓存&mdash;&gt;分析器&mdash;&gt;优化器&mdash;&gt;权限校验&mdash;&gt;执行器&mdash;&gt;引擎</p>
+<ul>
+<li>更新语句</li>
+</ul>
+<p>分析器&mdash;-&gt;权限校验&mdash;-&gt;执行器&mdash;&gt;引擎&mdash;redo log(prepare 状态)&mdash;&gt;binlog&mdash;&gt;redo log(commit状态)</p>
+<p>针对sql语句<code>update tb_student A set A.age = '19' where A.name='张三'</code></p>
+<ol>
+<li>先查询张三这一条数据，如果有缓存，则会用到缓存。</li>
+<li>然后拿到查询的语句，把 age 改为 19，然后调用引擎 API 接口，写入这一行数据，InnoDB 引擎把数据保存在内存中，同时记录 redo log，此时 redo log 进入 prepare 状态，然后告诉执行器，执行完成了，随时可以提交。</li>
+<li>执行器收到通知后记录 binlog，然后调用引擎接口，提交 redo log 为提交状态。</li>
+<li>更新完成。</li>
+</ol>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -504,7 +574,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/golang%E6%BA%90%E7%A0%81_%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="prev" rel="prev" title="Golang源码之内存管理"><i class="fas fa-angle-left fa-fw"></i>Golang源码之内存管理</a></div>
+    <div class="post-nav"><a href="/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" class="prev" rel="prev" title="Redis相关面试题"><i class="fas fa-angle-left fa-fw"></i>Redis相关面试题</a>
+            <a href="/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/" class="next" rel="next" title="Golang面试题">Golang面试题<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>
