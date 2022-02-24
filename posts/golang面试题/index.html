@@ -9,8 +9,8 @@
 <meta property="og:description" content="Go语言面试题总结。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-02-23T00:00:00+00:00" />
-<meta property="article:modified_time" content="2022-02-23T00:00:00+00:00" />
+<meta property="article:published_time" content="2022-02-24T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-02-24T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Golang面试题"/>
@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "Golang, 面试","wordcount":  1550 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-23T00:00:00+00:00","dateModified": "2022-02-23T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "Golang, 面试","wordcount":  3040 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-24T00:00:00+00:00","dateModified": "2022-02-24T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-23">2022-02-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1550 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3040 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -148,7 +148,30 @@
         <li><a href="#如何选择">如何选择：</a></li>
       </ul>
     </li>
-    <li><a href="#5go的mapslice非线性安全">5、Go的map、slice非线性安全？</a></li>
+    <li><a href="#5go的mapslice非线性安全">5、Go的map、slice非线性安全？</a>
+      <ul>
+        <li><a href="#51-非线性安全的例子">5.1 非线性安全的例子</a></li>
+        <li><a href="#52-如何支持并发读写">5.2 如何支持并发读写</a>
+          <ul>
+            <li><a href="#mapmutex">Map+Mutex</a></li>
+            <li><a href="#yncmap">ync.Map</a></li>
+          </ul>
+        </li>
+        <li><a href="#53-为什么不支持">5.3 为什么不支持？</a></li>
+      </ul>
+    </li>
+    <li><a href="#6单核-cpu开两个-goroutine其中一个死循环会怎么样">6、单核 CPU，开两个 Goroutine，其中一个死循环，会怎么样？</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#单核cpu">单核CPU</a></li>
+            <li><a href="#goroutine受限">Goroutine受限</a></li>
+            <li><a href="#go版本问题">Go版本问题</a></li>
+            <li><a href="#实战演练">实战演练</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="1nil切片和空切片">1、nil切片和空切片</h2>
@@ -353,12 +376,157 @@
 <li>在一致性上的考虑：如果类型的某些方法必须有指针接收器，那么其余的方法也应该有指针接收器，所以无论类型如何使用，方法集都是一致的。</li>
 </ul>
 <h2 id="5go的mapslice非线性安全">5、Go的map、slice非线性安全？</h2>
+<h3 id="51-非线性安全的例子">5.1 非线性安全的例子</h3>
 <p>在Go中，map与slice不支持并发读写，也就是非线性安全的，如下两个并发操作的例子：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+ <span class="kd">var</span> <span class="nx">s</span> <span class="p">[]</span><span class="kt">string</span>
+ <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">9999</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+  <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+   <span class="nx">s</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="s">&#34;脑子进煎鱼了&#34;</span><span class="p">)</span>
+  <span class="p">}()</span>
+ <span class="p">}</span>
+
+ <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;进了 %d 只煎鱼&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div><p>输出结果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224205634739.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224205634739.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224205634739.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224205634739.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224205634739.png"
+        title="image-20220224205634739" /></p>
+<p>产生这样的原因是因为并发模式下，产生了覆盖写入情况。</p>
+<p>同样针对map，也使用这种方式：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+ <span class="nx">s</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span>
+ <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">99</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+  <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+   <span class="nx">s</span><span class="p">[</span><span class="s">&#34;煎鱼&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&#34;吸鱼&#34;</span>
+  <span class="p">}()</span>
+ <span class="p">}</span>
+
+ <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;进了 %d 只煎鱼&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">))</span>
+<span class="p">}</span>
+</code></pre></div><p>输出结果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224205956322.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224205956322.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224205956322.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224205956322.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224205956322.png"
+        title="image-20220224205956322" /></p>
+<p>程序直接报错。并发写 map 会导致 <code>fatal error: concurrent map writes</code> 错误提示。</p>
+<h3 id="52-如何支持并发读写">5.2 如何支持并发读写</h3>
+<ul>
+<li>
+<h4 id="mapmutex">Map+Mutex</h4>
+</li>
+</ul>
+<p>Go官方提供了一种简单又便利的方式来实现并发读写：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">counter</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{</span>
+    <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>
+    <span class="nx">m</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span>
+<span class="p">}{</span><span class="nx">m</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)}</span>
+</code></pre></div><p><strong>这条语句声明了一个变量，它是一个匿名结构体，包含一个原生map和一个嵌入式读写锁</strong>。</p>
+<p>从变量中读出数据，则调用读锁：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210440475.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210440475.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210440475.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210440475.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210440475.png"
+        title="image-20220224210440475" /></p>
+<p>从变量中写数据，则调用写锁：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210509208.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210509208.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210509208.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210509208.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210509208.png"
+        title="image-20220224210509208" /></p>
+<ul>
+<li>
+<h4 id="yncmap">ync.Map</h4>
+</li>
+</ul>
+<p>虽然有Map+Mutex方案，但如果map的数据量非常大时，只有一把锁，<strong>一把锁会导致大量的争夺锁，导致各种冲突和性能低下</strong>。</p>
+<p>Go语言的<code>sync.Map</code>支持并发读写Map,<strong>采用空间换时间的机制，冗余了两个数据结构，分别是:read和dirty，减少加锁对性能的影响，适合读多写少的场景</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210910249.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210910249.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210910249.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210910249.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224210910249.png"
+        title="image-20220224210910249" /></p>
+<p><strong>若出现写多/并发多的场景，会导致 read map 缓存失效，需要加锁，冲突变多，性能急剧下降。这是他的重大缺点。</strong></p>
+<h3 id="53-为什么不支持">5.3 为什么不支持？</h3>
+<p>Go Slice 的话，主要还是索引位覆写问题，这个就不需要纠结了，势必是程序逻辑在编写上有明显缺陷，自行改之就好。</p>
+<p>Go Map为什么不支持并发读写，原因如下：</p>
+<ul>
+<li>典型使用场景：map 的典型使用场景是不需要从多个 goroutine 中进行安全访问。</li>
+<li>非典型场景（需要原子操作）：map 可能是一些更大的数据结构或已经同步的计算的一部分。</li>
+<li>性能场景考虑：若是只是为少数程序增加安全性，导致 map 所有的操作都要处理 mutex，将会降低大多数程序的性能。</li>
+</ul>
+<p>汇总来讲，就是 Go 官方在经过了长时间的讨论后，认为 Go map 更应适配典型使用场景，而不是为了小部分情况，导致大部分程序付出代价（性能），决定了不支持。</p>
+<h2 id="6单核-cpu开两个-goroutine其中一个死循环会怎么样">6、单核 CPU，开两个 Goroutine，其中一个死循环，会怎么样？</h2>
+<p>针对这个问题，需要把问题拆开，其具有以下几个元素：</p>
+<ul>
+<li>
+<p>运行Go程序的计算机只有一个单核CPU。</p>
+</li>
+<li>
+<p>两个Goroutine在运行。</p>
+</li>
+<li>
+<p>一个Goroutine死循环。</p>
+</li>
+</ul>
+<h4 id="单核cpu">单核CPU</h4>
+<p>单核CPU对GMP模型中影响最大的就是P， 因为P的数量默认与CPU核数(GOMAXPROCS)保持一致。</p>
+<h4 id="goroutine受限">Goroutine受限</h4>
+<p>两个Goroutine，一个死循环，一个正常运行。可以理解为 Main Goroutine + 起了一个新 Goroutine 跑着死循环。</p>
+<p>需要注意，Goroutine 里跑着死循环，也就是时时刻刻在运行着 “业务逻辑”。这块需要与单核 CPU 关联起来，<strong>考虑是否会一直阻塞住，把整个 Go 进程运行给 hang 住了</strong>？面试时需要问清楚。</p>
+<h4 id="go版本问题">Go版本问题</h4>
+<p>针对不同的Go版本，结果可能不一样</p>
+<h4 id="实战演练">实战演练</h4>
+<p>构造如下例子：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Main Goroutine 
+</span><span class="c1"></span><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 模拟单核 CPU
+</span><span class="c1"></span>    <span class="nx">runtime</span><span class="p">.</span><span class="nf">GOMAXPROCS</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="c1">// 模拟 Goroutine 死循环
+</span><span class="c1"></span>    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">{</span>
+        <span class="p">}</span>
+    <span class="p">}()</span>
+
+    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;脑子进煎鱼了&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div><p>答案是：</p>
+<ul>
+<li>在 Go1.14 前，不会输出任何结果。</li>
+<li>在 Go1.14 及之后，能够正常输出结果。</li>
+</ul>
+<p>在Go1.14前，这段程序是有一个 Goroutine 是正在执行死循环，也就是说他肯定无法被抢占。即主程序永远没有机会被调度，因此永远无法执行完毕。</p>
+<p>在Go1.14版本及之后版本，会正常输出。因为<strong>在 Go1.14 实现了基于信号的抢占式调度</strong>，以此来解决上述一些仍然无法被抢占解决的场景。相应方法会检测符合场景的 P，当满足下述两个场景之一时，就会发送信号给 M。M 收到信号后将会休眠正在阻塞的 Goroutine，调用绑定的信号方法，并进行重新调度。以此来解决这个问题。</p>
+<blockquote>
+<p>1.抢占阻塞在系统调用上的 P。</p>
+<p>2.抢占运行时间过长的 G。</p>
+</blockquote>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-02-23</span>
+                <span>更新于 2022-02-24</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -377,7 +545,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" class="prev" rel="prev" title="MySQL面试题"><i class="fas fa-angle-left fa-fw"></i>MySQL面试题</a></div>
+    <div class="post-nav"><a href="/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/" class="prev" rel="prev" title="缓存穿透与缓存雪崩"><i class="fas fa-angle-left fa-fw"></i>缓存穿透与缓存雪崩</a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>
