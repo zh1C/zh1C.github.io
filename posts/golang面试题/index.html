@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "Golang, 面试","wordcount":  3040 ,
+        },"genre": "posts","keywords": "Golang, 面试","wordcount":  4637 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-24T00:00:00+00:00","dateModified": "2022-02-24T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3040 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4637 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -172,6 +172,20 @@
         </li>
       </ul>
     </li>
+    <li><a href="#7golang常用的并发模型">7、Golang常用的并发模型</a>
+      <ul>
+        <li><a href="#71-使用channel通知实现并发控制">7.1 使用channel通知实现并发控制</a></li>
+        <li><a href="#72-通过syncwaitgroup实现并发控制">7.2 通过sync.WaitGroup实现并发控制</a></li>
+        <li><a href="#73-context上下文实现并发控制">7.3 Context上下文，实现并发控制</a></li>
+      </ul>
+    </li>
+    <li><a href="#8进程线程协程goroutine区别">8、进程、线程、协程、goroutine区别</a>
+      <ul>
+        <li><a href="#81-概念理解">8.1 概念理解</a></li>
+        <li><a href="#82-理解区分">8.2 理解区分</a></li>
+      </ul>
+    </li>
+    <li><a href="#9golang有几种锁">9、Golang有几种锁</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="1nil切片和空切片">1、nil切片和空切片</h2>
@@ -378,8 +392,7 @@
 <h2 id="5go的mapslice非线性安全">5、Go的map、slice非线性安全？</h2>
 <h3 id="51-非线性安全的例子">5.1 非线性安全的例子</h3>
 <p>在Go中，map与slice不支持并发读写，也就是非线性安全的，如下两个并发操作的例子：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go">
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
  <span class="kd">var</span> <span class="nx">s</span> <span class="p">[]</span><span class="kt">string</span>
  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">9999</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
   <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
@@ -522,6 +535,62 @@
 <p>1.抢占阻塞在系统调用上的 P。</p>
 <p>2.抢占运行时间过长的 G。</p>
 </blockquote>
+<h2 id="7golang常用的并发模型">7、Golang常用的并发模型</h2>
+<p>控制并发有三种经典的方式，一种是通过channel通知实现并发控制，一种是WaitGroup，另外一种是Context。</p>
+<h3 id="71-使用channel通知实现并发控制">7.1 使用channel通知实现并发控制</h3>
+<p><strong>无缓冲通道</strong>，指的是通道大小为0，也就是说，这种类型的通道在接收前没有能力保存任何值，<strong>要求发送<code>goroutine</code>和接收<code>goroutine</code>同时准备好</strong>，才可以完成发送和接收操作。因此发送与接受的goroutine必须是同步的，如果没有同时准备好的话，先执行的操作就会阻塞等待，直到另一个相对应的操作准备好为止。这种无缓冲的通道我们也称之为同步通道。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225140618506.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225140618506.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225140618506.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225140618506.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225140618506.png"
+        title="image-20220225140618506" /></p>
+<h3 id="72-通过syncwaitgroup实现并发控制">7.2 通过sync.WaitGroup实现并发控制</h3>
+<p>WaitGroup用于等待一组线程的结束。父线程调用Add方法来设定应等待的线程的数量。每个被等待的线程在结束时应调用Done方法。同时，主线程里可以调用Wait方法阻塞至所有线程结束。</p>
+<p><strong>注意：在<code>WaitGroup</code>第一次使用后，不能被拷贝</strong>，如下代码则会报死锁：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225141213285.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225141213285.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225141213285.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225141213285.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225141213285.png"
+        title="image-20220225141213285" /></p>
+<p>这是因为<code>wg</code>给拷贝传递到了<code>goroutine</code>中，导致只有Add操作，其实Done操作都是在<code>wg</code>的副本执行的，因此Wait就死锁了。</p>
+<ul>
+<li>改进方法1：将匿名函数中<code>wg</code>的传入类型改为<code>*sync.WaitGroup</code>。</li>
+<li>改进方法2：将匿名函数中的<code>wg</code>的传入参数去掉，因为Go支持闭包操作，匿名函数中可以直接使用外面的<code>wg</code>变量。</li>
+</ul>
+<h3 id="73-context上下文实现并发控制">7.3 Context上下文，实现并发控制</h3>
+<p>Go将一个程序的运行环境、现场和快照等封装在一个<code>Context</code>里，再将它传给要执行的<code>goroutine</code>。<code>context</code>包主要用来处理多个<code>goroutine</code>之间共享数据，及多个<code>goroutine</code>的管理。</p>
+<h2 id="8进程线程协程goroutine区别">8、进程、线程、协程、goroutine区别</h2>
+<h3 id="81-概念理解">8.1 概念理解</h3>
+<ul>
+<li><strong>进程</strong></li>
+</ul>
+<p>进程是具有一定独立功能的程序关于某个数据集合上的一次运行活动,进程是系统进行资源分配和调度的一个独立单位。每个进程都有自己的独立内存空间，拥有自己独立的堆和栈，既不共享堆，亦不共享栈，进程由操作系统调度。不同进程通过进程间通信来通信。由于进程比较重量，占据独立的内存，所以上下文进程间的切换开销（栈、寄存器、虚拟内存、文件句柄等）比较大，但相对比较稳定安全。</p>
+<ul>
+<li><strong>线程</strong></li>
+</ul>
+<p>线程是进程的一个实体,是CPU调度和分派的基本单位,它是比进程更小的能独立运行的基本单位.线程自己基本上不拥有系统资源,而拥有自己独立的栈和共享的堆，共享堆，不共享栈，线程也由操作系统调度(标准线程是这样的)。只拥有一点在运行中必不可少的资源(如程序计数器,一组寄存器和栈),但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。线程间通信主要通过共享内存，上下文切换很快，资源开销较少，但相比进程不够稳定容易丢失数据。</p>
+<ul>
+<li><strong>协程</strong></li>
+</ul>
+<p><strong>协程是一种用户态的轻量级线程</strong>，协程的调度完全由用户控制。协程和线程一样共享堆，不共享栈，协程由程序员在协程的代码里显示调度。协程拥有自己的寄存器上下文和栈。协程调度切换时，将寄存器上下文和栈保存到其他地方，在切回来的时候，恢复先前保存的寄存器上下文和栈，直接操作栈则基本没有内核切换的开销，可以不加锁的访问全局变量，所以上下文的切换非常快。</p>
+<h3 id="82-理解区分">8.2 理解区分</h3>
+<ul>
+<li><strong>进程、线程(内核级线程)、协程(用户级线程)之间区别</strong></li>
+</ul>
+<p>对于 进程**、**线程，都是有内核进行调度，有 CPU 时间片的概念，进行 <strong>抢占式调度</strong>。</p>
+<p>对于 <strong>协程</strong>(用户级线程)，这是对内核透明的，也就是系统并不知道有协程的存在，是完全由用户自己的程序进行调度的，因此很难做到抢占式调度那样强制CPU切换，通常只能进行<strong>协作式调度</strong>。</p>
+<ul>
+<li><strong>goroutine和协程的区别</strong></li>
+</ul>
+<p><strong>本质上，goroutine就是协程</strong>，不同的是，Golang在runtime、系统调用等多方面对goroutine调度进行了封装和处理。协程只能进行协作式调度，而Goroutine是基于信号的抢占式调度。</p>
+<h2 id="9golang有几种锁">9、Golang有几种锁</h2>
+<p>有Mutex和RWMutex。然后可以介绍两种锁的底层。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">

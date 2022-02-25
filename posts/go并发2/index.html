@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/" /><link rel="prev" href="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%91/" /><link rel="next" href="http://wen-nan.github.io/posts/6-824%E5%AD%A6%E4%B9%A02/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/" /><link rel="prev" href="http://wen-nan.github.io/posts/6-824%E5%AD%A6%E4%B9%A01/" /><link rel="next" href="http://wen-nan.github.io/posts/6-824%E5%AD%A6%E4%B9%A02/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -155,7 +155,7 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-04%2016.30.19.png"
         title="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-04%2016.30.19.png" /></p>
-<p>可以在代码前巧用Lock方法，代码后调用Unlock方法来保证一段代码互斥执行(用<code>defer</code>语句可以保证互斥锁一定会被释放)。在一个 Go 协程调用 Lock 方法获得锁后，其他请求锁的协程都会阻塞在 Lock 方法，直到锁被释放。</p>
+<p>可以在代码前调用Lock方法，代码后调用Unlock方法来保证一段代码互斥执行(用<code>defer</code>语句可以保证互斥锁一定会被释放)。在一个 Go 协程调用 Lock 方法获得锁后，其他请求锁的协程都会阻塞在 Lock 方法，直到锁被释放。</p>
 <h3 id="读写锁syncrwmutex">读写锁(sync.RWMutex)</h3>
 <p>允许多个只读操作并行执行，但写操作完全互斥。这种锁称为<code>多读单写锁</code>，简称读写锁，读写锁分为读锁和写锁，读锁允许同时执行，但写锁互斥。有如下情况：</p>
 <ul>
@@ -276,7 +276,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/go%E5%B9%B6%E5%8F%91/" class="prev" rel="prev" title="goroutine的调度原理"><i class="fas fa-angle-left fa-fw"></i>goroutine的调度原理</a>
+    <div class="post-nav"><a href="/posts/6-824%E5%AD%A6%E4%B9%A01/" class="prev" rel="prev" title="MapReduce"><i class="fas fa-angle-left fa-fw"></i>MapReduce</a>
             <a href="/posts/6-824%E5%AD%A6%E4%B9%A02/" class="next" rel="next" title="GFS">GFS<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments">
