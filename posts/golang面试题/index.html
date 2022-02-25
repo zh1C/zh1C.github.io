@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "Golang, 面试","wordcount":  4840 ,
+        },"genre": "posts","keywords": "Golang, 面试","wordcount":  5666 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-24T00:00:00+00:00","dateModified": "2022-02-24T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4840 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5666 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -156,7 +156,7 @@
         <li><a href="#52-如何支持并发读写">5.2 如何支持并发读写</a>
           <ul>
             <li><a href="#mapmutex">Map+Mutex</a></li>
-            <li><a href="#yncmap">ync.Map</a></li>
+            <li><a href="#syncmap">sync.Map</a></li>
           </ul>
         </li>
         <li><a href="#53-为什么不支持">5.3 为什么不支持？</a></li>
@@ -188,6 +188,10 @@
       </ul>
     </li>
     <li><a href="#9golang有几种锁">9、Golang有几种锁</a></li>
+    <li><a href="#10高效拼接字符串">10、高效拼接字符串</a></li>
+    <li><a href="#11init函数什么时候执行">11、init()函数什么时候执行？</a></li>
+    <li><a href="#12go语言局部变量分配在栈上还是堆上">12、Go语言局部变量分配在栈上还是堆上？</a></li>
+    <li><a href="#13什么是协程泄露">13、什么是协程泄露？</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="1nil切片和空切片">1、nil切片和空切片</h2>
@@ -508,7 +512,7 @@
         title="image-20220224210509208" /></p>
 <ul>
 <li>
-<h4 id="yncmap">ync.Map</h4>
+<h4 id="syncmap">sync.Map</h4>
 </li>
 </ul>
 <p>虽然有Map+Mutex方案，但如果map的数据量非常大时，只有一把锁，<strong>一把锁会导致大量的争夺锁，导致各种冲突和性能低下</strong>。</p>
@@ -634,6 +638,61 @@
 <p><strong>本质上，goroutine就是协程</strong>，不同的是，Golang在runtime、系统调用等多方面对goroutine调度进行了封装和处理。协程只能进行协作式调度，而Goroutine是基于信号的抢占式调度。</p>
 <h2 id="9golang有几种锁">9、Golang有几种锁</h2>
 <p>有Mutex和RWMutex。然后可以介绍两种锁的底层。</p>
+<h2 id="10高效拼接字符串">10、高效拼接字符串</h2>
+<p>Go语言中，字符串是只读的，意味着每次修改操作都会创建一个新的字符串。<strong>如果需要拼接多次，应该使用<code>strings.Builder</code>，最小化内存拷贝次数</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225195236803.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225195236803.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225195236803.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225195236803.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225195236803.png"
+        title="image-20220225195236803" /></p>
+<h2 id="11init函数什么时候执行">11、init()函数什么时候执行？</h2>
+<p>同一个包，甚至是同一个源文件可以有多个 <code>init()</code> 函数。<code>init()</code> 函数没有入参和返回值，不能被其他函数调用，同一个包内多个 <code>init()</code> 函数的执行顺序不作保证。</p>
+<p>一句话总结： import –&gt; const –&gt; var –&gt; <code>init()</code> –&gt; <code>main()</code>。</p>
+<h2 id="12go语言局部变量分配在栈上还是堆上">12、Go语言局部变量分配在栈上还是堆上？</h2>
+<p>由编译器决定。Go语言编译器会自动决定把一个变量放到栈还是放到堆，编译器会做逃逸分析，<strong>当发现变量作用域没有超出函数范围，就可以在栈上，反之必须分配在堆上。</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225200055087.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225200055087.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225200055087.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225200055087.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225200055087.png"
+        title="image-20220225200055087" /></p>
+<blockquote>
+<p><code>foo()</code>函数中，如果v分配在栈上，foo函数返回时，&amp;v就不存在了，但上述代码可以正常运行，main函数中仍然能够正常访问该值，因为Go 编译器发现 v 的引用脱离了 foo 的作用域，会将其分配在堆上。</p>
+</blockquote>
+<blockquote>
+<p><strong>注意</strong>：函数返回局部变量的指针是安全的，因为Go编译器会对每个局部变量做逃逸分析。如果发现局部变量作用域超出函数，则不会将内存分配到栈上而分配到堆上。</p>
+</blockquote>
+<h2 id="13什么是协程泄露">13、什么是协程泄露？</h2>
+<p>协程泄露是指协程创建后，长时间得不到释放，并且还在不断地创建新的协程，最终导致内存耗尽，程序崩溃。常见的导致协程泄露的场景有以下几种：</p>
+<ul>
+<li><strong>缺少接收器，导致发送阻塞</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225201541046.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225201541046.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225201541046.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225201541046.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225201541046.png"
+        title="image-20220225201541046" /></p>
+<p>如上例子：每执行一次query，则启动1000个协程向信道ch发送数字0，但只接收了一次，导致999个协程被阻塞，不能退出。</p>
+<ul>
+<li><strong>缺少发送器，导致接收阻塞</strong></li>
+</ul>
+<p>同样的，如果启动 1000 个协程接收信道的信息，但信道并不会发送那么多次的信息，也会导致接收协程被阻塞，不能退出。</p>
+<ul>
+<li><strong>死锁</strong></li>
+</ul>
+<p>两个或两个以上的协程在执行过程中，由于竞争资源或者由于彼此通信而造成阻塞，这种情况下，也会导致协程被阻塞，不能退出。</p>
+<ul>
+<li><strong>无线循环</strong></li>
+</ul>
+<p>为了避免网络等问题，采用了无限重试的方式，发送 HTTP 请求，直到获取到数据。那如果 HTTP 服务宕机，永远不可达，导致协程不能退出，发生泄漏。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
