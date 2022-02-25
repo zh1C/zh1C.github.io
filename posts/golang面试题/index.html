@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "Golang, 面试","wordcount":  4637 ,
+        },"genre": "posts","keywords": "Golang, 面试","wordcount":  4840 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-24T00:00:00+00:00","dateModified": "2022-02-24T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4637 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4840 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -134,6 +134,8 @@
       <ul>
         <li><a href="#回答-1">回答</a></li>
         <li><a href="#解释-1">解释</a></li>
+        <li><a href="#高效的byte转string">高效的[]byte转string</a></li>
+        <li><a href="#高效的string转byte">高效的string转[]byte</a></li>
       </ul>
     </li>
     <li><a href="#3new和make有什么区别">3、new和make有什么区别？</a>
@@ -261,14 +263,6 @@
 <h3 id="回答-1">回答</h3>
 <p>字符串转成切片，会产生拷贝。严格来说，只要是发生类型强转都会产生内存拷贝。</p>
 <p>有没有什么办法可以在字符串转成切片的时候不用发生拷贝呢？</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032338.png"
-        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032338.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032338.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032338.png 2x"
-        data-sizes="auto"
-        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032338.png"
-        title="ScreenShot2021-08-31 10.41.24" /></p>
 <h3 id="解释-1">解释</h3>
 <ul>
 <li><strong>StringHeader是字符串在go底层结构</strong></li>
@@ -292,15 +286,64 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/blog/032339-1.png"
         title="ScreenShot2021-08-31 10.43.17" /></p>
-<ul>
-<li>如果想要在底层转换二者，只需要把StringHeader的地址强转成SliceHeader就行。golang有一个很强的包叫<code>unsafe</code>。</li>
-</ul>
-<ol>
-<li><code>unsafe.Pointer(&amp;a)</code>方法可以得到变量a的地址。</li>
-<li><code>(*reflect.StringHeader)(unsafe.Pointer(&amp;a))</code>可以把字符串a转成底层结构的形式。</li>
-<li><code>(*[]byte)(unsafe.pointer(&amp;ssh))</code>可以把ssh底层结构体转成byte的切片指针。</li>
-<li>再通过*转成指针指向的实际内容。</li>
-</ol>
+<p>可以发现StringHeader与SliceHeader的结构体内存是对齐的，除了SliceHeader最后多了一个Cap字段。</p>
+<h3 id="高效的byte转string">高效的[]byte转string</h3>
+<blockquote>
+<p><strong>unsafe.Pointer</strong></p>
+<p>Pointer类型用于表示任意类型的指针。任意类型的指针可以转换为一个Pointer类型值，一个Pointer类型值可以转换为任意类型的指针。</p>
+</blockquote>
+<p><strong>直接转换指针类型即可，忽略cap字段</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225173122810.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225173122810.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225173122810.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225173122810.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225173122810.png"
+        title="image-20220225173122810" /></p>
+<h3 id="高效的string转byte">高效的string转[]byte</h3>
+<p><strong>注意：string高效转[]byte虽然依然可以直接转，但是会出现没有生成cap字段，对读取操作没有影响，但如果要append元素可能会出问题</strong>：</p>
+<blockquote>
+<p>因为这样做的cap属性是随机的，可能是大于len的值，那么append时就不会新开辟一段内存存放元素，而是在原数组后面追加，如果后面的内存不可写就会panic</p>
+</blockquote>
+<p>因此转换时需要想办法构建出cap字段。</p>
+<p>方式一：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225173502992.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225173502992.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225173502992.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225173502992.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225173502992.png"
+        title="image-20220225173502992" /></p>
+<p>方式二：</p>
+<p><strong>unsafe.Pointer, int, uintpr这三种类型占用内存大小相同</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182143376.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182143376.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182143376.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182143376.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182143376.png"
+        title="image-20220225182143376" /></p>
+<p>因此从底层结构上看，string可以看做[2]uintptr，[]byte类型可以看做[3]uintptr。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182305106.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182305106.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182305106.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182305106.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182305106.png"
+        title="image-20220225182305106" /></p>
+<p>代码如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182326189.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182326189.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182326189.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182326189.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220225182326189.png"
+        title="image-20220225182326189" /></p>
 <h2 id="3new和make有什么区别">3、new和make有什么区别？</h2>
 <h3 id="基本特性">基本特性</h3>
 <ul>

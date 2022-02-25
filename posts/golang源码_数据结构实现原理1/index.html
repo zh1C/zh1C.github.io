@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861\/"
-        },"genre": "posts","keywords": "Golang","wordcount":  5769 ,
+        },"genre": "posts","keywords": "Golang","wordcount":  5813 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861\/","datePublished": "2021-11-30T00:00:00+00:00","dateModified": "2021-11-30T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang源码之常见数据结构实现原理上</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-30">2021-11-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5769 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-30">2021-11-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5813 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -344,7 +344,7 @@
         title="ScreenShot2021-11-30 16.06.30" /></p>
 <p>可以看出，select语句的多个case执行顺序是随机的。</p>
 <blockquote>
-<p>通过示例可知:<strong>select的case语句读channel不会阻塞，尽管channel中没有语句。这时由于case语句编译后调用读channel时会明确传入不阻塞的参数，此时读不到数据不会将当前goroutine加入等待队列，而是直接返回</strong>。</p>
+<p>通过示例可知:<strong>select的case语句读channel不会阻塞，尽管channel中没有数据。这时由于case语句编译后调用读channel时会明确传入不阻塞的参数，此时读不到数据不会将当前goroutine加入等待队列，而是直接返回</strong>。</p>
 </blockquote>
 <h4 id="43-range">4.3 range</h4>
 <p>通过range可以持续从channel中读取数据，好像在遍历一个数组一样，<strong>当channel中没有数据时会阻塞当前goroutine，与读channel时阻塞处理机制一样</strong>。</p>
@@ -553,7 +553,7 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2015.39.27.png"
         title="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-12/ScreenShot2021-12-01%2015.39.27.png" /></p>
 <blockquote>
-<p>上图中，B=5,所以buckets总数是32.首先计算出key的哈希值，用最低5位<code>00110</code>，确定6号桶。使用高8位<code>10010111</code>，对应十进制151，在6号bucket中寻找<code>tophash</code>值（HOB hash）为151的key,找到了2号槽位，过程结束。</p>
+<p>上图中，B=5,所以buckets总数是32.首先计算出key的哈希值，用最低5位<code>00110</code>，确定6号桶。使用高8位<code>10010111</code>，对应十进制151，在6号bucket中寻找<code>tophash</code>值（HOB hash）为151的key,找到了2号槽位，然后去keys数组的对应位置查找到key2，如果该key2与key相同，则返回value2，结束。</p>
 <p>如果在bucket中没有找到，并且overflow不为空，则还要继续去overflow bucket中寻找，最后没找到<strong>则返回对应值类型的0值</strong>。</p>
 </blockquote>
 <h3 id="4-渐进式扩容">4. 渐进式扩容</h3>
