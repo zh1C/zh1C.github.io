@@ -2,20 +2,21 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://wen-nan.github.io/categories/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/tags/golang/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/categories/golang/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/categories/</loc><lastmod>2022-02-25T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/tags/golang/</loc><lastmod>2022-02-25T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/categories/golang/</loc><lastmod>2022-02-25T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/posts/golang%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%A2%98/</loc><lastmod>2022-02-25T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/</loc><lastmod>2022-02-25T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/posts/</loc><lastmod>2022-02-25T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/tags/</loc><lastmod>2022-02-25T00:00:00&#43;00:00</lastmod></url><url>
+            <loc>http://wen-nan.github.io/tags/%E9%9D%A2%E8%AF%95/</loc><lastmod>2022-02-25T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/posts/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/tags/redis/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/categories/redis%E5%AD%A6%E4%B9%A0/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/tags/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
-            <loc>http://wen-nan.github.io/tags/%E9%9D%A2%E8%AF%95/</loc><lastmod>2022-02-24T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/tags/mysql/</loc><lastmod>2022-02-23T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/categories/mysql/</loc><lastmod>2022-02-23T00:00:00&#43;00:00</lastmod></url><url>
             <loc>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</loc><lastmod>2022-02-23T00:00:00&#43;00:00</lastmod></url><url>
