@@ -11,6 +11,13 @@
     <guid>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</guid>
     <description><![CDATA[Redis用到的主要数据结构有简单动态字符串(SDS)、双端链表、字典、跳跃表、压缩列表、整数集合等。但是Redis并没有直接使用这些数据结]]></description>
 </item><item>
+    <title>计算机网络</title>
+    <link>http://wen-nan.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+    <pubDate>Sat, 26 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</guid>
+    <description><![CDATA[1. OSI与TCP/IP各层的结构与功能，都有哪些协议? 学习计算机网络时一般采用折中的办法，即中和OSI和TCP/IP的优点，采用一种只有五层]]></description>
+</item><item>
     <title>Golang多线程题目</title>
     <link>http://wen-nan.github.io/posts/golang%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%A2%98/</link>
     <pubDate>Fri, 25 Feb 2022 00:00:00 &#43;0000</pubDate>
@@ -31,13 +38,6 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/</guid>
     <description><![CDATA[缓存穿透 缓存穿透就是大量请求的key根本不存在于缓存中，导致请求直接到了数据库上，根本没有经过缓存这一层。流程如下： 有哪些解决办法？ 缓存无效]]></description>
-</item><item>
-    <title>计算机网络</title>
-    <link>http://wen-nan.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
-    <pubDate>Thu, 24 Feb 2022 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</guid>
-    <description><![CDATA[1. OSI与TCP/IP各层的结构与功能，都有哪些协议? 学习计算机网络时一般采用折中的办法，即中和OSI和TCP/IP的优点，采用一种只有五层]]></description>
 </item><item>
     <title>MySQL面试题</title>
     <link>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
