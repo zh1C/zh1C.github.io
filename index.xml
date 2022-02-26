@@ -3,9 +3,16 @@
         <title>NarcissusBlog</title>
         <link>http://wen-nan.github.io/</link>
         <description>NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 25 Feb 2022 00:00:00 &#43;0000</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 26 Feb 2022 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="http://wen-nan.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Redis(七)对象</title>
+    <link>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</link>
+    <pubDate>Sat, 26 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</guid>
+    <description><![CDATA[Redis用到的主要数据结构有简单动态字符串(SDS)、双端链表、字典、跳跃表、压缩列表、整数集合等。但是Redis并没有直接使用这些数据结]]></description>
+</item><item>
     <title>Golang多线程题目</title>
     <link>http://wen-nan.github.io/posts/golang%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%A2%98/</link>
     <pubDate>Fri, 25 Feb 2022 00:00:00 &#43;0000</pubDate>
@@ -68,12 +75,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E9%9B%B6%E6%8B%B7%E8%B4%9D/</guid>
     <description><![CDATA[以文件传输作为切入点，分析零拷贝原理。 1. 为什么要有DMA技术？ 在没有DMA技术前，I/O过程如下： CPU发出对应指令给磁盘控制器，然后返回；]]></description>
-</item><item>
-    <title>Golang源码之协程调度</title>
-    <link>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6/</link>
-    <pubDate>Mon, 14 Feb 2022 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6/</guid>
-    <description><![CDATA[1. Golang调度器的由来 1.1 单进程时代 早期的操作系统是单进程的，面临单一的执行流程，进程阻塞会带来CPU时间浪费的缺陷。 1.2 多进程时代有了调度]]></description>
 </item></channel>
 </rss>
