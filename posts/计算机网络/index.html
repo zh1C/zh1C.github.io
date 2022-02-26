@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/"
-        },"genre": "posts","keywords": "计算机网络, 面试","wordcount":  11750 ,
+        },"genre": "posts","keywords": "计算机网络, 面试","wordcount":  12037 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/","datePublished": "2022-02-24T00:00:00+00:00","dateModified": "2022-02-24T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">计算机网络</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="far fa-folder fa-fw"></i>计算机网络</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 11750 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 24 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12037 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 25 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -154,7 +154,12 @@
         <li><a href="#27-如果已经建立了连接但是客户端突然出现故障了怎么办">2.7 如果已经建立了连接，但是客户端突然出现故障了怎么办？</a></li>
       </ul>
     </li>
-    <li><a href="#3-tcpudp协议的区别">3. TCP、UDP协议的区别</a></li>
+    <li><a href="#3-tcpudp协议的区别">3. TCP、UDP协议的区别</a>
+      <ul>
+        <li><a href="#31-udp">3.1 UDP</a></li>
+        <li><a href="#32-tcp">3.2 TCP</a></li>
+      </ul>
+    </li>
     <li><a href="#4-tcp协议如何保证可靠传输">4. TCP协议如何保证可靠传输</a>
       <ul>
         <li><a href="#41-arq协议">4.1 ARQ协议</a></li>
@@ -221,7 +226,7 @@
 <h3 id="15-物理层">1.5 物理层</h3>
 <p><strong>物理层(physical layer)的作用是实现相邻计算机节点之间比特流的透明传送，尽可能屏蔽掉具体传输介质和物理设备的差异，</strong> 使其上面的数据链路层不必考虑网络的具体传输介质是什么。“透明传送比特流”表示经实际电路传送后的比特流没有发生变化，对传送的比特流来说，这个电路好像是看不见的。</p>
 <h2 id="2-tcp三次握手和四次挥手">2. TCP三次握手和四次挥手</h2>
-<p>TCP位于传输层，提供可靠的字节流服务。即为了方便管理，将大块数据分割成以报文段为单位的数据包进行管理，并且能够把数据准确可靠的传输给对方。<strong>为了准确无误地把数据送达目标处，TCP 协议采用了三次握手策略</strong>。</p>
+<p>TCP位于传输层，提供可靠的字节流服务。即为了方便管理，将大块数据分割成以报文段为单位的数据包进行管理，并且能够把数据准确可靠的传输给对方。<strong>为了准确无误地把数据送达目标处，TCP 协议采用了三次握手与四次挥手策略</strong>。</p>
 <h3 id="21-三次握手过程与图解">2.1 三次握手过程与图解</h3>
 <p><img
         class="lazyload"
@@ -315,6 +320,24 @@
         title="image-20220213152358821" /></p>
 <p>TCP 提供面向连接的服务。在传送数据之前必须先建立连接，数据传送结束后要释放连接。 TCP 不提供广播或多播服务。由于 TCP 要提供可靠的，面向连接的传输服务（TCP 的可靠体现在 TCP 在传递数据之前，会有三次握手来建立连接，而且在数据传递时，有确认、窗口、重传、拥塞控制机制，在数据传完后，还会断开连接用来节约系统资源），这难以避免增加了许多开销，如确认，流量控制，计时器以及连接管理等。这不仅使协议数据单元的首部增大很多，还要占用许多处理机资源。TCP 一般用于文件传输、发送和接收邮件、远程登录等场景。</p>
 <p>UDP 在传送数据之前不需要先建立连接，远地主机在收到 UDP 报文后，不需要给出任何确认。虽然 UDP 不提供可靠交付，但在某些情况下 UDP 却是一种最有效的工作方式（一般用于即时通信），比如： QQ 语音、 QQ 视频 、直播等等 。</p>
+<h3 id="31-udp">3.1 UDP</h3>
+<p>UDP全称是用户数据报协议，有以下特性</p>
+<ul>
+<li><strong>面向无连接</strong>，只是数据报文的搬运工，不会对数据报文进行任何拆分和拼接操作。</li>
+<li><strong>有单播、多播、广播等功能</strong>。</li>
+<li><strong>UDP是面向报文的</strong>，对应用程序交下来的报文，只会添加首部后就向下交付IP层，因此程序必须选择合适大小的报文。</li>
+<li><strong>不可靠性</strong>，体现在无连接上。</li>
+<li><strong>头部开销下，传输数据报文时很高效</strong>，头部只包含8字节（源端口和目标端口，报文长度与校验和）</li>
+</ul>
+<h3 id="32-tcp">3.2 TCP</h3>
+<p>TCP有以下特性：</p>
+<ul>
+<li><strong>面向连接</strong>，即发送数据前两端必须建立连接。</li>
+<li><strong>仅支持单播传输</strong>，只能进行点对点的数据传输。</li>
+<li><strong>可靠传输</strong>，可靠传输靠的是TCP段序号以及确认号。</li>
+<li><strong>提供拥塞控制</strong></li>
+<li>TCP首部最小20字节，最大60字节。</li>
+</ul>
 <h2 id="4-tcp协议如何保证可靠传输">4. TCP协议如何保证可靠传输</h2>
 <ol>
 <li>应用数据被分割成TCP认为最适合发送的数据块</li>
