@@ -9,8 +9,8 @@
 <meta property="og:description" content="学习mysql相关面试题。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-02-23T00:00:00+00:00" />
-<meta property="article:modified_time" content="2022-02-23T00:00:00+00:00" />
+<meta property="article:published_time" content="2022-02-27T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-02-27T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MySQL面试题"/>
@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="next" href="http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  7284 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-23T00:00:00+00:00","dateModified": "2022-02-23T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "MySQL","wordcount":  9244 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-27T00:00:00+00:00","dateModified": "2022-02-27T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-23">2022-02-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 7284 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 15 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-27">2022-02-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9244 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 19 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -133,6 +133,16 @@
         <li><a href="#21-事务的acid特性">2.1 事务的ACID特性</a></li>
         <li><a href="#22-并发事务带来了哪些问题">2.2 并发事务带来了哪些问题？</a></li>
         <li><a href="#23-事务的隔离级别">2.3 事务的隔离级别</a></li>
+        <li><a href="#24-mysql中如何实现事务隔离的">2.4 MySQL中如何实现事务隔离的</a>
+          <ul>
+            <li><a href="#实现可重复读">实现可重复读</a></li>
+          </ul>
+        </li>
+        <li><a href="#25-幻读">2.5 幻读</a>
+          <ul>
+            <li><a href="#如何解决当前读情况下的幻读问题">如何解决当前读情况下的幻读问题？</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#3-索引">3. 索引</a>
@@ -160,23 +170,26 @@
           </ul>
         </li>
         <li><a href="#43-两阶段提交">4.3 两阶段提交</a></li>
+        <li><a href="#总结">总结</a></li>
       </ul>
     </li>
-    <li><a href="#总结">总结</a></li>
-    <li><a href="#5-一条sql语句在mysql中如何被执行的">5. 一条SQL语句在MySQL中如何被执行的？</a>
+    <li><a href="#5mvcc实现原理">5、MVCC实现原理</a></li>
+    <li><a href="#-一条sql语句在mysql中如何被执行的">. 一条SQL语句在MySQL中如何被执行的？</a>
       <ul>
-        <li><a href="#51-mysql基础架构分析">5.1 MySQL基础架构分析</a></li>
-        <li><a href="#52-语法分析">5.2 语法分析</a></li>
+        <li><a href="#61-mysql基础架构分析">6.1 MySQL基础架构分析</a></li>
+        <li><a href="#62-语法分析">6.2 语法分析</a></li>
       </ul>
     </li>
+    <li><a href="#加锁机制">、加锁机制</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="1-myisam与innodb的区别">1. MyISAM与InnoDB的区别</h2>
+<p>MySQL支持的存储引擎有MyISAM、InnoDB、MEMORY等。</p>
 <p>在MySQL5.5之前，默认存储引擎是MyISAM，5.5版本之后，默认存储引擎变为了InnoDB。下面对比一下两者的区别：</p>
 <ul>
 <li><strong>是否支持事务</strong></li>
 </ul>
-<p>MyISAM不提供事务支持。InnoDB提供事务支持，具有提交和回滚事务的能力。</p>
+<p>MyISAM不提供事务支持。InnoDB提供事务支持，具有提交和回滚事务的能力。对于InnoDB的每一条SQL语句都默认封装成事务，自动提交。</p>
 <ul>
 <li><strong>是否支持外键</strong></li>
 </ul>
@@ -202,6 +215,20 @@
 <li><strong>索引类型区别</strong></li>
 </ul>
 <p>InnoDB 是聚簇索引，MyISAM 是非聚簇索引。聚簇索引的文件存放在主键索引的叶子节点上，因此InnoDB 必须要有主键，通过主键索引效率很高。但是辅助索引需要两次查询，先查询到主键，然后再通过主键查询到数据。因此，主键不应该过大，因为主键太大，其他索引也都会很大。而 MyISAM 是非聚集索引，数据文件是分离的，索引保存的是数据文件的指针。主键索引和辅助索引是独立的。</p>
+<ul>
+<li><strong>InnoDB不保存表的具体行数，执行select count(*) from table时需要全表扫描。而MyISAM用一个变量保存了整个表的行数，执行上述语句时只需要读出该变量即可，速度很快</strong></li>
+</ul>
+<blockquote>
+<p>为什么InnoDB没有了这个变量呢？</p>
+<p>因为InnoDB的事务特性，在同一时刻表中的行数对于不同的事务而言是不一样的，因此count统计会计算对于当前事务而言可以统计到的行数，而不是将总行数储存起来方便快速查询。</p>
+</blockquote>
+<ul>
+<li><strong>InnoDB表必须有唯一索引（如主键）（用户没有指定的话会自己找/生产一个隐藏列Row_id来充当默认主键），而Myisam可以没有</strong></li>
+</ul>
+<blockquote>
+<p>为什么InnoDB使用自增ID作为主键？</p>
+<p><strong>自增ID可以保证每次插入时B+索引是从右边扩展的，可以避免B+树和频繁合并和分裂（对比使用UUID）。如果使用字符串主键和随机主键，会使得数据随机插入，效率比较差。</strong></p>
+</blockquote>
 <h3 id="相关面试问题">相关面试问题</h3>
 <ul>
 <li>一张表，里面有ID自增主键，当insert了17条记录之后，删除了第15,16,17条记录，再把Mysql重启，再insert一条记录，这条记录的ID是18还是15 ？</li>
@@ -216,7 +243,7 @@
 <blockquote>
 <p>MyISAM更快，因为MyISAM内部维护了一个计数器，可以直接调取。在 MyISAM 存储引擎中，把表的总行数存储在磁盘上，当执行 select count(*) from t 时，直接返回总数据。</p>
 <p>在 InnoDB 存储引擎中，跟 MyISAM 不一样，没有将总行数存储在磁盘上，当执行 select count(*) from t 时，会先把数据读出来，一行一行的累加，最后返回总数量。</p>
-<p>InnoDB 中 count(*) 语句是在执行的时候，全表扫描统计总数量，所以当数据越来越大时，语句就越来越耗时了，为什么 InnoDB 引擎不像 MyISAM 引擎一样，将总行数存储到磁盘上？这跟 InnoDB 的事务特性有关，由于多版本并发控制（MVCC）的原因，InnoDB 表“应该返回多少行”也是不确定的。</p>
+<p>InnoDB 中 count(*) 语句是在执行的时候，全表扫描统计总数量，所以当数据越来越大时，语句就越来越耗时了，为什么 InnoDB 引擎不像 MyISAM 引擎一样，将总行数存储到磁盘上？<strong>这跟 InnoDB 的事务特性有关，由于多版本并发控制（MVCC）的原因，InnoDB 表“应该返回多少行”也是不确定的。</strong></p>
 </blockquote>
 <ul>
 <li>为什么查询MyISAM更快？</li>
@@ -238,13 +265,10 @@
 <p>并发事务会带来以下问题：</p>
 <ul>
 <li>
-<p><strong>脏读</strong>：当一个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外一个事务也访问了这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据，那么另外一个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。</p>
+<p><strong>脏读</strong>：<strong>即读到了并一定最终存在的数据</strong>，当一个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外一个事务也访问了这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据，未提交意味着数据可能会回滚，也就是最终不会存到数据库中，那么另外一个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。</p>
 </li>
 <li>
-<p><strong>丢失修改</strong>：指在一个事务读取一个数据时，另外一个事务也访问了该数据，那么在第一个事务中修改了这个数据后，第二个事务也修改了这个数据。这样第一个事务内的修改结果就被丢失，因此称为丢失修改。 例如：事务 1 读取某表中的数据 A=20，事务 2 也读取 A=20，事务 1 修改 A=A-1，事务 2 也修改 A=A-1，最终结果 A=19，事务 1 的修改被丢失。</p>
-</li>
-<li>
-<p><strong>不可重复读</strong>：指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据并做了修改。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。</p>
+<p><strong>不可重复读</strong>：<strong>指的是在同一事务内，不同的时刻读到的同一批数据可能是不一样的，可能会受到其他事务的影响</strong>，即在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据并做了修改。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。</p>
 </li>
 <li>
 <p><strong>幻读</strong>：幻读与不可重复读类似。它发生在一个事务（T1）读取了几行数据，接着另一个并发事务（T2）插入了一些数据时。在随后的查询中，第一个事务（T1）就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。</p>
@@ -264,7 +288,7 @@
 <p><strong>读提交(READ-COMMITTED)</strong>：一个事务提交后，他做的变更才会被其他事务看到。可以阻止脏读，但幻读和不可重复读仍可能发生。</p>
 </li>
 <li>
-<p><strong>可重复读(REPEATABLE-READ)</strong>：一个事务执行过程中看到的数据，总是跟这个事务启动时看到的数据保持一致。可以阻止脏读与不可重复读，但幻读仍可能发生。</p>
+<p><strong>可重复读(REPEATABLE-READ)</strong>：一个事务执行过程中看到的数据，总是跟这个事务启动时看到的数据保持一致。<strong>可以阻止脏读与不可重复读，但幻读仍可能发生</strong>。<strong>是MySQL的默认级别。</strong></p>
 </li>
 <li>
 <p><strong>可串行化(SERIALIZABLE)</strong>：最高隔离级别，对同一行数据，读写都会加锁。可以防止脏读、不可重复读和幻读。</p>
@@ -273,20 +297,55 @@
 <blockquote>
 <p>在实现上，<strong>数据库会创建一个视图，访问的时候以视图的逻辑结果为准</strong>。</p>
 <ul>
-<li>
-<p>“读未提交”隔离级别下直接返回记录上的最新值，没有视图概念。</p>
-</li>
-<li>
-<p>在“读提交”隔离级别下，视图在每个SQL语句开始执行的时候创建。</p>
-</li>
-<li>
-<p>在“可重复读”隔离级别下，视图在事务启动时创建，整个事务存在期间都用这个视图。</p>
-</li>
-<li>
-<p>“串行化”隔离级别下直接用加锁的方式避免并行访问。</p>
-</li>
+<li>“读未提交”隔离级别下直接返回记录上的最新值，没有视图概念。</li>
+<li>在“读提交”隔离级别下，视图在每个SQL语句开始执行的时候创建。</li>
+<li>在“可重复读”隔离级别下，视图在事务启动时创建，整个事务存在期间都用这个视图。</li>
+<li>“串行化”隔离级别下直接用加锁的方式避免并行访问。既不能并发写，也不能并发读。</li>
 </ul>
 </blockquote>
+<h3 id="24-mysql中如何实现事务隔离的">2.4 MySQL中如何实现事务隔离的</h3>
+<h4 id="实现可重复读">实现可重复读</h4>
+<p>为了解决不可重复读，或者为了实现可重复读，<strong>MySQL 采用了 MVVC (多版本并发控制) 的方式。</strong></p>
+<p>我们在数据库表中看到的一行记录可能实际上有多个版本，每个版本除了记录数据本身外，还有一个表示版本的字段，记为<code>row trx_id</code>，是使其产生的事务的id。事务ID记为transaction id。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227144334984.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227144334984.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227144334984.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227144334984.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227144334984.png"
+        title="image-20220227144334984" /></p>
+<blockquote>
+<p><strong>快照</strong>，学名叫做一致性视图，这也是可重复读和不可重复读的关键，可重复读是在事务开始的时候生成一个当前事务全局性的快照，而读提交则是每次执行语句的时候都重新生成一次快照。</p>
+</blockquote>
+<h3 id="25-幻读">2.5 幻读</h3>
+<p>在可重复读隔离级别下，mysql通过mvcc来避免幻读。<strong>普通的select语句就是快照读</strong>。是不会看到别的事务插入的数据的。因此不会出现幻读问题。</p>
+<p><strong>如果查询语句后面加了<code>for update</code>，就是当前读。而当前读的规则就是要能读到所有已经提交的记录的最新值</strong>。</p>
+<p>存在如下问题：为了实现并发写，我们通过加行锁的方式来解决，<strong>但是行锁只能锁住行，无法阻止新插入数据的问题，因为新插入记录这个动作，需要更新的是记录之间的间隙</strong>，这就造成了幻读问题。</p>
+<h4 id="如何解决当前读情况下的幻读问题">如何解决当前读情况下的幻读问题？</h4>
+<p>因此InnoDB只好引入间隙锁(Gap Lock)，间隙锁就是锁住两个值之前的空隙。</p>
+<blockquote>
+<p>注意，间隙锁之间不存在冲突，&ldquo;往间隙中间插入一个记录&quot;这个操作才和间隙锁有冲突。</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227160549799.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227160549799.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227160549799.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227160549799.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227160549799.png"
+        title="image-20220227160549799" /></p>
+<ul>
+<li>
+<p><strong>间隙锁和行锁合成为next-key lock(临键锁)，每个next-key Lock 是前开后闭区间</strong>。</p>
+</li>
+<li>
+<p><strong>间隙锁的引入，可能会导致同样的语句锁住更大的范围，这其实影响了并发度</strong>。</p>
+</li>
+<li>
+<p><strong>RR(可重复读)隔离级别下间隙锁才有效，RC(读提交)隔离级别下没有间隙锁</strong>。</p>
+</li>
+</ul>
 <h2 id="3-索引">3. 索引</h2>
 <p>索引是一种用于快速查询和检索数据的数据结构。常见的索引结构有: B 树， B+树和 Hash。</p>
 <h3 id="31-索引的优缺点">3.1 索引的优缺点</h3>
@@ -413,7 +472,7 @@
         title="image-20220223164216170" /></p>
 <blockquote>
 <p>为什么不每次把修改后的数据页直接刷盘不就好了，还有<code>redo log</code>什么事？</p>
-<p>数据页大小是<code>16K</code>，每次可能就修改了几byte数据；并且数据页刷盘是随机写因为一个数据页对应的位置可能在硬盘文件的随机位置，所以性能是很差。</p>
+<p>数据页大小是<code>16K</code>，每次可能就修改了几byte数据；并且数据页刷盘是随机写因为一个数据页对应的位置可能在硬盘文件的随机位置，所以性能是很差。<strong>mysql 为了提升性能不会把每次的修改都实时同步到磁盘，而是会先存到Boffer Pool(缓冲池)里头，把这个当作缓存来用。然后使用后台线程去做缓冲池和磁盘之间的同步</strong>。因此引入了redo log来记录已成功提交事务的修改信息，并且会把redo log持久化到磁盘。</p>
 </blockquote>
 <h3 id="42-bin-log-归档日志">4.2 bin log 归档日志</h3>
 <blockquote>
@@ -484,11 +543,47 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220223171610654.png"
         title="image-20220223171610654" /></p>
-<h2 id="总结">总结</h2>
+<h3 id="总结">总结</h3>
 <p>MySQL InnoDB 引擎使用 <strong>redo log(重做日志)</strong> 保证事务的<strong>持久性</strong>，使用 <strong>undo log(回滚日志)</strong> 来保证事务的<strong>原子性</strong>。</p>
 <p><code>MySQL</code>数据库的<strong>数据备份、主备、主主、主从</strong>都离不开<code>binlog</code>，需要依靠<code>binlog</code>来同步数据，保证数据一致性。</p>
-<h2 id="5-一条sql语句在mysql中如何被执行的">5. 一条SQL语句在MySQL中如何被执行的？</h2>
-<h3 id="51-mysql基础架构分析">5.1 MySQL基础架构分析</h3>
+<h2 id="5mvcc实现原理">5、MVCC实现原理</h2>
+<p>MVCC是多版本并发控制，快照读的实现就是基于MVCC。实现原理主要依赖记录中的三个隐式字段、undo log（回滚日志）、read view(读视图)来实现。</p>
+<ul>
+<li><strong>隐式字段</strong></li>
+</ul>
+<p>每行记录除了我们定义的字段外， 还有三个隐式字段:<code>DB_TRX_ID、DB_ROLL_PTR、DB_ROW_ID</code>。</p>
+<p><strong><code>DB_ROW_ID</code>是数据库默认为该行记录生成的唯一隐式主键，<code>DB_TRX_ID</code>是当前操作该记录的事务ID,而<code>DB_ROLL_PTR</code>是一个回滚指针，用于配合undo日志，指向上一个旧版本</strong>。</p>
+<ul>
+<li><strong>undo log</strong></li>
+</ul>
+<p>Undo log主要分两种</p>
+<blockquote>
+<p><strong>Insert ungo log</strong>:代表事务在insert新纪录时产生的回滚日志，只在事务回滚时需要，并且在事务提交后立即被删除。</p>
+<p><strong>update undo log</strong>:事务更新删除时产生的回滚日志，不仅在事务回滚时需要，在快照读时也需要，不能被随便删除，只有在快照读或事务回滚不涉及该日志时才被删除。</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png"
+        title="image-20220227172018967" /></p>
+<ul>
+<li><strong>read view (读视图)</strong></li>
+</ul>
+<p>Read View就是事务进行<code>快照读</code>操作的时候生产的<code>读视图</code>(Read View)，在该事务执行的快照读的那一刻，会生成数据库系统当前的一个快照，记录并维护系统当前活跃事务的ID(<strong>用一个数值列表保存当前系统活跃事务ID、还保存了活跃事务ID中的最小值ID、目前已经出现过的事务ID最大值+1</strong>)。<strong>并用来做可见性判断</strong>。</p>
+<p>Read view遵循一个可见性算法，主要是将要被修改的数据的最新记录中的<code>DB_TRX_ID</code>（即当前事务ID）取出来，与系统当前其他活跃事务的ID去对比。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227173346817.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227173346817.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227173346817.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227173346817.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227173346817.png"
+        title="image-20220227173346817" /></p>
+<h2 id="-一条sql语句在mysql中如何被执行的">. 一条SQL语句在MySQL中如何被执行的？</h2>
+<h3 id="61-mysql基础架构分析">6.1 MySQL基础架构分析</h3>
 <p>MySQL主要分为Server层和存储引擎层：</p>
 <ul>
 <li><strong>Server层</strong>：主要包括连接器、查询缓存、分析器、优化器、执行器等，所有跨存储引擎的功能都在这一层实现，比如存储过程、触发器、视图、函数等，还有一个通用日志模块binlog。</li>
@@ -533,7 +628,7 @@
 <li>执行器</li>
 </ul>
 <p>开始执行前，会先判断你对这个表有没有执行查询的权限，如果没有会返回没有权限的错误；如果有则会根据表的引擎定义，使用指定的引擎提供的接口查询结果并返回。</p>
-<h3 id="52-语法分析">5.2 语法分析</h3>
+<h3 id="62-语法分析">6.2 语法分析</h3>
 <p>sql语句可以分为查询和更新（增加、更新、删除）</p>
 <ul>
 <li><strong>查询语句</strong></li>
@@ -551,11 +646,15 @@
 <li>执行器收到通知后记录 binlog，然后调用引擎接口，提交 redo log 为提交状态。</li>
 <li>更新完成。</li>
 </ol>
+<h2 id="加锁机制">、加锁机制</h2>
+<p><strong>乐观锁与悲观锁是两种并发控制的思想</strong>。</p>
+<p>乐观锁会“乐观地”假定大概率不会发生并发更新冲突，访问、处理数据过程中不加锁，只在更新数据时再根据版本号或时间戳判断是否有冲突，有则处理，无则提交事务。</p>
+<p>悲观锁会“悲观地”假定大概率会发生并发更新冲突，访问、处理数据前就加排他锁，在整个数据处理过程中锁定数据，事务提交或回滚后才释放锁。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-02-23</span>
+                <span>更新于 2022-02-27</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -574,8 +673,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" class="prev" rel="prev" title="Redis相关面试题"><i class="fas fa-angle-left fa-fw"></i>Redis相关面试题</a>
-            <a href="/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/" class="next" rel="next" title="缓存穿透与缓存雪崩">缓存穿透与缓存雪崩<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/redis-%E5%AF%B9%E8%B1%A1/" class="prev" rel="prev" title="Redis(七)对象"><i class="fas fa-angle-left fa-fw"></i>Redis(七)对象</a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>

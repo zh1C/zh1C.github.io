@@ -3,9 +3,16 @@
         <title>NarcissusBlog</title>
         <link>http://wen-nan.github.io/</link>
         <description>NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 26 Feb 2022 00:00:00 &#43;0000</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 27 Feb 2022 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="http://wen-nan.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>MySQL面试题</title>
+    <link>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <pubDate>Sun, 27 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+    <description><![CDATA[1. MyISAM与InnoDB的区别 MySQL支持的存储引擎有MyISAM、InnoDB、MEMORY等。 在MySQL5.5之前，默认存储引擎]]></description>
+</item><item>
     <title>Redis(七)对象</title>
     <link>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</link>
     <pubDate>Sat, 26 Feb 2022 00:00:00 &#43;0000</pubDate>
@@ -40,13 +47,6 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/</guid>
     <description><![CDATA[缓存穿透 缓存穿透就是大量请求的key根本不存在于缓存中，导致请求直接到了数据库上，根本没有经过缓存这一层。流程如下： 有哪些解决办法？ 缓存无效]]></description>
-</item><item>
-    <title>MySQL面试题</title>
-    <link>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
-    <pubDate>Wed, 23 Feb 2022 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
-    <description><![CDATA[1. MyISAM与InnoDB的区别 在MySQL5.5之前，默认存储引擎是MyISAM，5.5版本之后，默认存储引擎变为了InnoDB。下面对]]></description>
 </item><item>
     <title>Redis相关面试题</title>
     <link>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
