@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  9244 ,
+        },"genre": "posts","keywords": "MySQL","wordcount":  9273 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-27T00:00:00+00:00","dateModified": "2022-02-27T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-27">2022-02-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9244 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-27">2022-02-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9273 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 19 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -262,7 +262,7 @@
 <li><strong>持久性（Durability）</strong>：一个事务被提交后，他对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何影响。</li>
 </ul>
 <h3 id="22-并发事务带来了哪些问题">2.2 并发事务带来了哪些问题？</h3>
-<p>并发事务会带来以下问题：</p>
+<p>并发事务会带来以下问题：<strong>写写并发会带来丢失更新的问题，读写并发会带来以下三个问题</strong>：</p>
 <ul>
 <li>
 <p><strong>脏读</strong>：<strong>即读到了并一定最终存在的数据</strong>，当一个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外一个事务也访问了这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据，未提交意味着数据可能会回滚，也就是最终不会存到数据库中，那么另外一个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。</p>
@@ -305,7 +305,7 @@
 </blockquote>
 <h3 id="24-mysql中如何实现事务隔离的">2.4 MySQL中如何实现事务隔离的</h3>
 <h4 id="实现可重复读">实现可重复读</h4>
-<p>为了解决不可重复读，或者为了实现可重复读，<strong>MySQL 采用了 MVVC (多版本并发控制) 的方式。</strong></p>
+<p>为了解决不可重复读，或者为了实现可重复读，<strong>MySQL 采用了 MVCC (多版本并发控制) 的方式。</strong></p>
 <p>我们在数据库表中看到的一行记录可能实际上有多个版本，每个版本除了记录数据本身外，还有一个表示版本的字段，记为<code>row trx_id</code>，是使其产生的事务的id。事务ID记为transaction id。</p>
 <p><img
         class="lazyload"

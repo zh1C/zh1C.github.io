@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/"
-        },"genre": "posts","keywords": "计算机网络, 面试","wordcount":  13039 ,
+        },"genre": "posts","keywords": "计算机网络, 面试","wordcount":  13315 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/","datePublished": "2022-02-26T00:00:00+00:00","dateModified": "2022-02-26T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">计算机网络</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="far fa-folder fa-fw"></i>计算机网络</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-26">2022-02-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 13039 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-26">2022-02-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 13315 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 27 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -326,7 +326,7 @@
 <h3 id="26-为什么time_wait状态需要经过2msl最大报文段生存时间才能返回到close状态">2.6 为什么TIME_WAIT状态需要经过2MSL(最大报文段生存时间)才能返回到CLOSE状态？</h3>
 <p>2MSL是两倍的MSL(Maximum Segment Lifetime)。MSL指一个片段在网络中最大的存活时间，2MSL就是一个发送和一个回复所需的最大时间。</p>
 <p>假想网络是不可靠的，有可能最后一个ACK丢失。所以TIME_WAIT状态就是用来重发可能丢失的ACK报文。在Client发送出最后的ACK回复，但该ACK可能丢失。Server如果没有收到ACK，将不断重复发送FIN片段。所以Client不能立即关闭，它必须确认Server接收到了该ACK。Client会在发送出ACK之后进入到TIME_WAIT状态。Client会设置一个计时器，等待2MSL的时间。如果在该时间内再次收到FIN，那么Client会重发ACK并再次等待2MSL。</p>
-<p>第二点理由是：<strong>避免新旧连接混淆</strong></p>
+<p>第二点理由是：<strong>避免新旧连接混淆,防止已失效的连接请求报文段出现在本连接中</strong></p>
 <p>在客户端发送完最后一个 <code>ACK</code> 报文段后，在经过 <code>2MSL</code> 时间，就可以使本连接持续的时间内所产生的所有报文都从网络中消失，使下一个新的连接中不会出现这种旧的连接请求报文。</p>
 <h3 id="27-如果已经建立了连接但是客户端突然出现故障了怎么办">2.7 如果已经建立了连接，但是客户端突然出现故障了怎么办？</h3>
 <p>TCP还设有一个<strong>保活计时器</strong>，显然，客户端如果出现故障，服务器不能一直等下去，白白浪费资源。服务器每收到一次客户端的请求后都会重新复位这个计时器，时间通常是设置为2小时，若两小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75秒钟发送一次。若一连发送10个探测报文仍然没反应，服务器就认为客户端出了故障，接着就关闭连接。</p>
@@ -422,7 +422,7 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220213185229578.png"
         title="image-20220213185229578" /></p>
 <ul>
-<li>请求发起后，浏览器首先会解析这个域名，首先它会查看本地磁盘的hosts文件，看看其中有没有和这个域名对应的IP，如果有的话直接使用hosts文件里面的ip地址</li>
+<li>请求发起后，浏览器首先会解析这个域名，首先它会查看本地磁盘的hosts文件和操作系统中的DNS缓存，看看其中有没有和这个域名对应的IP，如果有的话直接使用hosts文件里面的ip地址</li>
 <li>如果本地的hosts文件没有能够找到对应的ip地址，浏览器会发出一个DNS请求到本地DNS服务器，本地DNS服务器一般都是你的网络接入服务器提供商，如中国电信、中国移动</li>
 <li>查询你输入的网址的DNS请求到达本地DNS服务器之后，本地DNS服务器会首先查询他的缓存记录，如果缓存中有此条记录，就可以直接返回结果，此过程是递归的方式进行查询。如果没有，本地DNS服务器还要向DNS根服务器进行查询</li>
 </ul>
@@ -435,9 +435,19 @@
 <h3 id="52-建立tcp连接">5.2 建立TCP连接</h3>
 <p>在拿到ip地址后, 浏览器会向对应的web服务器80端口发起TCP连接,并通过三次握手建立TCP连接。</p>
 <h3 id="53-发送http请求">5.3 发送HTTP请求</h3>
-<p>建立TCP连接之后，发起HTTP请求，请求一般分为三部分：<strong>请求方法URI协议/版本、请求头、请求正文</strong>。</p>
+<p>建立TCP连接之后，发起HTTP请求，HTTP请求报文一般分为四部分：<strong>请求行、请求头部、空行、请求体</strong>。</p>
+<ul>
+<li><strong>请求行</strong>：包括请求方法、访问资源的URL、使用的HTTP版本。</li>
+<li><strong>请求头部</strong></li>
+<li><strong>请求体</strong>：主要是用户请求数据。</li>
+</ul>
 <h3 id="54-服务器处理请求">5.4 服务器处理请求</h3>
-<p>服务器端收到请求后的由web服务器（准确说应该是http服务器）处理请求，诸如Apache、Ngnix、IIS等。web服务器解析用户请求，知道了需要调度哪些资源文件，再通过相应的这些资源文件处理用户请求和参数，并调用数据库信息，最后将结果通过web服务器返回给浏览器客户端。HTTP响应报文也由三部分组成：<strong>状态码、响应报头、响应报文</strong>。</p>
+<p>服务器端收到请求后的由web服务器（准确说应该是http服务器）处理请求，诸如Apache、Ngnix、IIS等。web服务器解析用户请求，知道了需要调度哪些资源文件，再通过相应的这些资源文件处理用户请求和参数，并调用数据库信息，最后将结果通过web服务器返回给浏览器客户端。HTTP响应报文也由四部分组成：<strong>状态行、响应头、空行、响应体</strong>。</p>
+<ul>
+<li><strong>状态行</strong>：包括协议版本、状态码及状态描述。</li>
+<li><strong>响应头</strong>：包括一些响应字段。</li>
+<li><strong>响应体</strong>：包括服务器返回给客户端的内容。</li>
+</ul>
 <h3 id="55-浏览器解析渲染页面">5.5 浏览器解析渲染页面</h3>
 <p>对于获取到的HTML、CSS、JS、图片等资源，浏览器通过解析HTML，生成DOM树，解析CSS生成CSS规则树，通过DOM树和CSS规则树生成渲染树。渲染树与DOM树不同，渲染树中并没有head，display为none等不必显示的节点。注意：在解析CSS的同时，可以继续加载解析HTML，但在解析执行JS脚本时，会停止解析后续HTML，这就会出现阻塞问题。</p>
 <h3 id="56-关闭tcp连接">5.6 关闭TCP连接</h3>
@@ -514,19 +524,19 @@
 <ul>
 <li><strong>多路复用</strong></li>
 </ul>
-<p>每个HTTP请求中都会有一个帧来标识，因此可以乱序请求，使每个请求都不互相依赖，服务端也可以乱序给出响应，最后客户端根据帧标识也能够进行重新排序整合。</p>
+<p>每个HTTP请求中都会有一个帧来标识，因此可以乱序请求，使每个请求都不互相依赖，服务端也可以乱序给出响应，最后客户端根据帧标识也能够进行重新排序整合。<strong>允许同时发送多个请求和响应，并且这些请求和响应能够并行传输而不被阻塞</strong>。</p>
 <ul>
 <li><strong>二进制分帧层</strong></li>
 </ul>
-<p>HTTP2.0在TCP传输层与HTTP应用层中间插入了二进制分帧层，支持了二进制数据的传输。</p>
+<p>HTTP2.0在TCP传输层与HTTP应用层中间插入了二进制分帧层，<strong>支持了二进制数据的传输，HTTP1.x基于文本格式的传输</strong>。</p>
 <ul>
 <li><strong>头部压缩</strong></li>
 </ul>
-<p>HTTP1.x的头带有大量信息，而且每次都要重复发送。HTTP2.0中使用头部压缩来减少需要传输的header大小，并且通讯双方各自缓存一份头部字段表，既避免了重复header的传输，又减小了需要传输的大小。</p>
+<p>HTTP1.x的头带有大量信息，而且每次都要重复发送。HTTP2.0中使用头部压缩来减少需要传输的header大小，并且通讯双方各自缓存一份头部字段表，既避免了重复header的传输，减少了冗余数据，又减小了需要传输的大小。</p>
 <ul>
 <li><strong>服务端推送</strong></li>
 </ul>
-<p>HTTP2.0的服务端推送将支持服务端向客户端的单次请求返回多个响应，而不必每次都要客户端重复发起资源请求。</p>
+<p>HTTP2.0的服务端推送将支持服务端向客户端的单次请求返回多个响应，而不必每次都要客户端重复发起资源请求。<strong>即服务端向客户端推送资源</strong>。</p>
 <h3 id="http30">HTTP3.0</h3>
 <ul>
 <li><strong>Quic协议</strong></li>
@@ -538,7 +548,7 @@
 </ol>
 <blockquote>
 <p>对称加密：密钥只有一个，加密解密为同一个密码，且加解密速度快，典型的对称加密算法有 DES、AES 等；</p>
-<p>非对称加密：密钥成对出现（且根据公钥无法推知私钥，根据私钥也无法推知公钥），加密解密使用不同密钥（公钥加密需要私钥解密，私钥加密需要公钥解密），相对对称加密速度较慢，典型的非对称加密算法有 RSA、DSA 等。</p>
+<p>非对称加密：密钥成对出现（且根据公钥无法推知私钥，根据私钥也无法推知公钥），加密解密使用不同密钥（公钥加密需要私钥解密，私钥加密需要公钥解密），相对对称加密速度较慢，典型的非对称加密算法有 RSA、DSA 等。这种加密方式安全性高，计算量大。</p>
 </blockquote>
 <p><strong>HTTPS 在内容传输的加密上使用的是对称加密，非对称加密只作用在证书验证阶段。</strong></p>
 <ol start="3">
@@ -546,7 +556,7 @@
 </ol>
 <h2 id="12-cookie和session的区别">12. cookie和session的区别</h2>
 <p>● cookie实际上是一小段的文本信息。浏览器发送请求到服务器，如果服务器需要记录该用户的状态（比如：用户访问网页的次数，登录状态等），就使用response向客户端浏览器颁发一个cookie。客户端浏览器会把cookie保存起来。当浏览器再次请求该网站时，浏览器就会把请求地址和cookie一同给服务器。服务器检查该cookie，从而判断用户的状态。服务器还可以根据需要修改cookie的内容。
-● session也是类似的记录用户状态的机制。不同的是**cookie保存在客户端浏览器中，而session保存在服务器上。**session比cookie安全，别人可以分析存放在本地的cookie并进行cookie欺骗。cookie能保存的数据量比session小；</p>
+● session也是类似的记录用户状态的机制。不同的是**cookie保存在客户端浏览器中，而session保存在服务器上。**session比cookie安全，别人可以分析存放在本地的cookie并进行cookie欺骗。<strong>cookie能保存的数据量比session小，cookie可以设置为长时间保存。session一般失效时间短，客户端关闭或者session超时都会失效</strong>。</p>
 <h2 id="13-post和get的区别">13. POST和GET的区别？</h2>
 <h3 id="131-是什么">13.1 是什么</h3>
 <p><code>GET</code>和<code>POST</code>都是HTTP协议中发送请求的方法。本质上都是TCP连接，并不差别，但是由于HTTP的规定和浏览器/服务器的限制，导致它们在应用过程中会有一些区别。</p>
