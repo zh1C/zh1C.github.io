@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/"
-        },"genre": "posts","keywords": "计算机网络, 面试","wordcount":  13319 ,
+        },"genre": "posts","keywords": "计算机网络, 面试","wordcount":  13550 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/","datePublished": "2022-02-26T00:00:00+00:00","dateModified": "2022-02-26T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">计算机网络</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="far fa-folder fa-fw"></i>计算机网络</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-26">2022-02-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 13319 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 27 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-26">2022-02-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 13550 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 28 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -363,6 +363,12 @@
 <p>解决可靠性主要是解决以下几个问题：<strong>乱序、丢包、流量控制、拥塞控制</strong>。</p>
 <ol>
 <li>应用数据被分割成TCP认为最适合发送的数据块</li>
+</ol>
+<blockquote>
+<p><strong>为什么TCP会将应用数据做分割？</strong></p>
+<p>因为物理设备的限制导致IP协议会拆分数据，而TCP为了保证数据的可靠传输，受到IP协议的最大传输单元（MTU）的限制，也会对数据进行分割。**因为IP 协议对数据包的分片对上层是透明的，如果TCP协议不根据 MTU 做一些限制，那么 IP 协议的分片会导致部分数据包失去传输层协议头，一旦数据包发生丢失就只能丢弃全部数据。**当 IP 协议传输数据丢包时，TCP 协议的接收方没有办法对数据包进行重组，所以整个 TCP 数据段都需要重传，带来了更多额外的重传和重组开销。</p>
+</blockquote>
+<ol>
 <li>TCP 给发送的每一个包进行编号，接收方对数据包进行排序，把有序数据传送给应用层。</li>
 <li><strong>校验和：</strong> TCP 将保持它首部和数据的检验和。这是一个端到端的检验和，目的是检测数据在传输过程中的任何变化。如果收到段的检验和有差错，TCP 将丢弃这个报文段和不确认收到此报文段。</li>
 <li>TCP 的接收端会丢弃重复的数据。</li>
@@ -494,8 +500,8 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220214134017485.png"
         title="image-20220214134017485" /></p>
 <h2 id="8-url与uri的区别是什么">8. URL与URI的区别是什么？</h2>
-<p>**URL(Uniform Resource Locator)**是统一资源定位符，可以提供该资源的路径。它是一种具体的 URI，即 URL 可以用来标识一个资源，而且还指明了如何 locate 这个资源。</p>
-<p>**URI(Uniform Resource Identifier)**是统一资源标识符，可以唯一标识一个资源。</p>
+<p><strong>URL(Uniform Resource Locator)</strong>：是统一资源定位符，可以提供该资源的路径。它是一种具体的 URI，即 URL 可以用来标识一个资源，而且还指明了如何 locate 这个资源。</p>
+<p><strong>URI(Uniform Resource Identifier)</strong>：是统一资源标识符，可以唯一标识一个资源。</p>
 <p>URI用字符串标识某一互联网资源，而URL表示资源的地点（互联网上所处位置）。可见URL是URI的子集。</p>
 <h2 id="9-http长连接短连接">9. HTTP长连接、短连接</h2>
 <h3 id="91-http协议与tcpip协议的关系">9.1 HTTP协议与TCP/IP协议的关系</h3>
@@ -556,8 +562,14 @@
 <li>HTTPS协议需要到CA申请证书，一般免费证书较少，需要一定费用。</li>
 </ol>
 <h2 id="12-cookie和session的区别">12. cookie和session的区别</h2>
-<p>● cookie实际上是一小段的文本信息。浏览器发送请求到服务器，如果服务器需要记录该用户的状态（比如：用户访问网页的次数，登录状态等），就使用response向客户端浏览器颁发一个cookie。客户端浏览器会把cookie保存起来。当浏览器再次请求该网站时，浏览器就会把请求地址和cookie一同给服务器。服务器检查该cookie，从而判断用户的状态。服务器还可以根据需要修改cookie的内容。
-● session也是类似的记录用户状态的机制。不同的是**cookie保存在客户端浏览器中，而session保存在服务器上。**session比cookie安全，别人可以分析存放在本地的cookie并进行cookie欺骗。<strong>cookie能保存的数据量比session小，cookie可以设置为长时间保存。session一般失效时间短，客户端关闭或者session超时都会失效</strong>。</p>
+<ul>
+<li>
+<p>cookie实际上是一小段的文本信息。浏览器发送请求到服务器，如果服务器需要记录该用户的状态（比如：用户访问网页的次数，登录状态等），就使用response向客户端浏览器颁发一个cookie。客户端浏览器会把cookie保存起来。当浏览器再次请求该网站时，浏览器就会把请求地址和cookie一同给服务器。服务器检查该cookie，从而判断用户的状态。服务器还可以根据需要修改cookie的内容。</p>
+</li>
+<li>
+<p>session也是类似的记录用户状态的机制。不同的是**cookie保存在客户端浏览器中，而session保存在服务器上。**session比cookie安全，别人可以分析存放在本地的cookie并进行cookie欺骗。<strong>cookie能保存的数据量比session小，cookie可以设置为长时间保存。session一般失效时间短，客户端关闭或者session超时都会失效</strong>。</p>
+</li>
+</ul>
 <h2 id="13-post和get的区别">13. POST和GET的区别？</h2>
 <h3 id="131-是什么">13.1 是什么</h3>
 <p><code>GET</code>和<code>POST</code>都是HTTP协议中发送请求的方法。本质上都是TCP连接，并不差别，但是由于HTTP的规定和浏览器/服务器的限制，导致它们在应用过程中会有一些区别。</p>

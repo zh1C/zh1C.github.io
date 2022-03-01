@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  9273 ,
+        },"genre": "posts","keywords": "MySQL","wordcount":  9275 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-27T00:00:00+00:00","dateModified": "2022-02-27T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-27">2022-02-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9273 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-27">2022-02-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9275 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 19 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -174,13 +174,13 @@
       </ul>
     </li>
     <li><a href="#5mvcc实现原理">5、MVCC实现原理</a></li>
-    <li><a href="#-一条sql语句在mysql中如何被执行的">. 一条SQL语句在MySQL中如何被执行的？</a>
+    <li><a href="#6-一条sql语句在mysql中如何被执行的">6、 一条SQL语句在MySQL中如何被执行的？</a>
       <ul>
         <li><a href="#61-mysql基础架构分析">6.1 MySQL基础架构分析</a></li>
         <li><a href="#62-语法分析">6.2 语法分析</a></li>
       </ul>
     </li>
-    <li><a href="#加锁机制">、加锁机制</a></li>
+    <li><a href="#7加锁机制">7、加锁机制</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="1-myisam与innodb的区别">1. MyISAM与InnoDB的区别</h2>
@@ -582,7 +582,7 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227173346817.png"
         title="image-20220227173346817" /></p>
-<h2 id="-一条sql语句在mysql中如何被执行的">. 一条SQL语句在MySQL中如何被执行的？</h2>
+<h2 id="6-一条sql语句在mysql中如何被执行的">6、 一条SQL语句在MySQL中如何被执行的？</h2>
 <h3 id="61-mysql基础架构分析">6.1 MySQL基础架构分析</h3>
 <p>MySQL主要分为Server层和存储引擎层：</p>
 <ul>
@@ -646,7 +646,7 @@
 <li>执行器收到通知后记录 binlog，然后调用引擎接口，提交 redo log 为提交状态。</li>
 <li>更新完成。</li>
 </ol>
-<h2 id="加锁机制">、加锁机制</h2>
+<h2 id="7加锁机制">7、加锁机制</h2>
 <p><strong>乐观锁与悲观锁是两种并发控制的思想</strong>。</p>
 <p>乐观锁会“乐观地”假定大概率不会发生并发更新冲突，访问、处理数据过程中不加锁，只在更新数据时再根据版本号或时间戳判断是否有冲突，有则处理，无则提交事务。</p>
 <p>悲观锁会“悲观地”假定大概率会发生并发更新冲突，访问、处理数据前就加排他锁，在整个数据处理过程中锁定数据，事务提交或回滚后才释放锁。</p>
