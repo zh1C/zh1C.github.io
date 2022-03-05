@@ -9,8 +9,8 @@
 <meta property="og:description" content="学习mysql相关面试题。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-02-27T00:00:00+00:00" />
-<meta property="article:modified_time" content="2022-02-27T00:00:00+00:00" />
+<meta property="article:published_time" content="2022-03-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-05T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MySQL面试题"/>
@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/" /><link rel="next" href="http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E5%88%B7%E9%A2%98%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  9275 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-27T00:00:00+00:00","dateModified": "2022-02-27T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "MySQL","wordcount":  12029 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-03-05T00:00:00+00:00","dateModified": "2022-03-05T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-27">2022-02-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9275 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 19 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-05">2022-03-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12029 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 25 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -138,11 +138,13 @@
             <li><a href="#实现可重复读">实现可重复读</a></li>
           </ul>
         </li>
+        <li><a href="#25-快照读与当前读">2.5 快照读与当前读</a></li>
         <li><a href="#25-幻读">2.5 幻读</a>
           <ul>
             <li><a href="#如何解决当前读情况下的幻读问题">如何解决当前读情况下的幻读问题？</a></li>
           </ul>
         </li>
+        <li><a href="#26-mvcc实现原理">2.6 MVCC实现原理</a></li>
       </ul>
     </li>
     <li><a href="#3-索引">3. 索引</a>
@@ -173,14 +175,29 @@
         <li><a href="#总结">总结</a></li>
       </ul>
     </li>
-    <li><a href="#5mvcc实现原理">5、MVCC实现原理</a></li>
     <li><a href="#6-一条sql语句在mysql中如何被执行的">6、 一条SQL语句在MySQL中如何被执行的？</a>
       <ul>
         <li><a href="#61-mysql基础架构分析">6.1 MySQL基础架构分析</a></li>
         <li><a href="#62-语法分析">6.2 语法分析</a></li>
       </ul>
     </li>
-    <li><a href="#7加锁机制">7、加锁机制</a></li>
+    <li><a href="#7加锁机制">7、加锁机制</a>
+      <ul>
+        <li><a href="#共享锁和排它锁">共享锁和排它锁</a></li>
+        <li><a href="#锁的规则">锁的规则</a>
+          <ul>
+            <li><a href="#主键索引等值查询">主键索引等值查询</a></li>
+            <li><a href="#主键索引范围查询">主键索引范围查询</a></li>
+            <li><a href="#非唯一索引等值查询">非唯一索引等值查询</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#8mysql相关语句">8、mysql相关语句</a>
+      <ul>
+        <li><a href="#left-joinright-joininner-join">left join、right join、inner join</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="1-myisam与innodb的区别">1. MyISAM与InnoDB的区别</h2>
@@ -227,7 +244,7 @@
 </ul>
 <blockquote>
 <p>为什么InnoDB使用自增ID作为主键？</p>
-<p><strong>自增ID可以保证每次插入时B+索引是从右边扩展的，可以避免B+树和频繁合并和分裂（对比使用UUID）。如果使用字符串主键和随机主键，会使得数据随机插入，效率比较差。</strong></p>
+<p><strong>自增ID可以保证每次插入时B+索引是从右边扩展的，可以避免B+树频繁合并和分裂（对比使用UUID）。如果使用字符串主键和随机主键，会使得数据随机插入，效率比较差。</strong></p>
 </blockquote>
 <h3 id="相关面试问题">相关面试问题</h3>
 <ul>
@@ -268,15 +285,16 @@
 <p><strong>脏读</strong>：<strong>即读到了并一定最终存在的数据</strong>，当一个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外一个事务也访问了这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据，未提交意味着数据可能会回滚，也就是最终不会存到数据库中，那么另外一个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。</p>
 </li>
 <li>
-<p><strong>不可重复读</strong>：<strong>指的是在同一事务内，不同的时刻读到的同一批数据可能是不一样的，可能会受到其他事务的影响</strong>，即在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据并做了修改。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。</p>
+<p><strong>不可重复读</strong>：<strong>指的是在同一事务内，不同的时刻读到的同一批数据可能是不一样的，可能会受到其他事务的影响</strong>，即在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据做了修改并且提交了。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。</p>
 </li>
 <li>
-<p><strong>幻读</strong>：幻读与不可重复读类似。它发生在一个事务（T1）读取了几行数据，接着另一个并发事务（T2）插入了一些数据时。在随后的查询中，第一个事务（T1）就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。</p>
+<p><strong>幻读</strong>：幻读与不可重复读类似。它发生在一个事务（T1）读取了某个范围内的几行数据，接着另一个并发事务（T2）插入了一些数据在这个范围内。在随后的查询中，第一个事务（T1）就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。</p>
 </li>
 </ul>
 <blockquote>
 <p>不可重复读和幻读的区别：</p>
 <p>不可重复读的重点是修改，比如多次读取一条记录发现其中某些列的值被修改；幻读的重点在于新增或者删除，比如多次读取一条记录发现记录增多或减少了。</p>
+<p>查看隔离级别：<code>select @@trasaction_isolation;</code></p>
 </blockquote>
 <h3 id="23-事务的隔离级别">2.3 事务的隔离级别</h3>
 <p>为了解决并发事务带来的问题，所以有了四个隔离级别：</p>
@@ -318,6 +336,19 @@
 <blockquote>
 <p><strong>快照</strong>，学名叫做一致性视图，这也是可重复读和不可重复读的关键，可重复读是在事务开始的时候生成一个当前事务全局性的快照，而读提交则是每次执行语句的时候都重新生成一次快照。</p>
 </blockquote>
+<h3 id="25-快照读与当前读">2.5 快照读与当前读</h3>
+<p>表记录有两种读取方式：</p>
+<ul>
+<li><strong>快照读</strong>：读取的是快照版本。普通的<code>SELECT</code>就是快照读。通过mvcc来进行并发控制的，不用加锁。</li>
+<li><strong>当前读</strong>：读取的是最新版本。<code>UPDATE、DELETE、INSERT、SELECT … LOCK IN SHARE MODE、SELECT … FOR UPDATE</code>是当前读。</li>
+</ul>
+<p>快照读情况下，InnoDB通过<code>mvcc</code>机制避免了幻读现象。而<code>mvcc</code>机制无法避免当前读情况下出现的幻读现象。因为当前读每次读取的都是最新数据，这时如果两次查询中间有其它事务插入数据，就会产生幻读。</p>
+<p><strong>那么MySQL是如何避免幻读？</strong></p>
+<ul>
+<li>在快照读情况下，MySQL通过<code>mvcc</code>来避免幻读。</li>
+<li>在当前读情况下，MySQL通过<code>next-key</code>来避免幻读（加行锁和间隙锁来实现的）。</li>
+<li><code>Serializable</code>隔离级别也可以避免幻读，会锁住整张表，并发性极低，一般不会使用。</li>
+</ul>
 <h3 id="25-幻读">2.5 幻读</h3>
 <p>在可重复读隔离级别下，mysql通过mvcc来避免幻读。<strong>普通的select语句就是快照读</strong>。是不会看到别的事务插入的数据的。因此不会出现幻读问题。</p>
 <p><strong>如果查询语句后面加了<code>for update</code>，就是当前读。而当前读的规则就是要能读到所有已经提交的记录的最新值</strong>。</p>
@@ -336,16 +367,83 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227160549799.png"
         title="image-20220227160549799" /></p>
 <ul>
-<li>
-<p><strong>间隙锁和行锁合成为next-key lock(临键锁)，每个next-key Lock 是前开后闭区间</strong>。</p>
-</li>
-<li>
-<p><strong>间隙锁的引入，可能会导致同样的语句锁住更大的范围，这其实影响了并发度</strong>。</p>
-</li>
-<li>
-<p><strong>RR(可重复读)隔离级别下间隙锁才有效，RC(读提交)隔离级别下没有间隙锁</strong>。</p>
-</li>
+<li><strong>间隙锁和行锁合成为next-key lock(临键锁)，每个next-key Lock 是前开后闭区间</strong>。</li>
+<li><strong>间隙锁的引入，可能会导致同样的语句锁住更大的范围，这其实影响了并发度</strong>。</li>
+<li><strong>RR(可重复读)隔离级别下间隙锁才有效，RC(读提交)隔离级别下没有间隙锁</strong>。</li>
 </ul>
+<h3 id="26-mvcc实现原理">2.6 MVCC实现原理</h3>
+<p>MVCC(<code>Multiversion concurrency control</code>) 就是同一份数据保留多版本的一种方式，进而实现并发控制。在查询的时候，通过<code>read view</code>和版本链找到对应版本的数据。实现原理主要依赖记录中的三个隐式字段、undo log（回滚日志）、read view(读视图)来实现。</p>
+<p>作用：提升并发性能。对于高并发场景，MVCC比行级锁开销更小。</p>
+<ul>
+<li><strong>隐式字段</strong></li>
+</ul>
+<p>每行记录除了我们定义的字段外， 还有三个隐式字段:<code>DB_TRX_ID、DB_ROLL_PTR、DB_ROW_ID</code>。</p>
+<p><strong><code>DB_ROW_ID</code>：如果数据表没有主键，InnoDB会自动生成主键。<code>DB_TRX_ID</code>是当前操作该记录的事务ID,而<code>DB_ROLL_PTR</code>是一个回滚指针，用于配合undo日志，指向上一个旧版本</strong>。</p>
+<p>因此每条表记录大概如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305150958830.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305150958830.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305150958830.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305150958830.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305150958830.png"
+        title="image-20220305150958830" /></p>
+<ul>
+<li><strong>undo log</strong></li>
+</ul>
+<p>undo log主要分两种</p>
+<blockquote>
+<p><strong>Insert ungo log</strong>:代表事务在insert新纪录时产生的回滚日志，只在事务回滚时需要，并且在事务提交后立即被删除。</p>
+<p><strong>update undo log</strong>:事务更新删除时产生的回滚日志，不仅在事务回滚时需要，在快照读时也需要，不能被随便删除，只有在快照读或事务回滚不涉及该日志时才被删除。</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png"
+        title="image-20220227172018967" /></p>
+<ul>
+<li><strong>read view (读视图)</strong></li>
+</ul>
+<p>Read View就是事务进行<code>快照读</code>操作的时候生产的<code>读视图</code>(Read View)，在该事务执行的快照读的那一刻，会生成数据库系统当前的一个快照，记录并维护系统当前<strong>活跃事务ID的链表</strong>，表示生成<code>read view</code>的时候还在活跃的事务。</p>
+<blockquote>
+<p>不同的隔离级别生成<code>read view</code>的时机不同</p>
+<ul>
+<li>read committed(读提交)：每次执行select都会创建新的read_view，保证能读取到其他事务已经提交的修改。</li>
+<li>repeatable read(不可重复读)：在一个事务范围内，第一次select时更新这个read_view，以后不会再更新，后续所有的select都是复用之前的read_view。这样可以保证事务范围内每次读取的内容都一样，即可重复读。</li>
+</ul>
+</blockquote>
+<ul>
+<li><strong>read view记录筛选方式</strong></li>
+</ul>
+<p>前提：<code>DATA_TRX_ID</code> 表示每个数据行的最新的事务ID,<strong>即我们需要判断该行数据对我们的事务(即read view)是否可见的数据行事务ID</strong>。<code>up_limit_id</code>表示当前快照中的最先开始的事务；<code>low_limit_id</code>表示当前快照中的最慢开始的事务，即最后一个事务。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305152648004.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305152648004.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305152648004.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305152648004.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305152648004.png"
+        title="image-20220305152648004" /></p>
+<blockquote>
+<ol>
+<li>如果<code>DATA_TRX_ID</code> &lt; <code>up_limit_id</code>：说明在创建<code>read view</code>时，修改该数据行的事务已提交，该版本的记录可被我们的事务读取到。</li>
+<li>如果<code>DATA_TRX_ID</code> &gt;= <code>low_limit_id</code>：说明当前版本的记录的事务是在创建<code>read view</code>之后生成的，该版本的数据行不可以被我们的事务访问。此时需要通过版本链找到上一个版本，然后重新判断该版本的记录对当前事务的可见性。</li>
+<li>如果<code>up_limit_id</code> &lt;= <code>DATA_TRX_ID</code> &lt; <code>low_limit_i</code>：
+<ul>
+<li>需要在活跃事务链表中查找是否存在ID为<code>DATA_TRX_ID</code>的值的事务。</li>
+<li>如果存在，因为在活跃事务链表中的事务是未提交的，所以该记录对我们的事务是不可见的。此时需要通过版本链找到上一个版本，然后重新判断该版本的可见性。</li>
+<li>如果不存在，说明事务<code>DATA_TRX_ID</code> 已经提交了，这行记录对我们的事务是可见的。</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<ul>
+<li><strong>总结</strong></li>
+</ul>
+<p>InnoDB 的<code>MVCC</code>是通过 <code>read view</code> 和版本链实现的，版本链保存有历史版本记录，通过<code>read view</code> 判断当前版本的数据是否可见，如果不可见，再从版本链中找到上一个版本，继续进行判断，直到找到一个可见的版本。</p>
 <h2 id="3-索引">3. 索引</h2>
 <p>索引是一种用于快速查询和检索数据的数据结构。常见的索引结构有: B 树， B+树和 Hash。</p>
 <h3 id="31-索引的优缺点">3.1 索引的优缺点</h3>
@@ -371,7 +469,7 @@
 <blockquote>
 <p>为什么不使用哈希表作为索引的底层模型？</p>
 <ol>
-<li><strong>Hash冲突问题</strong>：多个不同的Key，可能最后会得到相同的Value。</li>
+<li><strong>Hash冲突问题</strong>：多个不同的Key，可能最后会得到相同的Value。所以哈希索引的性能不稳定。</li>
 <li><strong>Hash索引不支持顺序和范围查询</strong>：这是哈希索引的最大缺点，哈希表只能够进行等值查询。</li>
 </ol>
 </blockquote>
@@ -546,42 +644,6 @@
 <h3 id="总结">总结</h3>
 <p>MySQL InnoDB 引擎使用 <strong>redo log(重做日志)</strong> 保证事务的<strong>持久性</strong>，使用 <strong>undo log(回滚日志)</strong> 来保证事务的<strong>原子性</strong>。</p>
 <p><code>MySQL</code>数据库的<strong>数据备份、主备、主主、主从</strong>都离不开<code>binlog</code>，需要依靠<code>binlog</code>来同步数据，保证数据一致性。</p>
-<h2 id="5mvcc实现原理">5、MVCC实现原理</h2>
-<p>MVCC是多版本并发控制，快照读的实现就是基于MVCC。实现原理主要依赖记录中的三个隐式字段、undo log（回滚日志）、read view(读视图)来实现。</p>
-<ul>
-<li><strong>隐式字段</strong></li>
-</ul>
-<p>每行记录除了我们定义的字段外， 还有三个隐式字段:<code>DB_TRX_ID、DB_ROLL_PTR、DB_ROW_ID</code>。</p>
-<p><strong><code>DB_ROW_ID</code>是数据库默认为该行记录生成的唯一隐式主键，<code>DB_TRX_ID</code>是当前操作该记录的事务ID,而<code>DB_ROLL_PTR</code>是一个回滚指针，用于配合undo日志，指向上一个旧版本</strong>。</p>
-<ul>
-<li><strong>undo log</strong></li>
-</ul>
-<p>Undo log主要分两种</p>
-<blockquote>
-<p><strong>Insert ungo log</strong>:代表事务在insert新纪录时产生的回滚日志，只在事务回滚时需要，并且在事务提交后立即被删除。</p>
-<p><strong>update undo log</strong>:事务更新删除时产生的回滚日志，不仅在事务回滚时需要，在快照读时也需要，不能被随便删除，只有在快照读或事务回滚不涉及该日志时才被删除。</p>
-</blockquote>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png"
-        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png 2x"
-        data-sizes="auto"
-        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227172018967.png"
-        title="image-20220227172018967" /></p>
-<ul>
-<li><strong>read view (读视图)</strong></li>
-</ul>
-<p>Read View就是事务进行<code>快照读</code>操作的时候生产的<code>读视图</code>(Read View)，在该事务执行的快照读的那一刻，会生成数据库系统当前的一个快照，记录并维护系统当前活跃事务的ID(<strong>用一个数值列表保存当前系统活跃事务ID、还保存了活跃事务ID中的最小值ID、目前已经出现过的事务ID最大值+1</strong>)。<strong>并用来做可见性判断</strong>。</p>
-<p>Read view遵循一个可见性算法，主要是将要被修改的数据的最新记录中的<code>DB_TRX_ID</code>（即当前事务ID）取出来，与系统当前其他活跃事务的ID去对比。</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227173346817.png"
-        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227173346817.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227173346817.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227173346817.png 2x"
-        data-sizes="auto"
-        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220227173346817.png"
-        title="image-20220227173346817" /></p>
 <h2 id="6-一条sql语句在mysql中如何被执行的">6、 一条SQL语句在MySQL中如何被执行的？</h2>
 <h3 id="61-mysql基础架构分析">6.1 MySQL基础架构分析</h3>
 <p>MySQL主要分为Server层和存储引擎层：</p>
@@ -650,11 +712,129 @@
 <p><strong>乐观锁与悲观锁是两种并发控制的思想</strong>。</p>
 <p>乐观锁会“乐观地”假定大概率不会发生并发更新冲突，访问、处理数据过程中不加锁，只在更新数据时再根据版本号或时间戳判断是否有冲突，有则处理，无则提交事务。</p>
 <p>悲观锁会“悲观地”假定大概率会发生并发更新冲突，访问、处理数据前就加排他锁，在整个数据处理过程中锁定数据，事务提交或回滚后才释放锁。</p>
+<h3 id="共享锁和排它锁">共享锁和排它锁</h3>
+<p>select的读取锁定主要分为两种方式：共享锁和排它锁。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="o">&lt;</span><span class="mi">6</span><span class="w"> </span><span class="k">lock</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">share</span><span class="w"> </span><span class="n">mode</span><span class="p">;</span><span class="o">--</span><span class="err">共享锁</span><span class="w">
+</span><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="o">&lt;</span><span class="mi">6</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">update</span><span class="p">;</span><span class="o">--</span><span class="err">排他锁</span><span class="w">
+</span></code></pre></div><p>这两种方式主要的不同在于<code>LOCK IN SHARE MODE</code>多个事务同时更新同一个表单时很容易造成死锁。</p>
+<p>申请排他锁的前提是，没有线程对该结果集的任何行数据使用排它锁或者共享锁，否则申请会受到阻塞。在进行事务操作时，MySQL会对查询结果集的每行数据添加排它锁，其他线程对这些数据的更改或删除操作会被阻塞（只能读操作），直到该语句的事务被<code>commit</code>语句或<code>rollback</code>语句结束为止。</p>
+<p><code>SELECT... FOR UPDATE</code> 使用注意事项：</p>
+<ol>
+<li><code>for update</code> 仅适用于innodb，且必须在事务范围内才能生效。</li>
+<li>根据主键进行查询，查询条件为<code>like</code>或者不等于，主键字段产生<strong>表锁</strong>。</li>
+<li>根据非索引字段进行查询，会产生<strong>表锁</strong>。</li>
+</ol>
+<h3 id="锁的规则">锁的规则</h3>
+<p>对记录加锁时，<strong>加锁的基本单位是next-key lock</strong>，它是由记录锁和间隙锁组合而成的。但是在一些场景下next-key lock会退化成记录锁或间隙锁。</p>
+<blockquote>
+<p><strong>规则如下</strong></p>
+<p>唯一索引等值查询：</p>
+<ul>
+<li>当查询的记录存在时，next-key lock会退化为记录锁。</li>
+<li>当查询记录不存在时，next-key lock会退化为间隙锁。</li>
+</ul>
+<p>非唯一索引等值查询时：</p>
+<ul>
+<li>当查询记录存在时，除了加next-key lock外，还加额外间隙锁，也就是加两把锁。</li>
+<li>当查询记录不存在时，只会加next-key lock，然后退化为间隙锁，只加一把锁。</li>
+</ul>
+<p>非唯一索引和唯一索引的范围查询加锁规则不同点在于：</p>
+<ul>
+<li>
+<p>唯一索引在满足一些条件的时候，next-key lock 退化为间隙锁和记录锁。</p>
+</li>
+<li>
+<p>非唯一索引范围查询，next-key lock 不会退化为间隙锁和记录锁。</p>
+</li>
+</ul>
+</blockquote>
+<p>用如下案例分析：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305195607231.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305195607231.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305195607231.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305195607231.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305195607231.png"
+        title="image-20220305195607231" /></p>
+<p>id是主键索引(唯一索引)，b是普通索引(非唯一索引)，a是普通列。</p>
+<h4 id="主键索引等值查询">主键索引等值查询</h4>
+<p>当我们使用唯一索引进行等值查询的时候，查询记录存不存在，加锁规则会不同：</p>
+<ul>
+<li><strong>当查询记录存在时，用唯一索引进行等值查询时，next-key lock会退化为记录锁。</strong></li>
+<li><strong>当查询记录不存在时，用唯一索引进行等值查询时，next-key lock会退化为间隙锁。</strong></li>
+</ul>
+<p>先看记录存在时：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305200350228.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305200350228.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305200350228.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305200350228.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305200350228.png"
+        title="image-20220305200350228" /></p>
+<p>加锁的基本单位是next-key lock，因此会话1加锁范围是(8,16]，但是由于用唯一索引进行等值查询且记录存在，所以退化为记录锁，最终加锁范围是id=16这一行。</p>
+<p>记录不存在时：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305200640102.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305200640102.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305200640102.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305200640102.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305200640102.png"
+        title="image-20220305200640102" /></p>
+<p>加锁的基本单位是next-key lock，因此会话1加锁范围是(8,16]，但是由于用唯一索引进行等值查询且记录不存在，所以退化为间隙锁，最终加锁范围是(8,16)。</p>
+<h4 id="主键索引范围查询">主键索引范围查询</h4>
+<p>范围查询和等值查询的加锁规则不同，如下两条语句，虽然结果一样，但是加锁范围不同。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305202531334.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305202531334.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305202531334.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305202531334.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305202531334.png"
+        title="image-20220305202531334" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305202554386.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305202554386.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305202554386.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305202554386.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305202554386.png"
+        title="image-20220305202554386" /></p>
+<p>最开始找到第一行id=8，因此next-key lock(4,8]，但由于id是唯一索引且记录存在，则胡退化为记录锁，只加锁id=8这一行。由于范围查找，会继续往后找存在的记录，即找到id=16这一行，加上next-key lock(8,16]，但由于id=16不满足id&lt;9，退化为间隙锁，加锁范围为(8,16)。最终加锁是记录锁 id=8 和间隙锁(8, 16)。</p>
+<h4 id="非唯一索引等值查询">非唯一索引等值查询</h4>
+<p>用非唯一索引进行等值查询的时候，查询记录存在不存在，加锁规则不同：</p>
+<ul>
+<li><strong>当查询记录存在时，除了会加next-key lock外，还额外加间隙锁，也就是会加两把锁。</strong></li>
+<li><strong>当查询记录不存在时，只会加next-key lock，然后会退化为间隙锁，只加了一把锁。</strong></li>
+</ul>
+<p>查询值存在情况：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305201240688.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305201240688.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305201240688.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305201240688.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305201240688.png"
+        title="image-20220305201240688" /></p>
+<p>先会对普通索引b加上next-key lock，范围是(4,8]；然后因为是非唯一索引，且查询的记录是存在的，所以还会加上间隙锁，规则是向下遍历到第一个不符合条件的值才能停止，因此间隙锁范围是(8,16)。</p>
+<p>其他省略。</p>
+<h2 id="8mysql相关语句">8、mysql相关语句</h2>
+<h3 id="left-joinright-joininner-join">left join、right join、inner join</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/ScreenShot2022-03-05%2016.37.58.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/ScreenShot2022-03-05%2016.37.58.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/ScreenShot2022-03-05%2016.37.58.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/ScreenShot2022-03-05%2016.37.58.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/ScreenShot2022-03-05%2016.37.58.png"
+        title="ScreenShot2022-03-05 16.37.58" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-02-27</span>
+                <span>更新于 2022-03-05</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -673,8 +853,7 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/redis-%E5%AF%B9%E8%B1%A1/" class="prev" rel="prev" title="Redis(七)对象"><i class="fas fa-angle-left fa-fw"></i>Redis(七)对象</a>
-            <a href="/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" class="next" rel="next" title="操作系统">操作系统<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/%E5%88%B7%E9%A2%98%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" class="prev" rel="prev" title="刷题技巧总结"><i class="fas fa-angle-left fa-fw"></i>刷题技巧总结</a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>
