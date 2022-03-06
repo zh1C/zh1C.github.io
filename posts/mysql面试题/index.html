@@ -9,8 +9,8 @@
 <meta property="og:description" content="学习mysql相关面试题。" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-03-05T00:00:00+00:00" />
-<meta property="article:modified_time" content="2022-03-05T00:00:00+00:00" />
+<meta property="article:published_time" content="2022-03-06T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-06T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="MySQL面试题"/>
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  12029 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-03-05T00:00:00+00:00","dateModified": "2022-03-05T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "MySQL","wordcount":  13965 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-03-06T00:00:00+00:00","dateModified": "2022-03-06T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-05">2022-03-05</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12029 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 25 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-06">2022-03-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 13965 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 28 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -172,6 +172,7 @@
           </ul>
         </li>
         <li><a href="#43-两阶段提交">4.3 两阶段提交</a></li>
+        <li><a href="#undo-log-回滚日志">undo log 回滚日志</a></li>
         <li><a href="#总结">总结</a></li>
       </ul>
     </li>
@@ -181,9 +182,20 @@
         <li><a href="#62-语法分析">6.2 语法分析</a></li>
       </ul>
     </li>
-    <li><a href="#7加锁机制">7、加锁机制</a>
+    <li><a href="#7锁">7、锁</a>
       <ul>
-        <li><a href="#共享锁和排它锁">共享锁和排它锁</a></li>
+        <li><a href="#什么是锁">什么是锁</a></li>
+        <li><a href="#innodb存储引擎中的锁">InnoDB存储引擎中的锁</a>
+          <ul>
+            <li><a href="#意向锁">意向锁</a></li>
+          </ul>
+        </li>
+        <li><a href="#一致性非锁读">一致性非锁读</a>
+          <ul>
+            <li><a href="#一致性锁定读">一致性锁定读</a></li>
+          </ul>
+        </li>
+        <li><a href="#行锁三种算法">行锁三种算法</a></li>
         <li><a href="#锁的规则">锁的规则</a>
           <ul>
             <li><a href="#主键索引等值查询">主键索引等值查询</a></li>
@@ -191,6 +203,8 @@
             <li><a href="#非唯一索引等值查询">非唯一索引等值查询</a></li>
           </ul>
         </li>
+        <li><a href="#阻塞">阻塞</a></li>
+        <li><a href="#解决死锁的机制">解决死锁的机制</a></li>
       </ul>
     </li>
     <li><a href="#8mysql相关语句">8、mysql相关语句</a>
@@ -198,6 +212,7 @@
         <li><a href="#left-joinright-joininner-join">left join、right join、inner join</a></li>
       </ul>
     </li>
+    <li><a href="#9三范式">9、三范式</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="1-myisam与innodb的区别">1. MyISAM与InnoDB的区别</h2>
@@ -278,6 +293,9 @@
 <li><strong>隔离性（Isolation）</strong>：并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间的数据是独立的。</li>
 <li><strong>持久性（Durability）</strong>：一个事务被提交后，他对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何影响。</li>
 </ul>
+<blockquote>
+<p><strong>事务的隔离性由锁来实现，redo log(重做日志)用来保证事务的原子性和持久性，undo log（回滚日志）保证了事务的一致性</strong>。</p>
+</blockquote>
 <h3 id="22-并发事务带来了哪些问题">2.2 并发事务带来了哪些问题？</h3>
 <p>并发事务会带来以下问题：<strong>写写并发会带来丢失更新的问题，读写并发会带来以下三个问题</strong>：</p>
 <ul>
@@ -641,6 +659,12 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220223171610654.png"
         title="image-20220223171610654" /></p>
+<h3 id="undo-log-回滚日志">undo log 回滚日志</h3>
+<p>回滚日志有两个作用：</p>
+<ul>
+<li>用于如果用户执行的事务或语句由于某种原因失败了，又或者用户用一条ROLLBACK语句请求回滚，就可以利用undo log将数据回滚到以前的样子；</li>
+<li>undo log的另一个作用是MVCC，即InnoDB存储引擎的MVCC的实现需要undo log配合完成。</li>
+</ul>
 <h3 id="总结">总结</h3>
 <p>MySQL InnoDB 引擎使用 <strong>redo log(重做日志)</strong> 保证事务的<strong>持久性</strong>，使用 <strong>undo log(回滚日志)</strong> 来保证事务的<strong>原子性</strong>。</p>
 <p><code>MySQL</code>数据库的<strong>数据备份、主备、主主、主从</strong>都离不开<code>binlog</code>，需要依靠<code>binlog</code>来同步数据，保证数据一致性。</p>
@@ -708,22 +732,81 @@
 <li>执行器收到通知后记录 binlog，然后调用引擎接口，提交 redo log 为提交状态。</li>
 <li>更新完成。</li>
 </ol>
-<h2 id="7加锁机制">7、加锁机制</h2>
-<p><strong>乐观锁与悲观锁是两种并发控制的思想</strong>。</p>
-<p>乐观锁会“乐观地”假定大概率不会发生并发更新冲突，访问、处理数据过程中不加锁，只在更新数据时再根据版本号或时间戳判断是否有冲突，有则处理，无则提交事务。</p>
-<p>悲观锁会“悲观地”假定大概率会发生并发更新冲突，访问、处理数据前就加排他锁，在整个数据处理过程中锁定数据，事务提交或回滚后才释放锁。</p>
-<h3 id="共享锁和排它锁">共享锁和排它锁</h3>
-<p>select的读取锁定主要分为两种方式：共享锁和排它锁。</p>
+<h2 id="7锁">7、锁</h2>
+<h3 id="什么是锁">什么是锁</h3>
+<p>在数据库中，lock和latch都可以被称为锁，两者区别如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306142757221.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306142757221.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306142757221.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306142757221.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306142757221.png"
+        title="image-20220306142757221" /></p>
+<p>我们讨论的锁都是lock，lock的对象是事务，用来锁定数据库中的对象（表、页、行），并且一般仅在事务commit或rollback后进行释放。</p>
+<h3 id="innodb存储引擎中的锁">InnoDB存储引擎中的锁</h3>
+<p>InnoDB实现了两种标准的行级锁：</p>
+<ul>
+<li>共享锁(S lock)，允许事务读一行数据</li>
+<li>排它锁(X lock)，允许事务删除或更新一行数据。</li>
+</ul>
+<p>它们之间的兼容性如下：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306143608628.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306143608628.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306143608628.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306143608628.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306143608628.png"
+        title="image-20220306143608628" /></p>
+<blockquote>
+<p>注意：S和X锁都是行锁，兼容是指对同一记录锁的兼容性情况。</p>
+</blockquote>
+<h4 id="意向锁">意向锁</h4>
+<blockquote>
+<p><strong>为什么需要意向锁？</strong></p>
+<p>mysql支持表锁，InnoDB支持行锁，如果事务A锁定了表的某一行，只能读不能写；而事务B获取了整个表的写锁，就会有冲突。为了避免这种冲突，就需要做两步判断：1.判断该表是否有其他事务上了表锁，2.一行一行判断是否有行锁。<strong>第二步的判断效率很低，因此有了表意向锁</strong>。作用是提高并发，减少行锁判断。</p>
+</blockquote>
+<p>InnoDB存储引擎支持表级别的意向锁，有两种类型：</p>
+<ul>
+<li>意向共享锁(IS lock)：事务想要获得一张表中某几行的共享锁。</li>
+<li>意向排它锁(IX lock)：事务想要获得一张表中某几行的排它锁。</li>
+</ul>
+<p>表级意向锁和表锁锁兼容性如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306145416916.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306145416916.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306145416916.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306145416916.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220306145416916.png"
+        title="image-20220306145416916" /></p>
+<blockquote>
+<p>注意：表级意向锁不会与行锁互斥，上表中的互斥/排他锁是表级别的锁。</p>
+</blockquote>
+<h3 id="一致性非锁读">一致性非锁读</h3>
+<p>一致性的非锁读（即快照读）是指InnoDB存储引擎通过MVCC的方式读取当前执行时间数据库中行的数据，如果读取行正在执行DELETE或UPDATE操作，读取操作不会等待行上的锁释放，而是去读取行上的一个快照。具体原理见MVCC实现。</p>
+<h4 id="一致性锁定读">一致性锁定读</h4>
+<p>一致性锁定读（即当前读），InnoDB存储引擎对于select语句支持两种一致性锁定度操作：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="o">&lt;</span><span class="mi">6</span><span class="w"> </span><span class="k">lock</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">share</span><span class="w"> </span><span class="n">mode</span><span class="p">;</span><span class="o">--</span><span class="err">共享锁</span><span class="w">
 </span><span class="w"></span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">table</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="o">&lt;</span><span class="mi">6</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">update</span><span class="p">;</span><span class="o">--</span><span class="err">排他锁</span><span class="w">
 </span></code></pre></div><p>这两种方式主要的不同在于<code>LOCK IN SHARE MODE</code>多个事务同时更新同一个表单时很容易造成死锁。</p>
-<p>申请排他锁的前提是，没有线程对该结果集的任何行数据使用排它锁或者共享锁，否则申请会受到阻塞。在进行事务操作时，MySQL会对查询结果集的每行数据添加排它锁，其他线程对这些数据的更改或删除操作会被阻塞（只能读操作），直到该语句的事务被<code>commit</code>语句或<code>rollback</code>语句结束为止。</p>
+<p>申请排他锁的前提是，没有线程对该结果集的任何行数据使用排它锁或者共享锁，否则申请会受到阻塞。在进行事务操作时，MySQL会对查询结果集的每行数据添加排它锁，其他线程对这些数据的更改或删除操作会被阻塞（<strong>只能读操作</strong>），直到该语句的事务被<code>commit</code>语句或<code>rollback</code>语句结束为止。</p>
 <p><code>SELECT... FOR UPDATE</code> 使用注意事项：</p>
 <ol>
 <li><code>for update</code> 仅适用于innodb，且必须在事务范围内才能生效。</li>
 <li>根据主键进行查询，查询条件为<code>like</code>或者不等于，主键字段产生<strong>表锁</strong>。</li>
 <li>根据非索引字段进行查询，会产生<strong>表锁</strong>。</li>
+<li>即使读取的行已经被执行了select &hellip; for update，也是可以进行读取的。</li>
 </ol>
+<h3 id="行锁三种算法">行锁三种算法</h3>
+<p>InnoDB有三种行锁的算法：</p>
+<ul>
+<li>Record Lock：单个行记录上的锁。</li>
+<li>Gap Lock：间隙锁，锁定一个范围，但不包含记录本身。</li>
+<li>Next-Key Lock：Record Lock+Gap Lock锁定一个范围并且锁定记录本身。</li>
+</ul>
+<p>在默认事务隔离级别下，（即可重复读REPEATABLE READ）InnoDB存储引擎采用Next-Key Lock机制来避免幻读问题。</p>
 <h3 id="锁的规则">锁的规则</h3>
 <p>对记录加锁时，<strong>加锁的基本单位是next-key lock</strong>，它是由记录锁和间隙锁组合而成的。但是在一些场景下next-key lock会退化成记录锁或间隙锁。</p>
 <blockquote>
@@ -820,6 +903,20 @@
         title="image-20220305201240688" /></p>
 <p>先会对普通索引b加上next-key lock，范围是(4,8]；然后因为是非唯一索引，且查询的记录是存在的，所以还会加上间隙锁，规则是向下遍历到第一个不符合条件的值才能停止，因此间隙锁范围是(8,16)。</p>
 <p>其他省略。</p>
+<h3 id="阻塞">阻塞</h3>
+<p>因为不同锁之间的兼容性问题，会产生阻塞，在InnoDB存储引擎中，参数<code>innodb_lock_wait_timeout</code>用来控制等待的时间（默认是50秒），<code>innodb_rollback_on_timeout</code>用来设定是否等待超时时对进行中的事务进行回滚操作（默认不回滚）。</p>
+<h3 id="解决死锁的机制">解决死锁的机制</h3>
+<ul>
+<li><strong>超时机制</strong></li>
+</ul>
+<p>即当两个事物互相等待时，当一个等待时间超过设置的某一阈值时，其中一个事务进行回滚，另一个等待的事务就继续进行。<strong>根据FIFO的顺序选择回滚对象</strong>。</p>
+<blockquote>
+<p>缺点：如果回滚的事务更新了很多行，占用了较多的undo log，那么在回滚的时候花费的时间比另外一个正常执行的事务花费的时间可能还要多，就不太合适。</p>
+</blockquote>
+<ul>
+<li><strong>等待图</strong></li>
+</ul>
+<p>等待图(wait-for graph)，<strong>死锁碰撞检测（通过DFS），是一种较为主动的死锁检测机制</strong>，要求数据库保存锁的信息链表和事务等待链表两部分信息，通过这两个部分信息构造出一张图，在每个事务请求锁并发生等待时都会判断是否存在回路，如果在图中检测到回路，就表明有死锁产生，这时候<strong>InnoDB存储引擎会选择回滚undo量最小的事务。</strong></p>
 <h2 id="8mysql相关语句">8、mysql相关语句</h2>
 <h3 id="left-joinright-joininner-join">left join、right join、inner join</h3>
 <p><img
@@ -830,11 +927,32 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/ScreenShot2022-03-05%2016.37.58.png"
         title="ScreenShot2022-03-05 16.37.58" /></p>
+<h2 id="9三范式">9、三范式</h2>
+<ul>
+<li><strong>第一范式 1NF</strong></li>
+</ul>
+<p>确保数据库字段的原子性。即数据库表中的每一列都是不可分割的原子数据项。</p>
+<p>比如字段 <code>userInfo</code>: <code>广东省 10086'</code> ，依照第一范式必须拆分成 <code>userInfo</code>: <code>广东省</code> <code>userTel</code>:<code>10086</code>两个字段。</p>
+<ul>
+<li><strong>第二范式 2NF</strong></li>
+</ul>
+<p>首先必须满足第一范式，另外包含两部分内容，一是表必须有一个主键；二是非主键列必须完全依赖于主键，而不能只依赖于主键的一部分。</p>
+<p>举个例子。假定选课关系表为<code>student_course</code>(student_no, student_name, age, course_name, grade, credit)，主键为(student_no, course_name)。其中学分完全依赖于课程名称，姓名年龄完全依赖学号，不符合第二范式，会导致数据冗余（学生选n门课，姓名年龄有n条记录）、插入异常（插入一门新课，因为没有学号，无法保存新课记录）等问题。</p>
+<p>可以拆分成三个表：学生：<code>student</code>(stuent_no, student_name, 年龄)；课程：<code>course</code>(course_name, credit)；选课关系：<code>student_course_relation</code>(student_no, course_name, grade)。</p>
+<ul>
+<li><strong>第三范式 3NF</strong></li>
+</ul>
+<p>首先要满足第二范式，另外非主键列必须直接依赖于主键，不能存在传递依赖。即不能存在：非主键列 A 依赖于非主键列 B，非主键列 B 依赖于主键的情况。</p>
+<p><strong>2NF和3NF的区别？</strong></p>
+<ul>
+<li>2NF依据是非主键列是否完全依赖于主键，还是依赖于主键的一部分。</li>
+<li>3NF依据是非主键列是直接依赖于主键，还是直接依赖于非主键。</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-03-05</span>
+                <span>更新于 2022-03-06</span>
             </div>
             <div class="post-info-license"></div>
         </div>
