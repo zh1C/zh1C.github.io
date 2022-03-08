@@ -11,6 +11,13 @@
     <guid>http://wen-nan.github.io/posts/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0/</guid>
     <description><![CDATA[GroupCache 基本介绍 groupcache是一个小巧的kv存储库，**最大的特点就是没有删除接口，**即kv键值一旦设置进去了，用户端是没有主动的手段删]]></description>
 </item><item>
+    <title>Redis相关面试题</title>
+    <link>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <pubDate>Mon, 07 Mar 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+    <description><![CDATA[1. Redis简介 Redis就是一个使用C语言开发的数据库，与传统数据库不同的是，Redis数据是存在内存中的，即他是内存数据库，读写速度非常]]></description>
+</item><item>
     <title>MySQL面试题</title>
     <link>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
     <pubDate>Sun, 06 Mar 2022 00:00:00 &#43;0000</pubDate>
@@ -66,12 +73,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/</guid>
     <description><![CDATA[缓存穿透 缓存穿透就是大量请求的key根本不存在于缓存中，导致请求直接到了数据库上，根本没有经过缓存这一层。流程如下： 有哪些解决办法？ 缓存无效]]></description>
-</item><item>
-    <title>Redis相关面试题</title>
-    <link>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
-    <pubDate>Wed, 23 Feb 2022 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
-    <description><![CDATA[1. Redis简介 Redis就是一个使用C语言开发的数据库，与传统数据库不同的是，Redis数据是存在内存中的，即他是内存数据库，读写速度非常]]></description>
 </item></channel>
 </rss>

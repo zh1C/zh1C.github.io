@@ -9,8 +9,8 @@
 <meta property="og:description" content="Redis相关的面试题汇总" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-02-23T00:00:00+00:00" />
-<meta property="article:modified_time" content="2022-02-23T00:00:00+00:00" />
+<meta property="article:published_time" content="2022-03-07T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-03-07T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Redis相关面试题"/>
@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" /><link rel="next" href="http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="prev" href="http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" /><link rel="next" href="http://wen-nan.github.io/posts/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "Redis","wordcount":  2007 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-23T00:00:00+00:00","dateModified": "2022-02-23T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "Redis","wordcount":  4246 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-03-07T00:00:00+00:00","dateModified": "2022-03-07T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis相关面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Redis学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-23">2022-02-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2007 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-07">2022-03-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4246 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -148,7 +148,16 @@
         </li>
       </ul>
     </li>
-    <li><a href="#4-redis支持的数据类型有哪些">4. Redis支持的数据类型有哪些？</a></li>
+    <li><a href="#4-redis常见数据类型及使用场景">4. Redis常见数据类型及使用场景</a>
+      <ul>
+        <li><a href="#string">string</a></li>
+        <li><a href="#42-list">4.2 list</a></li>
+        <li><a href="#43-hash">4.3 hash</a></li>
+        <li><a href="#43-set">4.3 set</a></li>
+        <li><a href="#44-sorted-set">4.4 sorted set</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-redis淘汰机制">5. Redis淘汰机制</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="1-redis简介">1. Redis简介</h2>
@@ -244,13 +253,187 @@
 </li>
 </ul>
 <p>因为AOF持久化是通过保存被执行写命令来记录数据库状态，所以随着时间流逝，内容会越来越多。<strong>为了解决AOF文件体积膨胀问题，Redis提供了AOF文件重写功能</strong>，Redis服务器会创建一个新的AOF文件替代旧的AOF文件，并且两个文件保存的数据库状态相同，但新文件不会包含任何浪费空间的冗余命令。</p>
-<h2 id="4-redis支持的数据类型有哪些">4. Redis支持的数据类型有哪些？</h2>
-<p>Redis支持五种数据类型：string（字符串），hash（哈希），list（列表），set（集合）及zset(sorted set：有序集合)。</p>
+<h2 id="4-redis常见数据类型及使用场景">4. Redis常见数据类型及使用场景</h2>
+<h3 id="string">string</h3>
+<p>string数据结构是简单的key-value类型，相比与C原生字符串，Redis的string类型可以保存文本数据和二进制数据，并且获取长度复杂度为O(1)，不会造成缓冲区溢出。</p>
+<p><strong>常用命令有<code>set、get、strlen、exists、decr、incr、setex</code>等等</strong>。</p>
+<p>应用场景：<strong>一般常用在需要计数的场景，比如用户访问次数、热点文章的点赞转发数量扥等</strong></p>
+<p>简单使用命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># 普通字符串的基本操作</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> key value <span class="c1">#设置 key-value 类型的值</span>
+OK
+127.0.0.1:6379&gt; get key <span class="c1"># 根据 key 获得对应的 value</span>
+<span class="s2">&#34;value&#34;</span>
+127.0.0.1:6379&gt; exists key  <span class="c1"># 判断某个 key 是否存在</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; strlen key <span class="c1"># 返回 key 所储存的字符串值的长度。</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">5</span>
+127.0.0.1:6379&gt; del key <span class="c1"># 删除某个 key 对应的值</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; get key
+<span class="o">(</span>nil<span class="o">)</span>
+
+<span class="c1"># 批量操作</span>
+127.0.0.1:6379&gt; mset key1 value1 key2 value2 <span class="c1"># 批量设置 key-value 类型的值</span>
+OK
+127.0.0.1:6379&gt; mget key1 key2 <span class="c1"># 批量获取多个 key 对应的 value</span>
+1<span class="o">)</span> <span class="s2">&#34;value1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;value2&#34;</span>
+
+<span class="c1">#计数器(字符串的内容为整数的时候使用)</span>
+127.0.0.1:6379&gt; <span class="nb">set</span> number <span class="m">1</span>
+OK
+127.0.0.1:6379&gt; incr number <span class="c1"># 将 key 中储存的数字值增一</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; get number
+<span class="s2">&#34;2&#34;</span>
+127.0.0.1:6379&gt; decr number <span class="c1"># 将 key 中储存的数字值减一</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; get number
+<span class="s2">&#34;1&#34;</span>
+
+<span class="c1"># 过期（默认永不过期）</span>
+127.0.0.1:6379&gt; expire key  <span class="m">60</span> <span class="c1"># 数据在 60s 后过期</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; setex key <span class="m">60</span> value <span class="c1"># 数据在 60s 后过期 (setex:[set] + [ex]pire)</span>
+OK
+127.0.0.1:6379&gt; ttl key <span class="c1"># 查看数据还有多久过期</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">56</span>
+</code></pre></div><h3 id="42-list">4.2 list</h3>
+<p>list即为链表，特点是易于插入与删除，但是随机访问困难。</p>
+<p><strong>常用命令：<code>rpush、lpop、lpush、rpop、lrange、llen</code>等</strong>。</p>
+<p>应用场景：<strong>发布与订阅或者说消息队列、慢查询</strong>。</p>
+<p>简单使用命令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="c1"># 通过rpush/lpop实现队列</span>
+127.0.0.1:6379&gt; rpush myList value1 <span class="c1"># 向 list 的头部（右边）添加元素</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; rpush myList value2 value3 <span class="c1"># 向list的头部（最右边）添加多个元素</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; lpop myList <span class="c1"># 将 list的尾部(最左边)元素取出</span>
+<span class="s2">&#34;value1&#34;</span>
+127.0.0.1:6379&gt; lrange myList <span class="m">0</span> <span class="m">1</span> <span class="c1"># 查看对应下标的list列表， 0 为 start,1为 end</span>
+1<span class="o">)</span> <span class="s2">&#34;value2&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;value3&#34;</span>
+127.0.0.1:6379&gt; lrange myList <span class="m">0</span> -1 <span class="c1"># 查看列表中的所有元素，-1表示倒数第一</span>
+1<span class="o">)</span> <span class="s2">&#34;value2&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;value3&#34;</span>
+
+<span class="c1"># 通过rpush/rpop实现栈</span>
+127.0.0.1:6379&gt; rpush myList2 value1 value2 value3
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; rpop myList2 <span class="c1"># 将 list的头部(最右边)元素取出</span>
+<span class="s2">&#34;value3&#34;</span>
+
+<span class="c1"># 通过lrange查看对应下标范围的列表元素</span>
+127.0.0.1:6379&gt; rpush myList value1 value2 value3
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; lrange myList <span class="m">0</span> <span class="m">1</span> <span class="c1"># 查看对应下标的list列表， 0 为 start,1为 end</span>
+1<span class="o">)</span> <span class="s2">&#34;value1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;value2&#34;</span>
+127.0.0.1:6379&gt; lrange myList <span class="m">0</span> -1 <span class="c1"># 查看列表中的所有元素，-1表示倒数第一</span>
+1<span class="o">)</span> <span class="s2">&#34;value1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;value2&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;value3&#34;</span>
+
+<span class="c1"># 通过llen查看链表长度</span>
+127.0.0.1:6379&gt; llen myList
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+</code></pre></div><h3 id="43-hash">4.3 hash</h3>
+<p>redis的哈希是一个string类型的field和value的映射表，特别适合用于对象存储。</p>
+<p><strong>常用命令：<code>hset、hmset、hexists、hget、hgetall、hkeys、hvals</code>等</strong>。</p>
+<p>应用场景：<strong>系统中对象数据的存储</strong>。</p>
+<p>简单命令使用</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">127.0.0.1:6379&gt; hmset userInfoKey name <span class="s2">&#34;guide&#34;</span> description <span class="s2">&#34;dev&#34;</span> age <span class="s2">&#34;24&#34;</span>
+OK
+127.0.0.1:6379&gt; hexists userInfoKey name <span class="c1"># 查看 key 对应的 value中指定的字段是否存在。</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; hget userInfoKey name <span class="c1"># 获取存储在哈希表中指定字段的值。</span>
+<span class="s2">&#34;guide&#34;</span>
+127.0.0.1:6379&gt; hget userInfoKey age
+<span class="s2">&#34;24&#34;</span>
+127.0.0.1:6379&gt; hgetall userInfoKey <span class="c1"># 获取在哈希表中指定 key 的所有字段和值</span>
+1<span class="o">)</span> <span class="s2">&#34;name&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;guide&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;description&#34;</span>
+4<span class="o">)</span> <span class="s2">&#34;dev&#34;</span>
+5<span class="o">)</span> <span class="s2">&#34;age&#34;</span>
+6<span class="o">)</span> <span class="s2">&#34;24&#34;</span>
+127.0.0.1:6379&gt; hkeys userInfoKey <span class="c1"># 获取 key 列表</span>
+1<span class="o">)</span> <span class="s2">&#34;name&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;description&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;age&#34;</span>
+127.0.0.1:6379&gt; hvals userInfoKey <span class="c1"># 获取 value 列表</span>
+1<span class="o">)</span> <span class="s2">&#34;guide&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;dev&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;24&#34;</span>
+127.0.0.1:6379&gt; hset userInfoKey name <span class="s2">&#34;GuideGeGe&#34;</span> <span class="c1"># 修改某个字段对应的值</span>
+127.0.0.1:6379&gt; hget userInfoKey name
+<span class="s2">&#34;GuideGeGe&#34;</span>
+</code></pre></div><h3 id="43-set">4.3 set</h3>
+<p>set类型是一种无序集合，可以基于set轻易实现交集、并集、差集的操作。Redis 可以非常方便的实现如共同关注、共同粉丝、共同喜好等功能。这个过程也就是求交集的过程。</p>
+<p><strong>常用命令：<code>sadd、spop、dmembers、sismember、scard、sinterstore、sunion</code>等</strong>。</p>
+<p>应用场景：<strong>需要存放的数据不能重复以及需要获取多个数据源交集和并集等场景</strong>。</p>
+<p>简单命令使用</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">127.0.0.1:6379&gt; sadd mySet value1 value2 <span class="c1"># 添加元素进去</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; sadd mySet value1 <span class="c1"># 不允许有重复元素</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">0</span>
+127.0.0.1:6379&gt; smembers mySet <span class="c1"># 查看 set 中所有的元素</span>
+1<span class="o">)</span> <span class="s2">&#34;value1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;value2&#34;</span>
+127.0.0.1:6379&gt; scard mySet <span class="c1"># 查看 set 的长度</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; sismember mySet value1 <span class="c1"># 检查某个元素是否存在set 中，只能接收单个元素</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; sadd mySet2 value2 value3
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; sinterstore mySet3 mySet mySet2 <span class="c1"># 获取 mySet 和 mySet2 的交集并存放在 mySet3 中</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; smembers mySet3
+1<span class="o">)</span> <span class="s2">&#34;value2&#34;</span>
+</code></pre></div><h3 id="44-sorted-set">4.4 sorted set</h3>
+<p>和set相比，sorted set增加了一个权重参数score，使得集合中元素能够按score进行有序排列，还可以通过score的范围来获取元素的列表。</p>
+<p><strong>常用命令：<code>zadd、zcard、zscore、zrange、zrevrange、zrem等</code></strong>。</p>
+<p>应用场景：<strong>需要对数据根据某个权重进行排序的场景。比如直播系统中，实时排行信息包含直播间在线用户列表、各种礼物排行榜、弹幕消息等</strong>。</p>
+<p>简单命令使用</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">127.0.0.1:6379&gt; zadd myZset 3.0 value1 <span class="c1"># 添加元素到 sorted set 中 3.0 为权重</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">1</span>
+127.0.0.1:6379&gt; zadd myZset 2.0 value2 1.0 value3 <span class="c1"># 一次添加多个元素</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">2</span>
+127.0.0.1:6379&gt; zcard myZset <span class="c1"># 查看 sorted set 中的元素数量</span>
+<span class="o">(</span>integer<span class="o">)</span> <span class="m">3</span>
+127.0.0.1:6379&gt; zscore myZset value1 <span class="c1"># 查看某个 value 的权重</span>
+<span class="s2">&#34;3&#34;</span>
+127.0.0.1:6379&gt; zrange  myZset <span class="m">0</span> -1 <span class="c1"># 顺序输出某个范围区间的元素，0 -1 表示输出所有元素</span>
+1<span class="o">)</span> <span class="s2">&#34;value3&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;value2&#34;</span>
+3<span class="o">)</span> <span class="s2">&#34;value1&#34;</span>
+127.0.0.1:6379&gt; zrange  myZset <span class="m">0</span> <span class="m">1</span> <span class="c1"># 顺序输出某个范围区间的元素，0 为 start  1 为 stop</span>
+1<span class="o">)</span> <span class="s2">&#34;value3&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;value2&#34;</span>
+127.0.0.1:6379&gt; zrevrange  myZset <span class="m">0</span> <span class="m">1</span> <span class="c1"># 逆序输出某个范围区间的元素，0 为 start  1 为 stop</span>
+1<span class="o">)</span> <span class="s2">&#34;value1&#34;</span>
+2<span class="o">)</span> <span class="s2">&#34;value2&#34;</span>
+</code></pre></div><h2 id="5-redis淘汰机制">5. Redis淘汰机制</h2>
+<p>Redis提供了6种数据淘汰策略：</p>
+<ul>
+<li><strong>volatile-lru（least recently used）</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选最近最少使用的数据淘汰。</li>
+<li><strong>volatile-ttl</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选将要过期的数据淘汰</li>
+<li><strong>volatile-random</strong>：从已设置过期时间的数据集（server.db[i].expires）中任意选择数据淘汰</li>
+<li><strong>allkeys-lru（least recently used）</strong>：当内存不足以容纳新写入数据时，在键空间中，移除最近最少使用的 key（这个是最常用的）</li>
+<li><strong>allkeys-random</strong>：从数据集（server.db[i].dict）中任意选择数据淘汰</li>
+<li><strong>no-eviction</strong>：禁止驱逐数据，也就是说当内存不足以容纳新写入数据时，新写入操作会报错。</li>
+</ul>
+<p>4.0版本后新增加以下两种：</p>
+<ul>
+<li><strong>volatile-lfu（least frequently used）</strong>：从已设置过期时间的数据集（server.db[i].expires）中挑选最不经常使用的数据淘汰</li>
+<li><strong>allkeys-lfu（least frequently used）</strong>：当内存不足以容纳新写入数据时，在键空间中，移除最不经常使用的 key</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-02-23</span>
+                <span>更新于 2022-03-07</span>
             </div>
             <div class="post-info-license"></div>
         </div>
@@ -269,8 +452,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/golang%E6%BA%90%E7%A0%81_%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="prev" rel="prev" title="Golang源码之内存管理"><i class="fas fa-angle-left fa-fw"></i>Golang源码之内存管理</a>
-            <a href="/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/" class="next" rel="next" title="缓存穿透与缓存雪崩">缓存穿透与缓存雪崩<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/" class="prev" rel="prev" title="MySQL面试题"><i class="fas fa-angle-left fa-fw"></i>MySQL面试题</a>
+            <a href="/posts/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0/" class="next" rel="next" title="Golang实现分布式缓存">Golang实现分布式缓存<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>
