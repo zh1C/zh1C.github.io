@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/redis-%E8%B7%B3%E8%B7%83%E8%A1%A8\/"
-        },"genre": "posts","keywords": "Redis","wordcount":  1231 ,
+        },"genre": "posts","keywords": "Redis","wordcount":  1465 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/redis-%E8%B7%B3%E8%B7%83%E8%A1%A8\/","datePublished": "2021-09-11T00:00:00+00:00","dateModified": "2021-09-11T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis(四)跳跃表</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Redis学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-11">2021-09-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1231 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-09-11">2021-09-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1465 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -132,8 +132,25 @@
     <li><a href="#重点回顾">重点回顾</a></li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><p>跳跃表是一种有序数据结构，通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。支持平均O(logN)、最坏O(N)复杂度的节点查找，还可以通过顺序性操作来批处理节点。</p>
+            </div><div class="content" id="content"><p><strong>跳跃表是一种有序数据结构</strong>，通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。支持平均O(logN)、最坏O(N)复杂度的节点查找，还可以通过顺序性操作来批处理节点，<strong>跳跃表所有操作时间复杂度平均都是O(logN)</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220309151448603.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220309151448603.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220309151448603.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220309151448603.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220309151448603.png"
+        title="image-20220309151448603" /></p>
+<blockquote>
+<p>跳表是<strong>可以实现二分查找的有序链表</strong>。</p>
+</blockquote>
 <p>跳跃表效率可以和平衡树相媲美，并且跳跃表实现更为简单，所以不少程序都用跳跃表代替平衡树。和链表、字典等数据结构广泛应用在Redis内部不同，Redis只有在两个地方用到了跳跃表，<strong>一个是实现有序集合键，另一个是在集群节点中作为内部数据结构</strong>。</p>
+<blockquote>
+<p><strong>为什么Redis使用跳表而不使用红黑树来实现有序集合</strong>？</p>
+<p>Redis有序集合支持插入、删除、查找、有序输出所有元素、按照范围区间查找元素。</p>
+<p>前面四个操作跳跃表和红黑树的时间复杂度一样，但是按照范围区间查找数据这个操作，红黑树的效率没有跳表高。按照区间查找数据时，跳表可以做到 O(logn) 的时间复杂度定位区间的起点，然后在原始链表中顺序往后遍历就可以了，非常高效。</p>
+<p>另外红黑树的实现相比与跳跃表也更加复杂。</p>
+</blockquote>
 <h2 id="1跳跃表的实现">1、跳跃表的实现</h2>
 <p>Redis的跳跃表由两个结构定义，其中<code>zskiplistNode</code>结构用于表示跳跃表节点，而<code>zskiplist</code>结构保存跳跃表节点相关信息。</p>
 <p><img

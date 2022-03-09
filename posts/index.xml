@@ -3,7 +3,14 @@
         <title>所有文章 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/posts/</link>
         <description>所有文章 | NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 07 Mar 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 09 Mar 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang高性能编程</title>
+    <link>http://wen-nan.github.io/posts/golang%E6%80%A7%E8%83%BD%E7%BC%96%E7%A8%8B/</link>
+    <pubDate>Wed, 09 Mar 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/golang%E6%80%A7%E8%83%BD%E7%BC%96%E7%A8%8B/</guid>
+    <description><![CDATA[1. Benchmark 基准测试 Go 语言标准库内置的 testing 测试框架提供了基准测试(benchmark)的能力，能让我们很容易地对某一段代码进行性能测试。 1.1 benchm]]></description>
+</item><item>
     <title>Golang实现分布式缓存</title>
     <link>http://wen-nan.github.io/posts/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0/</link>
     <pubDate>Mon, 07 Mar 2022 00:00:00 &#43;0000</pubDate>
@@ -66,12 +73,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/golang%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
     <description><![CDATA[1、nil切片和空切片 问题 nil切片和空切片指向的地址一样吗？代码会输出什么？ 回答 nil切片和空切片指向的地址不一样。nil空切片引用数组指]]></description>
-</item><item>
-    <title>缓存穿透与缓存雪崩</title>
-    <link>http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/</link>
-    <pubDate>Thu, 24 Feb 2022 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/</guid>
-    <description><![CDATA[缓存穿透 缓存穿透就是大量请求的key根本不存在于缓存中，导致请求直接到了数据库上，根本没有经过缓存这一层。流程如下： 有哪些解决办法？ 缓存无效]]></description>
 </item></channel>
 </rss>

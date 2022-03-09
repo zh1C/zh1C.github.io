@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  13965 ,
+        },"genre": "posts","keywords": "MySQL","wordcount":  14027 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-03-06T00:00:00+00:00","dateModified": "2022-03-06T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-06">2022-03-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 13965 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-06">2022-03-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 14027 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 28 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -411,8 +411,8 @@
 </ul>
 <p>undo log主要分两种</p>
 <blockquote>
-<p><strong>Insert ungo log</strong>:代表事务在insert新纪录时产生的回滚日志，只在事务回滚时需要，并且在事务提交后立即被删除。</p>
-<p><strong>update undo log</strong>:事务更新删除时产生的回滚日志，不仅在事务回滚时需要，在快照读时也需要，不能被随便删除，只有在快照读或事务回滚不涉及该日志时才被删除。</p>
+<p><strong>Insert ungo log</strong>:代表事务在insert新记录时产生的回滚日志，只在事务回滚时需要，并且在事务提交后立即被删除。</p>
+<p><strong>update undo log</strong>:事务更新删除时产生的回滚日志，不仅在事务回滚时需要，在快照读时也需要，不能被随便删除，提交时放入 <code>undo log</code> 链表，等待 <code>purge线程</code> 进行最后的删除，只有在快照读或事务回滚不涉及该日志时才被删除。</p>
 </blockquote>
 <p><img
         class="lazyload"
@@ -436,15 +436,15 @@
 <ul>
 <li><strong>read view记录筛选方式</strong></li>
 </ul>
-<p>前提：<code>DATA_TRX_ID</code> 表示每个数据行的最新的事务ID,<strong>即我们需要判断该行数据对我们的事务(即read view)是否可见的数据行事务ID</strong>。<code>up_limit_id</code>表示当前快照中的最先开始的事务；<code>low_limit_id</code>表示当前快照中的最慢开始的事务，即最后一个事务。</p>
+<p>前提：<code>DATA_TRX_ID</code> 表示每个数据行的最新的事务ID,<strong>即我们需要判断该行数据对我们的事务(即read view)是否可见的数据行事务ID</strong>。<code>up_limit_id</code>表示当前快照活跃事务ID 中最小事务ID；<code>low_limit_id</code>表示目前出现过的最大事务ID+1，即下一个将被分配的事务ID。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305152648004.png"
-        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305152648004.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305152648004.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305152648004.png 2x"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220308145807760.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220308145807760.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220308145807760.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220308145807760.png 2x"
         data-sizes="auto"
-        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220305152648004.png"
-        title="image-20220305152648004" /></p>
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220308145807760.png"
+        title="image-20220308145807760" /></p>
 <blockquote>
 <ol>
 <li>如果<code>DATA_TRX_ID</code> &lt; <code>up_limit_id</code>：说明在创建<code>read view</code>时，修改该数据行的事务已提交，该版本的记录可被我们的事务读取到。</li>
@@ -663,7 +663,7 @@
 <p>回滚日志有两个作用：</p>
 <ul>
 <li>用于如果用户执行的事务或语句由于某种原因失败了，又或者用户用一条ROLLBACK语句请求回滚，就可以利用undo log将数据回滚到以前的样子；</li>
-<li>undo log的另一个作用是MVCC，即InnoDB存储引擎的MVCC的实现需要undo log配合完成。</li>
+<li>undo log的另一个作用是MVCC，当读取记录时，若该记录被其他事务占用或当前版本对该事务不可见，则可以通过 <code>undo log</code> 读取之前的版本数据，以此实现非锁定读。</li>
 </ul>
 <h3 id="总结">总结</h3>
 <p>MySQL InnoDB 引擎使用 <strong>redo log(重做日志)</strong> 保证事务的<strong>持久性</strong>，使用 <strong>undo log(回滚日志)</strong> 来保证事务的<strong>原子性</strong>。</p>
