@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E9%AB%98%E6%80%A7%E8%83%BD%E7%BC%96%E7%A8%8B\/"
-        },"genre": "posts","keywords": "Golang","wordcount":  1254 ,
+        },"genre": "posts","keywords": "Golang","wordcount":  2126 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E9%AB%98%E6%80%A7%E8%83%BD%E7%BC%96%E7%A8%8B\/","datePublished": "2022-03-10T00:00:00+00:00","dateModified": "2022-03-10T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang高性能编程</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-10">2022-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1254 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-10">2022-03-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2126 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -134,6 +134,14 @@
       <ul>
         <li><a href="#21-字符串拼接方式">2.1 字符串拼接方式</a></li>
         <li><a href="#22-性能测试">2.2 性能测试</a></li>
+        <li><a href="#23-性能背后的原理">2.3 性能背后的原理</a></li>
+        <li><a href="#24-比较stringsbuilder和bytesbuffer">2.4 比较strings.Builder和bytes.Buffer</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-切片性能及陷阱">3. 切片性能及陷阱</a>
+      <ul>
+        <li><a href="#31-切片操作常见的操作技巧图示">3.1 切片操作常见的操作技巧图示</a></li>
+        <li><a href="#32-性能陷阱">3.2 性能陷阱</a></li>
       </ul>
     </li>
   </ul>
@@ -257,7 +265,100 @@ BenchmarkByteConcat-8              <span class="m">21460</span>             <spa
 BenchmarkPreByteConcat-8           <span class="m">38476</span>             <span class="m">31120</span> ns/op          <span class="m">212992</span> B/op          <span class="m">2</span> allocs/op
 PASS
 ok      example 10.637s
-</code></pre></div></div><div class="post-footer" id="post-footer">
+</code></pre></div><p>可以看到使用<code>+</code>和<code>fmt.Sprintf</code>效率最低。<code>strings.Builder</code>、<code>bytes.Buffer</code>和<code>[]byte</code>的性能差距不大，且内存消耗十分接近。性能最好的是采用预分配内存的<code>[]byte</code>。因为该过程不需要发生内存拷贝和重新分配内存。</p>
+<p><strong>综合建议，一般推荐使用<code>strings.Builder</code>来拼接字符串</strong>。官方描述是：A Builder is used to efficiently build a string using Write methods. It minimizes memory copying.</p>
+<blockquote>
+<p>注意：<code>strings.Builder</code>也提供了预分配内存的方式。</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311141350330.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311141350330.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311141350330.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311141350330.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311141350330.png"
+        title="image-20220311141350330" /></p>
+<p>性能对比结果如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh">BenchmarkPreByteConcat-8           <span class="m">38613</span>             <span class="m">30964</span> ns/op          <span class="m">212992</span> B/op          <span class="m">2</span> allocs/op
+BenchmarkPreBuilderConcat-8        <span class="m">29694</span>             <span class="m">40361</span> ns/op          <span class="m">106496</span> B/op          <span class="m">1</span> allocs/op
+</code></pre></div><p>可以看到与预分配内存的<code>[]byte</code>相比，因为省去了<code>[]byte</code>和<code>string</code>之间的转换，内存分配次数减少了一次，内存消耗也减半。</p>
+<h3 id="23-性能背后的原理">2.3 性能背后的原理</h3>
+<p><code>strings.Builder</code> 和 <code>+</code> 性能和内存消耗差距如此巨大，是因为两者的内存分配方式不一样。</p>
+<p>字符串在Go语言中是不可变类型，占用内存大小是固定的，使用<code>+</code>拼接两个字符串时，需要开辟一段空间大小是两个字符串大小之和的新空间。</p>
+<p><strong>而 <code>strings.Builder</code>，<code>bytes.Buffer</code>，包括切片 <code>[]byte</code> 的内存是以倍数申请的。</strong></p>
+<h3 id="24-比较stringsbuilder和bytesbuffer">2.4 比较strings.Builder和bytes.Buffer</h3>
+<p><code>strings.Builder</code> 和 <code>bytes.Buffer</code> 底层都是 <code>[]byte</code> 数组，但 <code>strings.Builder</code> 性能比 <code>bytes.Buffer</code> 略快约 10% 。一个比较重要的区别在于，<code>bytes.Buffer</code> 转化为字符串时重新申请了一块空间，存放生成的字符串变量，而 <code>strings.Builder</code> 直接将底层的 <code>[]byte</code> 转换成了字符串类型返回了回来。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311143845317.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311143845317.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311143845317.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311143845317.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311143845317.png"
+        title="image-20220311143845317" /></p>
+<h2 id="3-切片性能及陷阱">3. 切片性能及陷阱</h2>
+<h3 id="31-切片操作常见的操作技巧图示">3.1 切片操作常见的操作技巧图示</h3>
+<ul>
+<li><strong>Copy</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145459113.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145459113.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145459113.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145459113.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145459113.png"
+        title="image-20220311145459113" /></p>
+<ul>
+<li><strong>Append</strong></li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145619636.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145619636.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145619636.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145619636.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145619636.png"
+        title="image-20220311145619636" /></p>
+<ul>
+<li><strong>Delete</strong></li>
+</ul>
+<p>切片底层是数组，删除意味着后面的元素需要逐个向前移动，复杂度是O(N)，因此切片不适合大量随机删除场景。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145850745.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145850745.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145850745.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145850745.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311145850745.png"
+        title="image-20220311145850745" /></p>
+<ul>
+<li><strong>Delete(GC)</strong></li>
+</ul>
+<p>删除后将空余位置置空，有助于垃圾回收</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311150251335.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311150251335.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311150251335.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311150251335.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311150251335.png"
+        title="image-20220311150251335" /></p>
+<ul>
+<li><strong>Filter</strong></li>
+</ul>
+<p>当原切片不会再使用时，就地filter方式比较推荐，可以节省内存空间。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311150622602.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311150622602.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311150622602.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311150622602.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220311150622602.png"
+        title="image-20220311150622602" /></p>
+<h3 id="32-性能陷阱">3.2 性能陷阱</h3>
+<p>在已有切片的基础上进行切片，不会创建新的底层数组。因为原来的底层数组没有发生变化，<strong>内存会一直占用，直到没有变量引用该数组</strong>。因此很可能出现这么一种情况，原切片由大量的元素构成，但是我们在原切片的基础上切片，虽然只使用了很小一段，但底层数组在内存中仍然占据了大量空间，得不到释放。比较推荐的做法，使用 <code>copy</code> 替代 <code>re-slice</code>。</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
