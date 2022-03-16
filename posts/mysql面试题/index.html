@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  14027 ,
+        },"genre": "posts","keywords": "MySQL","wordcount":  14437 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-03-06T00:00:00+00:00","dateModified": "2022-03-06T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-06">2022-03-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 14027 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 28 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-06">2022-03-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 14437 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 29 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -156,6 +156,8 @@
             <li><a href="#覆盖索引">覆盖索引</a></li>
           </ul>
         </li>
+        <li><a href="#34-索引失效">3.4 索引失效</a></li>
+        <li><a href="#35-最左匹配原则">3.5 最左匹配原则</a></li>
       </ul>
     </li>
     <li><a href="#4-mysql三大日志详解">4. MySQL三大日志详解</a>
@@ -504,7 +506,7 @@
 </blockquote>
 <blockquote>
 <p>为什么 MySQL 默认的存储引擎 InnoDB 会使用 B+ 树来存储数据？</p>
-<p>B 树能够在非叶节点中存储数据，但是这也导致在查询连续数据时可能会带来更多的随机 I/O，而 B+ 树的所有叶节点可以通过指针相互连接，能够减少顺序遍历时产生的额外随机 I/O</p>
+<p>B 树能够在非叶节点中存储数据，但是这也导致在查询连续数据时可能会带来更多的随机 I/O，而 B+ 树的所有叶节点可以通过指针相互连接，能够减少顺序遍历时产生的额外随机 I/O。</p>
 </blockquote>
 <h3 id="33-聚集索引和非聚集索引">3.3 聚集索引和非聚集索引</h3>
 <ul>
@@ -545,6 +547,65 @@
 <h4 id="覆盖索引">覆盖索引</h4>
 <p>非聚集索引一定要回表查询吗？</p>
 <p>非聚集索引不一定要回表查询。<strong>覆盖索引即需要查询的字段正好是索引的字段，那么直接根据该索引，就可以查到数据了， 而无需回表查询。</strong></p>
+<h3 id="34-索引失效">3.4 索引失效</h3>
+<ul>
+<li>使用!=（&lt;&gt;）导致索引失效；</li>
+<li>类型不一致；</li>
+<li>函数导致索引失效</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315092854348.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315092854348.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315092854348.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315092854348.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315092854348.png"
+        title="image-20220315092854348" /></p>
+<ul>
+<li>运算符导致索引失效，如果对列进行了+、-、*、/、!，都将不会走索引</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093020314.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093020314.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093020314.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093020314.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093020314.png"
+        title="image-20220315093020314" /></p>
+<ul>
+<li>OR引起索引失效</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093058440.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093058440.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093058440.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093058440.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093058440.png"
+        title="image-20220315093058440" /></p>
+<blockquote>
+<p><strong>注意：并不是所有的OR都会使索引失效，如果OR连接同一个字段，那么索引不会失效</strong>。</p>
+</blockquote>
+<ul>
+<li>模糊搜索导致索引失效</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093224347.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093224347.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093224347.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093224347.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220315093224347.png"
+        title="image-20220315093224347" /></p>
+<blockquote>
+<p><strong>%放在匹配字段前不走索引，放在后面才走索引</strong>。</p>
+</blockquote>
+<ul>
+<li>NOT IN、NOT EXISTS会导致索引失效。</li>
+</ul>
+<h3 id="35-最左匹配原则">3.5 最左匹配原则</h3>
+<p>最左前缀原则就是最左优先，在创建多列索引时，要根据业务需求，where子句中使用最频繁的一列放在最左边。<strong>MySQL会一直向右匹配直到遇到范围查找(&lt;、&gt;、between、like)就停止匹配</strong>，比如a=1 and b=2 and c &gt; 3 and d = 4如果建立(a,b,c,d)顺序的索引，则只会用到(a,b)的索引，d是用不到索引的，如果建立(a,b,d,c)的索引则(a,b,d)索引都可以用到。</p>
+<p><strong>注意=和in可以乱序，MySQL的查询优化器会优化成可以识别的模式</strong>。</p>
 <h2 id="4-mysql三大日志详解">4. MySQL三大日志详解</h2>
 <p>MySQL日志主要包括错误日志、查询日志、慢查询日志、事务日志、二进制日志几大类。比较重要的有二进制日志（<code>bin log</code>：归档日志）和事务日志（<code>redo log</code>：重做日志、<code>undo log</code>：回滚日志）</p>
 <h3 id="41-redo-log-重做日志">4.1 redo log 重做日志</h3>
