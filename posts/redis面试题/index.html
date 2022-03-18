@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "Redis","wordcount":  9935 ,
+        },"genre": "posts","keywords": "Redis","wordcount":  12464 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-03-07T00:00:00+00:00","dateModified": "2022-03-07T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis相关面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Redis学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-07">2022-03-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 9935 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 20 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-07">2022-03-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12464 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 25 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -209,8 +209,34 @@
             <li><a href="#1-setnx和expire非原子性">1. SETNX和EXPIRE非原子性</a></li>
             <li><a href="#2-锁误解除">2. 锁误解除</a></li>
             <li><a href="#3-超时解锁导致并发">3. 超时解锁导致并发</a></li>
+            <li><a href="#4-不可重入">4. 不可重入</a></li>
+            <li><a href="#5-无法等待锁释放">5. 无法等待锁释放</a></li>
           </ul>
         </li>
+      </ul>
+    </li>
+    <li><a href="#10-保证数据库和缓存一致性">10 保证数据库和缓存一致性</a>
+      <ul>
+        <li><a href="#101-如何保证缓存和数据库双写时数据一致性">10.1 如何保证缓存和数据库双写时数据一致性？</a></li>
+        <li><a href="#102-先删除缓存后更新数据库">10.2 先删除缓存，后更新数据库</a>
+          <ul>
+            <li><a href="#1021-延时双删">10.2.1 延时双删</a></li>
+            <li><a href="#1022-更新与读取操作进行异步串行化">10.2.2 更新与读取操作进行异步串行化</a></li>
+          </ul>
+        </li>
+        <li><a href="#103-先更新数据库后删除缓存">10.3 先更新数据库，后删除缓存</a></li>
+      </ul>
+    </li>
+    <li><a href="#11-redis应用-限流">11. Redis应用-限流</a>
+      <ul>
+        <li><a href="#111-计数器">11.1 计数器</a></li>
+        <li><a href="#112-漏桶算法">11.2 漏桶算法</a></li>
+        <li><a href="#113-令牌桶算法">11.3 令牌桶算法</a></li>
+      </ul>
+    </li>
+    <li><a href="#12-redis应用-消息队列">12. Redis应用-消息队列</a>
+      <ul>
+        <li><a href="#延时队列">延时队列</a></li>
       </ul>
     </li>
   </ul>
@@ -708,8 +734,6 @@ OK
 <h3 id="82-槽指派">8.2 槽指派</h3>
 <p>Redis集群通过分片的方式保存数据库中的键值对：<strong>集群的整个数据库被分为16384个槽，数据库中的每个键都属于这16384个槽的其中一个，集群中的每个节点可以处理0&mdash;16384个槽</strong>。</p>
 <p>当数据库中的16384个槽都有节点在处理时，集群处于上线状态；相反，只要有一个槽没得到处理，集群就处于下线状态。通过<code>CLUSTER ADDSLOTS</code>命令可以将槽分配给节点负责。</p>
-<blockquote>
-</blockquote>
 <h3 id="83-在集群中执行命令">8.3 在集群中执行命令</h3>
 <p>当客户端节点发送与数据库键有关命令时，接收命令的节点会<strong>计算出命令要处理的数据库键属于哪个槽</strong>，并检查这个槽是否指派给了自己，流程如下：</p>
 <p><img
@@ -746,7 +770,7 @@ OK
 </ul>
 <h3 id="92-存在的问题">9.2 存在的问题</h3>
 <h4 id="1-setnx和expire非原子性">1. SETNX和EXPIRE非原子性</h4>
-<p>如果SETNX成功，在设置锁超时时间后，服务器挂掉、重启或网络问题等，导致EXPIRE命令没有执行，所没有设置超时时间变成死锁。</p>
+<p>如果SETNX成功，在设置锁超时时间后，服务器挂掉、重启或网络问题等，导致EXPIRE命令没有执行，锁没有设置超时时间变成死锁。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -785,6 +809,164 @@ OK
 <span class="kr">end</span>
 </code></pre></div><h4 id="3-超时解锁导致并发">3. 超时解锁导致并发</h4>
 <p>如果线程 A 成功获取锁并设置过期时间 30 秒，但线程 A 执行时间超过了 30 秒，锁过期自动释放，此时线程 B 获取到了锁，线程 A 和线程 B 并发执行。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317092247578.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317092247578.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317092247578.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317092247578.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317092247578.png"
+        title="image-20220317092247578" /></p>
+<p>两个线程并发显然是不被允许的，一般有两种解决方式：</p>
+<ul>
+<li><strong>将过期时间设置足够长，以保证代码逻辑能够在释放锁之前执行完成</strong>。</li>
+<li><strong>为获取锁的线程增加守护线程，为将要过期但未释放的锁增加有效时间</strong>。</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317092516345.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317092516345.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317092516345.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317092516345.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317092516345.png"
+        title="image-20220317092516345" /></p>
+<h4 id="4-不可重入">4. 不可重入</h4>
+<p>当线程在持有锁的情况下再次请求加锁，如果一个锁支持一个线程多次加锁，那么这个锁就是可重入的。如果一个不可重入锁被再次加锁，由于该锁已经被持有，再次加锁会失败。Redis 可通过对锁进行重入计数，加锁时加 1，解锁时减 1，当计数归 0 时释放锁。</p>
+<p><strong>可以通过Redis map数据结构来实现分布式锁，既存锁的标识也对重入次数进行计数</strong>。</p>
+<h4 id="5-无法等待锁释放">5. 无法等待锁释放</h4>
+<p>上述命令执行都是立即返回的，如果客户端可以等待锁释放就无法使用。</p>
+<ul>
+<li>可以通过客户端轮询的方式解决。这种方式比较消耗服务器资源，并发量大的时候，会影响服务器效率。</li>
+<li>可以使用Redis的发布订阅功能，当获取锁失败时，订阅锁释放信息，获取锁成功释放时，发送锁释放信息。如下：</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317093337557.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317093337557.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317093337557.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317093337557.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220317093337557.png"
+        title="image-20220317093337557" /></p>
+<h2 id="10-保证数据库和缓存一致性">10 保证数据库和缓存一致性</h2>
+<p>缓存异常有四种类型，分别是<strong>缓存和数据库的数据不一致、缓存雪崩、缓存击穿、缓存穿透。</strong></p>
+<h3 id="101-如何保证缓存和数据库双写时数据一致性">10.1 如何保证缓存和数据库双写时数据一致性？</h3>
+<p>共有四种方案：</p>
+<ul>
+<li>先更新数据库，后更新缓存</li>
+<li>先更新缓存，后更新数据库</li>
+<li>先删除缓存，后更新数据库</li>
+<li>先更新数据库，后删除缓存</li>
+</ul>
+<p><strong>第一种和第二种方案很少使用，第一种方案存在问题：并发更新数据库场景下，会将脏数据刷到缓存</strong>。</p>
+<p><strong>第二种存在问题：如果先更新缓存成功，但数据库更新失败，则肯定会造成数据不一致。</strong></p>
+<h3 id="102-先删除缓存后更新数据库">10.2 先删除缓存，后更新数据库</h3>
+<p>存在问题：有两个请求，请求A(更新操作)，请求B(查询操作)：</p>
+<ol>
+<li>请求A进行写操作，删除缓存</li>
+<li>请求B查询发现缓存不存在</li>
+<li>请求B去数据库查询得到旧值</li>
+<li>请求B将旧值写入缓存</li>
+<li>请求A将新值写入数据库</li>
+</ol>
+<p><strong>上述情况会导致不一致情况。而且如果不采用给缓存设置过期时间策略，该数据将永远都是脏数据</strong>。</p>
+<h4 id="1021-延时双删">10.2.1 延时双删</h4>
+<p>最简单的解决办法就是延时双删。</p>
+<ol>
+<li>先淘汰缓存</li>
+<li>再写数据库(和原来两步一样)</li>
+<li>休眠一秒，再次淘汰缓存</li>
+</ol>
+<p><strong>这样做，可以将1秒内所造成的缓存脏数据，再次删除。确保读请求结束，写请求可以删除读请求造成的缓存脏数据</strong>。自行评估业务情况，休眠时间可以更改。</p>
+<p>如果使用MySQL的读写分离架构，那么主从同步之间也有时间差：</p>
+<p>请求A更新操作，删除Redis，请求B查询操作，发现Redis没有数据，<strong>去从库拿数据，但此时主从同步数据还未完成，拿到的数据是旧数据</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318100349611.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318100349611.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318100349611.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318100349611.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318100349611.png"
+        title="image-20220318100349611" /></p>
+<p><strong>解决办法是：如果对Redis进行天聪数据的查询数据库操作，强制将其指向主库进行查询</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318100712700.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318100712700.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318100712700.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318100712700.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318100712700.png"
+        title="image-20220318100712700" /></p>
+<h4 id="1022-更新与读取操作进行异步串行化">10.2.2 更新与读取操作进行异步串行化</h4>
+<ul>
+<li><strong>异步串行化</strong></li>
+</ul>
+<p>一个数据变更操作，先执行删除缓存，然后再去更新数据库，但是还没完成更新的时候，此时来了一个读请求，读到了空缓存。<strong>可以先将缓存更新的请求发送到队列中，此时会在队列中积压，排在刚才更新库操作之后，然后同步等待缓存更新完成，再读库</strong>。</p>
+<ul>
+<li><strong>读操作去重</strong></li>
+</ul>
+<p>多个读操作更新缓存的请求在同一个队列里面是没有意义的，可以做过滤。如果发现队列中已经有了该数据更新缓存的请求，就不用再放进队列里面。</p>
+<p>如果请求还在等待时间范围内，不断轮询发现可以取到值，就直接返回；<strong>如果等待时间超时，那么这一次就直接返回从数据库中读取到的当前旧值，仅仅读库后返回而不放入缓存</strong>。</p>
+<h3 id="103-先更新数据库后删除缓存">10.3 先更新数据库，后删除缓存</h3>
+<p>这种情况也会出现问题：<strong>比如更新数据库成功了，但在删除缓存阶段出错了没有删除成功</strong>，那么此时在读取缓存的时候每次都是错误数据。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318102448169.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318102448169.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318102448169.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318102448169.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318102448169.png"
+        title="image-20220318102448169" /></p>
+<p>解决方案是：<strong>利用消息队列进行删除的补偿</strong>：</p>
+<ol>
+<li>请求A先对数据库进行更新操作</li>
+<li>在对Redis进行删除操作的时候，发现删除报错，删除失败</li>
+<li>此时将Redis的key作为消息体发送到消息队列中</li>
+<li>系统接收到消息队列发送的消息后再次对Redis进行删除操作。</li>
+</ol>
+<p><strong>上述方案缺点是对业务代码造成大量的侵入，深深偶合在一起</strong>。优化方案：<strong>MySQL更新操作后在binlog日志中我们能够找到响应的操作，则可以订阅MySQL数据库的binlog日志对缓存进行操作</strong>。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318102858747.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318102858747.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318102858747.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318102858747.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220318102858747.png"
+        title="image-20220318102858747" /></p>
+<h2 id="11-redis应用-限流">11. Redis应用-限流</h2>
+<p>常见限流算法有三种：<strong>计数器、漏桶、令牌桶</strong>。</p>
+<h3 id="111-计数器">11.1 计数器</h3>
+<p>原理：记录每个请求，判断在设定的限流时间窗口内请求数是否大于限制数。</p>
+<p><strong>利用Redis有序集合实现，并用管道加速</strong>。</p>
+<p>思路：用户ID作为key，毫秒时间戳作为score。</p>
+<ol>
+<li>加入有序集合&mdash;zadd。</li>
+<li>移除时间窗口之前的行为记录，剩下的都在时间窗口内&mdash;zremrangebyscore。</li>
+<li>获取窗口内元素数量&mdash;zcard。</li>
+</ol>
+<h3 id="112-漏桶算法">11.2 漏桶算法</h3>
+<p>原理：漏桶 (Leaky Bucket) 算法思路很简单，水 (请求) 先进入到漏桶里，漏桶以一定的速度出水 (接口有响应速率), 当水流入速度过大会直接溢出 (访问频率超过接口响应速率), 然后就拒绝请求，可以看出漏桶算法能强行限制数据的传输速率。</p>
+<p>Redis4.0提供了一个限流Redis模块，名称为redis-cell，该模块提供了漏桶算法。</p>
+<h3 id="113-令牌桶算法">11.3 令牌桶算法</h3>
+<p>原理：令牌桶算法 (Token Bucket) 和 Leaky Bucket 效果一样但方向相反的算法，更加容易理解。随着时间流逝，系统会按恒定 1/QPS 时间间隔 (如果 QPS=100, 则间隔是 10ms) 往桶里加入 Token (想象和漏洞漏水相反，有个水龙头在不断的加水), 如果桶已经满了就不再加了。新请求来临时，会各自拿走一个 Token, 如果没有 Token 可拿了就阻塞或者拒绝服务。</p>
+<p><strong>利用Redis string+定时任务实现</strong></p>
+<p>利用定时任务不断增加令牌数，Redis&mdash;incr，自增1，令牌桶满则不再增加。</p>
+<p>来一个请求消耗一个令牌，Redis&mdash;decr，自减1，当没有令牌时则拒绝请求。</p>
+<p><strong>好处是：一旦需要提高速率，则按需求提高放入桶中令牌的速率即可。</strong></p>
+<h2 id="12-redis应用-消息队列">12. Redis应用-消息队列</h2>
+<p><strong>Redis通过list数据结构来实现消息队列</strong>：主要用到以下命令：</p>
+<ul>
+<li>lpush和rpush入队列</li>
+<li>lpop和rpop出队列</li>
+<li>blpop和brpop阻塞式出队列</li>
+</ul>
+<p><strong>使用阻塞式出队好处：在队列没有数据时，会立即进入休眠，一旦数据到来，则立即醒过来，消息延迟几乎为零</strong>。</p>
+<h3 id="延时队列">延时队列</h3>
+<p>你是否在做电商项目的时候会遇到如下场景：</p>
+<ul>
+<li>订单下单后超过一小时用户未支付，需要关闭订单</li>
+<li>订单的评论如果7天未评价，系统需要自动产生一条评论</li>
+</ul>
+<p>这个时候就需要延时对了，即需要延迟一段时间后执行。<strong>Redis可以用过zset来实现</strong>。将有序集合的key设置为消息任务，score设置为消息的到期时间，然后轮询获取有序集合中到期消息进行处理。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
