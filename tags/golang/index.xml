@@ -67,11 +67,11 @@
     <guid>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/</guid>
     <description><![CDATA[Channel 1. 前言 channel是Golang提供的goroutine间通信方式，主要用于进程内各goroutine间通信。源代码位于runtime/]]></description>
 </item><item>
-    <title>Golang基础语法细节</title>
-    <link>http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/</link>
+    <title>Golang操作sql总结</title>
+    <link>http://wen-nan.github.io/posts/sql%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/</link>
     <pubDate>Fri, 03 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E7%BB%86%E8%8A%82/</guid>
-    <description><![CDATA[一、类型 简短模式(x := 100)定义限制: 定义变量，同时显示初始化。 不能提供数据类型。 只能用在函数内部。 简短模式有可能会出现退化的赋值操作。例]]></description>
+    <guid>http://wen-nan.github.io/posts/sql%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/</guid>
+    <description><![CDATA[总结Go标准库里sql包的使用方法。]]></description>
 </item></channel>
 </rss>

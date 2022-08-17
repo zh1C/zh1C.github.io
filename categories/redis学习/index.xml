@@ -53,18 +53,18 @@
     <guid>http://wen-nan.github.io/posts/redis-%E8%B7%B3%E8%B7%83%E8%A1%A8/</guid>
     <description><![CDATA[跳跃表是一种有序数据结构，通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。支持平均O(logN)、最坏O(N)复杂度]]></description>
 </item><item>
-    <title>Redis(一)简单动态字符串</title>
-    <link>http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
-    <pubDate>Thu, 09 Sep 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
-    <description><![CDATA[概述 简单来说 Redis 就是一个使用 C 语言开发的数据库， 是速度非常快的非关系型（NoSQL）内存键值数据库，可以存储键和五种不同类型的值之间的映射。键]]></description>
-</item><item>
     <title>Redis(二)链表</title>
     <link>http://wen-nan.github.io/posts/redis-%E9%93%BE%E8%A1%A8/</link>
     <pubDate>Thu, 09 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/redis-%E9%93%BE%E8%A1%A8/</guid>
     <description><![CDATA[链表提供了高效的节点重排能力，以及排序性的节点访问方式，并且可以通过增删节点来灵活地调整链表的长度。 链表在Redis中应用非常广泛，比如列表]]></description>
+</item><item>
+    <title>Redis(一)简单动态字符串</title>
+    <link>http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+    <pubDate>Thu, 09 Sep 2021 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+    <description><![CDATA[概述 简单来说 Redis 就是一个使用 C 语言开发的数据库， 是速度非常快的非关系型（NoSQL）内存键值数据库，可以存储键和五种不同类型的值之间的映射。键]]></description>
 </item></channel>
 </rss>

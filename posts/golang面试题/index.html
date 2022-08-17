@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "Golang, 面试","wordcount":  5662 ,
+        },"genre": "posts","keywords": "Golang, 面试","wordcount":  6238 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-24T00:00:00+00:00","dateModified": "2022-02-24T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5662 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-24">2022-02-24</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6238 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 13 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -192,6 +192,13 @@
     <li><a href="#11init函数什么时候执行">11、init()函数什么时候执行？</a></li>
     <li><a href="#12go语言局部变量分配在栈上还是堆上">12、Go语言局部变量分配在栈上还是堆上？</a></li>
     <li><a href="#13什么是协程泄露">13、什么是协程泄露？</a></li>
+    <li><a href="#14为什么go语言函数能返回多个参数值">14、为什么Go语言函数能返回多个参数值？</a>
+      <ul>
+        <li><a href="#c语言为什么只能返回一个参数值">C语言为什么只能返回一个参数值？</a></li>
+        <li><a href="#go语言函数调用惯例">Go语言函数调用惯例</a></li>
+        <li><a href="#对比">对比</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="1nil切片和空切片">1、nil切片和空切片</h2>
@@ -407,28 +414,28 @@
 </ol>
 <h2 id="4结构体和结构体指针调用有什么区别">4、结构体和结构体指针调用有什么区别？</h2>
 <p>如下例子：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">MyStruct</span> <span class="kd">struct</span> <span class="p">{</span>
-    <span class="nx">Name</span> <span class="kt">string</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">MyStruct</span><span class="p">)</span> <span class="nf">SetName1</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">s</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="nx">name</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">MyStruct</span><span class="p">)</span> <span class="nf">SetName2</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">s</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="nx">name</span>
-<span class="p">}</span>
-</code></pre></div><p>该程序声明了一个<code>User</code>结构体，其包含两个结构体方法，分别是<code>SetName1</code>和<code>SetName2</code>方法，两者之间的差异就是<strong>引用的方式不同</strong>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">MyStruct</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Name</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">MyStruct</span><span class="p">)</span> <span class="nf">SetName1</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">s</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="nx">name</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">MyStruct</span><span class="p">)</span> <span class="nf">SetName2</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">s</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="nx">name</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>该程序声明了一个<code>User</code>结构体，其包含两个结构体方法，分别是<code>SetName1</code>和<code>SetName2</code>方法，两者之间的差异就是<strong>引用的方式不同</strong>。</p>
 <h3 id="两者区别">两者区别</h3>
 <p>当在一个类型上定义一个方法时，接收器的行为就像它是方法的一个参数一样。相当于：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">SetName1</span><span class="p">(</span><span class="nx">s</span> <span class="nx">MyStruct</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">){</span>
-    <span class="nx">u</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="nx">name</span>
- <span class="p">}</span>
-
- <span class="kd">func</span> <span class="nf">SetName2</span><span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">MyStruct</span><span class="p">,</span><span class="nx">name</span> <span class="kt">string</span><span class="p">){</span>
-    <span class="nx">u</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="nx">name</span>
- <span class="p">}</span>
-</code></pre></div><p>因此结构体方法将接收器定义成值还是指针。本质上与函数参数应该是值还是指针是同一个问题。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">SetName1</span><span class="p">(</span><span class="nx">s</span> <span class="nx">MyStruct</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">u</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="nx">name</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="kd">func</span> <span class="nf">SetName2</span><span class="p">(</span><span class="nx">s</span> <span class="o">*</span><span class="nx">MyStruct</span><span class="p">,</span><span class="nx">name</span> <span class="kt">string</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">u</span><span class="p">.</span><span class="nx">Name</span> <span class="p">=</span> <span class="nx">name</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span></code></pre></div><p>因此结构体方法将接收器定义成值还是指针。本质上与函数参数应该是值还是指针是同一个问题。</p>
 <h3 id="如何选择">如何选择：</h3>
 <p>考虑因素有如下，按重要程度排序：</p>
 <ul>
@@ -439,17 +446,17 @@
 <h2 id="5go的mapslice非线性安全">5、Go的map、slice非线性安全？</h2>
 <h3 id="51-非线性安全的例子">5.1 非线性安全的例子</h3>
 <p>在Go中，map与slice不支持并发读写，也就是非线性安全的，如下两个并发操作的例子：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
- <span class="kd">var</span> <span class="nx">s</span> <span class="p">[]</span><span class="kt">string</span>
- <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">9999</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-  <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-   <span class="nx">s</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="s">&#34;脑子进煎鱼了&#34;</span><span class="p">)</span>
-  <span class="p">}()</span>
- <span class="p">}</span>
-
- <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;进了 %d 只煎鱼&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">))</span>
-<span class="p">}</span>
-</code></pre></div><p>输出结果：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"> <span class="kd">var</span> <span class="nx">s</span> <span class="p">[]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl"> <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">9999</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">s</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">s</span><span class="p">,</span> <span class="s">&#34;脑子进煎鱼了&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}()</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;进了 %d 只煎鱼&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>输出结果：</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -460,17 +467,17 @@
         title="image-20220224205634739" /></p>
 <p>产生这样的原因是因为并发模式下，产生了覆盖写入情况。</p>
 <p>同样针对map，也使用这种方式：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
- <span class="nx">s</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span>
- <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">99</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-  <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-   <span class="nx">s</span><span class="p">[</span><span class="s">&#34;煎鱼&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&#34;吸鱼&#34;</span>
-  <span class="p">}()</span>
- <span class="p">}</span>
-
- <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;进了 %d 只煎鱼&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">))</span>
-<span class="p">}</span>
-</code></pre></div><p>输出结果：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"> <span class="nx">s</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"> <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">99</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">   <span class="nx">s</span><span class="p">[</span><span class="s">&#34;煎鱼&#34;</span><span class="p">]</span> <span class="p">=</span> <span class="s">&#34;吸鱼&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}()</span>
+</span></span><span class="line"><span class="cl"> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;进了 %d 只煎鱼&#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">s</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>输出结果：</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -487,11 +494,11 @@
 </li>
 </ul>
 <p>Go官方提供了一种简单又便利的方式来实现并发读写：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">counter</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{</span>
-    <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>
-    <span class="nx">m</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span>
-<span class="p">}{</span><span class="nx">m</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)}</span>
-</code></pre></div><p><strong>这条语句声明了一个变量，它是一个匿名结构体，包含一个原生map和一个嵌入式读写锁</strong>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">var</span> <span class="nx">counter</span> <span class="p">=</span> <span class="kd">struct</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">sync</span><span class="p">.</span><span class="nx">RWMutex</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">m</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span>
+</span></span><span class="line"><span class="cl"><span class="p">}{</span><span class="nx">m</span><span class="p">:</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">)}</span>
+</span></span></code></pre></div><p><strong>这条语句声明了一个变量，它是一个匿名结构体，包含一个原生map和一个嵌入式读写锁</strong>。</p>
 <p>从变量中读出数据，则调用读锁：</p>
 <p><img
         class="lazyload"
@@ -557,21 +564,21 @@
 <p>针对不同的Go版本，结果可能不一样</p>
 <h4 id="实战演练">实战演练</h4>
 <p>构造如下例子：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="c1">// Main Goroutine 
-</span><span class="c1"></span><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// 模拟单核 CPU
-</span><span class="c1"></span>    <span class="nx">runtime</span><span class="p">.</span><span class="nf">GOMAXPROCS</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-    
-    <span class="c1">// 模拟 Goroutine 死循环
-</span><span class="c1"></span>    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">{</span>
-        <span class="p">}</span>
-    <span class="p">}()</span>
-
-    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;脑子进煎鱼了&#34;</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><p>答案是：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Main Goroutine 
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 模拟单核 CPU
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">runtime</span><span class="p">.</span><span class="nf">GOMAXPROCS</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">// 模拟 Goroutine 死循环
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;脑子进煎鱼了&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>答案是：</p>
 <ul>
 <li>在 Go1.14 前，不会输出任何结果。</li>
 <li>在 Go1.14 及之后，能够正常输出结果。</li>
@@ -693,6 +700,46 @@
 <li><strong>无线循环</strong></li>
 </ul>
 <p>为了避免网络等问题，采用了无限重试的方式，发送 HTTP 请求，直到获取到数据。那如果 HTTP 服务宕机，永远不可达，导致协程不能退出，发生泄漏。</p>
+<h2 id="14为什么go语言函数能返回多个参数值">14、为什么Go语言函数能返回多个参数值？</h2>
+<h3 id="c语言为什么只能返回一个参数值">C语言为什么只能返回一个参数值？</h3>
+<p>C语言中函数调用时，参数都是通过寄存器和栈传递的：</p>
+<ul>
+<li>六个即六个以下的参数会按顺序分别使用edi、esi、edx、dcx、r8d和r9d六个寄存器传递；</li>
+<li>六个以上的参数会使用栈传递，函数的参数会以从右到左的顺序依次存入栈中。</li>
+</ul>
+<p>C语言函数返回值通过eax寄存器进行传递，<strong>由于只使用一个寄存器存储返回值，所以C语言的函数不能同时返回多个值</strong>。</p>
+<h3 id="go语言函数调用惯例">Go语言函数调用惯例</h3>
+<p>如下一个简单的片段代码：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220323093936689.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220323093936689.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220323093936689.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220323093936689.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-03/image-20220323093936689.png"
+        title="image-20220323093936689" /></p>
+<p>可以使用<code>go tool compile -S -N -l file</code>命令编译上述代码获得汇编指令。</p>
+<blockquote>
+<p>注意：如果不使用-N -l参数，编译器会对汇编代码进行优化，编译结果会有较大差别。</p>
+</blockquote>
+<p><strong>通过分析Go语言编译后的汇编指令，我们发现Go语言使用栈传递参数和接收返回值，所以它只需要你在栈上多分配一些内存就可以返回多个值</strong>。</p>
+<h3 id="对比">对比</h3>
+<p>C语言同时使用寄存器和栈传递参数，使用eax寄存器传递返回值；Go语言使用栈传递参数和返回值。</p>
+<ul>
+<li>C语言的方式能够极大的减少函数调用的额外开销，但增加了实现的复杂度：
+<ul>
+<li>CPU访问栈的开销比访问寄存器高几十倍，</li>
+<li>需要单独处理函数参数过多的情况。</li>
+</ul>
+</li>
+<li>Go语言的方式能够降低实现的复杂度并支持多返回值，但是牺牲了函数调用的性能：
+<ul>
+<li>不需要考虑超过寄存器数量的参数应该如何传递；</li>
+<li>不需要考虑不同架构上的寄存器差异；</li>
+<li>函数入参和出参的内存空间需要在栈上进行分配。</li>
+</ul>
+</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -748,7 +795,7 @@
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
                 <span id="run-time"></span>
-            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.101.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Narcissus</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

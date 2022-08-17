@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%BA%94%E7%94%A8/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" /><link rel="next" href="http://wen-nan.github.io/posts/redis-%E9%93%BE%E8%A1%A8/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%BA%94%E7%94%A8/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" /><link rel="next" href="http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -184,38 +184,38 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/IMG_A28A3874B300-1.jpeg"
         title="IMG_A28A3874B300-1" /></p>
 <p>代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">minEatingSpeed</span><span class="p">(</span><span class="nx">piles</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">h</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-    <span class="c1">// 二分查找左边界
-</span><span class="c1"></span>    <span class="nx">maxSpeed</span> <span class="o">:=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">piles</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="nx">val</span> <span class="p">&gt;</span> <span class="nx">maxSpeed</span> <span class="p">{</span>
-            <span class="nx">maxSpeed</span> <span class="p">=</span> <span class="nx">val</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">maxSpeed</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
-        <span class="nx">mid</span> <span class="o">:=</span> <span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="nf">isEatFinish</span><span class="p">(</span><span class="nx">piles</span><span class="p">,</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">mid</span><span class="p">)</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">{</span>
-            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">left</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">isEatFinish</span><span class="p">(</span><span class="nx">piles</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">speed</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
-    <span class="nx">allTime</span> <span class="o">:=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">pile</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">piles</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="nx">pile</span> <span class="o">%</span> <span class="nx">speed</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-            <span class="nx">allTime</span> <span class="o">+=</span> <span class="nx">pile</span> <span class="o">/</span> <span class="nx">speed</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="nx">allTime</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">pile</span> <span class="o">/</span> <span class="nx">speed</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">allTime</span> <span class="o">&lt;=</span> <span class="nx">h</span>
-<span class="p">}</span>
-</code></pre></div><h3 id="2运送货物">2、运送货物</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">minEatingSpeed</span><span class="p">(</span><span class="nx">piles</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">h</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 二分查找左边界
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">maxSpeed</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">piles</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">val</span> <span class="p">&gt;</span> <span class="nx">maxSpeed</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">maxSpeed</span> <span class="p">=</span> <span class="nx">val</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">maxSpeed</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">mid</span> <span class="o">:=</span> <span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nf">isEatFinish</span><span class="p">(</span><span class="nx">piles</span><span class="p">,</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">mid</span><span class="p">)</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">left</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">isEatFinish</span><span class="p">(</span><span class="nx">piles</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">speed</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">allTime</span> <span class="o">:=</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">pile</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">piles</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">pile</span> <span class="o">%</span> <span class="nx">speed</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">allTime</span> <span class="o">+=</span> <span class="nx">pile</span> <span class="o">/</span> <span class="nx">speed</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">allTime</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">pile</span> <span class="o">/</span> <span class="nx">speed</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">allTime</span> <span class="o">&lt;=</span> <span class="nx">h</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="2运送货物">2、运送货物</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -225,41 +225,41 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-06%2015.43.03.png"
         title="ScreenShot2021-09-06 15.43.03" /></p>
 <p>题目与上一道类似，<code>x</code>就是船载货能力,<code>target</code>就是能载完货物，<code>f(x)</code>可以定义为在载货能力<code>x</code>下能否载完货物。不做具体分析，代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">shipWithinDays</span><span class="p">(</span><span class="nx">weights</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">days</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-    <span class="c1">// 二分查找左边界
-</span><span class="c1"></span>    <span class="nx">maxWeight</span><span class="p">,</span> <span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">weights</span> <span class="p">{</span>
-        <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">val</span>
-        <span class="k">if</span> <span class="nx">val</span> <span class="p">&gt;</span> <span class="nx">maxWeight</span> <span class="p">{</span>
-            <span class="nx">maxWeight</span> <span class="p">=</span> <span class="nx">val</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="nx">maxWeight</span><span class="p">,</span> <span class="nx">sum</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
-        <span class="nx">mid</span> <span class="o">:=</span> <span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="nf">isFinish</span><span class="p">(</span><span class="nx">weights</span><span class="p">,</span> <span class="nx">days</span><span class="p">,</span> <span class="nx">mid</span><span class="p">)</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">{</span>
-            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">left</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">isFinish</span><span class="p">(</span><span class="nx">weights</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">day</span><span class="p">,</span> <span class="nx">cap</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
-    <span class="nx">allDay</span><span class="p">,</span> <span class="nx">sumWeight</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">weight</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">weights</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="nx">sumWeight</span> <span class="o">+</span> <span class="nx">weight</span> <span class="o">&lt;=</span> <span class="nx">cap</span> <span class="p">{</span>
-            <span class="nx">sumWeight</span> <span class="o">+=</span> <span class="nx">weight</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="nx">sumWeight</span> <span class="p">=</span> <span class="nx">weight</span>
-            <span class="nx">allDay</span><span class="o">++</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="nx">allDay</span><span class="o">++</span>
-    <span class="k">return</span> <span class="nx">allDay</span> <span class="o">&lt;=</span> <span class="nx">day</span>
-<span class="p">}</span>
-</code></pre></div><h3 id="3分隔数组的最大值">3、分隔数组的最大值</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">shipWithinDays</span><span class="p">(</span><span class="nx">weights</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">days</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 二分查找左边界
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">maxWeight</span><span class="p">,</span> <span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">weights</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">val</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">val</span> <span class="p">&gt;</span> <span class="nx">maxWeight</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">maxWeight</span> <span class="p">=</span> <span class="nx">val</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="nx">maxWeight</span><span class="p">,</span> <span class="nx">sum</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">mid</span> <span class="o">:=</span> <span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nf">isFinish</span><span class="p">(</span><span class="nx">weights</span><span class="p">,</span> <span class="nx">days</span><span class="p">,</span> <span class="nx">mid</span><span class="p">)</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">left</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">isFinish</span><span class="p">(</span><span class="nx">weights</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">day</span><span class="p">,</span> <span class="nx">cap</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">allDay</span><span class="p">,</span> <span class="nx">sumWeight</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">weight</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">weights</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">sumWeight</span> <span class="o">+</span> <span class="nx">weight</span> <span class="o">&lt;=</span> <span class="nx">cap</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">sumWeight</span> <span class="o">+=</span> <span class="nx">weight</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">sumWeight</span> <span class="p">=</span> <span class="nx">weight</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">allDay</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">allDay</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">allDay</span> <span class="o">&lt;=</span> <span class="nx">day</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="3分隔数组的最大值">3、分隔数组的最大值</h3>
 <p>想用二分查找技巧优化算法，首先要把for循环形式的暴力算法写出来，如果算法中存在以下形式的for循环：</p>
 <p><img
         class="lazyload"
@@ -298,42 +298,42 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/IMG_130BE3572293-1.jpeg"
         title="IMG_130BE3572293-1" /></p>
 <p>这样就转换为了二分查找左侧边界问题。代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">splitArray</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">m</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-    <span class="c1">// 二分查找左边界
-</span><span class="c1"></span>    <span class="nx">maxNum</span><span class="p">,</span> <span class="nx">sumNum</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
-        <span class="nx">sumNum</span> <span class="o">+=</span> <span class="nx">val</span>
-        <span class="k">if</span> <span class="nx">val</span> <span class="p">&gt;</span> <span class="nx">maxNum</span> <span class="p">{</span>
-            <span class="nx">maxNum</span> <span class="p">=</span> <span class="nx">val</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="nx">maxNum</span><span class="p">,</span> <span class="nx">sumNum</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
-        <span class="nx">mid</span> <span class="o">:=</span> <span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="nf">split</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">mid</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nx">m</span> <span class="p">{</span>
-            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nf">split</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">mid</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nx">m</span> <span class="p">{</span>
-            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">left</span>
-<span class="p">}</span>
-
-<span class="c1">// 子数组和不超过max情况下，最少能分割为几个子数组，返回个数
-</span><span class="c1"></span><span class="kd">func</span> <span class="nf">split</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">max</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-    <span class="c1">// 贪心思想解决
-</span><span class="c1"></span>    <span class="nx">sum</span><span class="p">,</span> <span class="nx">count</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="nx">sum</span> <span class="o">+</span> <span class="nx">val</span> <span class="o">&lt;=</span> <span class="nx">max</span> <span class="p">{</span>
-            <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">val</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="nx">sum</span> <span class="p">=</span> <span class="nx">val</span>
-            <span class="nx">count</span><span class="o">++</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span>
-<span class="p">}</span>
-</code></pre></div></div><div class="post-footer" id="post-footer">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">splitArray</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">m</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 二分查找左边界
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">maxNum</span><span class="p">,</span> <span class="nx">sumNum</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">sumNum</span> <span class="o">+=</span> <span class="nx">val</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">val</span> <span class="p">&gt;</span> <span class="nx">maxNum</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">maxNum</span> <span class="p">=</span> <span class="nx">val</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">left</span><span class="p">,</span> <span class="nx">right</span> <span class="o">:=</span> <span class="nx">maxNum</span><span class="p">,</span> <span class="nx">sumNum</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">left</span> <span class="p">&lt;</span> <span class="nx">right</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">mid</span> <span class="o">:=</span> <span class="nx">left</span> <span class="o">+</span> <span class="p">(</span><span class="nx">right</span> <span class="o">-</span> <span class="nx">left</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nf">split</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">mid</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nx">m</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">right</span> <span class="p">=</span> <span class="nx">mid</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nf">split</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">mid</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nx">m</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">left</span> <span class="p">=</span> <span class="nx">mid</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">left</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 子数组和不超过max情况下，最少能分割为几个子数组，返回个数
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">split</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">max</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 贪心思想解决
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">sum</span><span class="p">,</span> <span class="nx">count</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">sum</span> <span class="o">+</span> <span class="nx">val</span> <span class="o">&lt;=</span> <span class="nx">max</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">val</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">sum</span> <span class="p">=</span> <span class="nx">val</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">count</span><span class="o">++</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">count</span> <span class="o">+</span> <span class="mi">1</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -357,7 +357,7 @@
     </div>
 
     <div class="post-nav"><a href="/posts/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" class="prev" rel="prev" title="二分查找"><i class="fas fa-angle-left fa-fw"></i>二分查找</a>
-            <a href="/posts/redis-%E9%93%BE%E8%A1%A8/" class="next" rel="next" title="Redis(二)链表">Redis(二)链表<i class="fas fa-angle-right fa-fw"></i></a></div>
+            <a href="/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="next" rel="next" title="Redis(一)简单动态字符串">Redis(一)简单动态字符串<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>
@@ -388,7 +388,7 @@
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
                 <span id="run-time"></span>
-            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.101.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Narcissus</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

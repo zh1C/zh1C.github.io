@@ -176,40 +176,40 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-14%2013.43.34.png"
         title="ScreenShot2021-09-14 13.43.34" /></p>
 <p><strong>只要在递归之前做出选择，在递归之后撤销刚才的选择</strong>，就能正确得到每个节点的选择列表和路径。代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">permute</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">int</span> <span class="p">{</span>
-    <span class="c1">// 回溯算法
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">result</span> <span class="p">[][]</span><span class="kt">int</span>
-
-    <span class="kd">var</span> <span class="nx">backtrack</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">length</span> <span class="kt">int</span><span class="p">)</span>
-    <span class="nx">backtrack</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">length</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// 结束条件
-</span><span class="c1"></span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">==</span> <span class="nx">length</span> <span class="p">{</span>
-            <span class="nx">temp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">length</span><span class="p">)</span>
-            <span class="nb">copy</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nx">track</span><span class="p">)</span>
-            <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">temp</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-        <span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span>
-        <span class="k">for</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
-            <span class="c1">// 做选择
-</span><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
-            <span class="nx">nums</span><span class="p">[</span><span class="nx">index</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span>
-            <span class="nx">nums</span> <span class="p">=</span> <span class="nx">nums</span><span class="p">[:</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="c1">// 进入下一层决策
-</span><span class="c1"></span>            <span class="nf">backtrack</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">nums</span><span class="p">,</span> <span class="nx">length</span><span class="p">)</span>
-            <span class="c1">// 撤销选择
-</span><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-            <span class="nx">nums</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
-            <span class="nx">nums</span><span class="p">[</span><span class="nx">index</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="kd">var</span> <span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span>
-    <span class="nx">length</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span>
-    <span class="nf">backtrack</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">nums</span><span class="p">,</span> <span class="nx">length</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">result</span>
-<span class="p">}</span>
-</code></pre></div><h2 id="3n皇后问题">3、N皇后问题</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">permute</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 回溯算法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="nx">result</span> <span class="p">[][]</span><span class="kt">int</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">backtrack</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">length</span> <span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">backtrack</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">length</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 结束条件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">==</span> <span class="nx">length</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">temp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">length</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">copy</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nx">track</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">temp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">n</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="nx">index</span><span class="p">,</span> <span class="nx">val</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nums</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 做选择
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">nums</span><span class="p">[</span><span class="nx">index</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">nums</span> <span class="p">=</span> <span class="nx">nums</span><span class="p">[:</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 进入下一层决策
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nf">backtrack</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">nums</span><span class="p">,</span> <span class="nx">length</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 撤销选择
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">nums</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">nums</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">nums</span><span class="p">[</span><span class="nx">index</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">index</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">length</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">backtrack</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">nums</span><span class="p">,</span> <span class="nx">length</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">result</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="3n皇后问题">3、N皇后问题</h2>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -219,71 +219,71 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-18%2012.38.27.png"
         title="ScreenShot2021-09-18 12.38.27" /></p>
 <p><strong>回溯算法一般要配合剪枝降低复杂度</strong>。代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">solveNQueens</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">string</span> <span class="p">{</span>
-    <span class="c1">// 回溯算法
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="p">(</span>
-        <span class="nx">result</span> <span class="p">[][]</span><span class="kt">string</span>
-        <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span> <span class="kt">int</span><span class="p">)</span>
-    <span class="p">)</span>
-
-    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// 结束条件
-</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">row</span> <span class="o">==</span> <span class="nx">n</span> <span class="p">{</span>
-            <span class="kd">var</span> <span class="nx">temp</span> <span class="p">[]</span><span class="kt">string</span>
-            <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-                <span class="nx">temp</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">]))</span>
-            <span class="p">}</span>
-            <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">temp</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-        <span class="k">for</span> <span class="nx">col</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">col</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">col</span><span class="o">++</span> <span class="p">{</span>
-            <span class="c1">// 剪枝
-</span><span class="c1"></span>            <span class="k">if</span> <span class="p">!</span><span class="nf">isValid</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">continue</span>
-            <span class="p">}</span>
-            <span class="c1">// 做选择
-</span><span class="c1"></span>            <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">col</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;Q&#39;</span>
-            <span class="c1">// 下一层决策
-</span><span class="c1"></span>            <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="c1">// 撤销决策
-</span><span class="c1"></span>            <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">col</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;.&#39;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="nx">board</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
-    <span class="c1">// 初始化
-</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-        <span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
-        <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
-            <span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;.&#39;</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">result</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">isValid</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
-    <span class="c1">// 检查列
-</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">row</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">col</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;Q&#39;</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">false</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="c1">// 检查左斜线
-</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">row</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">col</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">row</span> <span class="o">-</span> <span class="nx">i</span><span class="p">][</span><span class="nx">col</span> <span class="o">-</span> <span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;Q&#39;</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">false</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="c1">// 检查右斜线
-</span><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">row</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">col</span> <span class="o">+</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">row</span> <span class="o">-</span> <span class="nx">i</span><span class="p">][</span><span class="nx">col</span> <span class="o">+</span> <span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;Q&#39;</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">false</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="kc">true</span>
-<span class="p">}</span>
-</code></pre></div><ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">solveNQueens</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 回溯算法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">result</span> <span class="p">[][]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span> <span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 结束条件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="nx">row</span> <span class="o">==</span> <span class="nx">n</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kd">var</span> <span class="nx">temp</span> <span class="p">[]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">temp</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">]))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">temp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="nx">col</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">col</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">col</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 剪枝
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="k">if</span> <span class="p">!</span><span class="nf">isValid</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 做选择
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">col</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;Q&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 下一层决策
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 撤销决策
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">col</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;.&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">board</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 初始化
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;.&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">result</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">isValid</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 检查列
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">row</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">col</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;Q&#39;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 检查左斜线
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">row</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">col</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">row</span> <span class="o">-</span> <span class="nx">i</span><span class="p">][</span><span class="nx">col</span> <span class="o">-</span> <span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;Q&#39;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 检查右斜线
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">row</span> <span class="o">-</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">col</span> <span class="o">+</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">row</span> <span class="o">-</span> <span class="nx">i</span><span class="p">][</span><span class="nx">col</span> <span class="o">+</span> <span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;Q&#39;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><ul>
 <li>代码中，通过isValid函数对回溯算法进行了剪枝。不符合就不需要继续进入下一层决策，降低了复杂度。</li>
 </ul>
 <h2 id="4回溯解决排列子集组合问题">4、回溯解决排列,子集,组合问题</h2>
@@ -298,37 +298,37 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-19%2010.53.05.png"
         title="ScreenShot2021-09-19 10.53.05" /></p>
 <p>代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">subsets</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">int</span> <span class="p">{</span>
-    <span class="c1">// 回溯算法
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="p">(</span>
-        <span class="nx">result</span> <span class="p">[][]</span><span class="kt">int</span>
-        <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">index</span> <span class="kt">int</span><span class="p">)</span>
-    <span class="p">)</span>
-
-    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">index</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// 加入结果集
-</span><span class="c1"></span>        <span class="nx">temp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">))</span>
-        <span class="nb">copy</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nx">track</span><span class="p">)</span>
-        <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">temp</span><span class="p">)</span>
-        <span class="c1">// 结束条件
-</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">return</span> 
-        <span class="p">}</span>
-        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">index</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-            <span class="c1">// 做选择
-</span><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
-            <span class="c1">// 进入下一层决策
-</span><span class="c1"></span>            <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="c1">// 撤销决策
-</span><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="nx">track</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{}</span>
-    <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span>  <span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">result</span>
-<span class="p">}</span>
-</code></pre></div><p>决策树如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">subsets</span><span class="p">(</span><span class="nx">nums</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 回溯算法
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">result</span> <span class="p">[][]</span><span class="kt">int</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">index</span> <span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">index</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 加入结果集
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nx">temp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">        <span class="nb">copy</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nx">track</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">temp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 结束条件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="nx">index</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> 
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">index</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 做选择
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">nums</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 进入下一层决策
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 撤销决策
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">track</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span>  <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">result</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>决策树如下：</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -347,40 +347,40 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-19%2012.10.24.png"
         title="ScreenShot2021-09-19 12.10.24" /></p>
 <p>代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">combine</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">k</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">int</span> <span class="p">{</span>
-    <span class="c1">// 回溯思想
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="p">(</span>
-        <span class="nx">result</span> <span class="p">[][]</span><span class="kt">int</span>
-        <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">index</span> <span class="kt">int</span><span class="p">)</span>
-    <span class="p">)</span>
-
-    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">index</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// 结束条件
-</span><span class="c1"></span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">==</span> <span class="nx">k</span> <span class="p">{</span>
-            <span class="nx">temp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span>
-            <span class="nb">copy</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nx">track</span><span class="p">)</span>
-            <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">temp</span><span class="p">)</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-        <span class="c1">// 剪枝
-</span><span class="c1"></span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">+</span> <span class="nx">n</span> <span class="o">-</span> <span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">&lt;</span> <span class="nx">k</span> <span class="p">{</span>
-            <span class="k">return</span> 
-        <span class="p">}</span>
-        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">index</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-            <span class="c1">// 做出选择
-</span><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
-            <span class="c1">// 进入下一层
-</span><span class="c1"></span>            <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="c1">// 撤销决策
-</span><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-
-    <span class="kd">var</span> <span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span>
-    <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">result</span>
-<span class="p">}</span>
-</code></pre></div><p>决策树如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">combine</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">k</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[][]</span><span class="kt">int</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 回溯思想
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">result</span> <span class="p">[][]</span><span class="kt">int</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">index</span> <span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">index</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 结束条件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">==</span> <span class="nx">k</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">temp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">k</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">copy</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nx">track</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">temp</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 剪枝
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">+</span> <span class="nx">n</span> <span class="o">-</span> <span class="nx">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">&lt;</span> <span class="nx">k</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> 
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">index</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 做出选择
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 进入下一层
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// 撤销决策
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">track</span> <span class="p">[]</span><span class="kt">int</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">result</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>决策树如下：</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -399,60 +399,60 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.48.42.png"
         title="ScreenShot2021-09-20 09.48.42" /></p>
 <p>代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">solveSudoku</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">)</span>  <span class="p">{</span>
-    <span class="c1">// 回溯
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span>
-    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
-        <span class="nx">m</span><span class="p">,</span> <span class="nx">n</span> <span class="o">:=</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span>
-        <span class="c1">// 结束条件
-</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">row</span> <span class="o">==</span> <span class="nx">m</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">true</span>
-        <span class="p">}</span>
-        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">col</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;.&#39;</span> <span class="p">{</span>
-                <span class="k">continue</span>
-            <span class="p">}</span>
-            <span class="k">for</span> <span class="nx">c</span> <span class="o">:=</span> <span class="sc">&#39;1&#39;</span><span class="p">;</span> <span class="nx">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;9&#39;</span><span class="p">;</span> <span class="nx">c</span><span class="o">++</span> <span class="p">{</span>
-                <span class="c1">// 剪枝
-</span><span class="c1"></span>                <span class="k">if</span> <span class="p">!</span><span class="nf">isValid</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nb">byte</span><span class="p">(</span><span class="nx">c</span><span class="p">))</span> <span class="p">{</span>
-                    <span class="k">continue</span>
-                <span class="p">}</span>
-                <span class="c1">// 做选择
-</span><span class="c1"></span>                <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nb">byte</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
-                <span class="c1">// 进入下一层决策
-</span><span class="c1"></span>                <span class="k">if</span> <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="k">return</span> <span class="kc">true</span>
-                <span class="p">}</span>
-                <span class="c1">// 撤销决策
-</span><span class="c1"></span>                <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;.&#39;</span>
-            <span class="p">}</span>
-            <span class="k">return</span> <span class="kc">false</span>
-        <span class="p">}</span>
-        <span class="c1">// 进入下一行
-</span><span class="c1"></span>        <span class="k">return</span> <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="p">}</span>
-
-    <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="kd">func</span> <span class="nf">isValid</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">char</span> <span class="kt">byte</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
-    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">9</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-        <span class="c1">// 判断行是否有重复
-</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="nx">char</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">false</span>
-        <span class="p">}</span>
-        <span class="c1">// 判断列是否有重复
-</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">col</span><span class="p">]</span> <span class="o">==</span> <span class="nx">char</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">false</span>
-        <span class="p">}</span>
-        <span class="c1">// 判断小九宫格是否有重复
-</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">board</span><span class="p">[(</span><span class="nx">row</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">/</span> <span class="mi">3</span><span class="p">][(</span><span class="nx">col</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">%</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="nx">char</span> <span class="p">{</span>
-            <span class="k">return</span> <span class="kc">false</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="kc">true</span>
-<span class="p">}</span>
-</code></pre></div><h2 id="6合法括号生成">6、合法括号生成</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">solveSudoku</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">)</span>  <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 回溯
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">m</span><span class="p">,</span> <span class="nx">n</span> <span class="o">:=</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">9</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 结束条件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="nx">row</span> <span class="o">==</span> <span class="nx">m</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">col</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">!=</span> <span class="sc">&#39;.&#39;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">for</span> <span class="nx">c</span> <span class="o">:=</span> <span class="sc">&#39;1&#39;</span><span class="p">;</span> <span class="nx">c</span> <span class="o">&lt;=</span> <span class="sc">&#39;9&#39;</span><span class="p">;</span> <span class="nx">c</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 剪枝
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">if</span> <span class="p">!</span><span class="nf">isValid</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nb">byte</span><span class="p">(</span><span class="nx">c</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 做选择
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nb">byte</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 进入下一层决策
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="k">if</span> <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// 撤销决策
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="sc">&#39;.&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 进入下一行
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">return</span> <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="nx">row</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nf">dfs</span><span class="p">(</span><span class="nx">board</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">isValid</span><span class="p">(</span><span class="nx">board</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">row</span><span class="p">,</span> <span class="nx">col</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">char</span> <span class="kt">byte</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">9</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 判断行是否有重复
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">row</span><span class="p">][</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="nx">char</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 判断列是否有重复
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="nx">board</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">col</span><span class="p">]</span> <span class="o">==</span> <span class="nx">char</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 判断小九宫格是否有重复
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="nx">board</span><span class="p">[(</span><span class="nx">row</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">/</span> <span class="mi">3</span><span class="p">][(</span><span class="nx">col</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="nx">i</span> <span class="o">%</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="nx">char</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="6合法括号生成">6、合法括号生成</h2>
 <p>括号问题可以简单分为两类：一是括号合法性判断；另一个是括号生成。括号合法性判断一般需要用到栈，括号生成一般考虑回溯思想。</p>
 <blockquote>
 <p>关于括号问题，有以下两个特点：</p>
@@ -470,44 +470,44 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-09/ScreenShot2021-09-20%2009.52.26.png"
         title="ScreenShot2021-09-20 09.52.26" /></p>
 <p>代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">generateParenthesis</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">string</span> <span class="p">{</span>
-    <span class="c1">// 回溯
-</span><span class="c1"></span>    <span class="kd">var</span> <span class="p">(</span>
-        <span class="nx">result</span> <span class="p">[]</span><span class="kt">string</span>
-        <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="kt">int</span><span class="p">)</span>
-    <span class="p">)</span>
-
-    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-        <span class="c1">// 结束条件
-</span><span class="c1"></span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">n</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="nx">leftNum</span> <span class="o">==</span> <span class="nx">rightNum</span> <span class="p">{</span>
-                <span class="nx">temp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">n</span><span class="p">)</span>
-                <span class="nb">copy</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nx">track</span><span class="p">)</span>
-                <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">temp</span><span class="p">))</span>
-            <span class="p">}</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-        <span class="c1">// 剪枝
-</span><span class="c1"></span>        <span class="k">if</span> <span class="nx">rightNum</span> <span class="p">&gt;</span> <span class="nx">leftNum</span> <span class="o">||</span> <span class="nx">leftNum</span> <span class="p">&gt;</span> <span class="nx">n</span> <span class="p">{</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-
-        <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="sc">&#39;(&#39;</span><span class="p">)</span>
-        <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">leftNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">rightNum</span><span class="p">)</span>
-        <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="sc">&#39;)&#39;</span><span class="p">)</span>
-        <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="p">}</span>
-
-    <span class="kd">var</span> <span class="p">(</span>
-        <span class="nx">track</span> <span class="p">[]</span><span class="kt">byte</span>
-        <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="kt">int</span>
-    <span class="p">)</span>
-    <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span><span class="p">)</span>
-    <span class="k">return</span> <span class="nx">result</span>
-<span class="p">}</span>
-</code></pre></div></div><div class="post-footer" id="post-footer">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">generateParenthesis</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">[]</span><span class="kt">string</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 回溯
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kd">var</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">result</span> <span class="p">[]</span><span class="kt">string</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">dfs</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="kt">int</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="nx">dfs</span> <span class="p">=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">track</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 结束条件
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">n</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="nx">leftNum</span> <span class="o">==</span> <span class="nx">rightNum</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">temp</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">n</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="nb">copy</span><span class="p">(</span><span class="nx">temp</span><span class="p">,</span> <span class="nx">track</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="nx">result</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">temp</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 剪枝
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="k">if</span> <span class="nx">rightNum</span> <span class="p">&gt;</span> <span class="nx">leftNum</span> <span class="o">||</span> <span class="nx">leftNum</span> <span class="p">&gt;</span> <span class="nx">n</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="sc">&#39;(&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">leftNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">rightNum</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">track</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="sc">&#39;)&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">track</span> <span class="p">=</span> <span class="nx">track</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="nx">track</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">track</span> <span class="p">[]</span><span class="kt">byte</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">dfs</span><span class="p">(</span><span class="nx">track</span><span class="p">,</span> <span class="nx">leftNum</span><span class="p">,</span> <span class="nx">rightNum</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nx">result</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
@@ -562,7 +562,7 @@
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">
                 <span id="run-time"></span>
-            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.1">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.101.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
                 </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Narcissus</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
