@@ -3,7 +3,14 @@
         <title>Tags - 标签 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/tags/</link>
         <description>Tags - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 16 Aug 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 17 Aug 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+    <title>shell</title>
+    <link>http://wen-nan.github.io/tags/shell/</link>
+    <pubDate>Wed, 17 Aug 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/tags/shell/</guid>
+    <description><![CDATA[]]></description>
+</item><item>
     <title>MySQL</title>
     <link>http://wen-nan.github.io/tags/mysql/</link>
     <pubDate>Tue, 16 Aug 2022 00:00:00 &#43;0000</pubDate>
@@ -65,13 +72,6 @@
     <pubDate>Mon, 20 Dec 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
     <guid>http://wen-nan.github.io/tags/%E5%B9%B6%E6%9F%A5%E9%9B%86/</guid>
-    <description><![CDATA[]]></description>
-</item><item>
-    <title>翻墙</title>
-    <link>http://wen-nan.github.io/tags/%E7%BF%BB%E5%A2%99/</link>
-    <pubDate>Sun, 19 Dec 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/%E7%BF%BB%E5%A2%99/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>
