@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84\/"
-        },"genre": "posts","keywords": "算法学习","wordcount":  4081 ,
+        },"genre": "posts","keywords": "算法学习","wordcount":  4173 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84\/","datePublished": "2022-09-07T00:00:00+00:00","dateModified": "2022-09-07T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">线段树-树状树学习及应用</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-07">2022-09-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4081 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-07">2022-09-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4173 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -150,6 +150,7 @@
                 <li><a href="#42-区间修改的动态开点">4.2 区间修改的动态开点</a></li>
               </ul>
             </li>
+            <li><a href="#5-离散化">5. 离散化</a></li>
           </ul>
         </li>
       </ul>
@@ -736,7 +737,10 @@
 </span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nf">spread</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">o</span><span class="p">.</span><span class="nf">op</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">lo</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="nx">r</span><span class="p">),</span> <span class="nx">o</span><span class="p">.</span><span class="nx">ro</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="nx">r</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+</span></span></code></pre></div><h4 id="5-离散化">5. 离散化</h4>
+<p>离散化常用于二维状态在一维线段树建树的技巧，所谓离散化就是将无限的个体映射到有限的个体中，提高算法效率，常用Hash实现。</p>
+<p>树状数组有时也需要离散化。例题LeetCode327。</p>
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
