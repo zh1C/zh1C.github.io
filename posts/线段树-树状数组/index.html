@@ -123,26 +123,28 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#1-介绍">1. 介绍</a></li>
-    <li><a href="#2-建立树状数组">2. 建立树状数组</a>
+    <li><a href="#差分数组">差分数组</a></li>
+    <li><a href="#树状数组">树状数组</a>
       <ul>
-        <li><a href="#单点更新区间查询">单点更新，区间查询</a></li>
-        <li><a href="#区间更新单点查询">区间更新，单点查询</a></li>
-        <li><a href="#区间更新区间查询">区间更新，区间查询</a></li>
+        <li><a href="#1-介绍">1. 介绍</a></li>
+        <li><a href="#2-建立树状数组">2. 建立树状数组</a>
+          <ul>
+            <li><a href="#单点更新区间查询">单点更新，区间查询</a></li>
+            <li><a href="#区间更新单点查询">区间更新，单点查询</a></li>
+            <li><a href="#区间更新区间查询">区间更新，区间查询</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
-  </ul>
-
-  <ul>
-    <li><a href="#线段树基本内容">线段树基本内容</a></li>
-    <li><a href="#线段树基本操作">线段树基本操作</a>
+    <li><a href="#线段树">线段树</a>
       <ul>
-        <li><a href="#1-点更新">1. 点更新</a></li>
-        <li><a href="#2-区间查询">2. 区间查询</a></li>
-        <li><a href="#3-区间更新">3. 区间更新</a></li>
-        <li><a href="#4-动态开点">4. 动态开点</a>
+        <li><a href="#线段树基本内容">线段树基本内容</a></li>
+        <li><a href="#线段树基本操作">线段树基本操作</a>
           <ul>
-            <li>
+            <li><a href="#1-点更新">1. 点更新</a></li>
+            <li><a href="#2-区间查询">2. 区间查询</a></li>
+            <li><a href="#3-区间更新">3. 区间更新</a></li>
+            <li><a href="#4-动态开点">4. 动态开点</a>
               <ul>
                 <li><a href="#41-单点修改的动态开点">4.1 单点修改的动态开点</a></li>
                 <li><a href="#42-区间修改的动态开点">4.2 区间修改的动态开点</a></li>
@@ -181,7 +183,7 @@
 </ol>
 </blockquote>
 <p>注意：<strong>树状数组仅仅适合于求区间和的问题，而线段树适合于区间问题。</strong></p>
-<h1 id="差分数组">差分数组</h1>
+<h2 id="差分数组">差分数组</h2>
 <p>前缀和主要适用的场景是原始数组不会被修改的情况下，频繁查询某个区间的累加和。</p>
 <p><strong>差分数组主要适用的场景是多次修改某个区间，输出最终结果</strong>。</p>
 <p>构造差分数组，<code>diff[i] = nums[i] - nums[i-1]</code>：
@@ -215,8 +217,8 @@
 </span></span></code></pre></div><blockquote>
 <p>LeetCode题目1109</p>
 </blockquote>
-<h1 id="树状数组">树状数组</h1>
-<h2 id="1-介绍">1. 介绍</h2>
+<h2 id="树状数组">树状数组</h2>
+<h3 id="1-介绍">1. 介绍</h3>
 <p>树状数组就是用数组来模拟树形结构。可以用来解决大部分基于区间上的更新以及求和问题。树状数组可以解决的问题都可以用线段树解决。但是线段树代码很长，常数很大，所以优先考虑树状树。<strong>修改和查询的复杂度都是O(logN)，树状数组本质就是二进制规律的应用。</strong></p>
 <p>树形结构如下：</p>
 <p><img
@@ -245,9 +247,9 @@
 <blockquote>
 <p><strong>注意：2^k怎么算呢？前辈的智慧：i&amp;(-i)，并且有一个专门的名称，lowbit。</strong></p>
 </blockquote>
-<h2 id="2-建立树状数组">2. 建立树状数组</h2>
+<h3 id="2-建立树状数组">2. 建立树状数组</h3>
 <p>如果我们更新A[i]，则会影响到包含A[i]的所有位置，<strong>A[i]包含于C[i+2^k]，C[(i+2^k)+2^k]&hellip;&hellip;</strong></p>
-<h3 id="单点更新区间查询">单点更新，区间查询</h3>
+<h4 id="单点更新区间查询">单点更新，区间查询</h4>
 <p>代码如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl">	<span class="nx">tree</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// int64
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>
@@ -305,7 +307,7 @@
 </span></span></code></pre></div><blockquote>
 <p>LeetCode题目：307</p>
 </blockquote>
-<h3 id="区间更新单点查询">区间更新，单点查询</h3>
+<h4 id="区间更新单点查询">区间更新，单点查询</h4>
 <p>如果需要将[x - y]区间内所有值均加上k，如果采用上述方式，复杂度肯定不行。<strong>这个时候就不需要用原数据建树，而是用差分数组建树。</strong></p>
 <p>则当对[x - y]区间内所有值做修改，只需要修改差分数组D[x]、D[y+1]即可。</p>
 <p><strong>此时求差分数组D[1 - i]的和就是求元素组A[i]。D[i] + D[i-1] +&hellip;+D[0] = A[i] - A[i-1] + A[i-1] - A[i-2] +&hellip;+A[1] - A[0] = A[i] - A[0] = A[i]</strong></p>
@@ -336,7 +338,7 @@
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="k">return</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="区间更新区间查询">区间更新，区间查询</h3>
+</span></span></code></pre></div><h4 id="区间更新区间查询">区间更新，区间查询</h4>
 <p>因为仍然需要区间更新，所以依然使用差分数组建树。推到如下：</p>
 <p><img
         class="lazyload"
@@ -379,10 +381,10 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">query</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="nx">r</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nf">sum</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span> <span class="o">-</span> <span class="nf">sum</span><span class="p">(</span><span class="nx">l</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h1 id="线段树">线段树</h1>
+</span></span></code></pre></div><h2 id="线段树">线段树</h2>
 <p>树状数组能解决的问题，线段树都能解决。线段树应用范围很广，主要用于解决区间问题，但远不止如此。</p>
 <p>线段树是一种二叉搜索树，可以在线维护修改以及查询区间上的最值、求和。</p>
-<h2 id="线段树基本内容">线段树基本内容</h2>
+<h3 id="线段树基本内容">线段树基本内容</h3>
 <p>首先需要明白：每个节点存什么？节点下标是什么？如何建树？</p>
 <p>例如，A[1:6] = {1, 8, 6, 4, 3, 5} 如下区间最大值情况：</p>
 <p><img
@@ -456,8 +458,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">t</span><span class="p">.</span><span class="nf">build</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">o</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">|</span><span class="mi">1</span><span class="p">,</span> <span class="nx">m</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">t</span><span class="p">.</span><span class="nf">maintain</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="c1">// 更新父节点
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></div><h2 id="线段树基本操作">线段树基本操作</h2>
-<h3 id="1-点更新">1. 点更新</h3>
+</span></span></code></pre></div><h3 id="线段树基本操作">线段树基本操作</h3>
+<h4 id="1-点更新">1. 点更新</h4>
 <p>更新的时间复杂度是O(logN)</p>
 <p>对于上述线段树，我们把a[3]+7，更新后线段树应该为：</p>
 <p><img
@@ -483,7 +485,7 @@
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">t</span><span class="p">.</span><span class="nf">maintain</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="2-区间查询">2. 区间查询</h3>
+</span></span></code></pre></div><h4 id="2-区间查询">2. 区间查询</h4>
 <p>对于上述线段树，比如现在我们要查询[2, 5]区间的最值，可以看看那些区间是[2, 5]的真子集，</p>
 <p><img
         class="lazyload"
@@ -517,7 +519,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="nx">seg</span><span class="p">)</span> <span class="nf">queryAll</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span> 
 </span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">t</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">val</span> 
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="3-区间更新">3. 区间更新</h3>
+</span></span></code></pre></div><h4 id="3-区间更新">3. 区间更新</h4>
 <p>树状数组中区间更新我们采用了差分的思想，而线段树中，我们<strong>将引入lazy_tag（懒惰标记）</strong>，<strong>线段树进行区间更新的时候，每次更新只更新到更新区间完全覆盖线段树节点区间为止，这样会导致被更新节点的子孙节点的区间得不到更新信息，所以在被更新节点上打上一个标记。等下次访问到这个节点的子节点时再讲这个标记传递给子节点，所以也可以叫延迟标记。</strong></p>
 <p>也就是说，在递归更新过程中，更新到节点区间为需要更新区间的真子集时不再递归更新，下次如果需要用到再更新，所以时间复杂度也是O(logN)。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">lazySeg</span> <span class="p">[]</span><span class="kd">struct</span> <span class="p">{</span>
@@ -602,7 +604,7 @@
 </span></span><span class="line"><span class="cl">	<span class="nx">vr</span> <span class="o">:=</span> <span class="nx">t</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">o</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">|</span><span class="mi">1</span><span class="p">,</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">t</span><span class="p">.</span><span class="nf">op</span><span class="p">(</span><span class="nx">vl</span><span class="p">,</span> <span class="nx">vr</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="4-动态开点">4. 动态开点</h3>
+</span></span></code></pre></div><h4 id="4-动态开点">4. 动态开点</h4>
 <p>常规线段树，一般以满二叉树方式存储，浪费了很多空间，有时需要动态开点的方式，动态开点的优势就是按需开点，因此一般采用链表方式实现而不是数组方式实现。</p>
 <h5 id="41-单点修改的动态开点">4.1 单点修改的动态开点</h5>
 <p>代码如下</p>
