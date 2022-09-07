@@ -3,7 +3,14 @@
         <title>算法学习 - 标签 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
         <description>算法学习 - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 05 Mar 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 07 Sep 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+    <title>线段树-树状树学习及应用</title>
+    <link>http://wen-nan.github.io/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/</link>
+    <pubDate>Wed, 07 Sep 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/</guid>
+    <description><![CDATA[假设我们有一个数组： 数组不变，求区间和：「前缀和」、「树状数组」、「线段树」 多次修改某个数（单点），求区间和：「树状数组」、「线段树」 多次修]]></description>
+</item><item>
     <title>刷题技巧总结</title>
     <link>http://wen-nan.github.io/posts/%E5%88%B7%E9%A2%98%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/</link>
     <pubDate>Sat, 05 Mar 2022 00:00:00 &#43;0000</pubDate>
@@ -66,12 +73,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/</guid>
     <description><![CDATA[分治算法可以认为是一种算法思想，通过将原问题分解成小规模的子问题，然后根据子问题的结果构造出原问题的答案。 归并排序 归并排序是最典型的分治算法]]></description>
-</item><item>
-    <title>回溯算法(或DFS)</title>
-    <link>http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/</link>
-    <pubDate>Mon, 20 Sep 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2/</guid>
-    <description><![CDATA[1、框架 深度优先搜索就是回溯算法，解决一个回溯问题，实际上就是一个决策树的遍历过程。需要思考三个问题： 路径：已经做出的选择。 选择列表：当前可]]></description>
 </item></channel>
 </rss>
