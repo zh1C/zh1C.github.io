@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84\/"
-        },"genre": "posts","keywords": "算法学习","wordcount":  4115 ,
+        },"genre": "posts","keywords": "算法学习","wordcount":  4081 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84\/","datePublished": "2022-09-07T00:00:00+00:00","dateModified": "2022-09-07T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">线段树-树状树学习及应用</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-07">2022-09-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4115 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-07">2022-09-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4081 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -180,6 +180,7 @@
 <li>其他情况，用「树状数组」</li>
 </ol>
 </blockquote>
+<p>注意：<strong>树状数组仅仅适合于求区间和的问题，而线段树适合于区间问题。</strong></p>
 <h1 id="差分数组">差分数组</h1>
 <p>前缀和主要适用的场景是原始数组不会被修改的情况下，频繁查询某个区间的累加和。</p>
 <p><strong>差分数组主要适用的场景是多次修改某个区间，输出最终结果</strong>。</p>
@@ -605,7 +606,10 @@
 <p>常规线段树，一般以满二叉树方式存储，浪费了很多空间，有时需要动态开点的方式，动态开点的优势就是按需开点，因此一般采用链表方式实现而不是数组方式实现。</p>
 <h5 id="41-单点修改的动态开点">4.1 单点修改的动态开点</h5>
 <p>代码如下</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">stNode</span> <span class="kd">struct</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 创建根节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">rt</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">stNode</span><span class="p">{</span><span class="nx">l</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">r</span><span class="p">:</span> <span class="mf">1e9</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">stNode</span> <span class="kd">struct</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">lo</span><span class="p">,</span> <span class="nx">ro</span> <span class="o">*</span><span class="nx">stNode</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">l</span><span class="p">,</span> <span class="nx">r</span>   <span class="kt">int</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">sum</span>    <span class="kt">int64</span>
@@ -619,31 +623,17 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">stNode</span><span class="p">)</span> <span class="nf">op</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int64</span><span class="p">)</span> <span class="kt">int64</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="c1">//
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">o</span> <span class="o">*</span><span class="nx">stNode</span><span class="p">)</span> <span class="nf">maintain</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">sum</span> <span class="p">=</span> <span class="nx">o</span><span class="p">.</span><span class="nf">op</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">lo</span><span class="p">.</span><span class="nf">get</span><span class="p">(),</span> <span class="nx">o</span><span class="p">.</span><span class="nx">ro</span><span class="p">.</span><span class="nf">get</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">o</span> <span class="o">*</span><span class="nx">stNode</span><span class="p">)</span> <span class="nf">build</span><span class="p">(</span><span class="nx">a</span> <span class="p">[]</span><span class="kt">int64</span><span class="p">,</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">r</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">l</span><span class="p">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">r</span> <span class="p">=</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">r</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">l</span> <span class="o">==</span> <span class="nx">r</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">o</span><span class="p">.</span><span class="nx">sum</span> <span class="p">=</span> <span class="nx">a</span><span class="p">[</span><span class="nx">l</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">m</span> <span class="o">:=</span> <span class="p">(</span><span class="nx">l</span> <span class="o">+</span> <span class="nx">r</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">lo</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">stNode</span><span class="p">{}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">lo</span><span class="p">.</span><span class="nf">build</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">m</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">ro</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">stNode</span><span class="p">{}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">ro</span><span class="p">.</span><span class="nf">build</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">m</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nf">maintain</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">o</span> <span class="o">*</span><span class="nx">stNode</span><span class="p">)</span> <span class="nf">update</span><span class="p">(</span><span class="nx">i</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">add</span> <span class="kt">int64</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">o</span><span class="p">.</span><span class="nx">l</span> <span class="o">==</span> <span class="nx">o</span><span class="p">.</span><span class="nx">r</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">o</span><span class="p">.</span><span class="nx">sum</span> <span class="o">+=</span> <span class="nx">add</span> <span class="c1">//
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">return</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">o</span><span class="p">.</span><span class="nx">sum</span> <span class="o">+=</span> <span class="nx">add</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">m</span> <span class="o">:=</span> <span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">l</span> <span class="o">+</span> <span class="nx">o</span><span class="p">.</span><span class="nx">r</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
 </span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="nx">m</span> <span class="p">{</span>
@@ -671,7 +661,10 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h5 id="42-区间修改的动态开点">4.2 区间修改的动态开点</h5>
 <p>代码如下</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">lazyNode</span> <span class="kd">struct</span> <span class="p">{</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 创建根节点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">rt</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">lazyNode</span><span class="p">{</span><span class="nx">l</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">r</span><span class="p">:</span> <span class="mf">1e9</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">lazyNode</span> <span class="kd">struct</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">lo</span><span class="p">,</span> <span class="nx">ro</span> <span class="o">*</span><span class="nx">lazyNode</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">l</span><span class="p">,</span> <span class="nx">r</span>   <span class="kt">int</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">sum</span>    <span class="kt">int64</span>
@@ -686,25 +679,11 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">lazyNode</span><span class="p">)</span> <span class="nf">op</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int64</span><span class="p">)</span> <span class="kt">int64</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span> <span class="c1">//
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">o</span> <span class="o">*</span><span class="nx">lazyNode</span><span class="p">)</span> <span class="nf">maintain</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">sum</span> <span class="p">=</span> <span class="nx">o</span><span class="p">.</span><span class="nf">op</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">lo</span><span class="p">.</span><span class="nf">get</span><span class="p">(),</span> <span class="nx">o</span><span class="p">.</span><span class="nx">ro</span><span class="p">.</span><span class="nf">get</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">o</span> <span class="o">*</span><span class="nx">lazyNode</span><span class="p">)</span> <span class="nf">build</span><span class="p">(</span><span class="nx">a</span> <span class="p">[]</span><span class="kt">int64</span><span class="p">,</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">r</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">l</span><span class="p">,</span> <span class="nx">o</span><span class="p">.</span><span class="nx">r</span> <span class="p">=</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">r</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">l</span> <span class="o">==</span> <span class="nx">r</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">o</span><span class="p">.</span><span class="nx">sum</span> <span class="p">=</span> <span class="nx">a</span><span class="p">[</span><span class="nx">l</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">m</span> <span class="o">:=</span> <span class="p">(</span><span class="nx">l</span> <span class="o">+</span> <span class="nx">r</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">lo</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">lazyNode</span><span class="p">{}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">lo</span><span class="p">.</span><span class="nf">build</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">m</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">ro</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">lazyNode</span><span class="p">{}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nx">ro</span><span class="p">.</span><span class="nf">build</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">m</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nf">maintain</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">o</span> <span class="o">*</span><span class="nx">lazyNode</span><span class="p">)</span> <span class="nf">do</span><span class="p">(</span><span class="nx">add</span> <span class="kt">int64</span><span class="p">)</span> <span class="p">{</span>
@@ -714,7 +693,8 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">o</span> <span class="o">*</span><span class="nx">lazyNode</span><span class="p">)</span> <span class="nf">spread</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">m</span> <span class="o">:=</span> <span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">l</span> <span class="o">+</span> <span class="nx">o</span><span class="p">.</span><span class="nx">r</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">o</span><span class="p">.</span><span class="nx">lo</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c1">// 动态开点
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">o</span><span class="p">.</span><span class="nx">lo</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">		<span class="nx">o</span><span class="p">.</span><span class="nx">lo</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">lazyNode</span><span class="p">{</span><span class="nx">l</span><span class="p">:</span> <span class="nx">o</span><span class="p">.</span><span class="nx">l</span><span class="p">,</span> <span class="nx">r</span><span class="p">:</span> <span class="nx">m</span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">o</span><span class="p">.</span><span class="nx">ro</span> <span class="o">==</span> <span class="kc">nil</span> <span class="p">{</span>
@@ -746,8 +726,8 @@
 </span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">o</span> <span class="o">*</span><span class="nx">lazyNode</span><span class="p">)</span> <span class="nf">query</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="nx">r</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int64</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="c1">// 对于不在线段树中的点，应按照题意来返回
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">o</span> <span class="o">==</span> <span class="kc">nil</span> <span class="o">||</span> <span class="nx">l</span> <span class="p">&gt;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">r</span> <span class="o">||</span> <span class="nx">r</span> <span class="p">&lt;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">l</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span> <span class="c1">// inf
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">l</span> <span class="o">&lt;=</span> <span class="nx">o</span><span class="p">.</span><span class="nx">l</span> <span class="o">&amp;&amp;</span> <span class="nx">o</span><span class="p">.</span><span class="nx">r</span> <span class="o">&lt;=</span> <span class="nx">r</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">o</span><span class="p">.</span><span class="nx">sum</span>
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
