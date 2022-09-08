@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84\/"
-        },"genre": "posts","keywords": "算法学习","wordcount":  4173 ,
+        },"genre": "posts","keywords": "算法学习","wordcount":  4169 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84\/","datePublished": "2022-09-07T00:00:00+00:00","dateModified": "2022-09-07T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">线段树-树状树学习及应用</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>算法学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-07">2022-09-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4173 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-07">2022-09-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4169 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -141,16 +141,15 @@
         <li><a href="#线段树基本内容">线段树基本内容</a></li>
         <li><a href="#线段树基本操作">线段树基本操作</a>
           <ul>
-            <li><a href="#1-点更新">1. 点更新</a></li>
-            <li><a href="#2-区间查询">2. 区间查询</a></li>
-            <li><a href="#3-区间更新">3. 区间更新</a></li>
-            <li><a href="#4-动态开点">4. 动态开点</a>
+            <li><a href="#1-单点更新区间查询">1. 单点更新，区间查询</a></li>
+            <li><a href="#2-区间更新区间查询">2. 区间更新区间查询</a></li>
+            <li><a href="#3--动态开点">3.  动态开点</a>
               <ul>
-                <li><a href="#41-单点修改的动态开点">4.1 单点修改的动态开点</a></li>
-                <li><a href="#42-区间修改的动态开点">4.2 区间修改的动态开点</a></li>
+                <li><a href="#31-单点修改的动态开点">3.1 单点修改的动态开点</a></li>
+                <li><a href="#区间修改的动态开点">区间修改的动态开点</a></li>
               </ul>
             </li>
-            <li><a href="#5-离散化">5. 离散化</a></li>
+            <li><a href="#4-离散化">4. 离散化</a></li>
           </ul>
         </li>
       </ul>
@@ -411,7 +410,31 @@
 <p>为什么叶子下标从9跳到了12？因为中间也有两个空间，这也是为什么无优化的线段树建树需要2<em>2^k空间，一本会开到4</em>n的空间防止RE。</p>
 </blockquote>
 <p><strong>节点k的左子树下标为<code>k &lt;&lt; 1</code>  右子树的下标为<code>k&lt;&lt;1 | 1</code></strong></p>
-<p>常使用递归的方式建树，代码如下：</p>
+<p>常使用递归的方式建树。</p>
+<h3 id="线段树基本操作">线段树基本操作</h3>
+<h4 id="1-单点更新区间查询">1. 单点更新，区间查询</h4>
+<p>更新和查询的时间复杂度是O(logN)</p>
+<p>对于上述线段树，我们把a[3]+7，更新后线段树应该为：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907163818434.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907163818434.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907163818434.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907163818434.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907163818434.png"
+        title="image-20220907163818434" /></p>
+<p>我们发现，无论更新哪一个叶子节点，最终都会到根节点，而把这个过程逆过来就是从根节点开始，找到左子树还是右子树包含需要更新的叶子节点，往下更新即可。所以采用递归的方式实现线段树更新</p>
+<p>对于上述线段树，比如现在我们要查询[2, 5]区间的最值，可以看看那些区间是[2, 5]的真子集，</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907164852933.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907164852933.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907164852933.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907164852933.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907164852933.png"
+        title="image-20220907164852933" /></p>
+<p>一共有五个区间，而区间[4, 5]已经包含其儿子节点的信息，所以一共需要查询3个区间。我们依然从根开始递归，如果当前节点是需要查询的区间的真子集，则返回节点信息并且停止递归。时间复杂度是O(logN)。</p>
+<p>代码如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// l 和 r 也可以写到方法参数上，实测二者在执行效率上无异
 </span></span></span><span class="line"><span class="cl"><span class="c1">// 考虑到 debug 和 bug free 上的优点，写到结构体参数中
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">type</span> <span class="nx">seg</span> <span class="p">[]</span><span class="kd">struct</span> <span class="p">{</span>
@@ -459,20 +482,8 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">t</span><span class="p">.</span><span class="nf">build</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">o</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">|</span><span class="mi">1</span><span class="p">,</span> <span class="nx">m</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">t</span><span class="p">.</span><span class="nf">maintain</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span> <span class="c1">// 更新父节点
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
-</span></span></code></pre></div><h3 id="线段树基本操作">线段树基本操作</h3>
-<h4 id="1-点更新">1. 点更新</h4>
-<p>更新的时间复杂度是O(logN)</p>
-<p>对于上述线段树，我们把a[3]+7，更新后线段树应该为：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907163818434.png"
-        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907163818434.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907163818434.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907163818434.png 2x"
-        data-sizes="auto"
-        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907163818434.png"
-        title="image-20220907163818434" /></p>
-<p>我们发现，无论更新哪一个叶子节点，最终都会到根节点，而把这个过程逆过来就是从根节点开始，找到左子树还是右子树包含需要更新的叶子节点，往下更新即可。所以采用递归的方式实现线段树更新，代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// o表示当前更新到的结点，从o=1开始更新
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// o表示当前更新到的结点，从o=1开始更新
 </span></span></span><span class="line"><span class="cl"><span class="c1">// i 表示要更新的节点，val表示要更新的值
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="nx">seg</span><span class="p">)</span> <span class="nf">update</span><span class="p">(</span><span class="nx">o</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">val</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">t</span><span class="p">[</span><span class="nx">o</span><span class="p">].</span><span class="nx">l</span> <span class="o">==</span> <span class="nx">t</span><span class="p">[</span><span class="nx">o</span><span class="p">].</span><span class="nx">r</span> <span class="p">{</span>
@@ -486,19 +497,8 @@
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">t</span><span class="p">.</span><span class="nf">maintain</span><span class="p">(</span><span class="nx">o</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="2-区间查询">2. 区间查询</h4>
-<p>对于上述线段树，比如现在我们要查询[2, 5]区间的最值，可以看看那些区间是[2, 5]的真子集，</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907164852933.png"
-        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907164852933.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907164852933.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907164852933.png 2x"
-        data-sizes="auto"
-        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220907164852933.png"
-        title="image-20220907164852933" /></p>
-<p>一共有五个区间，而区间[4, 5]已经包含其儿子节点的信息，所以一共需要查询3个区间。我们依然从根开始递归，如果当前节点是需要查询的区间的真子集，则返回节点信息并且停止递归。时间复杂度是O(logN)。</p>
-<p>代码如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// o=1 表示从根开始递归
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// o=1 表示从根开始递归
 </span></span></span><span class="line"><span class="cl"><span class="c1">// [l,r] 1&lt;=l&lt;=r&lt;=n
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="nx">seg</span><span class="p">)</span> <span class="nf">query</span><span class="p">(</span><span class="nx">o</span><span class="p">,</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">r</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">l</span> <span class="o">&lt;=</span> <span class="nx">t</span><span class="p">[</span><span class="nx">o</span><span class="p">].</span><span class="nx">l</span> <span class="o">&amp;&amp;</span> <span class="nx">t</span><span class="p">[</span><span class="nx">o</span><span class="p">].</span><span class="nx">r</span> <span class="o">&lt;=</span> <span class="nx">r</span> <span class="p">{</span>
@@ -520,7 +520,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">t</span> <span class="nx">seg</span><span class="p">)</span> <span class="nf">queryAll</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span> 
 </span></span><span class="line"><span class="cl">  <span class="k">return</span> <span class="nx">t</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">val</span> 
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="3-区间更新">3. 区间更新</h4>
+</span></span></code></pre></div><h4 id="2-区间更新区间查询">2. 区间更新区间查询</h4>
 <p>树状数组中区间更新我们采用了差分的思想，而线段树中，我们<strong>将引入lazy_tag（懒惰标记）</strong>，<strong>线段树进行区间更新的时候，每次更新只更新到更新区间完全覆盖线段树节点区间为止，这样会导致被更新节点的子孙节点的区间得不到更新信息，所以在被更新节点上打上一个标记。等下次访问到这个节点的子节点时再讲这个标记传递给子节点，所以也可以叫延迟标记。</strong></p>
 <p>也就是说，在递归更新过程中，更新到节点区间为需要更新区间的真子集时不再递归更新，下次如果需要用到再更新，所以时间复杂度也是O(logN)。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">lazySeg</span> <span class="p">[]</span><span class="kd">struct</span> <span class="p">{</span>
@@ -605,9 +605,9 @@
 </span></span><span class="line"><span class="cl">	<span class="nx">vr</span> <span class="o">:=</span> <span class="nx">t</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">o</span><span class="o">&lt;&lt;</span><span class="mi">1</span><span class="p">|</span><span class="mi">1</span><span class="p">,</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">r</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">t</span><span class="p">.</span><span class="nf">op</span><span class="p">(</span><span class="nx">vl</span><span class="p">,</span> <span class="nx">vr</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="4-动态开点">4. 动态开点</h4>
+</span></span></code></pre></div><h4 id="3--动态开点">3.  动态开点</h4>
 <p>常规线段树，一般以满二叉树方式存储，浪费了很多空间，有时需要动态开点的方式，动态开点的优势就是按需开点，因此一般采用链表方式实现而不是数组方式实现。</p>
-<h5 id="41-单点修改的动态开点">4.1 单点修改的动态开点</h5>
+<h5 id="31-单点修改的动态开点">3.1 单点修改的动态开点</h5>
 <p>代码如下</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 创建根节点
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">rt</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">stNode</span><span class="p">{</span><span class="nx">l</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">r</span><span class="p">:</span> <span class="mf">1e9</span><span class="p">}</span>
@@ -662,7 +662,7 @@
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">o</span><span class="p">.</span><span class="nf">op</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">lo</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="nx">r</span><span class="p">),</span> <span class="nx">o</span><span class="p">.</span><span class="nx">ro</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="nx">r</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h5 id="42-区间修改的动态开点">4.2 区间修改的动态开点</h5>
+</span></span></code></pre></div><h5 id="区间修改的动态开点">区间修改的动态开点</h5>
 <p>代码如下</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// 创建根节点
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">rt</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">lazyNode</span><span class="p">{</span><span class="nx">l</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">r</span><span class="p">:</span> <span class="mf">1e9</span><span class="p">}</span>
@@ -737,7 +737,7 @@
 </span></span><span class="line"><span class="cl">	<span class="nx">o</span><span class="p">.</span><span class="nf">spread</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">o</span><span class="p">.</span><span class="nf">op</span><span class="p">(</span><span class="nx">o</span><span class="p">.</span><span class="nx">lo</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="nx">r</span><span class="p">),</span> <span class="nx">o</span><span class="p">.</span><span class="nx">ro</span><span class="p">.</span><span class="nf">query</span><span class="p">(</span><span class="nx">l</span><span class="p">,</span> <span class="nx">r</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="5-离散化">5. 离散化</h4>
+</span></span></code></pre></div><h4 id="4-离散化">4. 离散化</h4>
 <p>离散化常用于二维状态在一维线段树建树的技巧，所谓离散化就是将无限的个体映射到有限的个体中，提高算法效率，常用Hash实现。</p>
 <p>树状数组有时也需要离散化。例题LeetCode327。</p>
 </div><div class="post-footer" id="post-footer">
