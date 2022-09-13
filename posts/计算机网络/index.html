@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-03-06T00:00:00+00:00" />
-<meta property="article:modified_time" content="2022-03-06T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-09-13T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="计算机网络"/>
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/"
-        },"genre": "posts","keywords": "计算机网络, 面试","wordcount":  15880 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/","datePublished": "2022-03-06T00:00:00+00:00","dateModified": "2022-03-06T00:00:00+00:00","publisher": {
+        },"genre": "posts","keywords": "计算机网络, 面试","wordcount":  16053 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C\/","datePublished": "2022-03-06T00:00:00+00:00","dateModified": "2022-09-13T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">计算机网络</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="far fa-folder fa-fw"></i>计算机网络</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-06">2022-03-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 15880 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 32 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-06">2022-03-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 16053 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 33 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -153,6 +153,7 @@
         <li><a href="#25-为什么连接的时候是三次握手关闭的时候却是四次握手">2.5 为什么连接的时候是三次握手，关闭的时候却是四次握手？</a></li>
         <li><a href="#26-为什么time_wait状态需要经过2msl最大报文段生存时间才能返回到close状态">2.6 为什么TIME_WAIT状态需要经过2MSL(最大报文段生存时间)才能返回到CLOSE状态？</a></li>
         <li><a href="#27-如果已经建立了连接但是客户端突然出现故障了怎么办">2.7 如果已经建立了连接，但是客户端突然出现故障了怎么办？</a></li>
+        <li><a href="#28-如果服务端出现故障怎么办">2.8 如果服务端出现故障怎么办？</a></li>
       </ul>
     </li>
     <li><a href="#3-tcpudp协议的区别">3. TCP、UDP协议的区别</a>
@@ -195,14 +196,14 @@
         <li><a href="#http30">HTTP3.0</a></li>
       </ul>
     </li>
-    <li><a href="#11-http与https的区别">11. HTTP与HTTPS的区别</a></li>
-    <li><a href="#12-cookie和session的区别">12. cookie和session的区别</a></li>
-    <li><a href="#13-post和get的区别">13. POST和GET的区别？</a>
+    <li><a href="#11-cookie和session的区别">11. cookie和session的区别</a></li>
+    <li><a href="#12-post和get的区别">12. POST和GET的区别？</a>
       <ul>
-        <li><a href="#131-是什么">13.1 是什么</a></li>
-        <li><a href="#132-区别">13.2 区别</a></li>
+        <li><a href="#121-是什么">12.1 是什么</a></li>
+        <li><a href="#122-区别">12.2 区别</a></li>
       </ul>
     </li>
+    <li><a href="#13-http与https的区别">13. HTTP与HTTPS的区别</a></li>
     <li><a href="#14-https原理">14. HTTPS原理</a>
       <ul>
         <li><a href="#http的最大弊端">HTTP的最大弊端</a></li>
@@ -345,6 +346,15 @@
 <p>在客户端发送完最后一个 <code>ACK</code> 报文段后，在经过 <code>2MSL</code> 时间，就可以使本连接持续的时间内所产生的所有报文都从网络中消失，使下一个新的连接中不会出现这种旧的连接请求报文。</p>
 <h3 id="27-如果已经建立了连接但是客户端突然出现故障了怎么办">2.7 如果已经建立了连接，但是客户端突然出现故障了怎么办？</h3>
 <p>TCP还设有一个<strong>保活计时器</strong>，显然，客户端如果出现故障，服务器不能一直等下去，白白浪费资源。服务器每收到一次客户端的请求后都会重新复位这个计时器，时间通常是设置为2小时，若两小时还没有收到客户端的任何数据，服务器就会发送一个探测报文段，以后每隔75秒钟发送一次。若一连发送10个探测报文仍然没反应，服务器就认为客户端出了故障，接着就关闭连接。</p>
+<h3 id="28-如果服务端出现故障怎么办">2.8 如果服务端出现故障怎么办？</h3>
+<ul>
+<li>服务器崩溃</li>
+</ul>
+<p>如果服务器主机出现故障，客户端TCP均会进行超时重传，一般重传12次后就会放弃重传并关闭该链接。</p>
+<ul>
+<li>服务器崩溃后重启</li>
+</ul>
+<p>如果在服务器崩溃后重启这段时间里，客户端没有因为超时重传超过限制而断开连接。则当客户端发送TCP报文后，<strong>由于服务器TCP连接已经关闭，会向客户端回复一个RST报文，客户端接收到该报文后将关闭连接。</strong></p>
 <h2 id="3-tcpudp协议的区别">3. TCP、UDP协议的区别</h2>
 <p><img
         class="lazyload"
@@ -563,20 +573,7 @@
 <ul>
 <li><strong>Quic协议</strong></li>
 </ul>
-<h2 id="11-http与https的区别">11. HTTP与HTTPS的区别</h2>
-<ol>
-<li><strong>端口</strong> ：HTTP 的 URL 由“http://”起始且默认使用端口80，而HTTPS的URL由“https://”起始且默认使用端口443。</li>
-<li><strong>安全性和资源消耗：</strong> HTTP 协议运行在 TCP 之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份。HTTPS 是运行在 SSL/TLS 之上的 HTTP 协议，SSL/TLS 运行在 TCP 之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。所以说，HTTP 安全性没有 HTTPS 高，但是 HTTPS 比 HTTP 耗费更多服务器资源。</li>
-</ol>
-<blockquote>
-<p>对称加密：密钥只有一个，加密解密为同一个密码，且加解密速度快，典型的对称加密算法有 DES、AES 等；</p>
-<p>非对称加密：密钥成对出现（且根据公钥无法推知私钥，根据私钥也无法推知公钥），加密解密使用不同密钥（公钥加密需要私钥解密，私钥加密需要公钥解密），相对对称加密速度较慢，典型的非对称加密算法有 RSA、DSA 等。这种加密方式安全性高，计算量大。</p>
-</blockquote>
-<p><strong>HTTPS 在内容传输的加密上使用的是对称加密，非对称加密只作用在证书验证阶段。</strong></p>
-<ol start="3">
-<li>HTTPS协议需要到CA申请证书，一般免费证书较少，需要一定费用。</li>
-</ol>
-<h2 id="12-cookie和session的区别">12. cookie和session的区别</h2>
+<h2 id="11-cookie和session的区别">11. cookie和session的区别</h2>
 <ul>
 <li>
 <p>cookie实际上是一小段的文本信息。浏览器发送请求到服务器，如果服务器需要记录该用户的状态（比如：用户访问网页的次数，登录状态等），就使用response向客户端浏览器颁发一个cookie。客户端浏览器会把cookie保存起来。当浏览器再次请求该网站时，浏览器就会把请求地址和cookie一同给服务器。服务器检查该cookie，从而判断用户的状态。服务器还可以根据需要修改cookie的内容。</p>
@@ -585,10 +582,10 @@
 <p>session也是类似的记录用户状态的机制。不同的是**cookie保存在客户端浏览器中，而session保存在服务器上。**session比cookie安全，别人可以分析存放在本地的cookie并进行cookie欺骗。<strong>cookie能保存的数据量比session小，cookie可以设置为长时间保存。session一般失效时间短，客户端关闭或者session超时都会失效</strong>。</p>
 </li>
 </ul>
-<h2 id="13-post和get的区别">13. POST和GET的区别？</h2>
-<h3 id="131-是什么">13.1 是什么</h3>
+<h2 id="12-post和get的区别">12. POST和GET的区别？</h2>
+<h3 id="121-是什么">12.1 是什么</h3>
 <p><code>GET</code>和<code>POST</code>都是HTTP协议中发送请求的方法。本质上都是TCP连接，并不差别，但是由于HTTP的规定和浏览器/服务器的限制，导致它们在应用过程中会有一些区别。</p>
-<h3 id="132-区别">13.2 区别</h3>
+<h3 id="122-区别">12.2 区别</h3>
 <ul>
 <li><strong>参数位置</strong></li>
 </ul>
@@ -614,6 +611,19 @@
 <p>对于GET方式的请求，浏览器会把<code>http header</code>和<code>data</code>一起发送出去，服务器响应200并返回数据。</p>
 <p>对个POST请求，浏览器先发送<code>header</code>，服务器响应100(continue)，浏览器再发送<code>data</code>，服务器响应200(ok)。</p>
 <p>但并不是所有的浏览器都会在POST中发送两次包，<code>Firefox</code>就只发送一次。</p>
+<h2 id="13-http与https的区别">13. HTTP与HTTPS的区别</h2>
+<ol>
+<li><strong>端口</strong> ：HTTP 的 URL 由“http://”起始且默认使用端口80，而HTTPS的URL由“https://”起始且默认使用端口443。</li>
+<li><strong>安全性和资源消耗：</strong> HTTP 协议运行在 TCP 之上，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份。HTTPS 是运行在 SSL/TLS 之上的 HTTP 协议，SSL/TLS 运行在 TCP 之上。所有传输的内容都经过加密，加密采用对称加密，但对称加密的密钥用服务器方的证书进行了非对称加密。所以说，HTTP 安全性没有 HTTPS 高，但是 HTTPS 比 HTTP 耗费更多服务器资源。</li>
+</ol>
+<blockquote>
+<p>对称加密：密钥只有一个，加密解密为同一个密码，且加解密速度快，典型的对称加密算法有 DES、AES 等；</p>
+<p>非对称加密：密钥成对出现（且根据公钥无法推知私钥，根据私钥也无法推知公钥），加密解密使用不同密钥（公钥加密需要私钥解密，私钥加密需要公钥解密），相对对称加密速度较慢，典型的非对称加密算法有 RSA、DSA 等。这种加密方式安全性高，计算量大。</p>
+</blockquote>
+<p><strong>HTTPS 在内容传输的加密上使用的是对称加密，非对称加密只作用在证书验证阶段。</strong></p>
+<ol start="3">
+<li>HTTPS协议需要到CA申请证书，一般免费证书较少，需要一定费用。</li>
+</ol>
 <h2 id="14-https原理">14. HTTPS原理</h2>
 <h3 id="http的最大弊端">HTTP的最大弊端</h3>
 <p>HTTP在传输数据过程中，所有数据都是明文传输，没有安全性可言。</p>
@@ -718,7 +728,7 @@
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-03-06</span>
+                <span>更新于 2022-09-13</span>
             </div>
             <div class="post-info-license"></div>
         </div>
