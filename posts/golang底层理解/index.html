@@ -18,7 +18,7 @@
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3/" /><link rel="prev" href="http://wen-nan.github.io/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" /><link rel="next" href="http://wen-nan.github.io/posts/context%E5%AD%A6%E4%B9%A0/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3\/"
-        },"genre": "posts","keywords": "Golang","wordcount":  2556 ,
+        },"genre": "posts","keywords": "Golang","wordcount":  4599 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3\/","datePublished": "2022-09-16T00:00:00+00:00","dateModified": "2022-09-16T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang底层原理理解叙述</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-16">2022-09-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2556 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 6 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-16">2022-09-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4599 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -128,6 +128,12 @@
         <li><a href="#概述">概述</a></li>
         <li><a href="#lock和unlock逻辑">Lock和Unlock逻辑</a></li>
         <li><a href="#信号量">信号量</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-gmp模型">2. GMP模型</a>
+      <ul>
+        <li><a href="#gm模型">GM模型</a></li>
+        <li><a href="#gmp模型">GMP模型</a></li>
       </ul>
     </li>
   </ul>
@@ -193,7 +199,88 @@
 </ul>
 <p>​		调度器对象与自旋锁主要不同在于等待队列，同步原语由内核提供，直接与系统的调度器交互，能够挂起和唤醒线程，这是自旋锁做不到的，但也正由于其在内核中中实现，所以应用程序中需要以<strong>系统调用的方式来使用它</strong>。<strong>这会造成一定的开销，并且获取锁失败还会发生线程切换</strong> 。所以调度器对象和自旋锁各有各的应用场景。</p>
 <p>​		在多核环境且持有锁的时间占比比较小的情况下，往往自旋几次之后就可以拿到锁，比发生一次线程切换的代价小得多。在单核环境或者持有锁的时间比较长的情况下，一直自旋会一直占据CPU。反而得不偿失。实际业务中一般先自旋，但限制最大自旋次数，有限次数内不能加锁成功，再通过调度器对象将当前线程挂起，这样就结合了二者优点，也是现在主流的锁实现思路。</p>
-<p>Go语言的Mutex就是这样实现的，</p>
+<p>Go语言的Mutex就是这样实现的，不过这不适合协程，如果协程等待，还需要切换线程，就不太适合了。那么协程要等待一个锁，要如何休眠、等待和唤醒呢？</p>
+<p>​		这需要runtime.semaphore来实现，这是可供协程使用的信号量。runtime内部会通过一个大小为251的semaTable来管理所有的semaphore。怎么通过固定大小来管理执行阶段数量不定的semaphore呢？</p>
+<p>大致思路是，semaTable存储的是251棵平衡二叉树的根，平衡树中每一个节点都是一个sudog类型的对象。要使用一个信号量时，需要提供一个记录信号量数值的变量，根据地址进行计算映射到semaTable中的一棵平衡树上，找到对应节点就找到了该信号量的等待队列。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919194845098.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919194845098.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919194845098.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919194845098.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919194845098.png"
+        title="image-20220919194845098" /></p>
+<h2 id="2-gmp模型">2. GMP模型</h2>
+<p>一个Hello World程序编译成可执行文件，执行时可执行文件被加载到内存中。</p>
+<p>​		对于进程虚拟地址空间中的代码段，我们感兴趣的是程序执行入口，他并不是我们熟悉的main.main,不同平台下的程序入口不同，再进行一系列检查与初始化等准备工作后，会以runtime.main为执行入口创建main goroutine，main goroutine执行起来后才会调用我们编写的main.main。</p>
+<p>​		再来看数据段，这里有几个重要的全局变量，我们知道Go语言中协程对应的数据结构是runtime.g，工作线程对应的数据结构是runtime.m:</p>
+<ul>
+<li>全局变量g0：主协程对应的g。与其他协程不同，它的栈是在主线程栈上分配的。</li>
+<li>全局变量m0,就是主线程对应的m</li>
+</ul>
+<blockquote>
+<p>g0持有m0的指针，m0里也记录了g0的指针。并且一开始m0上执行的协程就是g0。</p>
+</blockquote>
+<ul>
+<li>allgs记录了所有的g</li>
+<li>allm记录了所有的m</li>
+<li>sched(调度器)，用于保存空闲的m,空闲的p,全局队列等</li>
+<li>allp用于保存所有的p，在程序初始化时会进行调度器初始化，同时会根据GOMAXPROCS这个环境变量决定创建多少个P</li>
+</ul>
+<blockquote>
+<p>同时会将第一个P和m0关联起来</p>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919222549888.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919222549888.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919222549888.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919222549888.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919222549888.png"
+        title="image-20220919222549888" /></p>
+<h3 id="gm模型">GM模型</h3>
+<p>最初Go语言模型调度只有G和M，所有的待执行的G都等在一处，每个M来这里获取一个G时都要加锁，多个M分担多个G的执行任务，<strong>就会因为频繁加锁和解锁而发生等待，影响程序并发性能。</strong></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919221000015.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919221000015.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919221000015.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919221000015.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919221000015.png"
+        title="image-20220919221000015" /></p>
+<h3 id="gmp模型">GMP模型</h3>
+<p>所以后面又引入了P，对应的数据结构是runtime.p，它有一个本地的runq。这样只要把一个M关联到一个P，这个M就可以从P这里直接获取待执行的G，不用每次都和众多M从一个全局队列中争抢任务了。但仍然有一个全局runq，保存在全局变量sched(调度器)中，对应数据结构是runtime.schedt,里面记录了所有空闲的m和空闲的p。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919221707886.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919221707886.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919221707886.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919221707886.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919221707886.png"
+        title="image-20220919221707886" /></p>
+<p>​	如果P的本地队列已满，则等待执行的G会被放到全局队列里面，而M会先从关联的P的本地队列runq中获取等待执行的G，没有的话再到调度器持有的全局队列里获取一些任务，如果全局队列里面也没有G，则会从别的P哪里窃取一些G过来。</p>
+<p>GPM关系如下，main goroutine创建之后，会被加入到当前P的本地队列里面，然后通过mstart函数开启调度循环，**这个mstart是所有工作线程的入口，主要是调用schedule函数，也就是执行调度循环。**因此对于某个活跃的M而言，不是在执行某个G，就是在执行调度程序获取某个G。因为队列里面只有main goroutine等待执行，所以m0切换到main goroutine，执行入口则是runtime.main.</p>
+<p>Runtime.main会做很多事，包括创建监控线程，进行包初始化等，也包括调用熟悉的mian.mian。则会输出hello world。最后在main.main返回时，runtime.main会调用exit()函数结束进程。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919223406184.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919223406184.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919223406184.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919223406184.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919223406184.png"
+        title="image-20220919223406184" /></p>
+<p>改变函数例子，使用协程来输出hello, world，这样调用过程又是什么样呢？</p>
+<p>我们通过go关键字创建协程，会通过编译器转换为newproc函数调用，当然main goroutine也是通过newproc函数创建。创建goroutine时只负责指定入口、参数，而newproc会给goroutine构造一个栈帧，目的是让协程任务结束后，返回到goexit函数中，进行协程资源回收处理等工作。</p>
+<p>如果设置GOMAXPROCS只创建一个P，新创建的hello goroutine被添加到当前P的本地队列runq中，然后main.main就结束返回了，再然后exit()函数被调用，进程就结束了。所以hello goroutine没有被执行。</p>
+<p>如果想hello goroutine被执行，就要留住时间，可以使用time.Sleep函数，实际上会调用gopark函数将当前协程状态从_Grunning修改为Gwaiting，则main goroutine不会回到当前P的runq中，而是在timer中等待。继而调用schedule进行调度，hello goroutine得到调度执行。等到Sleep时间到达后，timer会把main goroutine重新 _Grunnable状态，放回到P的runq中，最后等到被调用结束程序。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919224545995.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919224545995.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919224545995.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919224545995.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919224545995.png"
+        title="image-20220919224545995" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
@@ -217,7 +304,8 @@
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" class="prev" rel="prev" title="线段树-树状树学习及应用"><i class="fas fa-angle-left fa-fw"></i>线段树-树状树学习及应用</a></div>
+    <div class="post-nav"><a href="/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" class="prev" rel="prev" title="线段树-树状树学习及应用"><i class="fas fa-angle-left fa-fw"></i>线段树-树状树学习及应用</a>
+            <a href="/posts/context%E5%AD%A6%E4%B9%A0/" class="next" rel="next" title="Context学习">Context学习<i class="fas fa-angle-right fa-fw"></i></a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>

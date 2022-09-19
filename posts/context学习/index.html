@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Context学习 - NarcissusBlog</title><meta name="Description" content="Golang Context包相关学习"><meta property="og:title" content="Context学习" />
+<meta property="og:description" content="Golang Context包相关学习" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wen-nan.github.io/posts/context%E5%AD%A6%E4%B9%A0/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-09-19T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-09-19T00:00:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Context学习"/>
+<meta name="twitter:description" content="Golang Context包相关学习"/>
+<meta name="application-name" content="NarcissusBlog">
+<meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/context%E5%AD%A6%E4%B9%A0/" /><link rel="prev" href="http://wen-nan.github.io/posts/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Context学习",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wen-nan.github.io\/posts\/context%E5%AD%A6%E4%B9%A0\/"
+        },"genre": "posts","keywords": "Golang","wordcount":  4103 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/context%E5%AD%A6%E4%B9%A0\/","datePublished": "2022-09-19T00:00:00+00:00","dateModified": "2022-09-19T00:00:00+00:00","publisher": {
+            "@type": "Organization",
+            "name": "Narcissus"},"author": {
+                "@type": "Person",
+                "name": "Narcissus"
+            },"description": "Golang Context包相关学习"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner">
+                <a class="menu-item" href="/posts/" title="全部文章"><i class="fa fa-fw fa-bars"></i> 全部文章 
+                        </a><a class="menu-item" href="/categories/" title="分类"><i class="fas fa-fw fa-th"></i> 分类 
+                        </a><a class="menu-item" href="/tags/" title="标签"><i class="fas fa-fw fa-tag"></i> 标签 
+                        </a>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="menu-item menu-more dropbtn" title="文档" ><i class='fas fa-fw fa-fan fa-spin'></i> 文档 
+                            </a>
+                            <div class="menu-more-content dropdown-content"><a href="https://gohugo.io/documentation/" title="" target="_blank" rel="noopener"><i class='fa fa-thumbs-up'></i> Hugo文档 </a></div>
+                        </div>
+                    <a class="menu-item" href="/about/" title="关于"><i class="fas fa-fw fa-at"></i> 关于 
+                        </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  
+                        </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="全部文章"><i class="fa fa-fw fa-bars"></i> 全部文章 
+                    </a><a class="menu-item" href="/categories/" title="分类"><i class="fas fa-fw fa-th"></i> 分类 
+                    </a><a class="menu-item" href="/tags/" title="标签"><i class="fas fa-fw fa-tag"></i> 标签 
+                    </a>
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="menu-item menu-more dropbtn" title="文档" ><i class='fas fa-fw fa-fan fa-spin'></i> 文档 
+                        </a>
+                        <div class="menu-more-content dropdown-content"><a href="https://gohugo.io/documentation/" title="" target="_blank" rel="noopener"><i class='fa fa-thumbs-up'></i> Hugo文档 </a></div>
+                    </div>
+                <a class="menu-item" href="/about/" title="关于"><i class="fas fa-fw fa-at"></i> 关于 
+                    </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  
+                    </a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Context学习</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-19">2022-09-19</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4103 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 9 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一什么是context">一、什么是Context</a></li>
+    <li><a href="#二为什么要有context">二、为什么要有Context</a></li>
+    <li><a href="#三如何使用context">三、如何使用Context</a>
+      <ul>
+        <li><a href="#31-传递共享的数据">3.1 传递共享的数据</a></li>
+        <li><a href="#32-取消goroutine">3.2 取消goroutine</a></li>
+        <li><a href="#33-防止goroutine泄露">3.3 防止goroutine泄露</a></li>
+      </ul>
+    </li>
+    <li><a href="#四context底层实现原理">四、Context底层实现原理</a>
+      <ul>
+        <li><a href="#41-整体概述">4.1 整体概述</a></li>
+        <li><a href="#42-接口">4.2 接口</a>
+          <ul>
+            <li><a href="#context">Context</a></li>
+            <li><a href="#canceler">canceler</a></li>
+          </ul>
+        </li>
+        <li><a href="#43-结构体">4.3 结构体</a>
+          <ul>
+            <li><a href="#emptyctx">emptyCtx</a></li>
+            <li><a href="#cancelctx">cancelCtx</a></li>
+            <li><a href="#valuectx">valueCtx</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="一什么是context">一、什么是Context</h2>
+<p>Go1.7标准库引入Context，译为“上下文”，准确说是goroutine的上下文，包含goroutine的运行状态、环境、现场等信息。<strong>主要用来在goroutine之间传递上下文信息，包括：取消信号、超时时间、截止时间、k-v等</strong> 。</p>
+<h2 id="二为什么要有context">二、为什么要有Context</h2>
+<p>Go常用于写后台服务，通常每一个请求都会启动若干个goroutine同时工作：有些拿数据，有些调用下游接口获取相关数据&hellip;&hellip;</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919170721414.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919170721414.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919170721414.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919170721414.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919170721414.png"
+        title="image-20220919170721414" /></p>
+<p>这些goroutine需要共享这个请求的基本数据，例如登录的token，处理请求的最大超时时间（如果超过此值再返回数据，请求方因为超时接收不到）等等。当请求被取消或者处理时间太长（可能是使用者关闭了浏览器或者超过了请求方规定的超时时间），请求方直接放弃了这次请求结果。这时，所有为这个请求工作的goroutine需要快速退出，因为他们的工作不再被需要。相关goroutine退出后，系统就可以回收资源。</p>
+<p>context包就是为了解决上述问题而开发的：<strong>在一组goroutine之间传递共享的值、取消信号、deadline</strong>&hellip;&hellip;</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919170833903.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919170833903.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919170833903.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919170833903.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919170833903.png"
+        title="image-20220919170833903" /></p>
+<p>一句话概述：<strong>context用来解决goroutine之间退出通知、元数据传递的功能</strong>。</p>
+<p>另外，像 <code>WithCancel</code>、<code>WithDeadline</code>、<code>WithTimeout</code>、<code>WithValue</code> 这些创建函数，实际上是创建了一个个的链表结点而已。我们知道，对链表的操作，通常都是 <code>O(n)</code> 复杂度的，效率不高。</p>
+<p>那么，context 包到底解决了什么问题呢？答案是：<code>cancelation</code>。仅管它并不完美，但它确实很简洁地解决了问题。</p>
+<h2 id="三如何使用context">三、如何使用Context</h2>
+<p>context使用非常方便，源码对外提供了一个创建根节点context的函数：<code>func Background() Context</code> 。这是一个空的context，它不能被取消，没有值，也没有超时时间。</p>
+<p>有了根节点，又提供四个函数创建子节点context：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172928684.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172928684.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172928684.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172928684.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172928684.png"
+        title="image-20220919172928684" /></p>
+<p>context会在函数传递间传值。只需要在适当的时间调动cancel函数向goroutine发出取消信号或者调用Value函数取出context中的值。</p>
+<p>官方博客有如下几点使用建议：</p>
+<ul>
+<li>
+<p>不要将Context塞到结构体中。直接将Context类型作为参数的第一参数，并且一般命名为ctx。</p>
+</li>
+<li>
+<p>不要向函数传入一个nil的context，如果实在不知道传什么，标准库给你准备好了一个context：todo。</p>
+</li>
+<li>
+<p>不要把本应该作为函数参数的类型塞到context中，context存储的应该是一些共同的数据。例如：登录的session、cookie等。</p>
+</li>
+<li>
+<p>同一个context可能会被传递到多个gorourine，别担心，<strong>context是并发安全的</strong>。</p>
+</li>
+</ul>
+<h3 id="31-传递共享的数据">3.1 传递共享的数据</h3>
+<p>对于web服务端开发，往往希望将一个请求处理的整个过程串起来，这就非常依赖于Thread Local（对于Go可理解为单个协程所独有）的变量，而Go语言没有这个概念，因此需要在函数调用的时候传递context。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919173712130.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919173712130.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919173712130.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919173712130.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919173712130.png"
+        title="image-20220919173712130" /></p>
+<h3 id="32-取消goroutine">3.2 取消goroutine</h3>
+<p>有如下一个场景：打开外卖的订单页，地图上显示外卖小哥的位置，而且是每秒更新 1 次。app 端向后台发起 websocket 连接（现实中可能是轮询）请求后，后台启动一个协程，每隔 1 秒计算 1 次小哥的位置，并发送给端。如果用户退出此页面，则后台需要“取消”此过程，退出 goroutine，系统回收资源。</p>
+<p>后端可能实现如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919181506624.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919181506624.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919181506624.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919181506624.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919181506624.png"
+        title="image-20220919181506624" /></p>
+<blockquote>
+<p>如果需要实现“取消”功能，并且在不了解 context 功能的前提下，可能会这样做：给函数增加一个指针型的 bool 变量，在 for 语句的开始处判断 bool 变量是发由 true 变为 false，如果改变，则退出循环。</p>
+</blockquote>
+<p>优雅的方式则是使用Context:</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919181722984.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919181722984.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919181722984.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919181722984.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919181722984.png"
+        title="image-20220919181722984" /></p>
+<p><strong>注意到WithTimeout函数返回的context和cancelFun是分开的，context本身没有取消函树，这样做的原因是取消函数只能由外层调用，防止子节点context调用取消函数，从而严格控制信息流向：从父节点流向子节点。</strong></p>
+<h3 id="33-防止goroutine泄露">3.3 防止goroutine泄露</h3>
+<p>如下例子，如果不用context取消，goroutine则会泄露：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919182427693.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919182427693.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919182427693.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919182427693.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919182427693.png"
+        title="image-20220919182427693" /></p>
+<p>这是一个可以生成无限整数序列的协程，但如果只需要前五个序列，就会发生goroutine泄露。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919182658308.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919182658308.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919182658308.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919182658308.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919182658308.png"
+        title="image-20220919182658308" /></p>
+<p>使用context改进的例子如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183456847.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183456847.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183456847.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183456847.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183456847.png"
+        title="image-20220919183456847" /></p>
+<h2 id="四context底层实现原理">四、Context底层实现原理</h2>
+<h3 id="41-整体概述">4.1 整体概述</h3>
+<p>context代码包并不长，总共500多行</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919171132847.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919171132847.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919171132847.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919171132847.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919171132847.png"
+        title="image-20220919171132847" /></p>
+<h3 id="42-接口">4.2 接口</h3>
+<h4 id="context">Context</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919171526528.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919171526528.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919171526528.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919171526528.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919171526528.png"
+        title="image-20220919171526528" /></p>
+<p><code>Context</code> 是一个接口，定义了四个方法，都是<strong>幂等</strong>的。也就是说连续多次调用同一个方法，得到的结果是相同的。</p>
+<ol>
+<li>
+<p><code>Done()</code> 返回一个channel，可以表示context被取消的信号：<strong>当这个channel被关闭时，说明context被取消了</strong> 。</p>
+</li>
+<li>
+<blockquote>
+<p>注意：这是一个只读的channel。我们知道，读一个关闭的channel会读出相应类型的零值。并且源码没有地方会向这个channel里面写入值。换句话说在子协程里读这个channel，除非被关闭，否则读不出任何东西。<strong>当子协程从channel里面读出了零值后，就可以做一些收尾工作，尽快退出。</strong></p>
+</blockquote>
+</li>
+<li>
+<p><code>Err()</code> 返回一个错误，表示channel被关闭的原因。例如被取消还是超时。</p>
+</li>
+<li>
+<p><code>Deadline()</code> 返回context的截止时间，通过此时间，函数就可以决定是否进行接下来的操作，如果时间太短，就可以不往下做了，否则浪费系统资源。当然也可以用这个deadline来设置一个I/O操作的超时时间。</p>
+</li>
+<li>
+<p><code>Value()</code> 获取之前设置的key对应的value。</p>
+</li>
+</ol>
+<h4 id="canceler">canceler</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172126522.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172126522.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172126522.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172126522.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172126522.png"
+        title="image-20220919172126522" /></p>
+<p>实现了上面定义的两个方法的Context，就表明该Context是可取消的。源码中有两个类型实现了canceler接口：<strong><code>*cannelCtx</code></strong> <strong>和<code>*timerCtx</code></strong> 。注意：加*表明是这两个结构体的指针实现了canceler接口。</p>
+<p>Context接口设计成这个样子的原因：</p>
+<ul>
+<li><strong>“取消”操作应该是建议性，而非强制性</strong></li>
+</ul>
+<p>caller不应该去关心、干涉callee的情况，决定如何以及何时return是callee的责任。caller只需发送“取消”信息，callee根据收到的信息来做进一步的决策，因此接口没有定义cancel方法。</p>
+<ul>
+<li><strong>“取消”操作应该可传递</strong></li>
+</ul>
+<p>“取消”某个函数时，和它相关联的其它函数也应该“取消”。因此，<code>Done()</code> 方法返回一个只读的channel，所有相关函数监听此channel。一旦channel关闭，通过channel的“广播机制”，所有监听者都能收到。</p>
+<h3 id="43-结构体">4.3 结构体</h3>
+<h4 id="emptyctx">emptyCtx</h4>
+<p>源代码中定义了Context后，给出了一个实现：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172648769.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172648769.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172648769.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172648769.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919172648769.png"
+        title="image-20220919172648769" /></p>
+<p>每个函数的实现都非常简单，要么直接返回，要么返回nil。**这实际上是一个空的context，永远不会被cancel，没有存储值，也没有deadline。**它被包装成：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183847776.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183847776.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183847776.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183847776.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183847776.png"
+        title="image-20220919183847776" /></p>
+<p>通过下面两个导出函数对外公开：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183925308.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183925308.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183925308.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183925308.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919183925308.png"
+        title="image-20220919183925308" /></p>
+<p><strong>background通常在main函数中，作为所有context的根节点。</strong></p>
+<p><strong>todo通常用在并不知道传递什么context的情形。</strong> 例如，调用一个需要传递context参数的函数，手头并没有其他context可以传递，就可以传递todo。这常常发生在重构进行中，给一些函数添加一个Context参数，但不知道传递什么，可以暂时用todo占一个位置。</p>
+<h4 id="cancelctx">cancelCtx</h4>
+<p>这是一个重要的context:
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184031743.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184031743.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184031743.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184031743.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184031743.png"
+        title="image-20220919184031743" /></p>
+<p>这是一个可以取消的Context，实现了canceler接口。它直接将接口Context作为它的一个匿名字段，这样它就可以被看成一个Context。</p>
+<ul>
+<li>Done()方法的实现</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184327050.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184327050.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184327050.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184327050.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184327050.png"
+        title="image-20220919184327050" /></p>
+<blockquote>
+<p>c.done是“懒汉式”创建，只有调用了Done()方法的时候才会被创建。函数返回的是一个只读的channel，而且没有地方向这个channel里面写数据。<strong>所以直接调用读这个channel，协程会被block住，一般通过搭配select来使用。一旦关闭，就会立即读出零值。</strong></p>
+</blockquote>
+<ul>
+<li>Err()方法和String()方法实现简单，推荐看源码</li>
+<li>cancel()方法实现</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184922404.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184922404.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184922404.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184922404.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919184922404.png"
+        title="image-20220919184922404" /></p>
+<blockquote>
+<p><code>cancel()</code> 方法的**功能就是关闭channel：c.done；递归地取消它的所有子节点；从父节点删除自己。**达到的效果是通过关闭channel，将取消信号传递给它的所有子节点。goroutine接收到取消信号的方式就是select语句中读c.done被选中。</p>
+</blockquote>
+<ul>
+<li>创建一个可取消的context</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919185613461.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919185613461.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919185613461.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919185613461.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919185613461.png"
+        title="image-20220919185613461" /></p>
+<blockquote>
+<p>这是一个暴露给用户的方法，传入一个父Context(通常是一个<code>background</code> ,作为根节点)，返回新建的context。当<code>WithCancel</code> 函数返回的CancelFunc被调用或者父节点的done channel被关闭(父节点的CancelFunc被调用),此context的done channel也会被关闭。</p>
+</blockquote>
+<blockquote>
+<p>注意传给WithCancel方法的参数，前者是true表示取消的时候，需要将自己从父节点里面删除。第二个参数则是一个固定的取消错误类型：<code>var Canceled = errors.New(&quot;context canceles&quot;)</code> 。</p>
+</blockquote>
+<h4 id="valuectx">valueCtx</h4>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190658836.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190658836.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190658836.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190658836.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190658836.png"
+        title="image-20220919190658836" /></p>
+<p>它实现了两个方法：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190734093.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190734093.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190734093.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190734093.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190734093.png"
+        title="image-20220919190734093" /></p>
+<blockquote>
+<p>由于它直接将 Context 作为匿名字段，因此仅管它只实现了 2 个方法，其他方法继承自父 context。但它仍然是一个 Context，这是 Go 语言的一个特点。</p>
+</blockquote>
+<p>创建valueCtx的函数：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190912350.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190912350.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190912350.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190912350.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919190912350.png"
+        title="image-20220919190912350" /></p>
+<blockquote>
+<p>对 key 的要求是可比较，因为之后需要通过 key 取出 context 中的值，可比较是必须的。</p>
+</blockquote>
+<p>通过层层传递context，最终形成一棵树：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919191149401.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919191149401.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919191149401.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919191149401.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220919191149401.png"
+        title="image-20220919191149401" /></p>
+<p>和链表有点像，只是它的方向相反：Context 指向它的父节点，链表则指向下一个节点。通过 WithValue 函数，可以创建层层的 valueCtx，存储 goroutine 间可以共享的变量。</p>
+<p>取值的过程，实际上是一个递归查找的过程：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">valueCtx</span><span class="p">)</span> <span class="nf">Value</span><span class="p">(</span><span class="nx">key</span> <span class="nx">any</span><span class="p">)</span> <span class="nx">any</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">key</span> <span class="o">==</span> <span class="nx">key</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nx">val</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nf">value</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">value</span><span class="p">(</span><span class="nx">c</span> <span class="nx">Context</span><span class="p">,</span> <span class="nx">key</span> <span class="nx">any</span><span class="p">)</span> <span class="nx">any</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">switch</span> <span class="nx">ctx</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.(</span><span class="kd">type</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="o">*</span><span class="nx">valueCtx</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">key</span> <span class="o">==</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">key</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">val</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">c</span> <span class="p">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">Context</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="o">*</span><span class="nx">cancelCtx</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">key</span> <span class="o">==</span> <span class="o">&amp;</span><span class="nx">cancelCtxKey</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="nx">c</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">c</span> <span class="p">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">Context</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="o">*</span><span class="nx">timerCtx</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="nx">key</span> <span class="o">==</span> <span class="o">&amp;</span><span class="nx">cancelCtxKey</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="o">&amp;</span><span class="nx">ctx</span><span class="p">.</span><span class="nx">cancelCtx</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">c</span> <span class="p">=</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">Context</span>
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="o">*</span><span class="nx">emptyCtx</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">nil</span>
+</span></span><span class="line"><span class="cl">		<span class="k">default</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="nx">c</span><span class="p">.</span><span class="nf">Value</span><span class="p">(</span><span class="nx">key</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><blockquote>
+<p>它会顺着链路一直往上找，比较当前节点的 key 是否是要找的 key，如果是，则直接返回 value。否则，一直顺着 context 往前，最终找到根节点（一般是 emptyCtx），直接返回一个 nil。所以用 Value 方法的时候要判断结果是否为 nil。</p>
+</blockquote>
+<p><strong>因为查找方向是往上走的，所以，父节点没法获取子节点存储的值，子节点却可以获取父节点的值。</strong></p>
+<p><code>WithValue</code> 创建 context 节点的过程实际上就是创建链表节点的过程。两个节点的 key 值是可以相等的，但它们是两个不同的 context 节点。查找的时候，会向上查找到最后一个挂载的 context 节点，也就是离得比较近的一个父节点 context。所以，整体上而言，用 <code>WithValue</code> 构造的其实是一个低效率的链表。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-09-19</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/context%E5%AD%A6%E4%B9%A0/" data-title="Context学习" data-hashtags="Golang"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/context%E5%AD%A6%E4%B9%A0/" data-hashtag="Golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/context%E5%AD%A6%E4%B9%A0/" data-title="Context学习" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/context%E5%AD%A6%E4%B9%A0/" data-title="Context学习"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">Golang</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3/" class="prev" rel="prev" title="Golang底层原理理解叙述"><i class="fas fa-angle-left fa-fw"></i>Golang底层原理理解叙述</a></div>
+</div>
+<div id="comments">
+        <div id="gitalk" class="comment"></div>
+        <link rel="stylesheet" href="/js/gitalk.css">
+        <script src="/js/gitalk.min.js"></script>
+        <script src="/js/md5.js"></script>
+        <script>
+        const gitalk = new Gitalk({
+            clientID: '60afa8aa721493fdc40a',
+            clientSecret: '0d83669766bc4d55f49702f8d22e76215dfb373a',
+            repo: 'wen-nan.github.io',
+            owner: 'wen-nan',
+            admin: ['wen-nan'],
+            
+            
+            id: md5(location.pathname), 
+            distractionFreeMode: false 
+        });
+        (function() {
+            if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+                document.getElementById('gitalk').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+                return;
+            }
+            gitalk.render('gitalk');
+        })();
+        </script>
+        </div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                <span id="run-time"></span>
+            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.101.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Narcissus</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>
