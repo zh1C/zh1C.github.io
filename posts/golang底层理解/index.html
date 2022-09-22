@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3\/"
-        },"genre": "posts","keywords": "Golang","wordcount":  14105 ,
+        },"genre": "posts","keywords": "Golang","wordcount":  14176 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3\/","datePublished": "2022-09-16T00:00:00+00:00","dateModified": "2022-09-16T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang底层原理理解叙述</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-16">2022-09-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 14105 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-16">2022-09-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 14176 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 29 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -780,6 +780,7 @@
         title="image-20220922185646202" /></p>
 <h3 id="缺陷">缺陷</h3>
 <p>内部的C函数并不会被跟踪，因为原理是采集goroutine的情况,并不会跟踪C的函数。</p>
+<p>Goroutine分析可以捕获的最大调用栈深度是32。如果调用栈深度超过，将会被截断，也就意味着将错过调用栈中导致采样处于活动状态的函数部分。</p>
 <h3 id="goroutine采样原理">goroutine采样原理</h3>
 <h4 id="1概述">1、概述</h4>
 <p>Go runtime 在一个名为<a href="https://github.com/golang/go/blob/3a778ff50f7091b8a64875c8ed95bfaacf3d334c/src/runtime/proc.go#L500" target="_blank" rel="noopener noreffer">allgs</a>的简单切片中保存了所有的goroutine。包含了活着和死去的goroutine。死去的goroutine被保留用于新的goroutine产生的时候复用。</p>
