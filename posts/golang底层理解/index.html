@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3\/"
-        },"genre": "posts","keywords": "Golang","wordcount":  11298 ,
+        },"genre": "posts","keywords": "Golang","wordcount":  12596 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3\/","datePublished": "2022-09-16T00:00:00+00:00","dateModified": "2022-09-16T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang底层原理理解叙述</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-16">2022-09-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 11298 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 23 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-16">2022-09-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12596 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 26 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -153,6 +153,13 @@
         <li><a href="#go的gc">Go的GC</a></li>
         <li><a href="#常见gc算法介绍">常见GC算法介绍</a></li>
         <li><a href="#gc触发方式">GC触发方式</a></li>
+      </ul>
+    </li>
+    <li><a href="#全cpu采集">全CPU采集</a>
+      <ul>
+        <li><a href="#问题">问题</a></li>
+        <li><a href="#原理">原理</a></li>
+        <li><a href="#缺陷">缺陷</a></li>
       </ul>
     </li>
   </ul>
@@ -564,6 +571,164 @@
 <li>sysmon</li>
 </ul>
 <p>监控线程的一个任务就是强制执行GC，runtime包初始化时会开启一个协程，监控线程在检测到距离上一次GC已经超过指定时间时，就会把该协程添加到runq中，等待得到调度执行。</p>
+<h2 id="全cpu采集">全CPU采集</h2>
+<h3 id="问题">问题</h3>
+<p>假设有如下的一段代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// Http request to a web service that might be slow.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nf">slowNetworkRequest</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// Some heavy CPU computation.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nf">cpuIntensiveTask</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">// Poorly named function that you don&#39;t understand yet.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nf">weirdFunction</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>使用pprof的profile采集的火焰图如下所示：
+<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922090400054.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922090400054.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922090400054.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922090400054.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922090400054.png"
+        title="image-20220922090400054" /></p>
+<p>可以看到所有时间消耗都在cpuIntensiveTask任务上，而我们通过简单的统计时间方式可以得到如下效果：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922091254594.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922091254594.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922091254594.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922091254594.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922091254594.png"
+        title="image-20220922091254594" /></p>
+<blockquote>
+<p>出现上述情况是因为profile的采集是On-CPU的，等待I/O所花费的时间被隐藏了。由于 Go 使用非阻塞 I/O，等待 I/O 的 Goroutines 被停放并且不在任何线程上运行。因此，它们最终对 Go 的内置 CPU 分析器基本上是不可见的。</p>
+</blockquote>
+<p>而使用fgprof，则三个函数的消耗就可以显示：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922092820005.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922092820005.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922092820005.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922092820005.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922092820005.png"
+        title="image-20220922092820005" /></p>
+<h3 id="原理">原理</h3>
+<p>原理是后台启动了一个goroutine，每秒99次唤醒99次调用<code>runtime.GoroutineProfile</code>函数，这个函数将返回所有当前的goroutine与他们的调用栈，不管他们是On/Off CPU状态。但是开销将会随着活动的goroutine的增加而增加，当服务小于1000goroutine的时候，无须担心，但是当goroutine数量达到10k或者更多的时候，开销将会很大。</p>
+<blockquote>
+<p><code>func GoroutineProfile(p []StackRecord) (n int, ok bool)</code></p>
+<p>GoroutineProfile 返回 n，即活动 goroutine 堆栈配置文件中的记录数。如果 len(p) &gt;= n，GoroutineProfile 将 profile 复制到 p 并返回 n，true。如果 len(p) &lt; n，GoroutineProfile 不会改变 p 并返回 n，false。</p>
+<p><code>runtime.StackRecord</code>用于描述单个执行堆栈。</p>
+</blockquote>
+<p>由于并不知道会有多少runtime.StackRecord记录数，所以采用动态增长切片长度的方式，先使用长度为0的切片去调用，然后runtime.GoroutineProfile会返回记录数，然后动态增加1.1*n去获取记录，因为这期间可能增加了goroutine。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922100428655.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922100428655.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922100428655.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922100428655.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922100428655.png"
+        title="image-20220922100428655" /></p>
+<p>然后将每一次唤醒获取的记录进行合并，采用map的数据结构，存储到结构体wallclockProfile.stacks中。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102411065.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102411065.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102411065.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102411065.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102411065.png"
+        title="image-20220922102411065" /></p>
+<p>记录已经存在就count++,没有就创建一个记录，并获取这条调用栈的函数名、文件名、行号等信息存入frames的切片中。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102638325.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102638325.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102638325.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102638325.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102638325.png"
+        title="image-20220922102638325" /></p>
+<p>最后将wallclockProfile结构体转换成profile.Profile结构体即可展示火焰图。先将map的调用栈转换成切片形式，同时去忽略本函数栈帧。转换过程中将count*100ms，就表示成了消耗时间。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">wallclockProfile</span><span class="p">)</span> <span class="nf">exportPprof</span><span class="p">(</span><span class="nx">hz</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">startTime</span><span class="p">,</span> <span class="nx">endTime</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="p">)</span> <span class="o">*</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Profile</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">prof</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Profile</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">m</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Mapping</span><span class="p">{</span><span class="nx">ID</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">HasFunctions</span><span class="p">:</span> <span class="kc">true</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">prof</span><span class="p">.</span><span class="nx">Period</span> <span class="p">=</span> <span class="nb">int64</span><span class="p">(</span><span class="mf">1e9</span> <span class="o">/</span> <span class="nx">hz</span><span class="p">)</span> <span class="c1">// Number of nanoseconds between samples.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">prof</span><span class="p">.</span><span class="nx">TimeNanos</span> <span class="p">=</span> <span class="nx">startTime</span><span class="p">.</span><span class="nf">UnixNano</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">prof</span><span class="p">.</span><span class="nx">DurationNanos</span> <span class="p">=</span> <span class="nb">int64</span><span class="p">(</span><span class="nx">endTime</span><span class="p">.</span><span class="nf">Sub</span><span class="p">(</span><span class="nx">startTime</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">prof</span><span class="p">.</span><span class="nx">Mapping</span> <span class="p">=</span> <span class="p">[]</span><span class="o">*</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Mapping</span><span class="p">{</span><span class="nx">m</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">prof</span><span class="p">.</span><span class="nx">SampleType</span> <span class="p">=</span> <span class="p">[]</span><span class="o">*</span><span class="nx">profile</span><span class="p">.</span><span class="nx">ValueType</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Type</span><span class="p">:</span> <span class="s">&#34;samples&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Unit</span><span class="p">:</span> <span class="s">&#34;count&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Type</span><span class="p">:</span> <span class="s">&#34;time&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Unit</span><span class="p">:</span> <span class="s">&#34;nanoseconds&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="p">},</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">prof</span><span class="p">.</span><span class="nx">PeriodType</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">profile</span><span class="p">.</span><span class="nx">ValueType</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Type</span><span class="p">:</span> <span class="s">&#34;wallclock&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Unit</span><span class="p">:</span> <span class="s">&#34;nanoseconds&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kd">type</span> <span class="nx">functionKey</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Name</span>     <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Filename</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">funcIdx</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="nx">functionKey</span><span class="p">]</span><span class="o">*</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Function</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kd">type</span> <span class="nx">locationKey</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Function</span> <span class="nx">functionKey</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">Line</span>     <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="nx">locationIdx</span> <span class="o">:=</span> <span class="kd">map</span><span class="p">[</span><span class="nx">locationKey</span><span class="p">]</span><span class="o">*</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Location</span><span class="p">{}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ws</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">p</span><span class="p">.</span><span class="nf">exportStacks</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">sample</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Sample</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">Value</span><span class="p">:</span> <span class="p">[]</span><span class="kt">int64</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nb">int64</span><span class="p">(</span><span class="nx">ws</span><span class="p">.</span><span class="nx">count</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">				<span class="nb">int64</span><span class="p">(</span><span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">/</span> <span class="nx">hz</span> <span class="o">*</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">count</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">			<span class="p">},</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">frame</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ws</span><span class="p">.</span><span class="nx">frames</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">fnKey</span> <span class="o">:=</span> <span class="nx">functionKey</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">Function</span><span class="p">,</span> <span class="nx">Filename</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">File</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">function</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">funcIdx</span><span class="p">[</span><span class="nx">fnKey</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">function</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Function</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">ID</span><span class="p">:</span>         <span class="nb">uint64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">prof</span><span class="p">.</span><span class="nx">Function</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">Name</span><span class="p">:</span>       <span class="nx">frame</span><span class="p">.</span><span class="nx">Function</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">SystemName</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">Function</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">Filename</span><span class="p">:</span>   <span class="nx">frame</span><span class="p">.</span><span class="nx">File</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">funcIdx</span><span class="p">[</span><span class="nx">fnKey</span><span class="p">]</span> <span class="p">=</span> <span class="nx">function</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">prof</span><span class="p">.</span><span class="nx">Function</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">prof</span><span class="p">.</span><span class="nx">Function</span><span class="p">,</span> <span class="nx">function</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			<span class="nx">locKey</span> <span class="o">:=</span> <span class="nx">locationKey</span><span class="p">{</span><span class="nx">Function</span><span class="p">:</span> <span class="nx">fnKey</span><span class="p">,</span> <span class="nx">Line</span><span class="p">:</span> <span class="nx">frame</span><span class="p">.</span><span class="nx">Line</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">location</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">locationIdx</span><span class="p">[</span><span class="nx">locKey</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">location</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Location</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">ID</span><span class="p">:</span>      <span class="nb">uint64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">prof</span><span class="p">.</span><span class="nx">Location</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">Mapping</span><span class="p">:</span> <span class="nx">m</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">					<span class="nx">Line</span><span class="p">:</span> <span class="p">[]</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Line</span><span class="p">{{</span>
+</span></span><span class="line"><span class="cl">						<span class="nx">Function</span><span class="p">:</span> <span class="nx">function</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">						<span class="nx">Line</span><span class="p">:</span>     <span class="nb">int64</span><span class="p">(</span><span class="nx">frame</span><span class="p">.</span><span class="nx">Line</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">					<span class="p">}},</span>
+</span></span><span class="line"><span class="cl">				<span class="p">}</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">locationIdx</span><span class="p">[</span><span class="nx">locKey</span><span class="p">]</span> <span class="p">=</span> <span class="nx">location</span>
+</span></span><span class="line"><span class="cl">				<span class="nx">prof</span><span class="p">.</span><span class="nx">Location</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">prof</span><span class="p">.</span><span class="nx">Location</span><span class="p">,</span> <span class="nx">location</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">			<span class="p">}</span>
+</span></span><span class="line"><span class="cl">			<span class="nx">sample</span><span class="p">.</span><span class="nx">Location</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">sample</span><span class="p">.</span><span class="nx">Location</span><span class="p">,</span> <span class="nx">location</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="nx">prof</span><span class="p">.</span><span class="nx">Sample</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">prof</span><span class="p">.</span><span class="nx">Sample</span><span class="p">,</span> <span class="nx">sample</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">prof</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><blockquote>
+<p>Profile结构体中，每一条调用栈存入Sampling切片中，记录了调用次数和转换的时间，同时映射到一个Location结构体，Location中存储了函数相关信息，包括行号、函数名、文件名等信息。</p>
+</blockquote>
+<h3 id="缺陷">缺陷</h3>
+<p>内部的C函数并不会被跟踪，因为原理是采集goroutine的情况,并不会跟踪C的函数。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
