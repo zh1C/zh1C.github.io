@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3\/"
-        },"genre": "posts","keywords": "Golang","wordcount":  12596 ,
+        },"genre": "posts","keywords": "Golang","wordcount":  14105 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3\/","datePublished": "2022-09-16T00:00:00+00:00","dateModified": "2022-09-16T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Golang底层原理理解叙述</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-16">2022-09-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12596 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 26 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-16">2022-09-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 14105 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 29 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -160,6 +160,14 @@
         <li><a href="#问题">问题</a></li>
         <li><a href="#原理">原理</a></li>
         <li><a href="#缺陷">缺陷</a></li>
+        <li><a href="#goroutine采样原理">goroutine采样原理</a>
+          <ul>
+            <li><a href="#1概述">1、概述</a></li>
+            <li><a href="#2声明">2、声明</a></li>
+            <li><a href="#3goroutine属性">3、goroutine属性</a></li>
+            <li><a href="#4特征矩阵">4、特征矩阵</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -603,6 +611,7 @@
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922091254594.png"
         title="image-20220922091254594" /></p>
 <blockquote>
+<p>profile的采集原理是，系统1s内发送100次信号，信号将会中断当前线程，并记录当前线程的堆栈。</p>
 <p>出现上述情况是因为profile的采集是On-CPU的，等待I/O所花费的时间被隐藏了。由于 Go 使用非阻塞 I/O，等待 I/O 的 Goroutines 被停放并且不在任何线程上运行。因此，它们最终对 Go 的内置 CPU 分析器基本上是不可见的。</p>
 </blockquote>
 <p>而使用fgprof，则三个函数的消耗就可以显示：</p>
@@ -619,7 +628,8 @@
 <blockquote>
 <p><code>func GoroutineProfile(p []StackRecord) (n int, ok bool)</code></p>
 <p>GoroutineProfile 返回 n，即活动 goroutine 堆栈配置文件中的记录数。如果 len(p) &gt;= n，GoroutineProfile 将 profile 复制到 p 并返回 n，true。如果 len(p) &lt; n，GoroutineProfile 不会改变 p 并返回 n，false。</p>
-<p><code>runtime.StackRecord</code>用于描述单个执行堆栈。</p>
+<p><code>runtime.StackRecord</code>用于描述单个执行堆栈。结构为[32]uintptr，记录的是程序计数器PC的值，所以调用栈追踪深度为32，不清楚的调用栈函数为0，如下是一条StackRecord记录：</p>
+<p><code>[4299802552 4299802509 4299802384 4299446240 4299614708 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]</code></p>
 </blockquote>
 <p>由于并不知道会有多少runtime.StackRecord记录数，所以采用动态增长切片长度的方式，先使用长度为0的切片去调用，然后runtime.GoroutineProfile会返回记录数，然后动态增加1.1*n去获取记录，因为这期间可能增加了goroutine。</p>
 <p><img
@@ -630,8 +640,41 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922100428655.png"
         title="image-20220922100428655" /></p>
-<p>然后将每一次唤醒获取的记录进行合并，采用map的数据结构，存储到结构体wallclockProfile.stacks中。</p>
-<p><img
+<p>然后将每一次唤醒获取的记录进行合并，采用map的数据结构，存储到结构体wallclockProfile.stacks中。同时ignore中存储当前函数的栈帧，用户后面忽略统计函数的调用栈。</p>
+<p>Runtime.Frame包含函数名，函数所在文件、行号等信息，如下所示：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">type</span> <span class="nx">Frame</span> <span class="kd">struct</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// PC is the program counter for the location in this frame.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// For a frame that calls another frame, this will be the
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// program counter of a call instruction. Because of inlining,
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// multiple frames may have the same PC value, but different
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// symbolic information.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">PC</span> <span class="kt">uintptr</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Func is the Func value of this call frame. This may be nil
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// for non-Go code or fully inlined functions.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">Func</span> <span class="o">*</span><span class="nx">Func</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Function is the package path-qualified function name of
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// this call frame. If non-empty, this string uniquely
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// identifies a single function in the program.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// This may be the empty string if not known.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// If Func is not nil then Function == Func.Name().
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">Function</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// File and Line are the file name and line number of the
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// location in this frame. For non-leaf frames, this will be
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// the location of a call. These may be the empty string and
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// zero, respectively, if not known.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">File</span> <span class="kt">string</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">Line</span> <span class="kt">int</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// Entry point program counter for the function; may be zero
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// if not known. If Func is not nil then Entry ==
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">// Func.Entry().
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">Entry</span> <span class="kt">uintptr</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// contains filtered or unexported fields
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><p><img
         class="lazyload"
         src="/svg/loading.min.svg"
         data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102411065.png"
@@ -643,12 +686,12 @@
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102638325.png"
-        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102638325.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102638325.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102638325.png 2x"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922185413286.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922185413286.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922185413286.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922185413286.png 2x"
         data-sizes="auto"
-        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922102638325.png"
-        title="image-20220922102638325" /></p>
-<p>最后将wallclockProfile结构体转换成profile.Profile结构体即可展示火焰图。先将map的调用栈转换成切片形式，同时去忽略本函数栈帧。转换过程中将count*100ms，就表示成了消耗时间。</p>
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922185413286.png"
+        title="image-20220922185413286" /></p>
+<p>最后将wallclockProfile结构体转换成profile.Profile结构体即可展示火焰图。先将map的调用栈转换成切片形式，同时去忽略本函数栈帧。转换过程中将count*10ms（1s/hz），就表示成了消耗时间。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="o">*</span><span class="nx">wallclockProfile</span><span class="p">)</span> <span class="nf">exportPprof</span><span class="p">(</span><span class="nx">hz</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">startTime</span><span class="p">,</span> <span class="nx">endTime</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Time</span><span class="p">)</span> <span class="o">*</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Profile</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">prof</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Profile</span><span class="p">{}</span>
 </span></span><span class="line"><span class="cl">	<span class="nx">m</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">profile</span><span class="p">.</span><span class="nx">Mapping</span><span class="p">{</span><span class="nx">ID</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">HasFunctions</span><span class="p">:</span> <span class="kc">true</span><span class="p">}</span>
@@ -725,10 +768,83 @@
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">prof</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><blockquote>
-<p>Profile结构体中，每一条调用栈存入Sampling切片中，记录了调用次数和转换的时间，同时映射到一个Location结构体，Location中存储了函数相关信息，包括行号、函数名、文件名等信息。</p>
+<p>Profile结构体中，每一条调用栈存入Sampling切片中，记录了调用次数和转换的时间，同时映射到一个Location结构体，Location中存储了函数相关信息，包括行号与Function结构体，Function中存储函数相关信息。同时profile中也有Location结构体切片。</p>
 </blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922185646202.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922185646202.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922185646202.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922185646202.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/image-20220922185646202.png"
+        title="image-20220922185646202" /></p>
 <h3 id="缺陷">缺陷</h3>
 <p>内部的C函数并不会被跟踪，因为原理是采集goroutine的情况,并不会跟踪C的函数。</p>
+<h3 id="goroutine采样原理">goroutine采样原理</h3>
+<h4 id="1概述">1、概述</h4>
+<p>Go runtime 在一个名为<a href="https://github.com/golang/go/blob/3a778ff50f7091b8a64875c8ed95bfaacf3d334c/src/runtime/proc.go#L500" target="_blank" rel="noopener noreffer">allgs</a>的简单切片中保存了所有的goroutine。包含了活着和死去的goroutine。死去的goroutine被保留用于新的goroutine产生的时候复用。</p>
+<p>Go runtime 中有提供API来追踪allgs中存活的goroutine及其堆栈等各种信息。一些API也能提供统计各种信息的功能。</p>
+<p>尽管API之间存在差异，但是存活的goroutine都有如下<a href="https://github.com/golang/go/blob/9b955d2d3fcff6a5bc8bce7bafdc4c634a28e95b/src/runtime/mprof.go#L729" target="_blank" rel="noopener noreffer">基本</a><a href="https://github.com/golang/go/blob/9b955d2d3fcff6a5bc8bce7bafdc4c634a28e95b/src/runtime/traceback.go#L931" target="_blank" rel="noopener noreffer">定义</a>：</p>
+<ul>
+<li>
+<p>没有<a href="https://github.com/golang/go/blob/go1.15.6/src/runtime/runtime2.go#L65-L71" target="_blank" rel="noopener noreffer">死亡</a></p>
+</li>
+<li>
+<p>不是<a href="https://github.com/golang/go/blob/9b955d2d3fcff6a5bc8bce7bafdc4c634a28e95b/src/runtime/traceback.go#L1013-L1021" target="_blank" rel="noopener noreffer">系统goroutine</a>也不是终结器goroutine</p>
+</li>
+</ul>
+<p>总结来说，正在运行的goroutine以及等待I/O、锁、通道、调度等的goroutine都被认为是存活的goroutine。</p>
+<h4 id="2声明">2、声明</h4>
+<p>Go中所有可用的Goroutine分析都一个O(N)时间复杂度的STW阶段（其中N是分配的goroutine的数量）。一个简单的<a href="https://github.com/felixge/fgprof/blob/fe01e87ceec08ea5024e8168f88468af8f818b62/fgprof_test.go#L35-L78" target="_blank" rel="noopener noreffer">基准测试</a><a href="https://github.com/felixge/fgprof/blob/master/BenchmarkProfilerGoroutines.txt" target="_blank" rel="noopener noreffer">表明</a>，当使用 <a href="https://pkg.go.dev/runtime#GoroutineProfile" target="_blank" rel="noopener noreffer">runtime.GoroutineProfile() </a>API 时，每个 goroutine 会停止大约 1µs。但是这个数字很可能会随着程序的平均堆栈深度、死去的 goroutine 的数量等因素而波动。</p>
+<p>因此，对延迟非常敏感并且使用活动数达数千个goroutine的程序，进行goroutine分析要谨慎。大多数不会产生大量 goroutine 并且可以容忍几毫秒的偶然额外延迟的应用程序在生产中的连续goroutine 分析应该没有问题。</p>
+<h4 id="3goroutine属性">3、goroutine属性</h4>
+<p>Goroutines 有很多<a href="https://github.com/golang/go/blob/go1.15.6/src/runtime/runtime2.go#L406-L486" target="_blank" rel="noopener noreffer">属性</a>可以帮助调试 Go 应用程序。通过本文档后面描述的 API 不同程度地公开。</p>
+<ul>
+<li>
+<p><code>goid</code>：goroutine的唯一id，主goroutine的id为1。</p>
+</li>
+<li>
+<p><code>atomicstatus</code> ：goroutine 的状态，以下之一：</p>
+<ul>
+<li><code>idle</code>: 刚被分配</li>
+<li><code>runnable</code> :在运行队列，等待被调度</li>
+<li><code>running</code> :在操作系统线程上执行</li>
+<li><code>syscall</code> :被系统调用阻塞</li>
+<li><code>waiting</code> :由调度程序停放，参见<code>g.waitreason</code></li>
+<li><code>dead</code> :刚刚退出或正在重新初始化</li>
+<li><code>copystack</code> :当前正在移动堆栈</li>
+<li><code>preempted</code> :只是抢占了自己</li>
+</ul>
+</li>
+<li>
+<p><code>waitreason</code> :goroutine处于等待状态的原因，例如：Sleep、channel操作、i/o、gc等</p>
+</li>
+<li>
+<p><code>waitsince</code> :goroutine进入等待或系统调用状态的大致时间戳，由等待开始后的第一个GC确定。</p>
+</li>
+<li>
+<p><code>lables</code> :一组可以附加到 goroutines 的键/值<a href="https://rakyll.org/profiler-labels/" target="_blank" rel="noopener noreffer">分析器标签</a>。</p>
+</li>
+<li>
+<p><code>stack trace</code> :当前正在执行的函数及其调用者。这表现为文件名、函数名和行号的纯文本输出或程序计数器地址 (pcs) 的片段。 🚧 研究更多细节，例如func/file/line 文本可以转换成 pcs 吗？</p>
+</li>
+<li>
+<p><code>gopc</code> :导致该 goroutine 被创建的 go &hellip; 调用的程序计数器地址 (pc)。可以转换为文件、函数名和行号。</p>
+</li>
+<li>
+<p><code>lockedm</code> :这个 goroutine 被锁定的线程，如果有的话。</p>
+</li>
+</ul>
+<h4 id="4特征矩阵">4、特征矩阵</h4>
+<p>下面的功能矩阵通过各种 API 让您快速了解这些属性的当前可用性。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/%28null%29-20220922192607181.%28null%29"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/%28null%29-20220922192607181.%28null%29, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/%28null%29-20220922192607181.%28null%29 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/%28null%29-20220922192607181.%28null%29 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2022-09/(null)-20220922192607181.(null)"
+        title="img" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
