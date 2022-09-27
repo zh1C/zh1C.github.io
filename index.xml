@@ -3,9 +3,16 @@
         <title>NarcissusBlog</title>
         <link>http://wen-nan.github.io/</link>
         <description>NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 25 Sep 2022 00:00:00 &#43;0000</lastBuildDate>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 27 Sep 2022 00:00:00 &#43;0000</lastBuildDate>
             <atom:link href="http://wen-nan.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Git日常操作总结</title>
+    <link>http://wen-nan.github.io/posts/git%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</link>
+    <pubDate>Tue, 27 Sep 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/git%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</guid>
+    <description><![CDATA[1. 移除已经commit的文件 将某个文件已经提交了，这时候需要移除这个文件，并且将其添加到.gitignore中，让git不追踪该文件，可以使]]></description>
+</item><item>
     <title>Emacs学习</title>
     <link>http://wen-nan.github.io/posts/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80/</link>
     <pubDate>Sun, 25 Sep 2022 00:00:00 &#43;0000</pubDate>
@@ -68,12 +75,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/golang%E9%AB%98%E6%80%A7%E8%83%BD%E7%BC%96%E7%A8%8B/</guid>
     <description><![CDATA[1. Benchmark 基准测试 Go 语言标准库内置的 testing 测试框架提供了基准测试(benchmark)的能力，能让我们很容易地对某一段代码进行性能测试。 1.1 benchm]]></description>
-</item><item>
-    <title>Redis相关面试题</title>
-    <link>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
-    <pubDate>Mon, 07 Mar 2022 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
-    <description><![CDATA[1. Redis简介 Redis就是一个使用C语言开发的数据库，与传统数据库不同的是，Redis数据是存在内存中的，即他是内存数据库，读写速度非常]]></description>
 </item></channel>
 </rss>

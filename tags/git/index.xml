@@ -3,7 +3,14 @@
         <title>Git - 标签 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/tags/git/</link>
         <description>Git - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 03 Sep 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/git/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 27 Sep 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/git/" rel="self" type="application/rss+xml" /><item>
+    <title>Git日常操作总结</title>
+    <link>http://wen-nan.github.io/posts/git%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</link>
+    <pubDate>Tue, 27 Sep 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/git%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/</guid>
+    <description><![CDATA[1. 移除已经commit的文件 将某个文件已经提交了，这时候需要移除这个文件，并且将其添加到.gitignore中，让git不追踪该文件，可以使]]></description>
+</item><item>
     <title>Git基础使用</title>
     <link>http://wen-nan.github.io/posts/git%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8/</link>
     <pubDate>Fri, 03 Sep 2021 00:00:00 &#43;0000</pubDate>
