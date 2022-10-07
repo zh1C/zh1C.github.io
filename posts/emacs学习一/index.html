@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/"
-        },"genre": "posts","keywords": "emacs","wordcount":  1345 ,
+        },"genre": "posts","keywords": "emacs","wordcount":  1937 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/","datePublished": "2022-09-25T00:00:00+00:00","dateModified": "2022-10-04T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Emacs学习</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/emacs/"><i class="far fa-folder fa-fw"></i>emacs</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-25">2022-09-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1345 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-09-25">2022-09-25</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1937 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -135,6 +135,7 @@
     <li><a href="#三常用快捷键">三、常用快捷键</a>
       <ul>
         <li><a href="#光标移动快捷键">光标移动快捷键</a></li>
+        <li><a href="#窗口操作">窗口操作</a></li>
       </ul>
     </li>
   </ul>
@@ -270,6 +271,179 @@
 <tr>
 <td><code>SPC j $</code></td>
 <td style="text-align:left">移动光标到行末尾位置(并在前一个位置设置一个标记)</td>
+</tr>
+<tr>
+<td><code>数字 j</code></td>
+<td style="text-align:left">向下移动number行</td>
+</tr>
+<tr>
+<td><code>数字 k</code></td>
+<td style="text-align:left">向上移动number行</td>
+</tr>
+<tr>
+<td><code>C d</code></td>
+<td style="text-align:left">向下翻屏</td>
+</tr>
+<tr>
+<td><code>C u</code></td>
+<td style="text-align:left">向上翻屏</td>
+</tr>
+</tbody>
+</table>
+<p>如果安装了<code>ivy</code>层，可以使用如下跳跃，很有用：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC j b</code></td>
+<td style="text-align:left">返回到上一个位置(跳跃之后)</td>
+</tr>
+<tr>
+<td><code>SPC j j</code></td>
+<td style="text-align:left">跳跃到指定字符</td>
+</tr>
+<tr>
+<td><code>SPC j l</code></td>
+<td style="text-align:left">跳跃到指定行</td>
+</tr>
+<tr>
+<td><code>SPC j w</code></td>
+<td style="text-align:left">跳跃到指定单词</td>
+</tr>
+<tr>
+<td><code>SPC j d</code></td>
+<td style="text-align:left">跳转到当前目录列表</td>
+</tr>
+<tr>
+<td><code>SPC j D</code></td>
+<td style="text-align:left">跳转到当前目录列表(新窗口)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>跳转到配对为止</li>
+</ul>
+<p>在vim模式下， 非编辑模式，可以按<code>%</code>跳转到配对为止，例如<code>()[]{}</code>等配对位置。</p>
+<ul>
+<li>搜索操作</li>
+</ul>
+<p>快捷键<code>SPC s s</code>可以在当前文件中进行搜索，后面可以加上需要选择的行号。</p>
+<ul>
+<li>选择区域</li>
+</ul>
+<p>很多时候需要选中区域，然后操作(复制/删除/加注释等)，按<code>v</code>则可以进入选择模式，然后跳转到任意结束位置即可。</p>
+<ol>
+<li>选中单词：</li>
+</ol>
+<p><code>M f</code>前进一个单词；<code>M b</code>回退一个单词；<code>y w</code>复制单词</p>
+<ol start="2">
+<li>选中函数</li>
+</ol>
+<p><code>C M h</code>选中当前函数</p>
+<ol start="3">
+<li>选中行</li>
+</ol>
+<p><code>$</code>跳到行尾；<code>^</code>跳到行首；<code>y y</code>复制行</p>
+<ul>
+<li>删除操作</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>x</code></td>
+<td>删除字符(光标后)</td>
+</tr>
+<tr>
+<td><code>X</code></td>
+<td>删除字符(光标前)</td>
+</tr>
+<tr>
+<td><code>dw</code></td>
+<td>删除单词(光标后)</td>
+</tr>
+<tr>
+<td><code>dd</code></td>
+<td>删除当前行(也相当于剪切)</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>复制/粘贴操作</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>yy</code></td>
+<td>复制当前行</td>
+</tr>
+<tr>
+<td><code>nyy</code></td>
+<td>复制当前行向下n行</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>粘贴到光标下一行</td>
+</tr>
+<tr>
+<td><code>P</code></td>
+<td>粘贴到光标上一行</td>
+</tr>
+<tr>
+<td><code>u</code></td>
+<td>撤销上一步操作</td>
+</tr>
+<tr>
+<td><code>C r</code></td>
+<td>重做上一步，例如想多复制几次，就可以使用</td>
+</tr>
+</tbody>
+</table>
+<h3 id="窗口操作">窗口操作</h3>
+<p>每个窗口都有一个编号，通过快捷键<code>SPC number</code>可以快速切换到对应的窗口。</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC w d</code></td>
+<td>删除当前窗口</td>
+</tr>
+<tr>
+<td><code>SPC w s</code></td>
+<td>水平分割当前窗口</td>
+</tr>
+<tr>
+<td><code>SPC w S</code></td>
+<td>水平分割当前窗口并聚焦到新窗口</td>
+</tr>
+<tr>
+<td><code>SPC w v</code></td>
+<td>垂直分割当前窗口</td>
+</tr>
+<tr>
+<td><code>SPC w V</code></td>
+<td>垂直分割当前窗口并聚焦到新窗口</td>
 </tr>
 </tbody>
 </table>
