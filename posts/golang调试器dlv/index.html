@@ -5,35 +5,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
-        <title>MySQL:事务 - NarcissusBlog</title><meta name="Description" content="学习MySQL45讲事务相关知识。"><meta property="og:title" content="MySQL:事务" />
-<meta property="og:description" content="学习MySQL45讲事务相关知识。" />
+        <title>Golang调试器Delve学习 - NarcissusBlog</title><meta name="Description" content="学习非常适合Golang的调试器Delve"><meta property="og:title" content="Golang调试器Delve学习" />
+<meta property="og:description" content="学习非常适合Golang的调试器Delve" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2021-11-30T00:00:00+00:00" />
-<meta property="article:modified_time" content="2021-11-30T00:00:00+00:00" />
+<meta property="og:url" content="http://wen-nan.github.io/posts/golang%E8%B0%83%E8%AF%95%E5%99%A8dlv/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-11-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2022-11-13T00:00:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="MySQL:事务"/>
-<meta name="twitter:description" content="学习MySQL45讲事务相关知识。"/>
+<meta name="twitter:title" content="Golang调试器Delve学习"/>
+<meta name="twitter:description" content="学习非常适合Golang的调试器Delve"/>
 <meta name="application-name" content="NarcissusBlog">
 <meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" /><link rel="prev" href="http://wen-nan.github.io/posts/mysql45%E8%AE%B23/" /><link rel="next" href="http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/golang%E8%B0%83%E8%AF%95%E5%99%A8dlv/" /><link rel="prev" href="http://wen-nan.github.io/posts/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "MySQL:事务",
+        "headline": "Golang调试器Delve学习",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "http:\/\/wen-nan.github.io\/posts\/mysql45%E8%AE%B22\/"
-        },"genre": "posts","keywords": "MySQL","wordcount":  699 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/mysql45%E8%AE%B22\/","datePublished": "2021-11-30T00:00:00+00:00","dateModified": "2021-11-30T00:00:00+00:00","publisher": {
+            "@id": "http:\/\/wen-nan.github.io\/posts\/golang%E8%B0%83%E8%AF%95%E5%99%A8dlv\/"
+        },"genre": "posts","keywords": "Golang","wordcount":  765 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/golang%E8%B0%83%E8%AF%95%E5%99%A8dlv\/","datePublished": "2022-11-13T00:00:00+00:00","dateModified": "2022-11-13T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
                 "name": "Narcissus"
-            },"description": "学习MySQL45讲事务相关知识。"
+            },"description": "学习非常适合Golang的调试器Delve"
     }
     </script></head>
     <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
@@ -112,9 +112,9 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single"><h1 class="single-title animated flipInX">MySQL:事务</h1><div class="post-meta">
-            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2021-11-30">2021-11-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 699 字&nbsp;
+        </div><article class="page single"><h1 class="single-title animated flipInX">Golang调试器Delve学习</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/golang/"><i class="far fa-folder fa-fw"></i>Golang</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-11-13">2022-11-13</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 765 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -123,73 +123,123 @@
                 </div>
                 <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#事务隔离为什么你改了我还看不见">事务隔离：为什么你改了我还看不见？</a>
+    <li><a href="#1-安装">1. 安装</a></li>
+    <li><a href="#2-基础使用">2. 基础使用</a>
       <ul>
-        <li><a href="#隔离性与隔离级别">隔离性与隔离级别</a></li>
-        <li><a href="#事务隔离的实现">事务隔离的实现</a></li>
+        <li><a href="#21-命令">2.1 命令</a></li>
+        <li><a href="#22-标准输入的调试方式">2.2 标准输入的调试方式</a></li>
       </ul>
     </li>
   </ul>
 </nav></div>
-            </div><div class="content" id="content"><h2 id="事务隔离为什么你改了我还看不见">事务隔离：为什么你改了我还看不见？</h2>
-<p><strong>事务支持是在引擎层实现的</strong>，MySQL是支持多引擎的系统，但并不是所有引擎都支持事务。</p>
-<h3 id="隔离性与隔离级别">隔离性与隔离级别</h3>
-<p>事务的特性有ACID（Atomicity、Consistency、Isolation、Durability，即原子性、一致性、隔离性、持久性）。</p>
-<p>当数据库多个事务同时执行的时候，就可能出现脏读、不可重复读、幻读的问题，为了解决这些问题，就有了隔离级别的概念。SQL标准事务隔离级别包括：</p>
-<ul>
-<li>读未提交：一个事务还没提交时，他做的变更就能被别的事务看到。</li>
-<li>读提交：一个事务提交后，他做的变更才会被其他事务看到。</li>
-<li>可重复读：一个事务执行过程中看到的数据，总是跟这个事务启动时看到的数据保持一致。</li>
-<li>串行化：对同一行记录，读写都会加锁。</li>
-</ul>
-<blockquote>
-<p>在实现上，<strong>数据库会创建一个视图，访问的时候以视图的逻辑结果为准</strong>。</p>
-<ul>
-<li>在“可重复读”隔离级别下，视图在事务启动时创建，整个事务存在期间都用这个视图。</li>
-<li>在“读提交”隔离级别下，视图在每个SQL语句开始执行的时候创建。</li>
-<li>“读未提交”隔离级别下直接返回记录上的最新值，没有视图概念。</li>
-<li>“串行化”隔离级别下直接用加锁的方式避免并行访问。</li>
-</ul>
+            </div><div class="content" id="content"><p>Go语言支持GDB、LLDB、Delve等调试器，其中Delve是专门为Go语言设计开发的调试器，本身也是采用Golang实现，下面学习Delve。</p>
+<h2 id="1-安装">1. 安装</h2>
+<p><a href="https://github.com/go-delve/delve" target="_blank" rel="noopener noreffer">Delve</a>可以使用如下方式进行安装：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="k">go</span> <span class="nx">install</span> <span class="nx">github</span><span class="p">.</span><span class="nx">com</span><span class="o">/</span><span class="k">go</span><span class="o">-</span><span class="nx">delve</span><span class="o">/</span><span class="nx">delve</span><span class="o">/</span><span class="nx">cmd</span><span class="o">/</span><span class="nx">dlv</span><span class="err">@</span><span class="nx">latest</span>
+</span></span></code></pre></div><blockquote>
+<p>注意：此方式安装必须要求Go版本为1.16及以上。</p>
 </blockquote>
-<h3 id="事务隔离的实现">事务隔离的实现</h3>
-<p><strong>事务隔离通过回滚日志实现</strong>，在MySQL中，每一条记录在更新的时候都会记录一条回滚操作，假设一个值从1被顺序改成了2、3、4，在回滚日志里面有类似下面的记录：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png"
-        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png 2x"
-        data-sizes="auto"
-        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-11/ScreenShot2021-11-20%2018.36.53.png"
-        title="ScreenShot2021-11-20 18.36.53" /></p>
-<p>在视图A、B、C中，这个记录的值分别是1、2、4，<strong>同一条记录在系统中可以存在多个版本，这就是数据库的多版本并发控制（MVCC）</strong>。</p>
-<blockquote>
-<p>注意：当系统里没有比回滚日志更早的read-view时，回滚日志就会被删除。因此我们应该尽量避免使用长事务，因为会导致大量占用存储空间。</p>
+<p>安装完成后，GOBIN目录下将会有dlv的可执行文件。</p>
+<h2 id="2-基础使用">2. 基础使用</h2>
+<h3 id="21-命令">2.1 命令</h3>
+<p>使用<code>dlv debug file.go</code>即可启动调试，输入<code>help</code>即可查询可用命令。</p>
+<pre tabindex="0"><code>Running the program:
+    call ------------------------ Resumes process, injecting a function call (EXPERIMENTAL!!!)
+    continue (alias: c) --------- Run until breakpoint or program termination.
+    next (alias: n) ------------- Step over to next source line.
+    rebuild --------------------- Rebuild the target executable and restarts it. It does not work if the executable was not built by delve.
+    restart (alias: r) ---------- Restart process.
+    step (alias: s) ------------- Single step through program.
+    step-instruction (alias: si)  Single step a single cpu instruction.
+    stepout (alias: so) --------- Step out of the current function.
+
+Manipulating breakpoints:
+    break (alias: b) ------- Sets a breakpoint.
+    breakpoints (alias: bp)  Print out info for active breakpoints.
+    clear ------------------ Deletes breakpoint.
+    clearall --------------- Deletes multiple breakpoints.
+    condition (alias: cond)  Set breakpoint condition.
+    on --------------------- Executes a command when a breakpoint is hit.
+    toggle ----------------- Toggles on or off a breakpoint.
+    trace (alias: t) ------- Set tracepoint.
+    watch ------------------ Set watchpoint.
+
+Viewing program variables and memory:
+    args ----------------- Print function arguments.
+    display -------------- Print value of an expression every time the program stops.
+    examinemem (alias: x)  Examine raw memory at the given address.
+    locals --------------- Print local variables.
+    print (alias: p) ----- Evaluate an expression.
+    regs ----------------- Print contents of CPU registers.
+    set ------------------ Changes the value of a variable.
+    vars ----------------- Print package variables.
+    whatis --------------- Prints type of an expression.
+
+Listing and switching between threads and goroutines:
+    goroutine (alias: gr) -- Shows or changes current goroutine
+    goroutines (alias: grs)  List program goroutines.
+    thread (alias: tr) ----- Switch to the specified thread.
+    threads ---------------- Print out info for every traced thread.
+
+Viewing the call stack and selecting frames:
+    deferred --------- Executes command in the context of a deferred call.
+    down ------------- Move the current frame down.
+    frame ------------ Set the current frame, or execute command on a different frame.
+    stack (alias: bt)  Print stack trace.
+    up --------------- Move the current frame up.
+
+Other commands:
+    config --------------------- Changes configuration parameters.
+    disassemble (alias: disass)  Disassembler.
+    dump ----------------------- Creates a core dump from the current process state
+    edit (alias: ed) ----------- Open where you are in $DELVE_EDITOR or $EDITOR
+    exit (alias: quit | q) ----- Exit the debugger.
+    funcs ---------------------- Print list of functions.
+    help (alias: h) ------------ Prints the help message.
+    libraries ------------------ List loaded dynamic libraries
+    list (alias: ls | l) ------- Show source code.
+    source --------------------- Executes a file containing a list of delve commands
+    sources -------------------- Print list of source files.
+    transcript ----------------- Appends command output to a file.
+    types ---------------------- Print list of types
+</code></pre><h3 id="22-标准输入的调试方式">2.2 标准输入的调试方式</h3>
+<p>因为这方调试方式并不是主流，所以暂不支持优雅的方式进行调试，可以采用如下方式：</p>
+<ol>
+<li>启动一个Shell输入如下命令调试相关文件</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">dlv debug --headless --listen<span class="o">=</span>&lt;:XYZ&gt; &lt;file.go&gt;
+</span></span></code></pre></div><blockquote>
+<p>listen后面就是监听的端口，然后就可以在该终端进行标准输入</p>
 </blockquote>
+<ol start="2">
+<li>启动另一个端口，输入如下命令进行正常调试即可</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl">dlv connect :XYZ
+</span></span></code></pre></div><p><strong>第一个终端的输入将进入第二个，最后的输入将在第一个终端。</strong></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2021-11-30</span>
+                <span>更新于 2022-11-13</span>
             </div>
             <div class="post-info-license"></div>
         </div>
         <div class="post-info-line">
             <div class="post-info-md"></div>
             <div class="post-info-share">
-                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" data-title="MySQL:事务" data-hashtags="MySQL"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" data-hashtag="MySQL"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" data-title="MySQL:事务" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/mysql45%E8%AE%B22/" data-title="MySQL:事务"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/golang%E8%B0%83%E8%AF%95%E5%99%A8dlv/" data-title="Golang调试器Delve学习" data-hashtags="Golang"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/golang%E8%B0%83%E8%AF%95%E5%99%A8dlv/" data-hashtag="Golang"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/golang%E8%B0%83%E8%AF%95%E5%99%A8dlv/" data-title="Golang调试器Delve学习" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/golang%E8%B0%83%E8%AF%95%E5%99%A8dlv/" data-title="Golang调试器Delve学习"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
             </div>
         </div>
     </div>
 
     <div class="post-info-more">
-        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/mysql/">MySQL</a></section>
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/golang/">Golang</a></section>
         <section>
             <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/posts/mysql45%E8%AE%B23/" class="prev" rel="prev" title="MySQL:索引"><i class="fas fa-angle-left fa-fw"></i>MySQL:索引</a>
-            <a href="/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%861/" class="next" rel="next" title="Golang源码之常见数据结构实现原理上">Golang源码之常见数据结构实现原理上<i class="fas fa-angle-right fa-fw"></i></a></div>
+    <div class="post-nav"><a href="/posts/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80/" class="prev" rel="prev" title="Emacs学习"><i class="fas fa-angle-left fa-fw"></i>Emacs学习</a></div>
 </div>
 <div id="comments">
         <div id="gitalk" class="comment"></div>

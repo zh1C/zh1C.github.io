@@ -3,7 +3,14 @@
         <title>Golang - 标签 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/tags/golang/</link>
         <description>Golang - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 19 Sep 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 13 Nov 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/golang/" rel="self" type="application/rss+xml" /><item>
+    <title>Golang调试器Delve学习</title>
+    <link>http://wen-nan.github.io/posts/golang%E8%B0%83%E8%AF%95%E5%99%A8dlv/</link>
+    <pubDate>Sun, 13 Nov 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/golang%E8%B0%83%E8%AF%95%E5%99%A8dlv/</guid>
+    <description><![CDATA[Go语言支持GDB、LLDB、Delve等调试器，其中Delve是专门为Go语言设计开发的调试器，本身也是采用Golang实现，下面学习De]]></description>
+</item><item>
     <title>Context学习</title>
     <link>http://wen-nan.github.io/posts/context%E5%AD%A6%E4%B9%A0/</link>
     <pubDate>Mon, 19 Sep 2022 00:00:00 &#43;0000</pubDate>
@@ -66,12 +73,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E5%8D%8F%E7%A8%8B%E8%B0%83%E5%BA%A6/</guid>
     <description><![CDATA[1. Golang调度器的由来 1.1 单进程时代 早期的操作系统是单进程的，面临单一的执行流程，进程阻塞会带来CPU时间浪费的缺陷。 1.2 多进程时代有了调度]]></description>
-</item><item>
-    <title>Golang源码之常见数据结构实现原理下</title>
-    <link>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/</link>
-    <pubDate>Wed, 01 Dec 2021 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/golang%E6%BA%90%E7%A0%81_%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%862/</guid>
-    <description><![CDATA[Struct的Tag 1. 前言 Go的struct声明允许字段附带Tag来对字段做一些标记。该Tag不仅仅是一个字符串，写法也需要遵循一定的规则。]]></description>
 </item></channel>
 </rss>
