@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/"
-        },"genre": "posts","keywords": "emacs","wordcount":  3675 ,
+        },"genre": "posts","keywords": "emacs","wordcount":  3954 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/","datePublished": "2022-10-07T00:00:00+00:00","dateModified": "2022-10-08T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Emacs学习</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/emacs/"><i class="far fa-folder fa-fw"></i>emacs</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-07">2022-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3675 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-07">2022-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3954 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -142,6 +142,7 @@
         <li><a href="#光标移动快捷键">光标移动快捷键</a></li>
         <li><a href="#窗口操作">窗口操作</a></li>
         <li><a href="#编程语言相关操作">编程语言相关操作</a></li>
+        <li><a href="#dired-mode">Dired-mode</a></li>
       </ul>
     </li>
   </ul>
@@ -545,6 +546,7 @@
 <p>在normal模式下，按<code>/</code>进入查找模式，输入需要查找的字符串，回车则跳转到第一个匹配位置，<code>n</code>跳转下一个匹配位置，<code>N</code>跳转到上一个。</p>
 <blockquote>
 <p>默认是大小写不敏感的，输入字符后输入<code>\C</code>则大小写敏感</p>
+<p>搜索匹配后是高亮显示：可以输入<code>:noh</code>结束高亮</p>
 </blockquote>
 <p>替换如下语法<code>:{作用范围}s/{目标}/{替换}/替换标志</code></p>
 <blockquote>
@@ -645,6 +647,42 @@
 <li>python环境中，可以使用<code>SPC SPC</code>然后输入yapf选择格式化buffer或者region(V模式选中的块)来进行格式化。如果在python层中配置了<code>python-formatter 'yapf</code>，则可以使用<code>, =</code>来格式化。</li>
 </ul>
 </blockquote>
+<h3 id="dired-mode">Dired-mode</h3>
+<p>spacemacs中文件或者文件夹相关操作可以进入<code>dired-mode</code>模式，在一个buffer中，按<code>SPC f j</code>就可以跳转到文件目录(如果是目录，则会跳转到上一层目录)，此时就是dired-mode模式，有如下相关操作：</p>
+<blockquote>
+<p><code>SPC a d</code>也可以进入该模式，然后选中某个文件夹Enter进入。</p>
+<p>该模式下可以适配Vim相关操作，移动、搜索等。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>C</code></td>
+<td>拷贝文件，然后会选择需要拷贝到的目录并输入名称即可</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>重命名文件，可以改变文件路径</td>
+</tr>
+<tr>
+<td><code>D</code></td>
+<td>删除文件</td>
+</tr>
+<tr>
+<td><code>Enter</code></td>
+<td>进入文件</td>
+</tr>
+<tr>
+<td><code>! open</code></td>
+<td>用外部程序打开文件，open会用默认程序打开，也可以输入程序名称进行打开</td>
+</tr>
+</tbody>
+</table>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
