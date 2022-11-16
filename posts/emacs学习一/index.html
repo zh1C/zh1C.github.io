@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/"
-        },"genre": "posts","keywords": "emacs","wordcount":  5071 ,
+        },"genre": "posts","keywords": "emacs","wordcount":  5494 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/","datePublished": "2022-10-07T00:00:00+00:00","dateModified": "2022-11-15T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Emacs学习</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/emacs/"><i class="far fa-folder fa-fw"></i>emacs</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-07">2022-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5071 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-07">2022-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5494 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -130,6 +130,7 @@
         <li><a href="#改键">改键</a></li>
         <li><a href="#github管理个人配置">github管理个人配置</a></li>
         <li><a href="#常用配置修改">常用配置修改</a></li>
+        <li><a href="#查看帮助文档">查看帮助文档</a></li>
       </ul>
     </li>
     <li><a href="#三开发环境配置">三、开发环境配置</a>
@@ -263,12 +264,51 @@
 </span></span></code></pre></div><blockquote>
 <p>后续如果需要打开，可以通过<code>SPC t S</code>进行手动开启。e</p>
 </blockquote>
+<h3 id="查看帮助文档">查看帮助文档</h3>
+<p>需要会查看帮助文档，有如下常用快捷键</p>
+<table>
+<thead>
+<tr>
+<th>emacs快捷键</th>
+<th>spacemacs快捷键</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>C h v</code></td>
+<td><code>SPC h d v</code></td>
+<td>查看变量的文档</td>
+</tr>
+<tr>
+<td><code>C h f</code></td>
+<td><code>SPC h d f</code></td>
+<td>查看命令的文档</td>
+</tr>
+<tr>
+<td><code>C h k</code></td>
+<td><code>SPC h d k</code></td>
+<td>查看快捷键的文档</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意：emacs有官方教程，可以通过命令<code>SPC SPC help-with-tutorial</code>打开教程进行学习</strong></p>
 <h2 id="三开发环境配置">三、开发环境配置</h2>
 <h3 id="python开发环境配置">Python开发环境配置</h3>
 <p>在对应的env中，安装如下依赖包即可，然后再spacemacs中添加<code>python</code>层，</p>
 <p><code>pip install autoflake isort yapf flake8 python-lsp-server importmagic epc</code></p>
 <h2 id="四常用快捷键">四、常用快捷键</h2>
 <h3 id="光标移动相关操作">光标移动相关操作</h3>
+<blockquote>
+<p>注意：Vim相关操作教程学习，可以在命令行输入<code>vimtutor</code>进行学习。</p>
+<p><strong>vim许多命令都有如下结构：<code>一个操作符  一个动作构成</code>，即<code>d motion</code>,而在动作前输入数字表示该动作重复次数。</strong></p>
+<p><code>opreator [number] motion</code></p>
+<ul>
+<li>Opreator:操作符，代表要做的事</li>
+<li>Number: 可以附加数字，代表要重复操作的次数</li>
+<li>Motion:动作，代表在文本上的移动操作</li>
+</ul>
+</blockquote>
 <p><strong>Vim在编辑模式下有时候需要输入一个命令，但是来回切换有点麻烦，可以按<code>C o</code>来临时切换到命令模式，然后输入一个命令。</strong></p>
 <blockquote>
 <p>例如：编辑模式下频繁需要从当前行中跳到下一行继续输入，<code>C o o</code>就相对高效。</p>
@@ -519,12 +559,37 @@
 <td>粘贴到光标上一行</td>
 </tr>
 <tr>
-<td><code>u</code></td>
-<td>撤销上一步操作</td>
+<td><code>u</code>,<code>U</code></td>
+<td>撤销上一步操作,撤销对本行的操作</td>
 </tr>
 <tr>
 <td><code>C r</code></td>
 <td>重做上一步，例如想多复制几次，就可以使用</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>替换/修改命令</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>r [替换后的字符]</code></td>
+<td>替换掉光标位置的字符</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>连续替换多个字符，<strong>替换和插入差不多，只是替换每输入一个字符都会删除一个已有字符</strong></td>
+</tr>
+<tr>
+<td><code>c [number] motion</code></td>
+<td>更改当前光标位置到动作指示位置之间的文本，例如<code>ce</code>修改当前位置到单词结尾，<code>c$</code>修改当前位置当行末尾。</td>
 </tr>
 </tbody>
 </table>
