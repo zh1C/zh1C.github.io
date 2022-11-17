@@ -3,7 +3,14 @@
         <title>emacs - 分类 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/categories/emacs/</link>
         <description>emacs - 分类 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 07 Oct 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/categories/emacs/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 16 Nov 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/categories/emacs/" rel="self" type="application/rss+xml" /><item>
+    <title>org mode写博客</title>
+    <link>http://wen-nan.github.io/posts/org-mode%E5%86%99%E5%8D%9A%E5%AE%A2/</link>
+    <pubDate>Wed, 16 Nov 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/org-mode%E5%86%99%E5%8D%9A%E5%AE%A2/</guid>
+    <description><![CDATA[org基本和markdown类似，但是更加强大，配合emacs使用更加优雅，因此考虑将写博客的流程切换到org,下面将介绍org mode写博]]></description>
+</item><item>
     <title>Emacs学习</title>
     <link>http://wen-nan.github.io/posts/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80/</link>
     <pubDate>Fri, 07 Oct 2022 00:00:00 &#43;0000</pubDate>

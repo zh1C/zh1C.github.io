@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/"
-        },"genre": "posts","keywords": "emacs","wordcount":  5494 ,
+        },"genre": "posts","keywords": "emacs","wordcount":  5739 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/","datePublished": "2022-10-07T00:00:00+00:00","dateModified": "2022-11-15T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Emacs学习</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/emacs/"><i class="far fa-folder fa-fw"></i>emacs</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-07">2022-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5494 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 11 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-07">2022-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5739 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -153,6 +153,12 @@
           </ul>
         </li>
         <li><a href="#treemacs">Treemacs</a></li>
+      </ul>
+    </li>
+    <li><a href="#五使用小tips">五、使用小tips</a>
+      <ul>
+        <li><a href="#go-mode缩进异常">Go-mode缩进异常</a></li>
+        <li><a href="#org-mode缩进显示">Org-mode缩进显示</a></li>
       </ul>
     </li>
   </ul>
@@ -262,7 +268,7 @@
 <p>拼写检查层默认在layers中配置：<code>spell-checking</code>,可以通过如下配置默认不打开拼写检查：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">spell-checking</span> <span class="ss">:variables</span> <span class="nv">spell-checking-enable-by-default</span> <span class="no">nil</span><span class="p">)</span>
 </span></span></code></pre></div><blockquote>
-<p>后续如果需要打开，可以通过<code>SPC t S</code>进行手动开启。e</p>
+<p>后续如果需要打开，可以通过<code>SPC t S</code>进行手动开启。</p>
 </blockquote>
 <h3 id="查看帮助文档">查看帮助文档</h3>
 <p>需要会查看帮助文档，有如下常用快捷键</p>
@@ -968,7 +974,17 @@
 </tr>
 </tbody>
 </table>
-</div><div class="post-footer" id="post-footer">
+<h2 id="五使用小tips">五、使用小tips</h2>
+<h3 id="go-mode缩进异常">Go-mode缩进异常</h3>
+<p>在编辑Golang相关文件时，输入大括号后Enter换行，缩进不会生效，并且再次按Tab缩进的时候在Message buffer中会出现如下代码</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="nv">auto</span> <span class="nv">trimmed</span> <span class="mi">1</span> <span class="nv">chars</span>
+</span></span></code></pre></div><p>发现是一个bug，需要在设置中将某个变量设置为nil</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="nv">dotspacemacs-use-clean-aindent-mode</span> <span class="no">nil</span>
+</span></span></code></pre></div><p>相关Github issue讨论如下：<a href="https://github.com/syl20bnr/spacemacs/issues/6520" target="_blank" rel="noopener noreffer">链接</a></p>
+<h3 id="org-mode缩进显示">Org-mode缩进显示</h3>
+<p>默认情况下，org文件大纲没有缩进显示，可以通过<code>org-indent-mode</code>命令来手动开关，如果想要所有文件打开就采用缩进显示，则需要在user-config中进行如下配置：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="k">setq</span> <span class="nv">org-startup-indented</span> <span class="no">t</span><span class="p">)</span>
+</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
