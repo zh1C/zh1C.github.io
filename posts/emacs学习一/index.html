@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/"
-        },"genre": "posts","keywords": "emacs","wordcount":  5739 ,
+        },"genre": "posts","keywords": "emacs","wordcount":  5538 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/","datePublished": "2022-10-07T00:00:00+00:00","dateModified": "2022-11-15T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Emacs学习</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/emacs/"><i class="far fa-folder fa-fw"></i>emacs</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-07">2022-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5739 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-07">2022-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5538 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -142,23 +142,20 @@
       <ul>
         <li><a href="#光标移动相关操作">光标移动相关操作</a></li>
         <li><a href="#多行编辑操作">多行编辑操作</a></li>
+        <li><a href="#注释与解注释操作">注释与解注释操作</a></li>
+        <li><a href="#替换操作">替换操作</a></li>
         <li><a href="#搜索操作">搜索操作</a></li>
         <li><a href="#窗口操作">窗口操作</a></li>
         <li><a href="#编程语言相关操作">编程语言相关操作</a></li>
+        <li><a href="#字体大小设置">字体大小设置</a></li>
         <li><a href="#dired-mode">Dired-mode</a></li>
-        <li><a href="#org-mode">org-mode</a>
-          <ul>
-            <li><a href="#基本使用">基本使用</a></li>
-            <li><a href="#todo">Todo</a></li>
-          </ul>
-        </li>
-        <li><a href="#treemacs">Treemacs</a></li>
+        <li><a href="#treemacs-layer">Treemacs layer</a></li>
+        <li><a href="#shell-layer">Shell layer</a></li>
       </ul>
     </li>
     <li><a href="#五使用小tips">五、使用小tips</a>
       <ul>
         <li><a href="#go-mode缩进异常">Go-mode缩进异常</a></li>
-        <li><a href="#org-mode缩进显示">Org-mode缩进显示</a></li>
       </ul>
     </li>
   </ul>
@@ -401,7 +398,7 @@
 </tr>
 </tbody>
 </table>
-<p>如果安装了<code>ivy</code>层，可以使用如下跳跃，很有用：</p>
+<p>可以使用如下跳跃，很有用：</p>
 <table>
 <thead>
 <tr>
@@ -614,6 +611,7 @@
 <li>用<code>Shift v</code>进入行可视化模式，文本选择以行为单位。</li>
 <li>用<code>Ctrl v</code>进入块可视化模式，可以选择一个矩形内的文字。</li>
 </ol>
+<h3 id="注释与解注释操作">注释与解注释操作</h3>
 <ul>
 <li><strong>Vim多行注释和解注释</strong></li>
 </ul>
@@ -633,13 +631,38 @@
 <li><code>x</code>或<code>d</code>删除注释符</li>
 </ol>
 <ul>
-<li><strong>Vim查找与替换</strong></li>
+<li><strong>Spacemacs的操作模式</strong></li>
 </ul>
-<p>在normal模式下，按<code>/</code>进入查找模式，输入需要查找的字符串，回车则跳转到第一个匹配位置，<code>n</code>跳转下一个匹配位置，<code>N</code>跳转到上一个。</p>
+<p>注释操作由<a href="https://github.com/redguardtoo/evil-nerd-commenter" target="_blank" rel="noopener noreffer">evil-nerd-commenter</a>package实现，常用有如下快捷键：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC ;</code></td>
+<td>开启注释操作</td>
+</tr>
+<tr>
+<td><code>SPC c l</code>、<code>SPC c L</code></td>
+<td>行注释与行解注释</td>
+</tr>
+<tr>
+<td><code>SPC c h</code></td>
+<td>隐藏或显示所有注释</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
-<p>默认是大小写不敏感的，输入字符后输入<code>\C</code>则大小写敏感</p>
-<p>搜索匹配后是高亮显示：可以输入<code>:noh</code>结束高亮</p>
+<p>快速多行注释和解注释的spacemacs操作方式为: <strong><code>SPC ; SPC j l</code></strong></p>
 </blockquote>
+<h3 id="替换操作">替换操作</h3>
+<ul>
+<li><strong>vim操作</strong></li>
+</ul>
 <p>替换如下语法<code>:{作用范围}s/{目标}/{替换}/替换标志</code></p>
 <blockquote>
 <p>作用范围有当前行、全局、V模式选中区域三种：</p>
@@ -703,7 +726,11 @@
 <ul>
 <li>Vim的搜索</li>
 </ul>
-<p>Vim的搜索上面已经介绍，相对简单。</p>
+<p>在normal模式下，按<code>/</code>进入查找模式，输入需要查找的字符串，回车则跳转到第一个匹配位置，<code>n</code>跳转下一个匹配位置，<code>N</code>跳转到上一个。</p>
+<blockquote>
+<p>默认是大小写不敏感的，输入字符后输入<code>\C</code>则大小写敏感</p>
+<p>搜索匹配后是高亮显示：可以输入<code>:noh</code>结束高亮或者使用快捷键<code>SPC s c</code></p>
+</blockquote>
 <ul>
 <li>spacemacs扩展</li>
 </ul>
@@ -813,6 +840,13 @@
 <li>python环境中，可以使用<code>SPC SPC</code>然后输入yapf选择格式化buffer或者region(V模式选中的块)来进行格式化。如果在python层中配置了<code>python-formatter 'yapf</code>，则可以使用<code>, =</code>来格式化。</li>
 </ul>
 </blockquote>
+<h3 id="字体大小设置">字体大小设置</h3>
+<p>永久设置字体大小可以在<code>dotspacemacs-default-font</code>中进行设置，如果需要临时调整当前buffer的字体大小，可以使用emacs对应快捷键</p>
+<blockquote>
+<p><code>C x C -</code>,缩小字体</p>
+<p><code>C x C =</code>，增大字体</p>
+<p><code>C x C 0</code>，重置字体大小</p>
+</blockquote>
 <h3 id="dired-mode">Dired-mode</h3>
 <p>spacemacs中文件或者文件夹相关操作可以进入<code>dired-mode</code>模式，在一个buffer中，按<code>SPC f j</code>就可以跳转到文件目录(如果是目录，则会跳转到上一层目录)，此时就是dired-mode模式，有如下相关操作：</p>
 <blockquote>
@@ -849,76 +883,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="org-mode">org-mode</h3>
-<h4 id="基本使用">基本使用</h4>
-<p>可以使用org文件进行日程管理，Org 是一个用文本方式来快速高效地做笔记、维持待办事项和做项目计划的模式。</p>
-<table>
-<thead>
-<tr>
-<th>快捷键或代码</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>*   **   ***</code></td>
-<td>分别对应一级标题，二级标题，三级标题</td>
-</tr>
-<tr>
-<td><code>Tab</code></td>
-<td>可以折叠或展开当前标题下的内容</td>
-</tr>
-<tr>
-<td><code>* TODO something</code></td>
-<td>标题后输入TODO即可变成代办事项</td>
-</tr>
-<tr>
-<td><code>C c C t</code> 或者<code>t</code></td>
-<td>将当前项的状态在（unmarked）-&gt;TODO-&gt;DONE 之间循环切换</td>
-</tr>
-<tr>
-<td><code>, d s</code></td>
-<td>可以在当前TODO事项添加scheduled日期</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>注意：如果org layer的变量<code>org-want-todo-bindings</code>是True，则可以使用<code>t</code>来循环当前标题的TODO状态。</p>
-<p><code>T</code>来插入新的DODO事项。<code>M t</code>在当前子标题中插入新的TODO事项。</p>
-</blockquote>
-<h4 id="todo">Todo</h4>
-<p>集成使用org-todos,在<code>user-config</code>中添加如下配置，</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="k">setq</span> <span class="nv">org-agenda-files</span> <span class="p">(</span><span class="nc">list</span> <span class="s">&#34;~/orgFiles/todos.org&#34;</span><span class="p">))</span>
-</span></span></code></pre></div><blockquote>
-<p>注意：接收的文件路径应该是一个列表，即使只有一个文件路径</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>快捷键</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>SPC a o o</code></td>
-<td>打开org agenda</td>
-</tr>
-<tr>
-<td><code>t</code></td>
-<td>显示所有的TODOs，在TODO上则可以循环TODO状态</td>
-</tr>
-<tr>
-<td><code>q</code></td>
-<td>退出</td>
-</tr>
-<tr>
-<td><code>SPC a o a</code></td>
-<td>this week org agenda list</td>
-</tr>
-</tbody>
-</table>
-<h3 id="treemacs">Treemacs</h3>
+<h3 id="treemacs-layer">Treemacs layer</h3>
 <p>treemacs是一个文件导航栏layer，常见如下操作</p>
 <table>
 <thead>
@@ -974,6 +939,35 @@
 </tr>
 </tbody>
 </table>
+<h3 id="shell-layer">Shell layer</h3>
+<p>shell layer的配置如下</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="nv">shell</span> <span class="ss">:variables</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">shell-default-shell</span>  <span class="ss">&#39;ansi-term</span>
+</span></span><span class="line"><span class="cl">        <span class="nv">shell-default-term-shell</span> <span class="s">&#34;/bin/zsh&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></div><p>常用快捷键如下</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SPC !</code></td>
+<td>在minibuffer中运行一条shell命令</td>
+</tr>
+<tr>
+<td><code>SPC '</code></td>
+<td>打开shell buffer</td>
+</tr>
+<tr>
+<td><code>C-c C-c</code></td>
+<td>终止当前正在运行的shell命令</td>
+</tr>
+</tbody>
+</table>
 <h2 id="五使用小tips">五、使用小tips</h2>
 <h3 id="go-mode缩进异常">Go-mode缩进异常</h3>
 <p>在编辑Golang相关文件时，输入大括号后Enter换行，缩进不会生效，并且再次按Tab缩进的时候在Message buffer中会出现如下代码</p>
@@ -981,10 +975,7 @@
 </span></span></code></pre></div><p>发现是一个bug，需要在设置中将某个变量设置为nil</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="nv">dotspacemacs-use-clean-aindent-mode</span> <span class="no">nil</span>
 </span></span></code></pre></div><p>相关Github issue讨论如下：<a href="https://github.com/syl20bnr/spacemacs/issues/6520" target="_blank" rel="noopener noreffer">链接</a></p>
-<h3 id="org-mode缩进显示">Org-mode缩进显示</h3>
-<p>默认情况下，org文件大纲没有缩进显示，可以通过<code>org-indent-mode</code>命令来手动开关，如果想要所有文件打开就采用缩进显示，则需要在user-config中进行如下配置：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-lisp" data-lang="lisp"><span class="line"><span class="cl"><span class="p">(</span><span class="k">setq</span> <span class="nv">org-startup-indented</span> <span class="no">t</span><span class="p">)</span>
-</span></span></code></pre></div></div><div class="post-footer" id="post-footer">
+</div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
