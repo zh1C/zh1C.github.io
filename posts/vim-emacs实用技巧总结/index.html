@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <title>Vim-Emacs实用技巧总结 - NarcissusBlog</title><meta name="Description" content="总结一些平常使用Vim和emacs过程中的痛点解决方案"><meta property="og:title" content="Vim-Emacs实用技巧总结" />
+<meta property="og:description" content="总结一些平常使用Vim和emacs过程中的痛点解决方案" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://wen-nan.github.io/posts/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-11-23T00:00:00+08:00" />
+<meta property="article:modified_time" content="2022-11-23T19:18:30+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Vim-Emacs实用技巧总结"/>
+<meta name="twitter:description" content="总结一些平常使用Vim和emacs过程中的痛点解决方案"/>
+<meta name="application-name" content="NarcissusBlog">
+<meta name="apple-mobile-web-app-title" content="NarcissusBlog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://wen-nan.github.io/posts/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" /><link rel="prev" href="http://wen-nan.github.io/posts/org-mode%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" /><link rel="stylesheet" href="/lib/normalize/normalize.min.css"><link rel="stylesheet" href="/css/style.min.css"><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Vim-Emacs实用技巧总结",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/wen-nan.github.io\/posts\/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93\/"
+        },"genre": "posts","keywords": "emacs","wordcount":  1459 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93\/","datePublished": "2022-11-23T00:00:00+08:00","dateModified": "2022-11-23T19:18:30+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Narcissus"},"author": {
+                "@type": "Person",
+                "name": "Narcissus"
+            },"description": "总结一些平常使用Vim和emacs过程中的痛点解决方案"
+    }
+    </script></head>
+    <body header-desktop="fixed" header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner">
+                <a class="menu-item" href="/posts/" title="全部文章"><i class="fa fa-fw fa-bars"></i> 全部文章 
+                        </a><a class="menu-item" href="/categories/" title="分类"><i class="fas fa-fw fa-th"></i> 分类 
+                        </a><a class="menu-item" href="/tags/" title="标签"><i class="fas fa-fw fa-tag"></i> 标签 
+                        </a>
+                        <div class="dropdown">
+                            <a href="javascript:void(0);" class="menu-item menu-more dropbtn" title="文档" ><i class='fas fa-fw fa-fan fa-spin'></i> 文档 
+                            </a>
+                            <div class="menu-more-content dropdown-content"><a href="https://gohugo.io/documentation/" title="" target="_blank" rel="noopener"><i class='fa fa-thumbs-up'></i> Hugo文档 </a></div>
+                        </div>
+                    <a class="menu-item" href="/about/" title="关于"><i class="fas fa-fw fa-at"></i> 关于 
+                        </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  
+                        </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="NarcissusBlog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/mechanic.png"
+        data-srcset="/mechanic.png, /mechanic.png 1.5x, /mechanic.png 2x"
+        data-sizes="auto"
+        alt="/mechanic.png"
+        title="/mechanic.png" />NarcissusBlog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/posts/" title="全部文章"><i class="fa fa-fw fa-bars"></i> 全部文章 
+                    </a><a class="menu-item" href="/categories/" title="分类"><i class="fas fa-fw fa-th"></i> 分类 
+                    </a><a class="menu-item" href="/tags/" title="标签"><i class="fas fa-fw fa-tag"></i> 标签 
+                    </a>
+                    <div class="dropdown">
+                        <a href="javascript:void(0);" class="menu-item menu-more dropbtn" title="文档" ><i class='fas fa-fw fa-fan fa-spin'></i> 文档 
+                        </a>
+                        <div class="menu-more-content dropdown-content"><a href="https://gohugo.io/documentation/" title="" target="_blank" rel="noopener"><i class='fa fa-thumbs-up'></i> Hugo文档 </a></div>
+                    </div>
+                <a class="menu-item" href="/about/" title="关于"><i class="fas fa-fw fa-at"></i> 关于 
+                    </a><a class="menu-item" href="https://github.com/wen-nan" title="GitHub" rel="noopener noreffer" target="_blank"><i class='fab fa-github fa-fw'></i>  
+                    </a><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                <i class="fas fa-adjust fa-fw"></i>
+            </a></div>
+    </div>
+</header>
+<div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div>
+<main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animated flipInX">Vim-Emacs实用技巧总结</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/emacs/"><i class="far fa-folder fa-fw"></i>emacs</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-11-23">2022-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1459 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  kept="">
+                <div class="details-summary toc-title">
+                    <span>目录</span>
+                    <span><i class="details-icon fas fa-angle-right"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#技巧一-在插入模式下想看到更多上下文内容">技巧一：在插入模式下想看到更多上下文内容</a></li>
+    <li><a href="#技巧二-实际行与屏幕行的区别与移动">技巧二：实际行与屏幕行的区别与移动</a></li>
+    <li><a href="#技巧三-单词与字串的理解与移动">技巧三：单词与字串的理解与移动</a></li>
+    <li><a href="#技巧四-行内字符查找操作">技巧四：行内字符查找操作</a></li>
+    <li><a href="#技巧五-文本对象">技巧五：文本对象</a></li>
+    <li><a href="#技巧六-vim寄存器">技巧六：Vim寄存器</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><h2 id="技巧一-在插入模式下想看到更多上下文内容">技巧一：在插入模式下想看到更多上下文内容</h2>
+<p>插入模式下，如果当前行正在窗口底部或者顶部，有时需要滚动一下屏幕，以便看到更多的上下文。可以通过快捷键 <code>C-o zz</code> 来实现，其中 <code>C-o</code> 快捷键可以切换到插入-普通模式，即插入模式下可以输入一个普通模式的命令，
+<code>zz</code> 则可以重绘屏幕，并把当前行显示在窗口正中间。</p>
+<h2 id="技巧二-实际行与屏幕行的区别与移动">技巧二：实际行与屏幕行的区别与移动</h2>
+<p>Vim中有实际行与屏幕行的区别，原因是当每行内容超过窗口宽度时会被回绕显示，因此有了屏幕行的概念。实际行的常用移动操作有: <code>j,k,0,$,^</code>, 而屏幕行的移动操作就是在实际行操作前加上字符g，即对应为: <code>gj,gk,g0,g$,g^</code> 。注意: <code>^</code> 操作是移动到行首第一个非空字符位置。</p>
+<h2 id="技巧三-单词与字串的理解与移动">技巧三：单词与字串的理解与移动</h2>
+<p>Vim中字串的定义就是右非空白字符序列组成，字串间以空白字符分隔。
+Vim中单词的移动操作为: <code>w,b,e,ge</code> ,因为符号也被理解为一个单词，所以单词的移动比较慢，可以通过字串来进行相应移动，操作为: <code>W,B,E,gE</code> 。</p>
+<h2 id="技巧四-行内字符查找操作">技巧四：行内字符查找操作</h2>
+<p><code>f{char}</code> 是Vim中移动最快的操作之一，他会在光标位置到当前行行尾之间查找指定字符，如果找到了，会把光标移动到此字符位置；如果没有找到，则不会移动。下面将列出字符查找命令集中所有命令：</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>f{char}</td>
+<td>正向移动到下一个{char}所在之处</td>
+</tr>
+<tr>
+<td>F{char}</td>
+<td>反向移动到上一个{char}所在之处</td>
+</tr>
+<tr>
+<td>t{char}</td>
+<td>正向移动到下一个{char}所在之处的前一个字符上</td>
+</tr>
+<tr>
+<td>T{char}</td>
+<td>反向移动到上一个{char}所在之处的后一个字符上</td>
+</tr>
+<tr>
+<td>;</td>
+<td>重复上一次字符查找命令</td>
+</tr>
+<tr>
+<td>,</td>
+<td>反转方向查找上一次字符查找命令</td>
+</tr>
+</tbody>
+</table>
+<h2 id="技巧五-文本对象">技巧五：文本对象</h2>
+<p>文本对象本身不是不是动作命令，不能用于在文本中移动，但可以用于v可视模式以及操作符待决模式中使用文本对象。在命令语法中看到{motion}时，该处就可以使用文本对象，例如: <code>d{motion},y{motion},c{motion}</code> 。文本对象由两个字符组成，第一个永远是i或a,而以i开头的文本对象会选择分隔符内的文本，以a开头的文本对象会选择包括分隔符在内的整个文本。常见分隔符文本对象:</p>
+<table>
+<thead>
+<tr>
+<th>文本对象</th>
+<th>选择范围</th>
+<th>文本对象</th>
+<th>选择范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ab</td>
+<td>一对圆括号</td>
+<td>ib</td>
+<td>圆括号内部</td>
+</tr>
+<tr>
+<td>a&quot;</td>
+<td>一对双引号</td>
+<td>i&quot;</td>
+<td>双引号内部</td>
+</tr>
+<tr>
+<td>a{</td>
+<td>一对花括号</td>
+<td>i{</td>
+<td>花括号内部</td>
+</tr>
+<tr>
+<td>aw</td>
+<td>当前单词及一个空格</td>
+<td>iw</td>
+<td>当前单词</td>
+</tr>
+<tr>
+<td>aW</td>
+<td>当前字串及一个空格</td>
+<td>iW</td>
+<td>当前字串</td>
+</tr>
+</tbody>
+</table>
+<h2 id="技巧六-vim寄存器">技巧六：Vim寄存器</h2>
+<p>Vim包含常用的寄存器有无名寄存器、有名寄存器(a-z)、复制专用寄存器(0)、黑洞寄存器(_)等。若操作没有指定寄存器，将使用无名寄存器, <code>s(等同于xi),x,d{motion},c{motion},y{motion}</code> 都会覆盖无名寄存器的内容，可以通过在上述操作前添加{register}前缀来指定使用另外一个寄存器。案例讲解:</p>
+<ul>
+<li>
+<p>案例一:使用无名寄存器实现一些快速操作</p>
+<table>
+<thead>
+<tr>
+<th>快捷键</th>
+<th>描述</th>
+<th>理解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>xp</td>
+<td>调换光标之后两个字符</td>
+<td>x操作将当前光标位置字符剪切下来保存到无名寄存器，p将无名寄存器中内容粘贴到光标后</td>
+</tr>
+<tr>
+<td>ddp</td>
+<td>调换当前行和下一行位置</td>
+<td>dd操作将当前行内容删除并保存到无名寄存器，p将无名寄存器中内容粘贴到下一行</td>
+</tr>
+<tr>
+<td>yyp</td>
+<td>复制当前行副本到下一行</td>
+<td>略</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>案例二:糟糕，丢失了复制内容如右一段文本：collection = getcollection();
+想要将collection复制到无名寄存器，并用复制内容替换getcollection这样一个操作，使用如下命令操作:
+<code>yiw -&gt; ww -&gt; diw -&gt; P</code>
+通过上述操作后实际上该文本不会改变，这是因为第一个yiw操作复制到无名寄存器中的内容被diw操作的内容覆盖了。</p>
+<p>有如下三种操作可以解决:</p>
+<ol>
+<li>使用有名寄存器，操作为 <code>ayiw -&gt; ww -&gt; diw -&gt; aP</code></li>
+<li>使用黑洞寄存器，这是一个有去无回的寄存器,操作位 <code>yiw -&gt; ww -&gt; _diw -&gt; P</code></li>
+<li>(推荐)使用复制专用寄存器,当使用 <code>y{motion}</code> 操作时，要复制的文本不仅会被拷贝到无名寄存器中，同时还会被拷贝到复制的专用寄存器中，操作为 <code>yiw -&gt; ww -&gt; diw -&gt; 0P</code></li>
+</ol>
+</li>
+</ul>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>更新于 2022-11-23</span>
+            </div>
+            <div class="post-info-license"></div>
+        </div>
+        <div class="post-info-line">
+            <div class="post-info-md"></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="分享到 Twitter" data-sharer="twitter" data-url="http://wen-nan.github.io/posts/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" data-title="Vim-Emacs实用技巧总结" data-hashtags="emacs"><i class="fab fa-twitter fa-fw"></i></a><a href="javascript:void(0);" title="分享到 Facebook" data-sharer="facebook" data-url="http://wen-nan.github.io/posts/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" data-hashtag="emacs"><i class="fab fa-facebook-square fa-fw"></i></a><a href="javascript:void(0);" title="分享到 微博" data-sharer="weibo" data-url="http://wen-nan.github.io/posts/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" data-title="Vim-Emacs实用技巧总结" data-ralateuid="dengzhicheng123"><i class="fab fa-weibo fa-fw"></i></a><a href="javascript:void(0);" title="分享到 百度" data-sharer="baidu" data-url="http://wen-nan.github.io/posts/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" data-title="Vim-Emacs实用技巧总结"><i data-svg-src="/lib/simple-icons/icons/baidu.min.svg"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw"></i>&nbsp;<a href="/tags/emacs/">emacs</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">返回</a></span>&nbsp;|&nbsp;<span><a href="/">主页</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/org-mode%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" class="prev" rel="prev" title="org mode基本使用"><i class="fas fa-angle-left fa-fw"></i>org mode基本使用</a></div>
+</div>
+<div id="comments">
+        <div id="gitalk" class="comment"></div>
+        <link rel="stylesheet" href="/js/gitalk.css">
+        <script src="/js/gitalk.min.js"></script>
+        <script src="/js/md5.js"></script>
+        <script>
+        const gitalk = new Gitalk({
+            clientID: '60afa8aa721493fdc40a',
+            clientSecret: '0d83669766bc4d55f49702f8d22e76215dfb373a',
+            repo: 'wen-nan.github.io',
+            owner: 'wen-nan',
+            admin: ['wen-nan'],
+            
+            
+            id: md5(location.pathname), 
+            distractionFreeMode: false 
+        });
+        (function() {
+            if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+                document.getElementById('gitalk').innerHTML = 'Gitalk comments not available by default when the website is previewed locally.';
+                return;
+            }
+            gitalk.render('gitalk');
+        })();
+        </script>
+        </div></article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">
+                <span id="run-time"></span>
+            </div><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.105.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.2.10"><i class="far fa-kiss-wink-heart fa-fw"></i> LoveIt</a>
+                </div><div class="footer-line"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2021 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Narcissus</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-arrow-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fas fa-comment fa-fw"></i>
+            </a>
+        </div><script type="text/javascript" src="/lib/smooth-scroll/smooth-scroll.min.js"></script><script type="text/javascript" src="/lib/lazysizes/lazysizes.min.js"></script><script type="text/javascript" src="/lib/clipboard/clipboard.min.js"></script><script type="text/javascript" src="/lib/sharer/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@2.1.3/dist/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-backstretch@2.1.18/jquery.backstretch.min.js"></script><script type="text/javascript" src="/js/custom.js"></script></body>
+</html>
