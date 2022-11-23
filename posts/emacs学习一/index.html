@@ -27,7 +27,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/"
-        },"genre": "posts","keywords": "emacs","wordcount":  5565 ,
+        },"genre": "posts","keywords": "emacs","wordcount":  5576 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80\/","datePublished": "2022-10-07T00:00:00+00:00","dateModified": "2022-11-15T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -114,7 +114,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Emacs学习</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/emacs/"><i class="far fa-folder fa-fw"></i>emacs</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-07">2022-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5565 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-10-07">2022-10-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 5576 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 12 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -385,16 +385,20 @@
 <td style="text-align:left">后移动一个单词，光标停留在单词开头</td>
 </tr>
 <tr>
-<td><code>e</code></td>
-<td style="text-align:left">后移动一个单词，光标停留在单词末尾</td>
-</tr>
-<tr>
 <td><code>b</code></td>
 <td style="text-align:left">前移动一个单词，光标停留在单词开头</td>
 </tr>
 <tr>
-<td><code>g g</code>、<code>G</code></td>
-<td style="text-align:left">分别移动光标到文件头与文件末尾</td>
+<td><code>e</code></td>
+<td style="text-align:left">后移动一个单词，光标停留在单词末尾</td>
+</tr>
+<tr>
+<td><code>ge</code></td>
+<td style="text-align:left">前移一个单词，光标停留在单词末尾</td>
+</tr>
+<tr>
+<td><code>gg</code>、<code>G</code></td>
+<td style="text-align:left">移动光标到文件头和文件末尾</td>
 </tr>
 </tbody>
 </table>
@@ -555,11 +559,11 @@
 </tr>
 <tr>
 <td><code>p</code></td>
-<td>粘贴到光标下一行</td>
+<td>粘贴到光标后</td>
 </tr>
 <tr>
-<td><code>P</code></td>
-<td>粘贴到光标上一行</td>
+<td>P`</td>
+<td>粘贴到光标前</td>
 </tr>
 <tr>
 <td><code>u</code>,<code>U</code></td>
