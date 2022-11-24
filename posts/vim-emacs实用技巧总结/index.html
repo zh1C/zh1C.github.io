@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-11-23T00:00:00+08:00" />
-<meta property="article:modified_time" content="2022-11-23T19:18:30+08:00" />
+<meta property="article:modified_time" content="2022-11-24T14:26:20+08:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Vim-Emacs实用技巧总结"/>
@@ -27,8 +27,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","keywords": "emacs","wordcount":  1459 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93\/","datePublished": "2022-11-23T00:00:00+08:00","dateModified": "2022-11-23T19:18:30+08:00","publisher": {
+        },"genre": "posts","keywords": "emacs","wordcount":  1826 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93\/","datePublished": "2022-11-23T00:00:00+08:00","dateModified": "2022-11-24T14:26:20+08:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
@@ -114,8 +114,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Vim-Emacs实用技巧总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/emacs/"><i class="far fa-folder fa-fw"></i>emacs</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-11-23">2022-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1459 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-11-23">2022-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1826 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -129,6 +129,7 @@
     <li><a href="#技巧四-行内字符查找操作">技巧四：行内字符查找操作</a></li>
     <li><a href="#技巧五-文本对象">技巧五：文本对象</a></li>
     <li><a href="#技巧六-vim寄存器">技巧六：Vim寄存器</a></li>
+    <li><a href="#技巧七-粘贴面向字符或面向行的区域">技巧七：粘贴面向字符或面向行的区域</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="技巧一-在插入模式下想看到更多上下文内容">技巧一：在插入模式下想看到更多上下文内容</h2>
@@ -252,7 +253,8 @@ Vim中单词的移动操作为: <code>w,b,e,ge</code> ,因为符号也被理解�
 </table>
 </li>
 <li>
-<p>案例二:糟糕，丢失了复制内容如右一段文本：collection = getcollection();
+<p>案例二:糟糕，丢失了复制内容</p>
+<p>如右一段文本：collection = getcollection();
 想要将collection复制到无名寄存器，并用复制内容替换getcollection这样一个操作，使用如下命令操作:
 <code>yiw -&gt; ww -&gt; diw -&gt; P</code>
 通过上述操作后实际上该文本不会改变，这是因为第一个yiw操作复制到无名寄存器中的内容被diw操作的内容覆盖了。</p>
@@ -264,11 +266,23 @@ Vim中单词的移动操作为: <code>w,b,e,ge</code> ,因为符号也被理解�
 </ol>
 </li>
 </ul>
+<h2 id="技巧七-粘贴面向字符或面向行的区域">技巧七：粘贴面向字符或面向行的区域</h2>
+<p>Vim中普通模式的粘贴命令,根据要插入文本的性质不同，执行结果也不同。主要有 <code>linewise-register和characterwise-register</code> 两种类型。那么粘贴命令 <code>p和P</code> 如何如何才能知道把寄存器中的文本粘贴到光标前后还是当前行前后呢？这取决于这个指定的寄存器是怎么被赋值的，如果是面向行的复制或删除操作，将创建面向行的寄存器；如果是面向字符的复制或删除则创建面向字符的寄存器。</p>
+<ul>
+<li>
+<p><strong>粘贴面向字符的区域</strong></p>
+<p>粘贴面向字符区域的内容时，因为需要判断需要粘贴到光标前还是光标后，这种方式很不直观。所以推荐使用 <code>&lt;C-r&gt;{register}</code> 命令，该命令可以在插入模式下直接使用而不同切换到普通模式。例如：粘贴复制专用寄存器0中的内容可用&lt;C-r&gt;0命令。</p>
+</li>
+<li>
+<p><strong>粘贴面向行的区域</strong></p>
+<p>粘贴面向行区域的内容时，则使用 <code>p,P</code> 命令并且也比较直观。</p>
+</li>
+</ul>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-11-23</span>
+                <span>更新于 2022-11-24</span>
             </div>
             <div class="post-info-license"></div>
         </div>
