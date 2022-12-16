@@ -10,7 +10,7 @@
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://wen-nan.github.io/posts/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2022-11-23T00:00:00+08:00" />
-<meta property="article:modified_time" content="2022-12-08T15:38:43+08:00" />
+<meta property="article:modified_time" content="2022-12-16T08:36:18+08:00" />
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Vim-Emacs实用技巧总结"/>
 <meta name="twitter:description" content="总结一些平常使用Vim和emacs过程中的痛点解决方案"/>
@@ -26,8 +26,8 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","keywords": "emacs","wordcount":  2325 ,
-        "url": "http:\/\/wen-nan.github.io\/posts\/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93\/","datePublished": "2022-11-23T00:00:00+08:00","dateModified": "2022-12-08T15:38:43+08:00","publisher": {
+        },"genre": "posts","keywords": "emacs","wordcount":  2344 ,
+        "url": "http:\/\/wen-nan.github.io\/posts\/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93\/","datePublished": "2022-11-23T00:00:00+08:00","dateModified": "2022-12-16T08:36:18+08:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
                 "@type": "Person",
@@ -113,7 +113,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Vim-Emacs实用技巧总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/emacs/"><i class="far fa-folder fa-fw"></i>emacs</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-11-23">2022-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2325 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-11-23">2022-11-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2344 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -223,7 +223,7 @@ Vim中单词的移动操作为: <code>w,b,e,ge</code> ,因为符号也被理解�
 </tbody>
 </table>
 <h2 id="技巧六-vim寄存器">技巧六：Vim寄存器</h2>
-<p>Vim包含常用的寄存器有无名寄存器、有名寄存器(a-z)、复制专用寄存器(0)、黑洞寄存器(_)等。若操作没有指定寄存器，将使用无名寄存器, <code>s(等同于xi),x,d{motion},c{motion},y{motion}</code> 都会覆盖无名寄存器的内容，可以通过在上述操作前添加{register}前缀来指定使用另外一个寄存器。案例讲解:</p>
+<p>Vim包含常用的寄存器有无名寄存器、有名寄存器(&ldquo;a-&ldquo;z)、复制专用寄存器(&ldquo;0)、黑洞寄存器(&rdquo;_)等。若操作没有指定寄存器，将使用无名寄存器, <code>s(等同于xi),x,d{motion},c{motion},y{motion}</code> 都会覆盖无名寄存器的内容，可以通过在上述操作前添加 <code>&quot;{register}</code> 前缀来指定使用另外一个寄存器。案例讲解:</p>
 <ul>
 <li>
 <p>案例一:使用无名寄存器实现一些快速操作</p>
@@ -262,9 +262,9 @@ Vim中单词的移动操作为: <code>w,b,e,ge</code> ,因为符号也被理解�
 通过上述操作后实际上该文本不会改变，这是因为第一个yiw操作复制到无名寄存器中的内容被diw操作的内容覆盖了。</p>
 <p>有如下三种操作可以解决:</p>
 <ol>
-<li>使用有名寄存器，操作为 <code>ayiw -&gt; ww -&gt; diw -&gt; aP</code></li>
-<li>使用黑洞寄存器，这是一个有去无回的寄存器,操作位 <code>yiw -&gt; ww -&gt; _diw -&gt; P</code></li>
-<li>(推荐)使用复制专用寄存器,当使用 <code>y{motion}</code> 操作时，要复制的文本不仅会被拷贝到无名寄存器中，同时还会被拷贝到复制的专用寄存器中，操作为 <code>yiw -&gt; ww -&gt; diw -&gt; 0P</code></li>
+<li>使用有名寄存器，操作为 <code>&quot;ayiw -&gt; ww -&gt; diw -&gt; &quot;aP</code></li>
+<li>使用黑洞寄存器，这是一个有去无回的寄存器,操作位 <code>yiw -&gt; ww -&gt; &quot;_diw -&gt; P</code></li>
+<li>(推荐)使用复制专用寄存器,当使用 <code>y{motion}</code> 操作时，要复制的文本不仅会被拷贝到无名寄存器中，同时还会被拷贝到复制的专用寄存器中，操作为 <code>yiw -&gt; ww -&gt; diw -&gt; &quot;0P</code></li>
 </ol>
 </li>
 </ul>
@@ -321,7 +321,7 @@ Vim中单词的移动操作为: <code>w,b,e,ge</code> ,因为符号也被理解�
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>更新于 2022-12-08</span>
+                <span>更新于 2022-12-16</span>
             </div>
             <div class="post-info-license"></div>
         </div>
