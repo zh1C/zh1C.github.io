@@ -3,7 +3,14 @@
         <title>所有文章 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/posts/</link>
         <description>所有文章 | NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 23 Nov 2022 00:00:00 &#43;0800</lastBuildDate><atom:link href="http://wen-nan.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sun, 05 Feb 2023 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>操作系统面试题</title>
+    <link>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</link>
+    <pubDate>Sun, 05 Feb 2023 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
+    <description><![CDATA[硬件结构 CPU是如何执行程序的？ 冯洛伊曼模型 定义了计算机的基本结构为5个部分，分别是：运算器、控制器、存储器、输入设备和输出设备。 指令周期 C]]></description>
+</item><item>
     <title>Vim-Emacs实用技巧总结</title>
     <link>http://wen-nan.github.io/posts/vim-emacs%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/</link>
     <pubDate>Wed, 23 Nov 2022 00:00:00 &#43;0800</pubDate>
@@ -32,6 +39,13 @@
     <guid>http://wen-nan.github.io/posts/golang%E8%B0%83%E8%AF%95%E5%99%A8dlv/</guid>
     <description><![CDATA[Go语言支持GDB、LLDB、Delve等调试器，其中Delve是专门为Go语言设计开发的调试器，本身也是采用Golang实现，下面学习De]]></description>
 </item><item>
+    <title>操作系统</title>
+    <link>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+    <pubDate>Sat, 15 Oct 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+    <description><![CDATA[1. 操作系统基础 1.1 什么是操作系统？ 操作系统是管理计算机硬件与软件资源的程序，是计算机的基石。 操作系统本质上是一个运行在计算机上的程序，用于管理]]></description>
+</item><item>
     <title>Emacs学习</title>
     <link>http://wen-nan.github.io/posts/emacs%E5%AD%A6%E4%B9%A0%E4%B8%80/</link>
     <pubDate>Fri, 07 Oct 2022 00:00:00 &#43;0000</pubDate>
@@ -59,19 +73,5 @@
     <author>作者</author>
     <guid>http://wen-nan.github.io/posts/golang%E5%BA%95%E5%B1%82%E7%90%86%E8%A7%A3/</guid>
     <description><![CDATA[1. Mutex 概述 Mutex这个名称来自于Mutual exclusion，俗称互斥锁。Go语言中Mutex的数据结构如下: ​ Mutex.state储存]]></description>
-</item><item>
-    <title>线段树-树状树学习及应用</title>
-    <link>http://wen-nan.github.io/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/</link>
-    <pubDate>Wed, 07 Sep 2022 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/</guid>
-    <description><![CDATA[假设我们有一个数组： 数组不变，求区间和：「前缀和」、「树状数组」、「线段树」 多次修改某个数（单点），求区间和：「树状数组」、「线段树」 多次修]]></description>
-</item><item>
-    <title>Golang实现分布式缓存</title>
-    <link>http://wen-nan.github.io/posts/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0/</link>
-    <pubDate>Mon, 29 Aug 2022 00:00:00 &#43;0000</pubDate>
-    <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/golang%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98%E5%AE%9E%E7%8E%B0/</guid>
-    <description><![CDATA[GroupCache 基本介绍 groupcache是一个小巧的kv存储库，**最大的特点就是没有删除接口，**即kv键值一旦设置进去了，用户端是没有主动的手段删]]></description>
 </item></channel>
 </rss>
