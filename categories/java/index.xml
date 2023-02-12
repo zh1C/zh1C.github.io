@@ -1,0 +1,28 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Java - 分类 - NarcissusBlog</title>
+        <link>http://wen-nan.github.io/categories/java/</link>
+        <description>Java - 分类 - NarcissusBlog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 10 Feb 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/categories/java/" rel="self" type="application/rss+xml" /><item>
+    <title>Java并发相关学习</title>
+    <link>http://wen-nan.github.io/posts/java%E5%B9%B6%E5%8F%91/</link>
+    <pubDate>Thu, 10 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/java%E5%B9%B6%E5%8F%91/</guid>
+    <description><![CDATA[Java内存模型(JMM) JMM概述 Java内存模型的主要目的是定义程序中各种变量的访问规则，此处的变量是指被线程共享的，包括实例字段、静态]]></description>
+</item><item>
+    <title>Java基础、集合、JVM</title>
+    <link>http://wen-nan.github.io/posts/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</link>
+    <pubDate>Thu, 10 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</guid>
+    <description><![CDATA[基础 1. JVM、JDK和JRE JVM（Java虚拟机）是运行Java字节码的虚拟机。JVM针对不同系统有不同的实现。 JDK是Java Development Kit的]]></description>
+</item><item>
+    <title>设计模式</title>
+    <link>http://wen-nan.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</link>
+    <pubDate>Thu, 10 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</guid>
+    <description><![CDATA[单例模式 在Java编程中，有时候为了节省内存和计算，某些类的实例只需要初始化一次，这时就需要使用单例模式。下面介绍单例模式的几种常见写法。 饿]]></description>
+</item></channel>
+</rss>
