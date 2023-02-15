@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","keywords": "计算机网络, 面试, 面试总结","wordcount":  22888 ,
+        },"genre": "posts","keywords": "计算机网络, 面试, 面试总结","wordcount":  26185 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/","datePublished": "2022-02-08T00:00:00+00:00","dateModified": "2022-02-08T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,8 +113,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">计算机网络面试题总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="far fa-folder fa-fw"></i>计算机网络</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-08">2022-02-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 22888 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 46 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-08">2022-02-08</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 26185 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 53 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -241,6 +241,30 @@
             <li><a href="#拥塞避免算法">拥塞避免算法</a></li>
             <li><a href="#拥塞发生">拥塞发生</a></li>
             <li><a href="#快速恢复">快速恢复</a></li>
+          </ul>
+        </li>
+        <li><a href="#tcp粘包">TCP粘包</a>
+          <ul>
+            <li><a href="#如何理解tcp是面向字节流">如何理解TCP是面向字节流？</a></li>
+            <li><a href="#如何解决粘包">如何解决粘包？</a></li>
+          </ul>
+        </li>
+        <li><a href="#syn报文什么情况下会被丢弃">SYN报文什么情况下会被丢弃？</a>
+          <ul>
+            <li><a href="#开启-tcp_tw_recycle-参数">开启 tcp_tw_recycle 参数</a></li>
+            <li><a href="#连接队列满了">连接队列满了</a></li>
+          </ul>
+        </li>
+        <li><a href="#tcp连接中断电和进程崩溃会发生什么">TCP连接中，断电和进程崩溃会发生什么？</a>
+          <ul>
+            <li><a href="#客户端进程崩溃">客户端进程崩溃</a></li>
+            <li><a href="#客户端主机崩溃">客户端主机崩溃</a></li>
+          </ul>
+        </li>
+        <li><a href="#tcp四次挥手可以变成三次吗">TCP四次挥手可以变成三次吗？</a>
+          <ul>
+            <li><a href="#为什么需要tcp四次挥手">为什么需要TCP四次挥手？</a></li>
+            <li><a href="#什么情况下会出现三次挥手">什么情况下会出现三次挥手？</a></li>
           </ul>
         </li>
       </ul>
@@ -1074,6 +1098,22 @@
 <li>如果客户端宕机或者由于某些原因导致报文不可达，那么探测次数上限后，会被判定TCP连接死亡。</li>
 </ul>
 <hr>
+<p>有如下场景，如果客户端宕机重启后，向服务端发送SYN报文重新建立连接，此时服务端会怎么处理？</p>
+<p>由于TCP连接通过四元组唯一确认，此场景这要考虑源端口是否相同的情况。</p>
+<ul>
+<li><strong>客户端的SYN报文里源端口和历史连接不相同</strong></li>
+</ul>
+<p>如果SYN报文里的源端口和历史连接的源端口不相同，则服务端会认为这是新的连接，通过三次握手建立新连接。服务端的旧连接处于ESTABLISH状态，会如何处理呢？</p>
+<blockquote>
+<p>如果服务端发送了数据包给客户端，由于客户端的连接已经被关闭了，此时客户的内核就会回 RST 报文，服务端收到后就会释放连接。</p>
+<p>如果服务端一直没有发送数据包给客户端，在超过一段时间后，TCP 保活机制就会启动，检测到客户端没有存活后，接着服务端就会释放掉该连接。</p>
+</blockquote>
+<ul>
+<li><strong>客户端的SYN报文里的源端口和历史连接相同</strong></li>
+</ul>
+<p><strong>处于 Established 状态的服务端，如果收到了客户端的 SYN 报文（注意此时的 SYN 报文其实是乱序的，因为 SYN 报文的初始化序列号其实是一个随机数），会回复一个携带了正确序列号和确认号的 ACK 报文，这个 ACK 被称之为 Challenge ACK。</strong></p>
+<p>接着，客户端收到这个 Challenge ACK，发现确认号（ack num）并不是自己期望收到的，于是就会回 RST 报文，服务端收到后，就会释放掉该连接。</p>
+<hr>
 <h4 id="建立了连接服务端突然出现故障了怎么办">建立了连接，服务端突然出现故障了怎么办？</h4>
 <p>TCP 的连接信息是由内核维护的，所以当服务端的进程崩溃后，内核需要回收该进程的所有 TCP 连接资源，于是内核会发送第一次挥手 FIN 报文，后续的挥手过程也都是在内核完成，并不需要进程的参与，所以<strong>即使服务端的进程退出了，还是能与客户端完成 TCP 四次挥手的过程。</strong></p>
 <hr>
@@ -1225,6 +1265,108 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230214185446012.png"
         title="image-20230214185446012" /></p>
+<hr>
+<hr>
+<h3 id="tcp粘包">TCP粘包</h3>
+<h4 id="如何理解tcp是面向字节流">如何理解TCP是面向字节流？</h4>
+<p>TCP是面向字节流的协议，UDP是面向报文的协议。</p>
+<blockquote>
+<p>为什么说UDP是面向报文的协议？</p>
+</blockquote>
+<p>当用户通过UDP协议传输消息时，<strong>操作系统不会对消息进行拆分</strong>，在组装好 UDP 头部后就交给网络层来处理，所以发出去的 UDP 报文中的数据部分就是完整的用户消息，也就是<strong>每个 UDP 报文就是一个用户消息的边界</strong>，这样接收方在接收到 UDP 报文后，读一个 UDP 报文就能读取到完整的用户消息。操作系统并通过<strong>队列</strong>来维护一个一个的UDP消息。</p>
+<blockquote>
+<p>为什么说TCP是面向字节流的协议？</p>
+</blockquote>
+<p>当用户消息通过 TCP 协议传输时，<strong>消息可能会被操作系统分组成多个的 TCP 报文</strong>，也就是一个完整的用户消息被拆分成多个 TCP 报文进行传输。接收方的程序如果不知道发送方发送的消息的长度，也就是不知道消息的边界时，是无法读出一个有效的用户消息。正因为如此，所以我们说TCP是面向字节流的协议。</p>
+<p><strong>当两个消息的某个部分内容被分到同一个 TCP 报文时，就是我们常说的 TCP 粘包问题</strong>，这时接收方不知道消息的边界的话，是无法读出有效的消息。</p>
+<hr>
+<h4 id="如何解决粘包">如何解决粘包？</h4>
+<p>一般有三种分包方式：<strong>固定长度的消息、特殊字符作为边界、自定义消息结构。</strong></p>
+<ul>
+<li><strong>固定长度的消息</strong></li>
+</ul>
+<p>这种是最简单方法，即每个用户消息都是固定长度的，但是这种方式灵活性不高，实际中很少用。比如规定一个消息的长度是 64 个字节，当接收方接满 64 个字节，就认为这个内容是一个完整且有效的消息。</p>
+<ul>
+<li><strong>特殊字符作为边界</strong></li>
+</ul>
+<p>我们可以在两个用户消息之间插入一个特殊的字符串，这样接收方在接收数据时，读到了这个特殊字符，就把认为已经读完一个完整的消息。</p>
+<p>HTTP通过设置回车符、换行符作为 HTTP 报文协议的边界。</p>
+<p><strong>需要注意的是，如果消息内容中刚好有特殊字符，则需要对字符进行转义。</strong></p>
+<ul>
+<li><strong>自定义消息结构</strong></li>
+</ul>
+<p>我们可以自定义一个消息结构，由包头和数据组成，其中包头包是固定大小的，而且<strong>包头里有一个字段来说明紧随其后的数据有多大</strong>。</p>
+<hr>
+<h3 id="syn报文什么情况下会被丢弃">SYN报文什么情况下会被丢弃？</h3>
+<p>SYN报文被丢弃主要有以下两种情况：</p>
+<ul>
+<li>开启 tcp_tw_recycle 参数，并且在 NAT 环境下，造成 SYN 报文被丢弃</li>
+<li>TCP 两个队列满了（半连接队列和全连接队列），造成 SYN 报文被丢弃</li>
+</ul>
+<h4 id="开启-tcp_tw_recycle-参数">开启 tcp_tw_recycle 参数</h4>
+<p>Linux提供了两个参数来快速回收处于TIME_WAIT状态的连接：</p>
+<blockquote>
+<ul>
+<li><code>net.ipv4.tcp_tw_reuse</code>，如果开启该选项的话，客户端（连接发起方） 在调用 connect() 函数时，**如果内核选择到的端口，已经被相同四元组的连接占用的时候，就会判断该连接是否处于 TIME_WAIT 状态，如果该连接处于 TIME_WAIT 状态并且 TIME_WAIT 状态持续的时间超过了 1 秒，那么就会重用这个连接，然后就可以正常使用该端口了。**所以该选项只适用于连接发起方。</li>
+<li><code>net.ipv4.tcp_tw_recycle</code>，如果开启该选项的话，允许处于 TIME_WAIT 状态的连接被快速回收。</li>
+</ul>
+<p>要使得这两个选项生效，有一个前提条件，就是要打开 TCP 时间戳</p>
+</blockquote>
+<p>对于服务器来说，如果同时开启了recycle 和 timestamps 选项，则会开启一种称之为「 per-host 的 PAWS 机制」。</p>
+<blockquote>
+<p>PAWS机制要求连接双方维护最近一次收到的数据包的时间戳(Recent TSval )，每收到一个新数据包都会读取数据包中的时间戳值跟 Recent TSval 值做比较，<strong>如果发现收到的数据包中时间戳不是递增的，则表示该数据包是过期的，就会直接丢弃这个数据包</strong>。</p>
+<p><strong>per-host 是对「对端 IP 做 PAWS 检查」</strong>，而非对「IP + 端口」四元组做 PAWS 检查。</p>
+</blockquote>
+<p><strong>如果客户端网络环境是用了 NAT 网关，那么客户端环境的每一台机器通过 NAT 网关后，都会是相同的 IP 地址，在服务端看来，就好像只是在跟一个客户端打交道一样，无法区分出来。</strong></p>
+<blockquote>
+<p>如下场景：</p>
+<p>当客户端 A 通过 NAT 网关和服务器建立 TCP 连接，然后服务器主动关闭并且快速回收 TIME-WAIT 状态的连接后，客户端 B 也通过 NAT 网关和服务器建立 TCP 连接，注意客户端 A 和 客户端 B 因为经过相同的 NAT 网关，所以是用相同的 IP 地址与服务端建立 TCP 连接，如果客户端 B 的 timestamp 比 客户端 A 的 timestamp 小，那么由于服务端的 per-host 的 PAWS 机制的作用，服务端就会丢弃客户端主机 B 发来的 SYN 包。</p>
+</blockquote>
+<h4 id="连接队列满了">连接队列满了</h4>
+<p>当TCP半连接队列满了以后，如果没有开启<code>syncookies</code>功能，<strong>这是后续来的syn包就会被丢弃。</strong></p>
+<p>在服务端并发处理大量请求时，如果 TCP accpet 队列(全连接队列)过小，或者应用程序调用 accept() 不及时，就会造成 accpet 队列满了 ，这时后续的连接就会被丢弃，这样就会出现服务端请求数量上不去的现象。</p>
+<hr>
+<h3 id="tcp连接中断电和进程崩溃会发生什么">TCP连接中，断电和进程崩溃会发生什么？</h3>
+<p>问题场景，TCP连接中，没有开启TCP keepAlive的情况下，没有数据交互，一端断电或者发生进程崩溃会发生什么？</p>
+<blockquote>
+<p>注意：TCP keepAlive是TCP的保活机制，而HTTP keepAlive则是HTTP长连接，两者没有任何关系。</p>
+</blockquote>
+<h4 id="客户端进程崩溃">客户端进程崩溃</h4>
+<p>TCP 的连接信息是由内核维护的，所以当服务端的进程崩溃后，内核需要回收该进程的所有 TCP 连接资源，于是内核会发送第一次挥手 FIN 报文，后续的挥手过程也都是在内核完成，并不需要进程的参与，所以<strong>即使服务端的进程退出了，还是能与客户端完成 TCP四次挥手的过程。</strong></p>
+<h4 id="客户端主机崩溃">客户端主机崩溃</h4>
+<ul>
+<li><strong>无数据交互</strong></li>
+</ul>
+<p>客户端主机崩溃了，服务端是<strong>无法感知到的</strong>，在加上服务端没有开启 TCP keepalive，又没有数据交互的情况下，<strong>服务端的 TCP 连接将会一直处于 ESTABLISHED 连接状态</strong>，直到服务端重启进程。</p>
+<p>所以，我们可以得知一个点，在没有使用 TCP 保活机制且双方不传输数据的情况下，一方的 TCP 连接处在 ESTABLISHED 状态，并不代表另一方的连接还一定正常。</p>
+<ul>
+<li><strong>有数据交互</strong></li>
+</ul>
+<p>如果客户端一直没有重启，服务端的数据报文会超时重传，当重传总间隔时长达到一定阈值（内核会根据 tcp_retries2 设置的值计算出一个阈值）后，会断开 TCP 连接。</p>
+<p>如果客户端及时重启，服务端触发数据超时重传过程中，客户端及时重启，但当客户端收到TCP数据报文后，<strong>会回复RST报文</strong>，断开连接。</p>
+<hr>
+<h3 id="tcp四次挥手可以变成三次吗">TCP四次挥手可以变成三次吗？</h3>
+<h4 id="为什么需要tcp四次挥手">为什么需要TCP四次挥手？</h4>
+<p>服务器收到客户端的 FIN 报文时，内核会马上回一个 ACK 应答报文，<strong>但是服务端应用程序可能还有数据要发送，所以并不能马上发送 FIN 报文，而是将发送 FIN 报文的控制权交给服务端应用程序</strong>：</p>
+<ul>
+<li>如果服务端应用程序有数据要发送的话，就发完数据后，才调用关闭连接的函数；</li>
+<li>如果服务端应用程序没有数据要发送的话，可以直接调用关闭连接的函数，</li>
+</ul>
+<blockquote>
+<p>注意：FIN报文并不一定得调用关闭函数才能发送，如果进程退出了，不管是不是正常退出，还是异常退出（如进程崩溃），内核都会发送 FIN 报文，与对方完成四次挥手。</p>
+</blockquote>
+<h4 id="什么情况下会出现三次挥手">什么情况下会出现三次挥手？</h4>
+<p>当被动关闭方（上图的服务端）在 TCP 挥手过程中，「<strong>没有数据要发送」并且「开启了 TCP 延迟确认机制」，那么第二和第三次挥手就会合并传输，这样就出现了三次挥手。</strong> 并且TCP延迟确认机制是默认开启的。</p>
+<blockquote>
+<p>TCP延迟确认机制</p>
+<p>当发送没有携带数据的 ACK，它的网络效率也是很低的，因为它也有 40 个字节的 IP 头 和 TCP 头，但却没有携带数据报文。 为了解决 ACK 传输效率低问题，所以就衍生出了 <strong>TCP 延迟确认</strong>。 TCP 延迟确认的策略：</p>
+<ul>
+<li>当有响应数据要发送时，ACK 会随着响应数据一起立刻发送给对方</li>
+<li>当没有响应数据要发送时，ACK 将会延迟一段时间，以等待是否有响应数据可以一起发送</li>
+<li>如果在延迟等待发送 ACK 期间，对方的第二个数据报文又到达了，这时就会立刻发送 ACK</li>
+</ul>
+</blockquote>
+<hr>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
