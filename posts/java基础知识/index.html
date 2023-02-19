@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86\/"
-        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  15113 ,
+        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  15170 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86\/","datePublished": "2022-02-10T00:00:00+00:00","dateModified": "2022-02-10T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,7 +113,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Java基础、集合、JVM</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java/"><i class="far fa-folder fa-fw"></i>Java</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 15113 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 15170 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 31 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -221,6 +221,10 @@
 <h3 id="3-包装类型的缓存机制">3. 包装类型的缓存机制</h3>
 <p>Java 基本数据类型的包装类型的大部分都用到了缓存机制来提升性能。超过范围则会重新创建对象。</p>
 <p><code>Byte</code>,<code>Short</code>,<code>Integer</code>,<code>Long</code> 这 4 种包装类默认创建了数值 <strong>[-128，127]</strong> 的相应类型的缓存数据，<code>Character</code> 创建了数值在 <strong>[0,127]</strong> 范围的缓存数据，<code>Boolean</code> 直接返回 <code>True</code> or <code>False</code>。</p>
+<blockquote>
+<p>由于有该缓存机制，阿里巴巴Java开发手册强制要求：<strong>所有整型包装类对象之间的值比较，全部使用equals方法比较。</strong></p>
+</blockquote>
+<hr>
 <h3 id="4-重写equals方法时为什么要同时重写hashcode方法">4. 重写equals()方法时，为什么要同时重写hashcode()方法。</h3>
 <p><code>hashcode()</code>方法和<code>equals()</code>方法都用于比较两个对象是否相等。</p>
 <blockquote>
