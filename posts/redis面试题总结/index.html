@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","keywords": "Redis, 面试总结","wordcount":  13763 ,
+        },"genre": "posts","keywords": "Redis, 面试总结","wordcount":  14238 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/","datePublished": "2022-02-17T00:00:00+00:00","dateModified": "2022-02-17T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,8 +113,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis面试题总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Redis学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-17">2022-02-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 13763 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 28 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-17">2022-02-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 14238 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 29 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -219,8 +219,10 @@
             <li><a href="#哈希表结构设计">哈希表结构设计</a></li>
             <li><a href="#哈希冲突">哈希冲突</a></li>
             <li><a href="#渐进式rehash">渐进式rehash</a></li>
+            <li><a href="#rehash触发条件">rehash触发条件</a></li>
           </ul>
         </li>
+        <li><a href="#整数集合">整数集合</a></li>
       </ul>
     </li>
   </ul>
@@ -1178,7 +1180,24 @@
 <p>实现的方式就是每个哈希表节点都有一个 next 指针，用于指向下一个哈希表节点，因此多个哈希表节点可以用 next 指针构成一个单项链表，<strong>被分配到同一个哈希桶上的多个节点可以用这个单项链表连接起来</strong>，这样就解决了哈希冲突。</p>
 <hr>
 <h4 id="渐进式rehash">渐进式rehash</h4>
-<p>Redis一个哈希表中定义了两个哈希数组的结构，用于rehash时使用。</p>
+<p>Redis一个哈希表中定义了两个哈希数组的结构，用于rehash时使用。为了避免 rehash 在数据迁移过程中，因拷贝数据的耗时，影响 Redis 性能的情况，所以 Redis 采用了<strong>渐进式 rehash</strong>，也就是将数据的迁移的工作不再是一次性迁移完成，而是分多次迁移。</p>
+<p>渐进式rehash步骤：</p>
+<ul>
+<li>给「哈希表 2」 分配空间；</li>
+<li><strong>在 rehash 进行期间，每次哈希表元素进行新增、删除、查找或者更新操作时，Redis 除了会执行对应的操作之外，还会顺序将「哈希表 1 」中索引位置上的所有 key-value 迁移到「哈希表 2」 上</strong>；</li>
+<li>随着处理客户端发起的哈希表操作请求数量越多，最终在某个时间点会把「哈希表 1 」的所有 key-value 迁移到「哈希表 2」，从而完成 rehash 操作。</li>
+</ul>
+<p>在进行渐进式 rehash 的过程中，会有两个哈希表，所以在渐进式 rehash 进行期间，哈希表元素的删除、查找、更新等操作都会在这两个哈希表进行。新增一个key-value时，则会被保存到「哈希表2」中。</p>
+<hr>
+<h4 id="rehash触发条件">rehash触发条件</h4>
+<p>触发 rehash 操作的条件，主要有两个：</p>
+<ul>
+<li><strong>当负载因子大于等于 1 ，并且 Redis 没有在执行 bgsave 命令或者 bgrewiteaof 命令，也就是没有执行 RDB 快照或没有进行 AOF 重写的时候，就会进行 rehash 操作。</strong></li>
+<li><strong>当负载因子大于等于 5 时，此时说明哈希冲突非常严重了，不管有没有有在执行 RDB 快照或 AOF 重写，都会强制进行 rehash 操作。</strong></li>
+</ul>
+<hr>
+<hr>
+<h3 id="整数集合">整数集合</h3>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
