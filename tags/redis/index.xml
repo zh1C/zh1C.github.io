@@ -25,6 +25,13 @@
     <guid>http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/</guid>
     <description><![CDATA[缓存穿透 缓存穿透就是大量请求的key根本不存在于缓存中，导致请求直接到了数据库上，根本没有经过缓存这一层。流程如下： 有哪些解决办法？ 缓存无效]]></description>
 </item><item>
+    <title>Redis面试题总结</title>
+    <link>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</link>
+    <pubDate>Thu, 17 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
+    <description><![CDATA[认识Redis 什么是Redis？ Redis 是一种基于内存的数据库，对数据的读写操作都是在内存中完成，因此读写速度非常快，常用于缓存，消息队列、分布式]]></description>
+</item><item>
     <title>Redis(六)压缩列表</title>
     <link>http://wen-nan.github.io/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/</link>
     <pubDate>Mon, 13 Sep 2021 00:00:00 &#43;0000</pubDate>

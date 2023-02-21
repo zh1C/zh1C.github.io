@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86\/"
-        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  15170 ,
+        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  15573 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86\/","datePublished": "2022-02-10T00:00:00+00:00","dateModified": "2022-02-10T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,8 +113,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Java基础、集合、JVM</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java/"><i class="far fa-folder fa-fw"></i>Java</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 15170 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 31 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 15573 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 32 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -244,12 +244,22 @@
 </ul>
 <p><code>String</code>不可变</p>
 <blockquote>
-<p>String为什么不可变？</p>
+<p>String为什么不可变？（<strong>Java String类的设计思想</strong>）</p>
 <ol>
 <li>保存字符串的数组被 <code>final</code> 修饰且为私有的，并且<code>String</code> 类没有提供/暴露修改这个字符串的方法。</li>
 <li><code>String</code> 类被 <code>final</code> 修饰导致其不能被继承，进而避免了子类破坏 <code>String</code> 不可变。</li>
 </ol>
+<p>注意：<code>final</code> 关键字修饰的数组保存字符串并不是 <code>String</code> 不可变的根本原因。因为这个数组保存的字符串是可变的（<code>final</code> 修饰引用类型变量的情况）。</p>
+<p>被 <code>final</code> 关键字修饰的类不能被继承，修饰的方法不能被重写，<strong>修饰的变量是基本数据类型则值不能改变，修饰的变量是引用类型则不能再指向其他对象。</strong></p>
 </blockquote>
+<hr>
+<blockquote>
+<p><strong>Java 9 为何要将 <code>String</code> 的底层实现由 <code>char[]</code> 改成了 <code>byte[]</code> ?</strong></p>
+<p>在 Java 9 之后，<code>String</code> 、<code>StringBuilder</code> 与 <code>StringBuffer</code> 的<strong>实现改用 <code>byte</code> 数组存储字符串</strong>。</p>
+<p>新版的 String 其实支持两个编码方案： Latin-1 和 UTF-16。如果字符串中包含的汉字没有超过 Latin-1 可表示范围内的字符，那就会使用 Latin-1 作为编码方案。Latin-1 编码方案下，<code>byte</code> 占一个字节(8 位)，<code>char</code> 占用 2 个字节（16），<code>byte</code> 相较 <code>char</code> 节省一半的内存空间。</p>
+<p>JDK 官方就说了绝大部分字符串对象只包含 Latin-1 可表示的字符。如果字符串中包含的汉字超过 Latin-1 可表示范围内的字符，<code>byte</code> 和 <code>char</code> 所占用的空间是一样的。</p>
+</blockquote>
+<hr>
 <p><code>StringBuilder</code> 与 <code>StringBuffer</code> 都继承自 <code>AbstractStringBuilder</code> 类，在 <code>AbstractStringBuilder</code> 中也是使用字符数组保存字符串，不过没有使用 <code>final</code> 和 <code>private</code> 关键字修饰，最关键的是这个 <code>AbstractStringBuilder</code> 类还提供了很多修改字符串的方法比如 <code>append</code> 方法。</p>
 <ul>
 <li>线程安全性</li>

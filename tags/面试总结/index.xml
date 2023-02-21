@@ -3,7 +3,14 @@
         <title>面试总结 - 标签 - NarcissusBlog</title>
         <link>http://wen-nan.github.io/tags/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/</link>
         <description>面试总结 - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 16 Feb 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 17 Feb 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/" rel="self" type="application/rss+xml" /><item>
+    <title>Redis面试题总结</title>
+    <link>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</link>
+    <pubDate>Thu, 17 Feb 2022 00:00:00 &#43;0000</pubDate>
+    <author>作者</author>
+    <guid>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
+    <description><![CDATA[认识Redis 什么是Redis？ Redis 是一种基于内存的数据库，对数据的读写操作都是在内存中完成，因此读写速度非常快，常用于缓存，消息队列、分布式]]></description>
+</item><item>
     <title>MySQL面试题总结</title>
     <link>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</link>
     <pubDate>Wed, 16 Feb 2022 00:00:00 &#43;0000</pubDate>
