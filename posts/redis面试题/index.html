@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "Redis","wordcount":  12464 ,
+        },"genre": "posts","keywords": "Redis","wordcount":  12465 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-03-07T00:00:00+00:00","dateModified": "2022-03-07T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,7 +113,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis相关面试题</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Redis学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-07">2022-03-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12464 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-07">2022-03-07</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 12465 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 25 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -149,7 +149,7 @@
     </li>
     <li><a href="#4-redis常见数据类型及使用场景">4. Redis常见数据类型及使用场景</a>
       <ul>
-        <li><a href="#string">string</a></li>
+        <li><a href="#41-string">4.1 string</a></li>
         <li><a href="#42-list">4.2 list</a></li>
         <li><a href="#43-hash">4.3 hash</a></li>
         <li><a href="#43-set">4.3 set</a></li>
@@ -283,11 +283,7 @@
 <p>Redis支持两种持久化操作，<strong>一种持久化方式是快照(RDB)、另一种是只追加文件持久化(AOF)</strong>。</p>
 <h3 id="31-快照持久化rdb">3.1 快照持久化（RDB）</h3>
 <p>RDB持久化既可以手动执行，也可以根据服务器配置选项定期执行，该功能可以将某个时间点上的数据库状态保存到一个RDB文件中，<strong>RDB文件是一个经过压缩的二进制文件，保存在硬盘里面，可以用来还原生成RDB文件时的数据库状态</strong>。</p>
-<ul>
-<li>
 <h4 id="rdb文件的创建与载入">RDB文件的创建与载入</h4>
-</li>
-</ul>
 <p>有两个Redis命令可以用于生成RDB文件，一个是SAVE，另一个是BGSAVE。</p>
 <blockquote>
 <p>SAVE命令会阻塞Redis服务器进程，直到RDB文件创建完毕为止，在服务器阻塞期间，不能处理任何命令请求。</p>
@@ -298,26 +294,14 @@
 <p><strong>注意：因为AOF文件的更新频率通常比RDB文件更新频率高</strong>，所以：</p>
 <p>如果服务器开启了AOF持久化功能，那么会优先使用AOF文件还原数据库状态；只有在AOF持久化关闭时，才会使用RDB文件还原数据库。</p>
 </blockquote>
-<ul>
-<li>
 <h4 id="自动间隔性保存">自动间隔性保存</h4>
-</li>
-</ul>
 <p>因为BGSAVE命令可以在不阻塞服务器进程情况下执行，所以允许用户配置自动执行该命令。当任意一个保存条件被满足时，服务器会自动执行BGSAVE命令。</p>
 <h3 id="32-aof持久化">3.2 AOF持久化</h3>
 <p>与RDB持久化通过保存数据库中键值对来记录数据库状态不同，<strong>AOF持久化通过保存Redis服务器所执行的写命令来记录数据库状态的</strong>。</p>
 <p>AOF持久化功能的实现可以分为命令追加、文件写入、文件同步三个步骤。</p>
-<ul>
-<li>
 <h4 id="命令追加">命令追加</h4>
-</li>
-</ul>
 <p>AOF持久化功能打开时，服务器执行完一个写命令后，会以协议格式<strong>将被执行的写命令追加到服务器的aof_buf缓冲区末尾</strong>。</p>
-<ul>
-<li>
 <h4 id="aof文件的写入与同步">AOF文件的写入与同步</h4>
-</li>
-</ul>
 <p>将aof_buf缓冲区中的内容写入和保存到AOF文件中，需要由<code>flushAppendOnlyFIle</code>函数中的<code>appendsync</code>配置选项值决定。</p>
 <p><img
         class="lazyload"
@@ -327,14 +311,10 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-02/image-20220224192044877.png"
         title="image-20220224192044877" /></p>
-<ul>
-<li>
 <h4 id="aof重写">AOF重写</h4>
-</li>
-</ul>
 <p>因为AOF持久化是通过保存被执行写命令来记录数据库状态，所以随着时间流逝，内容会越来越多。<strong>为了解决AOF文件体积膨胀问题，Redis提供了AOF文件重写功能</strong>，Redis服务器会创建一个新的AOF文件替代旧的AOF文件，并且两个文件保存的数据库状态相同，但新文件不会包含任何浪费空间的冗余命令。</p>
 <h2 id="4-redis常见数据类型及使用场景">4. Redis常见数据类型及使用场景</h2>
-<h3 id="string">string</h3>
+<h3 id="41-string">4.1 string</h3>
 <p>string数据结构是简单的key-value类型，相比与C原生字符串，Redis的string类型可以保存文本数据和二进制数据，并且获取长度复杂度为O(1)，不会造成缓冲区溢出。</p>
 <p><strong>常用命令有<code>set、get、strlen、exists、decr、incr、setex</code>等等</strong>。</p>
 <p>应用场景：<strong>一般常用在需要计数的场景，比如用户访问次数、热点文章的点赞转发数量扥等</strong></p>
