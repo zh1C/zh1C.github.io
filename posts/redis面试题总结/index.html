@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","keywords": "Redis, 面试总结","wordcount":  35967 ,
+        },"genre": "posts","keywords": "Redis, 面试总结","wordcount":  36633 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/","datePublished": "2022-02-17T00:00:00+00:00","dateModified": "2022-02-17T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,8 +113,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis面试题总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Redis学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-17">2022-02-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 35967 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 72 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-17">2022-02-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 36633 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 74 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -334,7 +334,12 @@
     </li>
     <li><a href="#redis实战">Redis实战</a>
       <ul>
-        <li><a href="#redis如何实现延迟队列">Redis如何实现延迟队列？</a></li>
+        <li><a href="#redis大key如何处理">Redis大key如何处理？</a>
+          <ul>
+            <li><a href="#大key的影响">大key的影响</a></li>
+            <li><a href="#删除大key">删除大key</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
   </ul>
@@ -1599,10 +1604,18 @@
 <blockquote>
 <p>大 key 除了会影响持久化之外，还会有以下的影响:</p>
 <ul>
-<li>**客户端超时阻塞。**由于 Redis 执行命令是单线程处理，然后在操作大 key 时会比较耗时，那么就会阻塞 Redis，从客户端这一视角看，就是很久很久都没有响应。</li>
-<li>**引发网络阻塞。**每次获取大 key 产生的网络流量较大，如果一个 key 的大小是 1 MB，每秒访问量为 1000，那么每秒会产生 1000MB 的流量，这对于普通千兆网卡的服务器来说是灾难性的。</li>
-<li>**阻塞工作线程。**如果使用 del 删除大 key 时，会阻塞工作线程，这样就没办法处理后续的命令。</li>
-<li>**内存分布不均。**集群模型在 slot 分片均匀情况下，会出现数据和查询倾斜情况，部分有大 key 的 Redis 节点占用内存多，QPS 也会比较大。</li>
+<li>
+<p><strong>客户端超时阻塞。</strong> 由于 Redis 执行命令是单线程处理，然后在操作大 key 时会比较耗时，那么就会阻塞 Redis，从客户端这一视角看，就是很久很久都没有响应。</p>
+</li>
+<li>
+<p><strong>引发网络阻塞。</strong> 每次获取大 key 产生的网络流量较大，如果一个 key 的大小是 1 MB，每秒访问量为 1000，那么每秒会产生 1000MB 的流量，这对于普通千兆网卡的服务器来说是灾难性的。</p>
+</li>
+<li>
+<p><strong>阻塞工作线程。</strong> 如果使用 del 删除大 key 时，会阻塞工作线程，这样就没办法处理后续的命令。</p>
+</li>
+<li>
+<p><strong>内存分布不均。</strong> 集群模型在 slot 分片均匀情况下，会出现数据和查询倾斜情况，部分有大 key 的 Redis 节点占用内存多，QPS 也会比较大。</p>
+</li>
 </ul>
 <hr>
 <p>如何避免大 Key 呢？</p>
@@ -2244,7 +2257,42 @@
 <hr>
 <hr>
 <h2 id="redis实战">Redis实战</h2>
-<h3 id="redis如何实现延迟队列">Redis如何实现延迟队列？</h3>
+<h3 id="redis大key如何处理">Redis大key如何处理？</h3>
+<p><strong>什么是大key?</strong></p>
+<p>大 key 并不是指 key 的值很大，而是 key 对应的 value 很大。一般而言，下面这两种情况被称为大 key：</p>
+<ul>
+<li>String 类型的值大于 10 KB；</li>
+<li>Hash、List、Set、ZSet 类型的元素的个数超过 5000个；</li>
+</ul>
+<h4 id="大key的影响">大key的影响</h4>
+<p>大key会带来如下的影响：</p>
+<ul>
+<li><strong>客户端超时阻塞</strong>。由于 Redis 执行命令是单线程处理，然后在操作大 key 时会比较耗时，那么就会阻塞 Redis，从客户端这一视角看，就是很久很久都没有响应。</li>
+<li><strong>引发网络阻塞</strong>。每次获取大 key 产生的网络流量较大，如果一个 key 的大小是 1 MB，每秒访问量为 1000，那么每秒会产生 1000MB 的流量，这对于普通千兆网卡的服务器来说是灾难性的。</li>
+<li><strong>阻塞工作线程</strong>。如果使用 del 删除大 key 时，会阻塞工作线程，这样就没办法处理后续的命令。</li>
+<li><strong>内存分布不均</strong>。集群模型在 slot 分片均匀情况下，会出现数据和查询倾斜情况，部分有大 key 的 Redis 节点占用内存多，QPS 也会比较大。</li>
+<li><strong>持久化时阻塞主线程</strong> ：在父进程<code>fork()</code>子进程复制页表时，和父进程发生写时复制是，由于大key占用内存大，会阻塞主线程过久。</li>
+</ul>
+<h4 id="删除大key">删除大key</h4>
+<blockquote>
+<p>如何查询到大key</p>
+<ol>
+<li><strong>使用redis-cli &ndash;bigkeys 查找大key</strong></li>
+</ol>
+<p>该方式只能返回每种类型中最大的那个 bigkey，无法得到大小排在前 N 位的 bigkey。并且对于集合类型来说，这个方法只统计集合元素个数的多少，而不是实际占用的内存量。</p>
+<ol start="2">
+<li><strong>使用 SCAN 命令查找大 key</strong></li>
+<li><strong>使用 RdbTools 工具查找大 key</strong></li>
+</ol>
+</blockquote>
+<p>如果一次性删除大Key，会造成主线程阻塞。删除大Key可以通过如下两种方式：</p>
+<ul>
+<li>分批次删除</li>
+<li>异步删除（Redis 4.0版本以上）</li>
+</ul>
+<blockquote>
+<p>从 Redis 4.0 版本开始，可以采用<strong>异步删除</strong>法，<strong>用 unlink 命令代替 del 来删除</strong>。这样 Redis 会将这个 key 放入到一个异步线程中进行删除，这样不会阻塞主线程。</p>
+</blockquote>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
