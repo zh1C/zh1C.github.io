@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","keywords": "Redis, 面试总结","wordcount":  36633 ,
+        },"genre": "posts","keywords": "Redis, 面试总结","wordcount":  36750 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/","datePublished": "2022-02-17T00:00:00+00:00","dateModified": "2022-02-17T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,7 +113,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Redis面试题总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/redis%E5%AD%A6%E4%B9%A0/"><i class="far fa-folder fa-fw"></i>Redis学习</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-17">2022-02-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 36633 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-17">2022-02-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 36750 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 74 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -1027,7 +1027,7 @@
 </span></span></code></pre></div><hr>
 <h3 id="hyperloglog">HyperLogLog</h3>
 <h4 id="介绍-6">介绍</h4>
-<p>Redis HyperLogLog 是 Redis 2.8.9 版本新增的数据类型，是一种用于「统计基数」的数据集合类型，**基数统计就是指统计一个集合中不重复的元素个数。**但要注意，HyperLogLog 是统计规则是基于概率完成的，不是非常准确，标准误算率是 0.81%。简单来说 HyperLogLog <strong>提供不精确的去重计数</strong>。</p>
+<p>Redis HyperLogLog 是 Redis 2.8.9 版本新增的数据类型，是一种用于「统计基数」的数据集合类型，<strong>基数统计就是指统计一个集合中不重复的元素个数。</strong> 但要注意，HyperLogLog 是统计规则是基于概率完成的，不是非常准确，标准误算率是 0.81%。简单来说 HyperLogLog <strong>提供不精确的去重计数</strong>。</p>
 <blockquote>
 <p>HyperLogLog 的优点是，在输入元素的数量或者体积非常非常大时，计算基数所需的内存空间总是固定的、并且是很小的。</p>
 </blockquote>
@@ -1419,6 +1419,10 @@
 <p>压缩列表的entry为什么要保存prevlen呢？listpack改成len之后不会影响功能吗？</p>
 <p>压缩列表的 entry 保存 prevlen 是为了实现节点从后往前遍历，知道前一个节点的长度，就可以计算前一个节点的偏移量。</p>
 <p>listpack 一样可以支持从后往前遍历的。详细的算法可以看Redis中<a href="https://github.com/antirez/listpack/blob/master/listpack.c" target="_blank" rel="noopener noreffer">lpDecodeBacklen函数</a>源码，lpDecodeBacklen 函数就可以从当前列表项起始位置的指针开始，向左逐个字节解析，得到前一项的 entry-len 值。</p>
+<blockquote>
+<p>具体的原理在于entry-len值的特殊设计，<strong>与protobuf中的varInts压缩int类型数值原理一样。</strong></p>
+<p>entry-len的<strong>每一个字节的最高位不记录具体数值，而用于记录是否为最后一个字节。</strong> 即最高位为1，表示entry-len还没有结束。</p>
+</blockquote>
 </blockquote>
 <p><img
         class="lazyload"

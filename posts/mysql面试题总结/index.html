@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","keywords": "MySQL, 面试总结","wordcount":  22528 ,
+        },"genre": "posts","keywords": "MySQL, 面试总结","wordcount":  22765 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/","datePublished": "2022-02-16T00:00:00+00:00","dateModified": "2022-02-16T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,8 +113,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-16">2022-02-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 22528 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 45 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-16">2022-02-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 22765 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 46 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -256,6 +256,7 @@
           <ul>
             <li><a href="#为什么需要两阶段提交">为什么需要两阶段提交？</a></li>
             <li><a href="#两阶段提交过程">两阶段提交过程</a></li>
+            <li><a href="#两阶段提交过程异常状况分析">两阶段提交过程异常状况分析</a></li>
           </ul>
         </li>
         <li><a href="#两阶段提交有什么问题">两阶段提交有什么问题？</a>
@@ -1146,7 +1147,7 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230220145147086.png"
         title="image-20230220145147086" /></p>
-<p>**InnoDB 用 write pos 表示 redo log 当前记录写到的位置，用 checkpoint 表示当前要擦除的位置。**一次 checkpoint 的过程就是脏页刷新到磁盘中变成干净页，然后标记 redo log 哪些记录可以被覆盖的过程。</p>
+<p><strong>InnoDB 用 write pos 表示 redo log 当前记录写到的位置，用 checkpoint 表示当前要擦除的位置。</strong> 一次 checkpoint 的过程就是脏页刷新到磁盘中变成干净页，然后标记 redo log 哪些记录可以被覆盖的过程。</p>
 <hr>
 <h3 id="为什么需要-bin-log">为什么需要 bin log?</h3>
 <p>binlog 文件是记录了所有数据库表结构变更和表数据修改的日志。</p>
@@ -1236,6 +1237,16 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230220153508565.png"
         title="image-20230220153508565" /></p>
+<hr>
+<h4 id="两阶段提交过程异常状况分析">两阶段提交过程异常状况分析</h4>
+<p>发生崩溃主要在两个时刻：<strong>一是redo log写入磁盘，binlog还没写入；一是两个都写入，还没有写入commit标志</strong>。这两个时刻发生崩溃redo log都是<code>prepare阶段</code>。</p>
+<blockquote>
+<p>MySQL重启后会按顺序扫描 redo log 文件，碰到处于 prepare 状态的 redo log，就会将redo log 中的 XID(事务ID) 去 binlog 查看是否存在此 XID：</p>
+<ul>
+<li><strong>如果 binlog 中没有当前事务的 XID，说明 redolog 完成刷盘，但是 binlog 还没有刷盘，则回滚事务</strong>。</li>
+<li><strong>如果 binlog 中有当前内部 XA 事务的 XID，说明 redolog 和 binlog 都已经完成了刷盘，则提交事务</strong>。</li>
+</ul>
+</blockquote>
 <hr>
 <h3 id="两阶段提交有什么问题">两阶段提交有什么问题？</h3>
 <p>两阶段提交虽然保证了两个日志文件的数据一致性，但是性能很差，主要有两个方面的影响：</p>

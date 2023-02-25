@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86\/"
-        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  15573 ,
+        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  15922 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86\/","datePublished": "2022-02-10T00:00:00+00:00","dateModified": "2022-02-10T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,7 +113,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Java基础、集合、JVM</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java/"><i class="far fa-folder fa-fw"></i>Java</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 15573 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 15922 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 32 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -176,6 +176,7 @@
           <ul>
             <li><a href="#垃圾收集算法">垃圾收集算法</a></li>
             <li><a href="#分代收集理论">分代收集理论</a></li>
+            <li><a href="#跨代引用问题">跨代引用问题</a></li>
             <li><a href="#对象已死">对象已死？</a></li>
             <li><a href="#三色标记-并发的可达性分析">三色标记-并发的可达性分析</a></li>
             <li><a href="#java垃圾收集器">Java垃圾收集器</a></li>
@@ -696,7 +697,7 @@
 </ul>
 <p>标记-整理算法的标记过程和前面的一样，但后续步骤不是直接对可回收对象进行清理，而是<strong>让所有存活的对象都向内存空间一端移动</strong>，然后直接清理掉边界以外的内存。</p>
 <h4 id="分代收集理论">分代收集理论</h4>
-<p>分代收集理论的设计原则是：**收集器应该将Java堆划分出不同的区域，然后将回收对象依据其年龄(年龄即对象熬过垃圾收集过程的次数)分配到不同的区域之中存储。 **显而易见，如果一个区域中大多数对象都是朝生夕灭，难以熬过垃圾收集过程的话，那 么把它们集中放在一起，每次回收时只关注如何保留少量存活而不是去标记那些大量将要被回收的对 象，就能以较低代价回收到大量的空间。</p>
+<p>分代收集理论的设计原则是：**收集器应该将Java堆划分出不同的区域，然后将回收对象依据其年龄(年龄即对象熬过垃圾收集过程的次数)分配到不同的区域之中存储。 ** 显而易见，如果一个区域中大多数对象都是朝生夕灭，难以熬过垃圾收集过程的话，那 么把它们集中放在一起，每次回收时只关注如何保留少量存活而不是去标记那些大量将要被回收的对 象，就能以较低代价回收到大量的空间。</p>
 <p>基于分代收集理论，垃圾回收类型可以分为：</p>
 <blockquote>
 <ul>
@@ -716,6 +717,18 @@
 <p>老年代：Tenured空间，采用标记-整理算法。</p>
 <p>永久代：JDK8之后是元空间，使用的是直接内存。</p>
 </blockquote>
+<hr>
+<h4 id="跨代引用问题">跨代引用问题</h4>
+<p>分代收集算法容易存在一个问题：<strong>对象之间不是孤立的，对象之间会存在跨代引用问题。</strong></p>
+<blockquote>
+<p>对新生代对象进行垃圾回收时，如果为了找出该区域的存活对象，需要遍历整个老年代对象，该方式虽然可行。但是会为垃圾回收带来更多的性能负担。</p>
+<blockquote>
+<p>此时有一个经验法则：<strong>跨代引用相对于同代引用来说仅占极少数。</strong> 因为被老年代引用的对象，很大概率会继续存活，使得新生代对象会晋升为老年代，这时候跨代引用就会消失。</p>
+</blockquote>
+<p>因此，解决方案为：
+在新生代上<strong>建立一个全局的数据结构(该结构被称为“记忆集”，Remembered Set)</strong>，这个结构把老年代划分成若干小块，标识出老年代的哪一块内存会存在跨代引用。虽然这种方法需要在对象改变引用关系(如将自己或者某个属性赋值)时维护记录数据的正确性，会增加一些运行时的开销，但比起收集时扫描整个老年代来说仍然是划算的。</p>
+</blockquote>
+<hr>
 <h4 id="对象已死">对象已死？</h4>
 <p>在进行垃圾回收之前，如何判定对象是否存活或死亡呢？</p>
 <ul>
@@ -773,7 +786,7 @@
 <ul>
 <li><strong>Parallel Old收集器</strong></li>
 </ul>
-<p>Parallel Old是Parallel Scavenge收集器的老年代版本，支持多线程并发收集，基于标记-整理算法实 现。</p>
+<p>Parallel Old是Parallel Scavenge收集器的老年代版本，支持多线程并发收集，基于标记-整理算法实现。</p>
 <ul>
 <li><strong>CMS收集器</strong></li>
 </ul>
@@ -787,7 +800,7 @@
 <blockquote>
 <p>CMS收集器的优势是：<strong>并发收集、低停顿</strong>。缺陷是：</p>
 <ol>
-<li>对处理器资源非常敏感。因为在并发阶段，会占用一部分线程导致应用程序变慢，降低总的吞吐量。CMS默认启动的回收线程数是**(处理器核心数量 +3)/4**，也就是说，如果处理器核心数在四个或以上，并发回收时垃圾收集线程只占用不超过25%的 处理器运算资源，并且会随着处理器核心数量的增加而下降。但是当处理器核心数量不足四个时， CMS对用户程序的影响就可能变得很大。</li>
+<li>对处理器资源非常敏感。因为在并发阶段，会占用一部分线程导致应用程序变慢，降低总的吞吐量。CMS默认启动的回收线程数是**(处理器核心数量 +3)/4** ，也就是说，如果处理器核心数在四个或以上，并发回收时垃圾收集线程只占用不超过25%的 处理器运算资源，并且会随着处理器核心数量的增加而下降。但是当处理器核心数量不足四个时， CMS对用户程序的影响就可能变得很大。</li>
 <li>无法处理“浮动垃圾”：在进行垃圾回收过程中，由于用户线程也在运行，可能也会产生垃圾，称之为浮动垃圾，本次GC无法处理。</li>
 <li>由于是标记-清除算法，则会产生大量内存碎片。</li>
 </ol>
@@ -805,7 +818,7 @@
 <p><strong>初始标记</strong>：标记GC Roots能直接关联的对象，这个阶段需要STW，但停顿时间很短。</p>
 <p><strong>并发标记</strong>：并发对堆中对象进行可达性分析。<strong>基于原始快照的方式来做的并发标记。</strong></p>
 <p><strong>最终标记</strong>：对用户线程做另一个短暂的暂停，用于处理并发阶段结束后仍遗留下来的最后那少量的SATB记录。</p>
-<p><strong>筛选回收</strong>：根据用户所期望的停顿时间来制定回收计划，可以自由选择任意多个Region 构成回收集，然后把决定回收的那一部分Region的存活对象复制到空的Region中，再清理掉整个旧 Region的全部空间。这里的操作涉及存活对象的移动，是必须暂停用户线程，由多条收集器线程并行 完成的。</p>
+<p><strong>筛选回收</strong>：根据用户所期望的停顿时间来制定回收计划，可以自由选择任意多个Region 构成回收集，然后把决定回收的那一部分Region的存活对象复制到空的Region中，再清理掉整个旧 Region的全部空间。这里的操作涉及存活对象的移动，是必须暂停用户线程，由多条收集器线程并行完成的。</p>
 </blockquote>
 <h4 id="内存分配策略">内存分配策略</h4>
 <ul>

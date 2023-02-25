@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/java%E5%B9%B6%E5%8F%91\/"
-        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  10854 ,
+        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  13995 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/java%E5%B9%B6%E5%8F%91\/","datePublished": "2022-02-10T00:00:00+00:00","dateModified": "2022-02-10T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,8 +113,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Java并发相关学习</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java/"><i class="far fa-folder fa-fw"></i>Java</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 10854 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 22 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 13995 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 28 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -134,6 +134,18 @@
       <ul>
         <li><a href="#如何使用synchronized">如何使用synchronized?</a></li>
         <li><a href="#synchronized原理">synchronized原理</a></li>
+      </ul>
+    </li>
+    <li><a href="#java线程基础知识">Java线程基础知识</a>
+      <ul>
+        <li><a href="#waitjoinsleepyield">wait、join、sleep、yield</a>
+          <ul>
+            <li><a href="#wait方法">wait()方法</a></li>
+            <li><a href="#join方法">join()方法</a></li>
+            <li><a href="#sleep方法">sleep()方法</a></li>
+            <li><a href="#yield方法">yield()方法</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#java锁的基础知识">Java锁的基础知识</a>
@@ -176,6 +188,13 @@
     <li><a href="#java线程池">Java线程池</a>
       <ul>
         <li><a href="#为什么要用线程池">为什么要用线程池？</a></li>
+        <li><a href="#线程池的核心设计与实现">线程池的核心设计与实现</a>
+          <ul>
+            <li><a href="#生命周期管理线程池如何维护自身状态">生命周期管理(线程池如何维护自身状态)</a></li>
+            <li><a href="#任务执行机制线程池如何管理任务">任务执行机制(线程池如何管理任务)</a></li>
+            <li><a href="#线程池如何管理线程">线程池如何管理线程</a></li>
+          </ul>
+        </li>
         <li><a href="#线程池的创建">线程池的创建</a>
           <ul>
             <li><a href="#executors工具类创建">Executors工具类创建</a></li>
@@ -294,6 +313,35 @@
         data-sizes="auto"
         alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230212094445727.png"
         title="image-20230212094445727" /></p>
+<hr>
+<h2 id="java线程基础知识">Java线程基础知识</h2>
+<h3 id="waitjoinsleepyield">wait、join、sleep、yield</h3>
+<h4 id="wait方法">wait()方法</h4>
+<p><code>wait()</code>方法是父类Object的方法，当一个线程调用一个共享变量的wait()方法时， 该调用线程会被阻塞挂起， 直到发生下面几件事情之一才返回:</p>
+<ol>
+<li>其他线程调用了该共享对象的 notify()或者notifyAll()方法;</li>
+<li>其他线程调用了该线程的 interrupt()方法，该线程抛出 InterruptedException异常返回。</li>
+</ol>
+<p><strong>注意：调用<code>wait()</code>方法的线程必须先获取对象的监视器锁，即使用<code>synchronized</code>，否则调用线程会抛出 IllegalMonitorStateException异常。</strong></p>
+<hr>
+<h4 id="join方法">join()方法</h4>
+<p><code>join()</code>方法是Thread类直接提供的，一个线程内如果调用另外一个线程的<code>join()</code>方法，则当前线程停止执行，一直等到<code>join()</code>方法的线程执行完毕。</p>
+<p><strong>本质上，<code>join()</code>方法内部也是调用wait()方法，当线程A中调用线程B的join方法阻塞后，会一直等到线程B执行完毕，线程B执行完毕后，会唤醒所有等待该线程B对象锁的线程</strong>。</p>
+<hr>
+<h4 id="sleep方法">sleep()方法</h4>
+<p>Thread类中有一个静态的 sleep方法，当一个执行中的线程调用了 Thread的 sleep方法后，调用线程会暂时让出指定时间的执行权，也就是在这期间不参与 CPU 的调度，<strong>但是该线程所拥有的监视器资源，比如锁还是持有不让出的 。</strong> 指定睡眠时间截止后，线程就会处于就绪状态，参与CPU调度。</p>
+<blockquote>
+<p>如果在睡眠期间其他线程调用了该线程的 interrupt()方法中断了该线程，则该线程会在调用 sleep 方法的地方抛出 IntermptedException 异常而返回 。</p>
+</blockquote>
+<hr>
+<h4 id="yield方法">yield()方法</h4>
+<p>Thread类中有一个静态的 yield方法，当一个线程调用 yield方法时，实际就是在暗示线程调度器<strong>当前线程请求让出自己 的 CPU 使用</strong>，但是线程调度器可以无条件忽略这个暗示。</p>
+<blockquote>
+<p>sleep和yield方法的区别</p>
+<p>当线程调用 sleep 方法时调用线程会被阻塞挂起指定的时间，在这期间线程调度器不会去调度该线程 。</p>
+<p>调用 yield 方法时，线程只是让出自己剩余的时间片，并没有被阻塞挂起，而是处于就绪状态，线程调度器下 一次调度时就有可能调度到当前线程执行 。</p>
+</blockquote>
+<hr>
 <h2 id="java锁的基础知识">Java锁的基础知识</h2>
 <h3 id="乐观锁悲观锁">乐观锁/悲观锁</h3>
 <p>根据线程是否要锁住同步资源，可以将锁分为：乐观锁和悲观锁。</p>
@@ -367,8 +415,12 @@
 <hr>
 <p>AQS中线程共享资源的锁模式有两种：</p>
 <ul>
-<li>**Shared：**表示线程以共享的方式等待锁</li>
-<li>**Exclusive：**表示线程以独占的方式等待锁。</li>
+<li>
+<p><strong>Shared：</strong> 表示线程以共享的方式等待锁</p>
+</li>
+<li>
+<p><strong>Exclusive：</strong> 表示线程以独占的方式等待锁。</p>
+</li>
 </ul>
 <p>一般来说，自定义同步器的共享方式要么是独占，要么是共享，他们也只需实现<code>tryAcquire-tryRelease</code>、<code>tryAcquireShared-tryReleaseShared</code>中的一种即可。但 AQS 也支持自定义同步器同时实现独占和共享两种方式，如<code>ReentrantReadWriteLock</code>。</p>
 <hr>
@@ -608,11 +660,136 @@
 <blockquote>
 <p>池化技术在编程中应用非常广，线程池、数据库连接池、Http 连接池等等都是对这个思想的应用。池化技术的思想主要是为了减少每次获取资源的消耗，提高对资源的利用率。</p>
 </blockquote>
-<p>线程池主要解决了两个问题：</p>
+<p>线程池是一种基于池化思想管理线程的工具，线程池可以带来如下的好处：</p>
 <ul>
-<li><strong>当执行大量异步任务时线程池能够提供较好的性能 。</strong>  在不使用线程池时，每当需要执行异步任务时直接 new 一个线程来运行，而线程的创建和销毁是需要开销的。 线程池里面的线程是可复用的，不需要每次执行异步任务时都重新创建和销毁线程 。</li>
-<li>线程池也提供了一种资源限制和管理的手段，比如可以限制线程的个数， 动态新增线程等 。</li>
+<li><strong>降低资源消耗</strong>：通过池化技术重复利用已创建的线程，降低线程创建和销毁造成的损耗。</li>
+<li><strong>提高响应速度</strong>：任务到达时，无需等待线程创建即可立即执行。</li>
+<li><strong>提高线程的可管理性</strong>：线程是稀缺资源，如果无限制创建，不仅会消耗系统资源，还会因为线程的不合理分布导致资源调度失衡，降低系统的稳定性。使用线程池可以进行统一的分配、调优和监控。</li>
+<li><strong>提供更多更强大的功能</strong>：线程池具备可拓展性，允许开发人员向其中增加更多的功能。比如延时定时线程池ScheduledThreadPoolExecutor，就允许任务延期执行或定期执行。</li>
 </ul>
+<hr>
+<p>线程池主要解决了以下的问题：</p>
+<ol>
+<li>频繁申请/销毁资源和调度资源，将带来额外的消耗，可能会非常巨大。</li>
+<li>对资源无限申请缺少抑制手段，易引发系统资源耗尽的风险。</li>
+<li>系统无法合理管理内部的资源分布，会降低系统的稳定性。</li>
+</ol>
+<hr>
+<h3 id="线程池的核心设计与实现">线程池的核心设计与实现</h3>
+<p>线程池在内部实际上构建了一个<strong>生产者消费者模型，将线程和任务两者解耦</strong>，并不直接关联，从而良好的缓冲任务，复用线程。</p>
+<p>线程池的运行主要分成两部分：<strong>任务管理、线程管理</strong>。</p>
+<ul>
+<li>任务管理部分充当生产者的角色，当任务提交后，线程池会判断该任务后续的流转：（1）直接申请线程执行该任务；（2）缓冲到队列中等待线程执行；（3）拒绝该任务。</li>
+<li>线程管理部分是消费者，它们被统一维护在线程池内，根据任务请求进行线程的分配，当线程执行完任务后则会继续获取新的任务去执行，最终当线程获取不到任务的时候，线程就会被回收。</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224184609571.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224184609571.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224184609571.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224184609571.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224184609571.png"
+        title="image-20230224184609571" /></p>
+<p>接下来，我们会按照以下三个部分去详细讲解线程池运行机制：</p>
+<ol>
+<li>线程池如何维护自身状态。</li>
+<li>线程池如何管理任务。</li>
+<li>线程池如何管理线程。</li>
+</ol>
+<hr>
+<h4 id="生命周期管理线程池如何维护自身状态">生命周期管理(线程池如何维护自身状态)</h4>
+<p>线程池内部使用一个变量维护两个值：运行状态(runState)和线程数量 (workerCount)。<strong>使用的是 AtomicInteger 类型变量，其中高 3 位用来表示线程池状态，后面 29 位用来记录线程池线程个数 。</strong></p>
+<blockquote>
+<p>用一个变量去存储两个值，可<strong>避免在做相关决策时，出现不一致的情况</strong>，不必为了维护两者的一致，而占用锁资源。</p>
+</blockquote>
+<p>ThreadPollExecutor的运行状态有5种，分别是：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224185622498.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224185622498.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224185622498.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224185622498.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224185622498.png"
+        title="image-20230224185622498" /></p>
+<p>其生命周期转换如下入所示：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224185645353.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224185645353.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224185645353.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224185645353.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224185645353.png"
+        title="image-20230224185645353" /></p>
+<hr>
+<h4 id="任务执行机制线程池如何管理任务">任务执行机制(线程池如何管理任务)</h4>
+<ul>
+<li><strong>任务调度</strong></li>
+</ul>
+<p>任务调度是线程池的主要入口，当用户提交了一个任务，接下来<strong>这个任务将如何执行都是由这个阶段决定的。</strong></p>
+<p>首先，所有任务的调度都是由execute方法完成的，这部分完成的工作是：<strong>检查现在线程池的运行状态、运行线程数、运行策略，决定接下来执行的流程，是直接申请线程执行，或是缓冲到队列中执行，亦或是直接拒绝该任务。</strong> 其执行过程如下：</p>
+<blockquote>
+<ol>
+<li>首先检测线程池运行状态，如果不是RUNNING，则直接拒绝，线程池要保证在RUNNING的状态下执行任务。</li>
+<li>如果workerCount &lt; corePoolSize，则创建并启动一个线程来执行新提交的任务。</li>
+<li>如果workerCount &gt;= corePoolSize，且线程池内的阻塞队列未满，则将任务添加到该阻塞队列中。</li>
+<li>如果workerCount &gt;= corePoolSize &amp;&amp; workerCount &lt; maximumPoolSize，且线程池内的阻塞队列已满，则创建并启动一个线程来执行新提交的任务。</li>
+<li>如果workerCount &gt;= maximumPoolSize，并且线程池内的阻塞队列已满, 则根据拒绝策略来处理该任务, 默认的处理方式是直接抛异常。</li>
+</ol>
+</blockquote>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224190333701.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224190333701.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224190333701.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224190333701.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224190333701.png"
+        title="image-20230224190333701" /></p>
+<hr>
+<ul>
+<li><strong>任务缓冲</strong></li>
+</ul>
+<p>任务缓冲模块是线程池能够管理任务的核心部分。线程池中是以生产者消费者模式，<strong>通过一个阻塞队列来实现的。阻塞队列缓存任务，工作线程从阻塞队列中获取任务。</strong></p>
+<blockquote>
+<p>阻塞队列(BlockingQueue)是一个支持两个附加操作的队列。这两个附加的操作是：在队列为空时，获取元素的线程会等待队列变为非空。当队列满时，存储元素的线程会等待队列可用。</p>
+</blockquote>
+<hr>
+<ul>
+<li><strong>任务申请</strong></li>
+</ul>
+<p>任务的执行有两种可能：一种是<strong>任务直接由新创建的线程执行</strong>。 另一种是<strong>线程从任务队列中获取任务然后执行，执行完任务的空闲线程会再次去从队列中申请任务再去执行。</strong></p>
+<p>工作线程Worker会不断接收新任务去执行，如果<code>task</code>为<code>null</code>，就会调用<code>getTask()</code>方法获取任务，即上述的第二种可能。执行流程如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224191931752.png"
+        data-srcset="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224191931752.png, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224191931752.png 1.5x, https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224191931752.png 2x"
+        data-sizes="auto"
+        alt="https://narcissusblog-img.oss-cn-beijing.aliyuncs.com/uPic/file-2023-02/image-20230224191931752.png"
+        title="image-20230224191931752" /></p>
+<hr>
+<ul>
+<li><strong>任务拒绝</strong></li>
+</ul>
+<p>任务拒绝模块是线程池的保护部分，线程池有一个最大的容量，当线程池的任务缓存队列已满，并且线程池中的线程数目达到maximumPoolSize时，就需要拒绝掉该任务，采取任务拒绝策略，保护线程池。</p>
+<hr>
+<h4 id="线程池如何管理线程">线程池如何管理线程</h4>
+<p>线程池设计了线程池内的工作线程Worker。Worker这个工作线程，<strong>实现了Runnable接口，继承了AQS</strong>。并持有一个线程thread，一个初始化的任务firstTask。</p>
+<blockquote>
+<p>thread是在调用构造方法时通过ThreadFactory来创建的线程，可以用来执行任务；firstTask用它来保存传入的第一个任务，这个任务可以有也可以为null。如果这个值是非空的，那么线程就会在启动初期立即执行这个任务，也就对应核心线程创建时的情况；如果这个值是null，那么就需要创建一个线程去执行任务列表（workQueue）中的任务，也就是非核心线程的创建。</p>
+<hr>
+<p><strong>Worker继承了AQS，通过AQS实现不可重入的的特性去反应线程现在的执行状态。</strong></p>
+<ol>
+<li>lock方法一旦获取了独占锁，表示当前线程正在执行任务中。</li>
+<li>如果该线程现在不是独占锁的状态，也就是空闲的状态，说明它没有在处理任务，这时可以对该线程进行中断。</li>
+</ol>
+</blockquote>
+<hr>
+<p><strong>线程池使用一张Hash表去持有线程的引用，这样可以通过添加引用、移除引用这样的操作来控制线程的生命周期。</strong></p>
+<blockquote>
+<p><strong>线程池中线程的销毁依赖JVM自动的回收</strong>，线程池做的工作是根据当前线程池的状态维护一定数量的线程引用，防止这部分线程被JVM回收，当线程池决定哪些线程需要回收时，只需要将其引用消除即可。</p>
+<p>Worker被创建出来后，就会不断地进行轮询，然后获取任务去执行，核心线程可以无限等待获取任务，非核心线程要限时获取任务。当Worker无法获取到任务，也就是获取的任务为空时，循环会结束，Worker会主动消除自身在线程池内的引用。</p>
+</blockquote>
+<hr>
 <h3 id="线程池的创建">线程池的创建</h3>
 <p>线程池的创建有两种方式，一是通过<code>Executors</code>工具类，另外是直接通过<code>ThreadPoolExecutor</code>类的构造器进行创建。</p>
 <h4 id="executors工具类创建">Executors工具类创建</h4>
@@ -631,7 +808,6 @@
 </blockquote>
 <hr>
 <h4 id="使用threadpoolexecutor方式创建">使用ThreadPoolExecutor方式创建</h4>
-<p><strong>线程池巧妙地使用一个 Integer类型的原子变量来记录线程池状态和线程池中的线程个数。假设 Integer 类型是 32 位二进制表示，则其中高 3 位用来表示线程池状态，后面 29 位用来记录线程池线程个数 。</strong></p>
 <p><code>SingleThreadExecutor</code>类有四种构造方法，允许传入参数最多的构造方法如下：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="nf">ThreadPoolExecutor</span><span class="o">(</span><span class="kt">int</span> <span class="n">corePoolSize</span><span class="o">,</span>
 </span></span><span class="line"><span class="cl">                          <span class="kt">int</span> <span class="n">maximumPoolSize</span><span class="o">,</span>
@@ -677,15 +853,15 @@
 </blockquote>
 <ul>
 <li><strong>threadFactory：创建线程的工厂，</strong> 一般默认即可。</li>
-<li>**handler：饱和策略，**当队列满并且线程个数达到<code>maximunPoolSize</code>后采取的策略，共有四种饱和策略。</li>
+<li><strong>handler：饱和策略，</strong> 当队列满并且线程个数达到<code>maximunPoolSize</code>后采取的策略，共有四种饱和策略。</li>
 </ul>
 <blockquote>
 <p>如果当前同时运行的线程数量达到最大线程数量并且队列也已经被放满了任务时，<code>ThreadPoolTaskExecutor</code> 定义四种饱和策略：</p>
 <ul>
-<li><strong><code>ThreadPoolExecutor.AbortPolicy</code></strong> ：抛出 <code>RejectedExecutionException</code>来拒绝新任务的处理。</li>
+<li><strong><code>ThreadPoolExecutor.AbortPolicy</code></strong> ：抛出 <code>RejectedExecutionException</code>来拒绝新任务的处理。这时线程池的默认拒绝策略，推荐比较关键的业务使用该策略，能够及时通过异常发现。</li>
 <li><strong><code>ThreadPoolExecutor.CallerRunsPolicy</code></strong> ：调用执行自己的线程运行任务，也就是直接在调用<code>execute</code>方法的线程中运行(<code>run</code>)被拒绝的任务，如果执行程序已关闭，则会丢弃该任务。因此这种策略会降低对于新任务提交速度，影响程序的整体性能。如果您的应用程序可以承受此延迟并且你要求任何一个任务请求都要被执行的话，你可以选择这个策略。</li>
-<li><strong><code>ThreadPoolExecutor.DiscardPolicy</code></strong> ：不处理新任务，直接丢弃掉。</li>
-<li><strong><code>ThreadPoolExecutor.DiscardOldestPolicy</code></strong> ： 此策略将丢弃最早的未处理的任务请求。</li>
+<li><strong><code>ThreadPoolExecutor.DiscardPolicy</code></strong> ：不处理新任务，直接丢弃掉。建议一些无关紧要的业务使用该策略。</li>
+<li><strong><code>ThreadPoolExecutor.DiscardOldestPolicy</code></strong> ： 此策略将丢弃队列最前面的任务，然后重新提交被拒绝的任务。</li>
 </ul>
 </blockquote>
 <hr>
