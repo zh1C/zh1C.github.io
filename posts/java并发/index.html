@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/java%E5%B9%B6%E5%8F%91\/"
-        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  13995 ,
+        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  16626 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/java%E5%B9%B6%E5%8F%91\/","datePublished": "2022-02-10T00:00:00+00:00","dateModified": "2022-02-10T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,8 +113,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Java并发相关学习</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java/"><i class="far fa-folder fa-fw"></i>Java</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 13995 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 28 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 16626 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 34 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -160,6 +160,19 @@
         <li><a href="#自旋锁适应性自旋锁">自旋锁/适应性自旋锁</a></li>
         <li><a href="#公平锁非公平锁">公平锁/非公平锁</a></li>
         <li><a href="#可重入锁非可重入锁">可重入锁/非可重入锁</a></li>
+      </ul>
+    </li>
+    <li><a href="#java线程安全的实现方法线程同步的方案">Java线程安全的实现方法(线程同步的方案)</a>
+      <ul>
+        <li><a href="#互斥同步阻塞同步">互斥同步(阻塞同步)</a></li>
+        <li><a href="#非阻塞同步">非阻塞同步</a></li>
+        <li><a href="#无同步方案">无同步方案</a></li>
+      </ul>
+    </li>
+    <li><a href="#threadlocal原理">ThreadLocal原理</a>
+      <ul>
+        <li><a href="#threadlocal原理-1">ThreadLocal原理</a></li>
+        <li><a href="#inheritablethreadlocal原理">InheritableThreadLocal原理</a></li>
       </ul>
     </li>
     <li><a href="#aqs详解">AQS详解</a>
@@ -395,6 +408,84 @@
 <h3 id="可重入锁非可重入锁">可重入锁/非可重入锁</h3>
 <p>可重入锁又名递归锁，是指在同一个线程在外层方法获取锁的时候，<strong>再进入该线程的内层方法会自动获取锁</strong>（前提锁对象得是同一个对象或者class），不会因为之前已经获取过还没释放而阻塞。Java中ReentrantLock和synchronized都是可重入锁，可重入锁的一个优点是可一定程度避免死锁。</p>
 <hr>
+<h2 id="java线程安全的实现方法线程同步的方案">Java线程安全的实现方法(线程同步的方案)</h2>
+<p>保障Java多线程安全的方案有如下三种：</p>
+<ul>
+<li><strong>互斥同步</strong>，也称为阻塞同步</li>
+<li><strong>非阻塞同步</strong></li>
+<li><strong>无同步方案</strong></li>
+</ul>
+<hr>
+<h3 id="互斥同步阻塞同步">互斥同步(阻塞同步)</h3>
+<p>互斥同步是一种最常见也是最主要的并发正确性保障手段。保证共享数据的互斥性，即可实现多线程之间同步的正确定。</p>
+<p>Java中互斥同步的方式有：<strong>synchronized关键字和Lock锁。</strong></p>
+<blockquote>
+<p>从解决问题的方式上看，互斥同步属于一种悲观的并发策略。</p>
+<p><strong>由于Java的线程是1:1映射到操作系统的原生内核上，因此阻塞和唤醒线程都需要操作系统的线程调度来执行，不可避免需要用户态和内核态之间的切换，这种状态转换需要更多的处理器时间。</strong></p>
+<p>即对共享资源加锁的方式，会导致用户态到核心态转换、维护锁计数器和检查是否有被阻塞的线程需要被唤醒等开销。</p>
+</blockquote>
+<h3 id="非阻塞同步">非阻塞同步</h3>
+<p>非阻塞同步是一种<strong>基于冲突检测的乐观策略</strong>。 通俗地说就是不管风险，先进行操作，如果没有其他线程争用共享数据，那操作就直接成功了;如果共享的数据的确被争用，产生了冲突，那再进行其他的补偿措施，<strong>最常用的补偿措施是不断地重试</strong>， 直到出现没有竞争的共享数据为止。</p>
+<p>这种乐观的并发策略不需要将线程阻塞挂起，因此称为非阻塞同步，这种代码也称为无锁编程。</p>
+<blockquote>
+<p>但是我们<strong>必须保证操作和冲突检测两个步骤具备原子性</strong>， 因此需要硬件指令集的支持。这类指令常用的有：</p>
+<ul>
+<li>测试并设置(Test and Set)</li>
+<li>获取并增加(Fetch and Increment)</li>
+<li>交换(Swap)</li>
+<li>比较并交换(Compare and Swap，CAS)</li>
+<li>加载链接/条件存储(Load Linked/Store Conditional，LL/SC)</li>
+</ul>
+<hr>
+<p>Java暴露出来的是CAS操作，该操作由<code>sun.misc.Unsafe</code>类里面的 <code>compareAndSwapInt()</code>和<code>compareAndSwapLong()</code>等几个方法包装提供。</p>
+<p>不过由于Unsafe类在<strong>设计上就不是提供给用户程序调用的类</strong>  (Unsafe::getUnsafe()的代码中限制了只有启动类加载器Bootstrap ClassLoader加载的Class才能访问它)。直到JDK 9之后，Java类库才在<code>VarHandle</code>类里开放了面向用户程序使用的CAS操作。</p>
+</blockquote>
+<h3 id="无同步方案">无同步方案</h3>
+<p>保证线程安全并不一定需要同步，同步只是保证了共享数据的安全，<strong>如果不涉及共享数据，自然不需要同步</strong> 。有如下两类：</p>
+<ul>
+<li><strong>可重入代码</strong></li>
+</ul>
+<p>指可以在代码执行的任何时刻中断它，转而去执行另外一段代码(包括递归调用它本身)，而在控制权返回后，原来的程序不会出现任何错误，也不会对结果有所影响。</p>
+<blockquote>
+<p>可重入代码有一些共同的特征，例如，<strong>不依赖全局变量、存储在堆上的数据和公用的系统资源，用到的状态量都由参数中传入</strong> ，不调用非可重入的方法等。</p>
+</blockquote>
+<ul>
+<li><strong>线程本地存储</strong></li>
+</ul>
+<p>可以把共享数据的可见范围限制在同一个线程之内，那么也无需考虑同步的问题。Java中如果需要变量只要被某个线程独享，<strong>可以通过<code>java.lang.ThreadLocal</code>类来实现线程本地存储的功能。</strong></p>
+<hr>
+<h2 id="threadlocal原理">ThreadLocal原理</h2>
+<h3 id="threadlocal原理-1">ThreadLocal原理</h3>
+<p>ThreadLocal提供了线程本地变量，也就是如果你创建了一个 ThreadLocal 变量 ，那么<strong>访问这个变量的每个线程都会有这个变量的一个本地副本</strong>  。当多个线程操作这个变量时，实际操作的是自己本地 存里面的变量 ，从而避免了线程安全问题。</p>
+<blockquote>
+<p>每一个Thread类中都有两个<code>ThreadLocalMap</code>类型的变量：<strong><code>threadLocals和inheritableThreadLocals</code></strong></p>
+<p>在默认情况下， 每个线程中的这两个变量都为 null，只有当前线程第一次调用 ThreadLocal 的 set或者get方法时才会创建它们。因此，<strong>本质上每个线程的本地变量不是存放在ThreadLocal变量中，而是存放在调用线程的<code>threadLocals</code>变量中</strong>， ThreadLocal就是一个工具壳，它通过set方法把 value值放入调用线程的 threadLocals里面并存放起来， 当调用线程调用它的 get方法时，再从当前 线程的 threadLocals变量里面将其拿出来使用 。</p>
+<blockquote>
+<p>注意：如果调用线程不终止，那么这个本地变量会一直存在，<strong>可能会造成内存泄漏</strong>，因此ThreadLocal变量使用完毕后要记得调用remove方法进行删除。</p>
+<p>原因分析：</p>
+<p><strong>ThreadLocal与其保存的值都是被放在ThreadLocalMap内部Entry对应的实例上。而Entry持有ThreadLocal的弱引用，当ThreadLocal只被Entry引用时，ThreadLocal对象将在GC时被无条件的回收掉。而对应的值却无法被回收，造成内存的泄漏，最终可能引起OOM。</strong></p>
+</blockquote>
+<hr>
+<p>Thread里面的 threadLocals为何被设计为 map结构?</p>
+<p>因为每一个线程可以关联多个ThreadLocal变量，因此设计成map结构， 其中key为我们定义的 ThreadLocal 变量的 this 引用， value则为我们使用 set方法设置的值。</p>
+</blockquote>
+<blockquote>
+<p>因为每一个线程都会有一份ThreadLocal的副本，所以同一个 ThreadLocal变量在父线程中被设置值后，在子线程中是获取不到的。即ThreadLocal不支持继承性。</p>
+</blockquote>
+<hr>
+<h3 id="inheritablethreadlocal原理">InheritableThreadLocal原理</h3>
+<p>为了解决ThreadLocal的不支持继承性问题，就有了<code>InheritableThreadLocal</code>，继承了ThreadLocal。而每一个Thread类中也有一个<code>inheritableThreadLocals</code>的变量用于存储值。</p>
+<blockquote>
+<p>InheritableThreadLocal的原理就是：子线程是通过在父线程中通过调用<code>new Thread()</code>方法来创建子线程，<code>Thread#init</code>方法在<code>Thread</code>的构造方法中被调用。在<code>init</code>方法中<strong>会把父线程中 inheritableThreadLocals变量里面的本地变量复制一份保存到子线程的 inheritableThreadLocals 变量里面。</strong></p>
+<blockquote>
+<p>注意：同理，Thread类中的<code>inheritableThreadLocals</code>变量也是在当前线程调用set或get方法设置变量时，创建当前线程的 inheritableThreadLocals变量。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>InheritableThreadLocal只能在父子进程之间传输，对于线程池的复用逻辑，则会存在问题，因此阿里巴巴开源了<a href="https://github.com/alibaba/transmittable-thread-local" target="_blank" rel="noopener noreffer">TransmittableThreadLocal</a>组件就可以解决该问题，源码只有约1000行，可以学习。</p>
+</blockquote>
+<hr>
+<hr>
 <h2 id="aqs详解">AQS详解</h2>
 <p>AQS 的全称为 <code>AbstractQueuedSynchronizer</code> ，翻译过来的意思就是抽象队列同步器。他是实现同步器的基础组件，并发包中锁的底层实现就是AQS。</p>
 <h3 id="aqs原理">AQS原理</h3>
@@ -622,6 +713,7 @@
 <li><strong>可实现选择性通知（锁可以绑定多个条件）</strong>: <code>synchronized</code>关键字与<code>wait()</code>和<code>notify()</code>/<code>notifyAll()</code>方法相结合可以实现等待/通知机制。<code>ReentrantLock</code>类当然也可以实现，但是需要借助于<code>Condition</code>接口与<code>newCondition()</code>方法。</li>
 </ul>
 </li>
+<li>Synchronized依赖于JVM，因此<strong>即使出现异常，JVM也能保证锁的正确释放</strong>；Lock需要确保在finally块中释放锁，否则一旦同步代码块发生异常，就可能永远不会释放锁。</li>
 </ul>
 <hr>
 <h2 id="reentrantreadwritelock原理">ReentrantReadWriteLock原理</h2>
