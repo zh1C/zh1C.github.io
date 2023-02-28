@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","keywords": "MySQL, 面试总结","wordcount":  22765 ,
+        },"genre": "posts","keywords": "MySQL, 面试总结","wordcount":  22761 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/","datePublished": "2022-02-16T00:00:00+00:00","dateModified": "2022-02-16T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,7 +113,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-16">2022-02-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 22765 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-16">2022-02-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 22761 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 46 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -599,7 +599,7 @@
 <h3 id="有什么索引优化方法">有什么索引优化方法？</h3>
 <p>常见的索引优化方法有：<strong>前缀索引优化，覆盖索引优化，主键索引最好是自增，防止索引失效。</strong></p>
 <h4 id="前缀索引优化">前缀索引优化</h4>
-<p>前缀索引顾名思义就是使用某个字段中字符串的前几个字符建立索引，使用前缀索引是为了减小索引字段大小，**可以增加一个索引页中存储的索引值，有效提高索引的查询速度。**在一些大字符串的字段作为索引时，使用前缀索引可以帮助我们减小索引项的大小。</p>
+<p>前缀索引顾名思义就是使用某个字段中字符串的前几个字符建立索引，使用前缀索引是为了减小索引字段大小，<strong>可以增加一个索引页中存储的索引值，有效提高索引的查询速度。</strong> 在一些大字符串的字段作为索引时，使用前缀索引可以帮助我们减小索引项的大小。</p>
 <p>不过前缀索引有一定的局限性：</p>
 <ul>
 <li>order by 就无法使用前缀索引；</li>

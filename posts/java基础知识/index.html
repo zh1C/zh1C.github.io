@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86\/"
-        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  16515 ,
+        },"genre": "posts","keywords": "Java, 面试, 面试总结","wordcount":  16628 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/java%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86\/","datePublished": "2022-02-10T00:00:00+00:00","dateModified": "2022-02-10T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,8 +113,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">Java基础、集合、JVM</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/java/"><i class="far fa-folder fa-fw"></i>Java</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 16515 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 33 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-10">2022-02-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 16628 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 34 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -194,6 +194,11 @@
                 <li><a href="#双亲委派模型">双亲委派模型</a></li>
               </ul>
             </li>
+          </ul>
+        </li>
+        <li><a href="#常用jvm参数与工具">常用JVM参数与工具</a>
+          <ul>
+            <li><a href="#常用jvm参数">常用JVM参数</a></li>
           </ul>
         </li>
       </ul>
@@ -430,6 +435,9 @@
 <li>JDK1.8之后</li>
 </ul>
 <p>JDK1.8 之后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）（将链表转换成红黑树前会判断，如果当前数组的长度小于 64，那么会选择先进行数组扩容，而不是转换为红黑树）时，将链表转化为红黑树，以减少搜索时间。</p>
+<blockquote>
+<p>红黑树有这样的性质：<strong>一棵大小为N的红黑树高度不会超过2lgN</strong>， 因此红黑树的插入、查找时间复杂度为O(lgN)。</p>
+</blockquote>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -956,8 +964,23 @@
 <p>双亲委派模型工作过程：<strong>如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的类加载器都是如此，因此所有的加载请求最终都应该传送到最顶层的启动类加载器中，只有当父加载器反馈自己无法完成这个加载请求(它的搜索范围中没有找到所需的类)时，子加载器才会尝试自己去完成加载。</strong></p>
 <blockquote>
 <p>双亲委派模型的好处：</p>
-<p>Java中的类随着它的类加载器一起具备了一种带有优先级的层级关系。例如：<code>java.lang.Object</code>类，存放在rt.jar中，无论哪一个类加载器都需要加载这个类，最终都会委派给处于模型顶端的启动类加载器进行加载，因此Object类在程序的各种类加载器环境中都能够保证是同一个类。<strong>双亲委派模型保证了 Java 程序的稳定运行，可以避免类的重复加载，也保证了 Java 的核心 API 不被篡改。</strong></p>
+<p>Java中的类随着它的类加载器一起具备了一种带有优先级的层级关系。例如：<code>java.lang.Object</code>类，存放在rt.jar中，无论哪一个类加载器需要加载这个类，最终都会委派给处于模型顶端的启动类加载器进行加载，因此Object类在程序的各种类加载器环境中都能够保证是同一个类。<strong>双亲委派模型保证了 Java 程序的稳定运行，可以避免类的重复加载，也保证了 Java 的核心 API 不被篡改。</strong></p>
 </blockquote>
+<hr>
+<h3 id="常用jvm参数与工具">常用JVM参数与工具</h3>
+<h4 id="常用jvm参数">常用JVM参数</h4>
+<ul>
+<li><strong>-XX:+PrintGCDetails,  -XX:+PrintGCTimeStamps,  -XX:+PrintGCDateStamps</strong></li>
+</ul>
+<p>用于打印出GC日志，查看GC情况。</p>
+<ul>
+<li><strong>-XX: MaxHeapSize=100M</strong></li>
+</ul>
+<p>设置最大堆大小</p>
+<ul>
+<li><strong>-XX:NewSize=20M,  -XX:OldSize=50M</strong></li>
+</ul>
+<p>设置年轻代，老年代大小</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
