@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/%E9%9D%A2%E8%AF%95%E9%A2%98\/"
-        },"genre": "posts","keywords": "面试总结","wordcount":  1338 ,
+        },"genre": "posts","keywords": "面试总结","wordcount":  1495 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/%E9%9D%A2%E8%AF%95%E9%A2%98\/","datePublished": "2022-02-23T00:00:00+00:00","dateModified": "2022-02-23T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,7 +113,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">面试题以及相关面经总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/%E6%8A%80%E6%9C%AF/"><i class="far fa-folder fa-fw"></i>技术</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-23">2022-02-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1338 字&nbsp;
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-23">2022-02-23</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1495 字&nbsp;
                 <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
@@ -140,6 +140,7 @@
         </li>
       </ul>
     </li>
+    <li><a href="#数据库三范式">数据库三范式</a></li>
   </ul>
 </nav></div>
             </div><div class="content" id="content"><h2 id="如何设计一个秒杀系统">如何设计一个秒杀系统？</h2>
@@ -185,6 +186,24 @@
 <p>如果经过上述手段后，后端流量依然很大，可以通过业务侧优化。</p>
 <p>例如，12306 购票时间都在同一时刻，这导致同一时刻并发量太大，系统经常支撑不住。后来 12306 将购票周期放长，可以提前 20 天购买火车票。通过业务侧的优化，我们将本来在 1 个小时的抢购分摊到了 20 天，服务器压力会降低很多。</p>
 <hr>
+<hr>
+<h2 id="数据库三范式">数据库三范式</h2>
+<ul>
+<li><strong>第一范式</strong></li>
+</ul>
+<p>确保数据库字段的原子性。即数据库表中的每一列都是不可分割的原子数据项。</p>
+<ul>
+<li><strong>第二范式</strong></li>
+</ul>
+<p>在满足第一范式的基础上，还必须满足两个要求：</p>
+<ol>
+<li>一个表必须有一个主键</li>
+<li>非主键列必须完全依赖于主键，而不能只依赖于主键的一部分</li>
+</ol>
+<ul>
+<li><strong>第三范式</strong></li>
+</ul>
+<p>在满足第二范式的基础上，还必须满足一个要求：非主键列必须直接依赖于主键，不能出现传递依赖。</p>
 <hr>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
