@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","keywords": "MySQL, 面试总结","wordcount":  24188 ,
+        },"genre": "posts","keywords": "MySQL, 面试总结","wordcount":  25238 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/","datePublished": "2022-02-16T00:00:00+00:00","dateModified": "2022-02-16T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,8 +113,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-16">2022-02-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 24188 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 49 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-16">2022-02-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 25238 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 51 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -189,6 +189,13 @@
             <li><a href="#哪种count性能最好">哪种count()性能最好？</a></li>
             <li><a href="#为什么要通过遍历的方式来统计">为什么要通过遍历的方式来统计？</a></li>
             <li><a href="#如何优化count">如何优化count(*)?</a></li>
+          </ul>
+        </li>
+        <li><a href="#索引合并优化">索引合并优化</a>
+          <ul>
+            <li><a href="#索引合并交集访问算法">索引合并交集访问算法</a></li>
+            <li><a href="#索引合并并集访问算法">索引合并并集访问算法</a></li>
+            <li><a href="#索引合并排序并集访问算法">索引合并排序并集访问算法</a></li>
           </ul>
         </li>
       </ul>
@@ -720,6 +727,82 @@
 <p>如果是想精确的获取表的记录总数，我们可以将这个计数值保存到单独的一张计数表中。在新增和删除操作时，我们需要额外维护这个计数表。</p>
 <hr>
 <hr>
+<h3 id="索引合并优化">索引合并优化</h3>
+<p><strong>当单表查询中，使用到了多个索引，优化器则用到了索引合并优化(Index merge)。</strong> 即一次查询语句中，MySQL用到了多个索引并将其求交集或者并集。在使用EXPLAIN时，在type那一列会显示<code>index_merge</code>。<code>Extra</code>字段会显示：<code>Using intersect (...)  Using union(...)    Using sort_union(...)</code>。</p>
+<blockquote>
+<p>索引合并优化算法有以下的限制：</p>
+<ul>
+<li>对于复杂的where子语句，包含了很深的and/or 嵌套，那么不会使用到索引合并技术。</li>
+<li>不适用于全文索引</li>
+</ul>
+</blockquote>
+<p>具体包含如下算法：</p>
+<ul>
+<li>Index Merge Intersection access (索引合并交集访问算法)</li>
+<li>Index Merge Union access（索引合并并集访问算法）</li>
+<li>Index Merge Sort-Union access (索引合并排序并集访问算法)</li>
+</ul>
+<hr>
+<h4 id="索引合并交集访问算法">索引合并交集访问算法</h4>
+<p>它的工作流程是：<strong>对于每一个使用到的索引进行查询，查询主键值集合，然后进行合并，求交集，也就是and运算。</strong></p>
+<blockquote>
+<p>会用到该算法必须满足以下两个条件：</p>
+<ul>
+<li>二级索引是等值查询；如果是组合索引，组合索引的每一位都必须覆盖到，不能只是部分</li>
+<li>InnoBD表上的主键范围查询</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="c1"># 主键可以使用范围查询，二级索引只能使用等值查询
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">innodb_table</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">primary_key</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">key_col1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1"># 没有主键的情况
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tbl_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">key1_part1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">key1_part2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">key2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><blockquote>
+<p>为什么二级索引必须要求等值查询？</p>
+<p>原因在于后续的求交集算法过程：</p>
+<p><strong>针对两个升序排序的数组，进行归并</strong>：逐个取出两个数组中的最小的值，如果相等，就放入结果集，否则将较小的数指针向后移动。时间复杂度O(N)。</p>
+<p>因此如果二级索引是范围查询，那么查询出来的主键是无序的。</p>
+</blockquote>
+<hr>
+<h4 id="索引合并并集访问算法">索引合并并集访问算法</h4>
+<p>执行流程和求交集算法类似，使用OR连接，求并集。</p>
+<blockquote>
+<p>用到该算法必须满足如下三个条件：</p>
+<ul>
+<li>二级索引是等值查询；如果是组合索引，组合索引的每一位都必须覆盖到，不能只是部分</li>
+<li>InnoBD表上的主键范围查询</li>
+<li>符合 index merge intersect 的条件</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="c1"># 无主键，OR连接
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">t1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">key1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">key2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">key3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1"># 既有AND,也有OR
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">innodb_table</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">key1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">key2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="k">OR</span><span class="w"> </span><span class="p">(</span><span class="n">key3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;foo&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">key4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;bar&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">key5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><blockquote>
+<p>求并集的算法流程：</p>
+<p>两个有序的升序数组，从两个数组中取出最小的数，然后比较，如果相等并且等于目前最小值，就放入结果集中，向后移动两个指针；否则，将小的数添加到结果集中。</p>
+</blockquote>
+<hr>
+<h4 id="索引合并排序并集访问算法">索引合并排序并集访问算法</h4>
+<p>交集、并集访问算法对二级索引的要求比较严格，更多的时候二级索引也采用了范围查询，因此有了该算法。该算法的流程是：<strong>根据索引查询得到主键集合，对于每个主键集合进行排序，然后求并集。</strong> 这样的好处是扩展了使用条件，增加了使用的范围；缺点就是消耗更大了。</p>
+<blockquote>
+<p>必要条件:</p>
+<ul>
+<li>二级索引不必等值查询，联合索引也不必匹配所有的索引项。</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tbl_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="n">key_col1</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">key_col2</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">20</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">tbl_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="k">WHERE</span><span class="w"> </span><span class="p">(</span><span class="n">key_col1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">key_col2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">nonkey_col</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><hr>
 <h2 id="事务篇">事务篇</h2>
 <h3 id="事务的概念">事务的概念</h3>
 <p>事务是由 MySQL 的引擎来实现的，我们常见的 InnoDB 引擎它是支持事务的。事务是逻辑上的一组操作，要么都执行，要么都不执行。</p>
