@@ -26,7 +26,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/"
-        },"genre": "posts","keywords": "MySQL, 面试总结","wordcount":  25238 ,
+        },"genre": "posts","keywords": "MySQL, 面试总结","wordcount":  25665 ,
         "url": "http:\/\/wen-nan.github.io\/posts\/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93\/","datePublished": "2022-02-16T00:00:00+00:00","dateModified": "2022-02-16T00:00:00+00:00","publisher": {
             "@type": "Organization",
             "name": "Narcissus"},"author": {
@@ -113,8 +113,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single"><h1 class="single-title animated flipInX">MySQL面试题总结</h1><div class="post-meta">
             <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fas fa-user-circle fa-fw"></i>Narcissus</a></span>&nbsp;<span class="post-category">收录于 <a href="/categories/mysql/"><i class="far fa-folder fa-fw"></i>MySQL</a></span></div>
-            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-16">2022-02-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 25238 字&nbsp;
-                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 51 分钟&nbsp;</div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-16">2022-02-16</time>&nbsp;<i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 25665 字&nbsp;
+                <i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 52 分钟&nbsp;</div>
         </div><div class="details toc" id="toc-static"  kept="">
                 <div class="details-summary toc-title">
                     <span>目录</span>
@@ -173,6 +173,7 @@
             <li><a href="#覆盖索引优化">覆盖索引优化</a></li>
             <li><a href="#主键索引最好是自增的">主键索引最好是自增的</a></li>
             <li><a href="#索引最好设置为not-null">索引最好设置为NOT NULL</a></li>
+            <li><a href="#使用索引扫描来做排序">使用索引扫描来做排序</a></li>
             <li><a href="#防止索引失效">防止索引失效</a></li>
           </ul>
         </li>
@@ -626,7 +627,19 @@
 <li>order by 就无法使用前缀索引；</li>
 <li>无法把前缀索引用作覆盖索引；</li>
 </ul>
-<hr>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="c1"># 建表时创建前缀索引
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="nf">table_name</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">column_list</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">INDEX</span><span class="p">(</span><span class="nf">column_name</span><span class="p">(</span><span class="n">length</span><span class="p">))</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="p">);</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1"># 建表后创建前缀索引
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">index_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ON</span><span class="w"> </span><span class="nf">table_name</span><span class="p">(</span><span class="nf">column_name</span><span class="p">(</span><span class="n">length</span><span class="p">));</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="c1"># 使用ALTER可以不用提供索引名，MYSQL会自动创建名称
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">table_name</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">index</span><span class="p">(</span><span class="nf">column_name</span><span class="p">(</span><span class="n">length</span><span class="p">));</span><span class="w">
+</span></span></span></code></pre></div><hr>
 <h4 id="覆盖索引优化">覆盖索引优化</h4>
 <p>覆盖索引是指 SQL 中 query 的所有字段，在索引 B+Tree 的叶子节点上都能找得到的那些索引，从二级索引中查询得到记录，而不需要通过聚簇索引查询获得，<strong>可以避免回表的操作，减少了大量的I/O操作</strong>。</p>
 <hr>
@@ -634,6 +647,10 @@
 <p><strong>如果我们使用自增主键</strong>，每次<strong>插入一条新记录，都是追加操作，不需要重新移动数据</strong>，因此这种插入数据的方法效率非常高。</p>
 <p><strong>如果我们使用非自增主键</strong>，由于每次插入主键的索引值都是随机的，因此每次插入新的数据时，就可能会插入到现有数据页中间的某个位置，可能会导致<strong>页分裂</strong>。<strong>页分裂还有可能会造成大量的内存碎片，导致索引结构不紧凑，从而影响查询效率</strong>。</p>
 <p>另外，主键字段的长度不要太大，因为<strong>主键字段长度越小，意味着二级索引的叶子节点越小（二级索引的叶子节点存放的数据是主键值），这样二级索引占用的空间也就越小</strong>。</p>
+<blockquote>
+<p>自增的主键什么情况下会造成坏结果？</p>
+<p>对于高并发工作负载，按主键顺序插入可能会造成明显的争用。主键的上界会成为“热点”，因为所有的插入都发生在这里，所以<strong>并发插入可能会导致间隙锁的竞争。</strong></p>
+</blockquote>
 <hr>
 <h4 id="索引最好设置为not-null">索引最好设置为NOT NULL</h4>
 <p>索引设置为NOT NULL，主要有以下两点原因：</p>
@@ -641,6 +658,20 @@
 <li>第一个原因：索引列存在 NULL 就会导致优化器在做索引选择的时候更加复杂，更加难以优化，因为可为 NULL 的列会使索引、索引统计和值比较都更复杂，比如进行索引统计时，count 会省略值为NULL 的行。</li>
 <li>第二个原因：NULL 值是一个没意义的值，但是它会占用物理空间，如果允许存在NULL的字段，那么行格式中<strong>至少会用 1 字节空间存储 NULL 值列表</strong>。</li>
 </ul>
+<hr>
+<h4 id="使用索引扫描来做排序">使用索引扫描来做排序</h4>
+<p>MySQL有两种方式可以生成有序的结果：通过排序的方式：或者按索引顺序扫描。</p>
+<blockquote>
+<p>如果explain出来的type列值为index，就说明MySQL使用了索引扫描来做排序。</p>
+</blockquote>
+<p>当<strong>索引的列顺序和ORDER BY子句的顺序完全一致，并且所有列的排序方向都一样时</strong>， MySQL则可以使用索引来对结果进行排序。</p>
+<blockquote>
+<p>ORDER BY子句要使用索引来进行排序，也必须满足最左匹配原则。但如果前导列为常量时，也可以使用索引列来进行排序。</p>
+<p>例如：表中有索引<code>(rental_date, inventory_id, customer_id)</code>，下列查询语句可以用到索引进行排序：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-mysql" data-lang="mysql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="n">rental_id</span><span class="p">,</span><span class="w"> </span><span class="n">staff_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">table_1</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">WHERE</span><span class="w"> </span><span class="n">rental_date</span><span class="w"> </span><span class="o">=</span><span class="s1">&#39;2005-05-05&#39;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">inventory_id</span><span class="p">,</span><span class="w"> </span><span class="n">customer_id</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div></blockquote>
 <hr>
 <h4 id="防止索引失效">防止索引失效</h4>
 <p>发生索引失效的情况：</p>
