@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>数学技巧 - 标签 - NarcissusBlog</title>
-        <link>http://wen-nan.github.io/tags/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</link>
+        <link>http://zh1C.github.io/tags/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</link>
         <description>数学技巧 - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 01 Oct 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 01 Oct 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://zh1C.github.io/tags/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/" rel="self" type="application/rss+xml" /><item>
     <title>数学技巧</title>
-    <link>http://wen-nan.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</link>
+    <link>http://zh1C.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</link>
     <pubDate>Fri, 01 Oct 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</guid>
+    <guid>http://zh1C.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</guid>
     <description><![CDATA[快速幂 根据幂运算的定义可以知道，如果要求 x 的 N 次幂，那么暴力方法就是用一个 N 次的循环，然后累乘得到结果，时间复杂度为o(N)。快速幂算法可以]]></description>
 </item></channel>
 </rss>

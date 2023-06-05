@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>数据结构 - 标签 - NarcissusBlog</title>
-        <link>http://wen-nan.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+        <link>http://zh1C.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
         <description>数据结构 - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 09 Oct 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Sat, 09 Oct 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://zh1C.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="self" type="application/rss+xml" /><item>
     <title>数据结构</title>
-    <link>http://wen-nan.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+    <link>http://zh1C.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
     <pubDate>Sat, 09 Oct 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+    <guid>http://zh1C.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
     <description><![CDATA[平衡查找树 在一棵含有N个结点的树中，我们希望树高为lgN，这样就能保证所有查找都能在lgN次比较内结束。但是在动态插入中保证树的完美平衡的代]]></description>
 </item></channel>
 </rss>

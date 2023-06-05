@@ -1,49 +1,49 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>MySQL - 分类 - NarcissusBlog</title>
-        <link>http://wen-nan.github.io/categories/mysql/</link>
+        <link>http://zh1C.github.io/categories/mysql/</link>
         <description>MySQL - 分类 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 16 Aug 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/categories/mysql/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 16 Aug 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://zh1C.github.io/categories/mysql/" rel="self" type="application/rss+xml" /><item>
     <title>MySQL面试题</title>
-    <link>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <link>http://zh1C.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
     <pubDate>Tue, 16 Aug 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+    <guid>http://zh1C.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
     <description><![CDATA[1. MyISAM与InnoDB的区别 MySQL支持的存储引擎有MyISAM、InnoDB、MEMORY等。 在MySQL5.5之前，默认存储引擎]]></description>
 </item><item>
     <title>MySQL面试题总结</title>
-    <link>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</link>
+    <link>http://zh1C.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</link>
     <pubDate>Wed, 16 Feb 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
+    <guid>http://zh1C.github.io/posts/mysql%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
     <description><![CDATA[基础篇 执行一条SQL语句，期间发生了什么？ MySQL 的架构共分为两层：Server 层和存储引擎层， Server 层负责建立连接、分析和执行 SQL。MySQL 大多]]></description>
 </item><item>
     <title>MySQL:事务</title>
-    <link>http://wen-nan.github.io/posts/mysql45%E8%AE%B22/</link>
+    <link>http://zh1C.github.io/posts/mysql45%E8%AE%B22/</link>
     <pubDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/mysql45%E8%AE%B22/</guid>
+    <guid>http://zh1C.github.io/posts/mysql45%E8%AE%B22/</guid>
     <description><![CDATA[事务隔离：为什么你改了我还看不见？ 事务支持是在引擎层实现的，MySQL是支持多引擎的系统，但并不是所有引擎都支持事务。 隔离性与隔离级别 事务的]]></description>
 </item><item>
     <title>MySQL:索引</title>
-    <link>http://wen-nan.github.io/posts/mysql45%E8%AE%B23/</link>
+    <link>http://zh1C.github.io/posts/mysql45%E8%AE%B23/</link>
     <pubDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/mysql45%E8%AE%B23/</guid>
+    <guid>http://zh1C.github.io/posts/mysql45%E8%AE%B23/</guid>
     <description><![CDATA[深入浅出索引 索引的出现就是为了提高数据查询的效率，就像书的目录一样。 索引常见模型优劣分析 哈希表 哈希表是以一种键值对存储的数据结构，适用于只有]]></description>
 </item><item>
     <title>MySQL:锁</title>
-    <link>http://wen-nan.github.io/posts/mysql45%E8%AE%B24/</link>
+    <link>http://zh1C.github.io/posts/mysql45%E8%AE%B24/</link>
     <pubDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/mysql45%E8%AE%B24/</guid>
+    <guid>http://zh1C.github.io/posts/mysql45%E8%AE%B24/</guid>
     <description><![CDATA[全局锁和表锁 ：给表加个字段怎么有这么多阻碍？ 根据加锁范围，MySQL里面的锁大致可以分为全局锁、表级锁和行锁三类。 全局锁 全局锁就是对整个数据]]></description>
 </item><item>
     <title>MySQL基本介绍</title>
-    <link>http://wen-nan.github.io/posts/mysql45%E8%AE%B21/</link>
+    <link>http://zh1C.github.io/posts/mysql45%E8%AE%B21/</link>
     <pubDate>Tue, 30 Nov 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/mysql45%E8%AE%B21/</guid>
+    <guid>http://zh1C.github.io/posts/mysql45%E8%AE%B21/</guid>
     <description><![CDATA[基础架构：一条SQL查询语句是如何执行的？ MySQL的基本架构示意图如下： MySQL可以分为Server层和存储引擎层，不同存储引擎共用一个]]></description>
 </item></channel>
 </rss>

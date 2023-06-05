@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>动态规划 - 标签 - NarcissusBlog</title>
-        <link>http://wen-nan.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
+        <link>http://zh1C.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/</link>
         <description>动态规划 - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 19 Nov 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 19 Nov 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://zh1C.github.io/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="self" type="application/rss+xml" /><item>
     <title>动态规划-区间DP</title>
-    <link>http://wen-nan.github.io/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E5%8C%BA%E9%97%B4dp/</link>
+    <link>http://zh1C.github.io/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E5%8C%BA%E9%97%B4dp/</link>
     <pubDate>Fri, 19 Nov 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E5%8C%BA%E9%97%B4dp/</guid>
+    <guid>http://zh1C.github.io/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E5%8C%BA%E9%97%B4dp/</guid>
     <description><![CDATA[概念 区间 DP 是状态的定义和转移都与区间有关，其中区间用两个端点表示。**状态定义 dp[i][j] = [i..j] 上原问题的解。i 变大，j 变小都可以得到更小规模的子问题。]]></description>
 </item></channel>
 </rss>

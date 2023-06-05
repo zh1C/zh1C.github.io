@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>排序 - 标签 - NarcissusBlog</title>
-        <link>http://wen-nan.github.io/tags/%E6%8E%92%E5%BA%8F/</link>
+        <link>http://zh1C.github.io/tags/%E6%8E%92%E5%BA%8F/</link>
         <description>排序 - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 08 Oct 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E6%8E%92%E5%BA%8F/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Fri, 08 Oct 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://zh1C.github.io/tags/%E6%8E%92%E5%BA%8F/" rel="self" type="application/rss+xml" /><item>
     <title>排序</title>
-    <link>http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/</link>
+    <link>http://zh1C.github.io/posts/%E6%8E%92%E5%BA%8F/</link>
     <pubDate>Fri, 08 Oct 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/</guid>
+    <guid>http://zh1C.github.io/posts/%E6%8E%92%E5%BA%8F/</guid>
     <description><![CDATA[二叉堆 二叉堆主要应用有两个，一种是排序方法堆排序，第二是一种数据结构&ndash;优先队列。 二叉堆概览 二叉堆就是一种特殊的二叉树（完全二叉树]]></description>
 </item></channel>
 </rss>

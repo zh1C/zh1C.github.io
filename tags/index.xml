@@ -1,77 +1,77 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Tags - 标签 - NarcissusBlog</title>
-        <link>http://wen-nan.github.io/tags/</link>
+        <link>http://zh1C.github.io/tags/</link>
         <description>Tags - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 23 Nov 2022 00:00:00 &#43;0800</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 23 Nov 2022 00:00:00 &#43;0800</lastBuildDate><atom:link href="http://zh1C.github.io/tags/" rel="self" type="application/rss+xml" /><item>
     <title>emacs</title>
-    <link>http://wen-nan.github.io/tags/emacs/</link>
+    <link>http://zh1C.github.io/tags/emacs/</link>
     <pubDate>Wed, 23 Nov 2022 00:00:00 &#43;0800</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/emacs/</guid>
+    <guid>http://zh1C.github.io/tags/emacs/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>Golang</title>
-    <link>http://wen-nan.github.io/tags/golang/</link>
+    <link>http://zh1C.github.io/tags/golang/</link>
     <pubDate>Sun, 13 Nov 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/golang/</guid>
+    <guid>http://zh1C.github.io/tags/golang/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>操作系统</title>
-    <link>http://wen-nan.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
+    <link>http://zh1C.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
     <pubDate>Sat, 15 Oct 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
+    <guid>http://zh1C.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>Git</title>
-    <link>http://wen-nan.github.io/tags/git/</link>
+    <link>http://zh1C.github.io/tags/git/</link>
     <pubDate>Tue, 27 Sep 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/git/</guid>
+    <guid>http://zh1C.github.io/tags/git/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>算法学习</title>
-    <link>http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
+    <link>http://zh1C.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
     <pubDate>Wed, 07 Sep 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</guid>
+    <guid>http://zh1C.github.io/tags/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>分布式缓存</title>
-    <link>http://wen-nan.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98/</link>
+    <link>http://zh1C.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98/</link>
     <pubDate>Mon, 29 Aug 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98/</guid>
+    <guid>http://zh1C.github.io/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%93%E5%AD%98/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>shell</title>
-    <link>http://wen-nan.github.io/tags/shell/</link>
+    <link>http://zh1C.github.io/tags/shell/</link>
     <pubDate>Wed, 17 Aug 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/shell/</guid>
+    <guid>http://zh1C.github.io/tags/shell/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>MySQL</title>
-    <link>http://wen-nan.github.io/tags/mysql/</link>
+    <link>http://zh1C.github.io/tags/mysql/</link>
     <pubDate>Tue, 16 Aug 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/mysql/</guid>
+    <guid>http://zh1C.github.io/tags/mysql/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>Redis</title>
-    <link>http://wen-nan.github.io/tags/redis/</link>
+    <link>http://zh1C.github.io/tags/redis/</link>
     <pubDate>Mon, 07 Mar 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/redis/</guid>
+    <guid>http://zh1C.github.io/tags/redis/</guid>
     <description><![CDATA[]]></description>
 </item><item>
     <title>计算机网络</title>
-    <link>http://wen-nan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
+    <link>http://zh1C.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
     <pubDate>Sun, 06 Mar 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</guid>
+    <guid>http://zh1C.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</guid>
     <description><![CDATA[]]></description>
 </item></channel>
 </rss>

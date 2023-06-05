@@ -1,14 +1,14 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>并发 - 标签 - NarcissusBlog</title>
-        <link>http://wen-nan.github.io/tags/%E5%B9%B6%E5%8F%91/</link>
+        <link>http://zh1C.github.io/tags/%E5%B9%B6%E5%8F%91/</link>
         <description>并发 - 标签 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 04 Nov 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/tags/%E5%B9%B6%E5%8F%91/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Thu, 04 Nov 2021 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://zh1C.github.io/tags/%E5%B9%B6%E5%8F%91/" rel="self" type="application/rss+xml" /><item>
     <title>sync包学习</title>
-    <link>http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/</link>
+    <link>http://zh1C.github.io/posts/go%E5%B9%B6%E5%8F%912/</link>
     <pubDate>Thu, 04 Nov 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/go%E5%B9%B6%E5%8F%912/</guid>
+    <guid>http://zh1C.github.io/posts/go%E5%B9%B6%E5%8F%912/</guid>
     <description><![CDATA[读写锁和互斥锁 Go语言标准库sync提供了2中锁，互斥锁（sync.Mutex）和读写锁（sync.RWMutex）。 互斥锁(sync.Mu]]></description>
 </item></channel>
 </rss>

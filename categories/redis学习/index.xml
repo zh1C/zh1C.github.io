@@ -1,77 +1,77 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Redis学习 - 分类 - NarcissusBlog</title>
-        <link>http://wen-nan.github.io/categories/redis%E5%AD%A6%E4%B9%A0/</link>
+        <link>http://zh1C.github.io/categories/redis%E5%AD%A6%E4%B9%A0/</link>
         <description>Redis学习 - 分类 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 07 Mar 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/categories/redis%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Mon, 07 Mar 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://zh1C.github.io/categories/redis%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
     <title>Redis相关面试题</title>
-    <link>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <link>http://zh1C.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
     <pubDate>Mon, 07 Mar 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
+    <guid>http://zh1C.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98/</guid>
     <description><![CDATA[1. Redis简介 Redis就是一个使用C语言开发的数据库，与传统数据库不同的是，Redis数据是存在内存中的，即他是内存数据库，读写速度非常]]></description>
 </item><item>
     <title>Redis(七)对象</title>
-    <link>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</link>
+    <link>http://zh1C.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</link>
     <pubDate>Sat, 26 Feb 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</guid>
+    <guid>http://zh1C.github.io/posts/redis-%E5%AF%B9%E8%B1%A1/</guid>
     <description><![CDATA[Redis用到的主要数据结构有简单动态字符串(SDS)、双端链表、字典、跳跃表、压缩列表、整数集合等。但是Redis并没有直接使用这些数据结]]></description>
 </item><item>
     <title>缓存穿透与缓存雪崩</title>
-    <link>http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/</link>
+    <link>http://zh1C.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/</link>
     <pubDate>Thu, 24 Feb 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/</guid>
+    <guid>http://zh1C.github.io/posts/%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9/</guid>
     <description><![CDATA[缓存穿透 缓存穿透就是大量请求的key根本不存在于缓存中，导致请求直接到了数据库上，根本没有经过缓存这一层。流程如下： 有哪些解决办法？ 缓存无效]]></description>
 </item><item>
     <title>Redis面试题总结</title>
-    <link>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</link>
+    <link>http://zh1C.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</link>
     <pubDate>Thu, 17 Feb 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
+    <guid>http://zh1C.github.io/posts/redis%E9%9D%A2%E8%AF%95%E9%A2%98%E6%80%BB%E7%BB%93/</guid>
     <description><![CDATA[认识Redis 什么是Redis？ Redis 是一种基于内存的数据库，对数据的读写操作都是在内存中完成，因此读写速度非常快，常用于缓存，消息队列、分布式]]></description>
 </item><item>
     <title>Redis(六)压缩列表</title>
-    <link>http://wen-nan.github.io/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/</link>
+    <link>http://zh1C.github.io/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/</link>
     <pubDate>Mon, 13 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/</guid>
+    <guid>http://zh1C.github.io/posts/redis-%E5%8E%8B%E7%BC%A9%E5%88%97%E8%A1%A8/</guid>
     <description><![CDATA[压缩列表(ziplist)是列表键和哈希键的底层实现之一。当一个列表键只包含少量列表项(哈希键只包含少量键值对)，并且每个列表项(键值对的键]]></description>
 </item><item>
     <title>Redis(五)整数集合</title>
-    <link>http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/</link>
+    <link>http://zh1C.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/</link>
     <pubDate>Sun, 12 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/</guid>
+    <guid>http://zh1C.github.io/posts/redis-%E6%95%B4%E6%95%B0%E9%9B%86%E5%90%88/</guid>
     <description><![CDATA[整数集合是集合键的底层实现之一，当一个集合只包含整数值元素，并且集合元素不多时，Redis会使用整数集合作为集合键的底层实现。 1、整数集合的]]></description>
 </item><item>
     <title>Redis(三)字典</title>
-    <link>http://wen-nan.github.io/posts/redis-%E5%AD%97%E5%85%B8/</link>
+    <link>http://zh1C.github.io/posts/redis-%E5%AD%97%E5%85%B8/</link>
     <pubDate>Sat, 11 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis-%E5%AD%97%E5%85%B8/</guid>
+    <guid>http://zh1C.github.io/posts/redis-%E5%AD%97%E5%85%B8/</guid>
     <description><![CDATA[字典，又称为符号表、关联数组或映射，是一种用于保存键值对的抽象数据结构。字典中每个键都是独一无二的。字典在Redis中应用相当广泛，比如Re]]></description>
 </item><item>
     <title>Redis(四)跳跃表</title>
-    <link>http://wen-nan.github.io/posts/redis-%E8%B7%B3%E8%B7%83%E8%A1%A8/</link>
+    <link>http://zh1C.github.io/posts/redis-%E8%B7%B3%E8%B7%83%E8%A1%A8/</link>
     <pubDate>Sat, 11 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis-%E8%B7%B3%E8%B7%83%E8%A1%A8/</guid>
+    <guid>http://zh1C.github.io/posts/redis-%E8%B7%B3%E8%B7%83%E8%A1%A8/</guid>
     <description><![CDATA[跳跃表是一种有序数据结构，通过在每个节点中维持多个指向其他节点的指针，从而达到快速访问节点的目的。支持平均O(logN)、最坏O(N)复杂度]]></description>
 </item><item>
     <title>Redis(二)链表</title>
-    <link>http://wen-nan.github.io/posts/redis-%E9%93%BE%E8%A1%A8/</link>
+    <link>http://zh1C.github.io/posts/redis-%E9%93%BE%E8%A1%A8/</link>
     <pubDate>Thu, 09 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis-%E9%93%BE%E8%A1%A8/</guid>
+    <guid>http://zh1C.github.io/posts/redis-%E9%93%BE%E8%A1%A8/</guid>
     <description><![CDATA[链表提供了高效的节点重排能力，以及排序性的节点访问方式，并且可以通过增删节点来灵活地调整链表的长度。 链表在Redis中应用非常广泛，比如列表]]></description>
 </item><item>
     <title>Redis(一)简单动态字符串</title>
-    <link>http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
+    <link>http://zh1C.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</link>
     <pubDate>Thu, 09 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
+    <guid>http://zh1C.github.io/posts/redis-%E7%AE%80%E5%8D%95%E5%8A%A8%E6%80%81%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid>
     <description><![CDATA[概述 简单来说 Redis 就是一个使用 C 语言开发的数据库， 是速度非常快的非关系型（NoSQL）内存键值数据库，可以存储键和五种不同类型的值之间的映射。键]]></description>
 </item></channel>
 </rss>

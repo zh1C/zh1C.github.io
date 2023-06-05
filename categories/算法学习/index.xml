@@ -1,77 +1,77 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>算法学习 - 分类 - NarcissusBlog</title>
-        <link>http://wen-nan.github.io/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
+        <link>http://zh1C.github.io/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/</link>
         <description>算法学习 - 分类 - NarcissusBlog</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 07 Sep 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://wen-nan.github.io/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Wed, 07 Sep 2022 00:00:00 &#43;0000</lastBuildDate><atom:link href="http://zh1C.github.io/categories/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0/" rel="self" type="application/rss+xml" /><item>
     <title>线段树-树状树学习及应用</title>
-    <link>http://wen-nan.github.io/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/</link>
+    <link>http://zh1C.github.io/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/</link>
     <pubDate>Wed, 07 Sep 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/</guid>
+    <guid>http://zh1C.github.io/posts/%E7%BA%BF%E6%AE%B5%E6%A0%91-%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/</guid>
     <description><![CDATA[假设我们有一个数组： 数组不变，求区间和：「前缀和」、「树状数组」、「线段树」 多次修改某个数（单点），求区间和：「树状数组」、「线段树」 多次修]]></description>
 </item><item>
     <title>刷题技巧总结</title>
-    <link>http://wen-nan.github.io/posts/%E5%88%B7%E9%A2%98%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/</link>
+    <link>http://zh1C.github.io/posts/%E5%88%B7%E9%A2%98%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/</link>
     <pubDate>Sat, 05 Mar 2022 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E5%88%B7%E9%A2%98%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/</guid>
+    <guid>http://zh1C.github.io/posts/%E5%88%B7%E9%A2%98%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/</guid>
     <description><![CDATA[位掩码技巧 原理讲解 用于快速判断是否有重复出现的字符。限制条件为必须均为小写字母构成(不是必须)，则可以使用位掩码技巧：用一个(长度为26比特]]></description>
 </item><item>
     <title>图论</title>
-    <link>http://wen-nan.github.io/posts/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0-%E5%9B%BE%E8%AE%BA/</link>
+    <link>http://zh1C.github.io/posts/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0-%E5%9B%BE%E8%AE%BA/</link>
     <pubDate>Mon, 20 Dec 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0-%E5%9B%BE%E8%AE%BA/</guid>
+    <guid>http://zh1C.github.io/posts/%E7%AE%97%E6%B3%95%E5%AD%A6%E4%B9%A0-%E5%9B%BE%E8%AE%BA/</guid>
     <description><![CDATA[图论基础 1. 图的逻辑结构和具体实现 一幅图是由节点和边构成的，逻辑结构如下： 实现上，通常用邻接表和邻接矩阵来实现。 邻接表很直观，就是每个节点x的]]></description>
 </item><item>
     <title>动态规划-区间DP</title>
-    <link>http://wen-nan.github.io/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E5%8C%BA%E9%97%B4dp/</link>
+    <link>http://zh1C.github.io/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E5%8C%BA%E9%97%B4dp/</link>
     <pubDate>Fri, 19 Nov 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E5%8C%BA%E9%97%B4dp/</guid>
+    <guid>http://zh1C.github.io/posts/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92-%E5%8C%BA%E9%97%B4dp/</guid>
     <description><![CDATA[概念 区间 DP 是状态的定义和转移都与区间有关，其中区间用两个端点表示。**状态定义 dp[i][j] = [i..j] 上原问题的解。i 变大，j 变小都可以得到更小规模的子问题。]]></description>
 </item><item>
     <title>数据结构</title>
-    <link>http://wen-nan.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
+    <link>http://zh1C.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</link>
     <pubDate>Sat, 09 Oct 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
+    <guid>http://zh1C.github.io/posts/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</guid>
     <description><![CDATA[平衡查找树 在一棵含有N个结点的树中，我们希望树高为lgN，这样就能保证所有查找都能在lgN次比较内结束。但是在动态插入中保证树的完美平衡的代]]></description>
 </item><item>
     <title>排序</title>
-    <link>http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/</link>
+    <link>http://zh1C.github.io/posts/%E6%8E%92%E5%BA%8F/</link>
     <pubDate>Fri, 08 Oct 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%8E%92%E5%BA%8F/</guid>
+    <guid>http://zh1C.github.io/posts/%E6%8E%92%E5%BA%8F/</guid>
     <description><![CDATA[二叉堆 二叉堆主要应用有两个，一种是排序方法堆排序，第二是一种数据结构&ndash;优先队列。 二叉堆概览 二叉堆就是一种特殊的二叉树（完全二叉树]]></description>
 </item><item>
     <title>双指针</title>
-    <link>http://wen-nan.github.io/posts/%E5%8F%8C%E6%8C%87%E9%92%88/</link>
+    <link>http://zh1C.github.io/posts/%E5%8F%8C%E6%8C%87%E9%92%88/</link>
     <pubDate>Wed, 06 Oct 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E5%8F%8C%E6%8C%87%E9%92%88/</guid>
+    <guid>http://zh1C.github.io/posts/%E5%8F%8C%E6%8C%87%E9%92%88/</guid>
     <description><![CDATA[双指针技巧一般分为两类，一类是快慢指针，一类是左右指针。前者主要解决链表中的问题，比如典型的判断链表中是否有环；后者主要解决数组(或字符串)]]></description>
 </item><item>
     <title>栈和队列</title>
-    <link>http://wen-nan.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</link>
+    <link>http://zh1C.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</link>
     <pubDate>Tue, 05 Oct 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</guid>
+    <guid>http://zh1C.github.io/posts/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</guid>
     <description><![CDATA[队列是一种先进先出的数据结构，栈是一种先进后出的数据结构。这两种数据结构底层都是数组或者链表实现的，只是API限定了它们的特性。 栈实现队列 队]]></description>
 </item><item>
     <title>数学技巧</title>
-    <link>http://wen-nan.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</link>
+    <link>http://zh1C.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</link>
     <pubDate>Fri, 01 Oct 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</guid>
+    <guid>http://zh1C.github.io/posts/%E6%95%B0%E5%AD%A6%E6%8A%80%E5%B7%A7/</guid>
     <description><![CDATA[快速幂 根据幂运算的定义可以知道，如果要求 x 的 N 次幂，那么暴力方法就是用一个 N 次的循环，然后累乘得到结果，时间复杂度为o(N)。快速幂算法可以]]></description>
 </item><item>
     <title>分治算法</title>
-    <link>http://wen-nan.github.io/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/</link>
+    <link>http://zh1C.github.io/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/</link>
     <pubDate>Thu, 30 Sep 2021 00:00:00 &#43;0000</pubDate>
     <author>作者</author>
-    <guid>http://wen-nan.github.io/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/</guid>
+    <guid>http://zh1C.github.io/posts/%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/</guid>
     <description><![CDATA[分治算法可以认为是一种算法思想，通过将原问题分解成小规模的子问题，然后根据子问题的结果构造出原问题的答案。 归并排序 归并排序是最典型的分治算法]]></description>
 </item></channel>
 </rss>
